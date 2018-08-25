@@ -15,6 +15,7 @@ public class MD5Utils {
 			secretBytes = MessageDigest.getInstance("md5").digest(
 					plainText.getBytes());
 		} catch (NoSuchAlgorithmException e) {
+			System.out.println("md5");
 			throw new RuntimeException("没有md5这个算法！");
 		}
 		String md5code = new BigInteger(1, secretBytes).toString(16);// 16进制数字
