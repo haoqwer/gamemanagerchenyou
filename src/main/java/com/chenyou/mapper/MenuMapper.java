@@ -130,5 +130,5 @@ public interface MenuMapper {
      * @param userId
      * @return
      */
-    public List<Menu> selectListMenuByUserId(Integer userId);
+    public List<String> selectListMenuByUserId(Integer userId);
 }

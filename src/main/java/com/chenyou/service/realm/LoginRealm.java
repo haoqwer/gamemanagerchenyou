@@ -28,36 +28,22 @@ public class LoginRealm extends AuthorizingRealm {
 
     /**
      * 进行权限校验
+     *
      * @param principals
      * @return
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         User user = (User) principals.getPrimaryPrincipal();
-        /**
-         * 获取到用户跟角色管理的所有角色信息
-         */
-        List<Role> roles = roleService.selectRolesByUserId(user.getUserId());
-        SimpleAuthorizationInfo sai = new SimpleAuthorizationInfo();
-        /**
-         * 获取用户跟角色关联，角色跟权限关联的所有信息
-         */
-        List<Menu> menus = menuService.selectListMenuByUserId(user.getUserId());
-        if (null != menus && menus.size() > 0) {
-            for (Menu menu : menus) {
-                sai.addStringPermission(menu.getPerms());
-            }
-        }
-        if (null != roles && roles.size() > 0) {
-            for (Role role : roles) {
-                sai.addRole(role.getRoleKey());
-            }
-        }
-        return sai;
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        info.setRoles(roleService.selectRoleKeys(user.getUserId()));
+        info.setStringPermissions(menuService.selectListMenuByUserId(user.getUserId()));
+        return info;
     }
 
     /**
      * 进行登录认证
+     *
      * @param token
      * @return
      * @throws AuthenticationException

@@ -97,10 +97,10 @@ public interface RoleMapper {
     Role checkRoleNameUnique(String roleName);
 
     /**
-     * 根据用户ID查询角色
-     *
+     * 根据用户ID查询角色关键字
      * @param userId 用户ID
      * @return 角色列表
      */
     public List<Role> selectRolesByUserId(Integer userId);
+
 }

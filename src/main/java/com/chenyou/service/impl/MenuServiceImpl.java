@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -221,7 +218,15 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public List <Menu> selectListMenuByUserId(Integer userId) {
-        return menuMapper.selectListMenuByUserId(userId);
+    public Set <String> selectListMenuByUserId(Integer userId) {
+        List <String> perms = menuMapper.selectListMenuByUserId(userId);
+        Set<String> permSet=new HashSet <>();
+        for(String perm:perms) {
+            if (StringUtils.isNotEmpty(perm))
+            {
+                permSet.addAll(Arrays.asList(perm.trim().split(",")));
+            }
+        }
+        return  permSet;
     }
 }

@@ -20,14 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
 public class RoleServiceImpl implements RoleService {
 
-    private  static  final Logger logger=LoggerFactory.getLogger(RoleServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
     @Autowired
     private RoleMapper roleMapper;
@@ -40,6 +39,7 @@ public class RoleServiceImpl implements RoleService {
 
     /**
      * 查找对应的角色
+     *
      * @param roleId
      * @return
      */
@@ -50,13 +50,14 @@ public class RoleServiceImpl implements RoleService {
 
     /**
      * 查看所有角色
+     *
      * @param pageNum
      * @param pageSize
      * @return
      */
     @Override
     public PageResult findPage(int pageNum, int pageSize) {
-        logger.info("pageNum"+pageNum+"---pageSize:"+pageSize);
+        logger.info("pageNum" + pageNum + "---pageSize:" + pageSize);
         PageHelper.startPage(pageNum, pageSize);
         Page <Role> page = (Page <Role>) roleMapper.selectByExample(null);
         return new PageResult(page.getTotal(), page.getResult());
@@ -70,6 +71,7 @@ public class RoleServiceImpl implements RoleService {
 
     /**
      * 有条件分页查询
+     *
      * @param role
      * @param pageNum
      * @param pageSize
@@ -90,18 +92,20 @@ public class RoleServiceImpl implements RoleService {
 
     /**
      * 根据用户userId查找对应的Role集合
+     *
      * @param userId
      * @return
      */
     @Override
     public List <Role> selectRolesByUserId(Integer userId) {
-        logger.info("userId:"+userId);
+        logger.info("userId:" + userId);
         List <Role> userRoles = roleMapper.selectRolesByUserId(userId);
         return userRoles;
     }
 
     /**
      * 新增角色
+     *
      * @param role
      * @return
      */
@@ -127,9 +131,9 @@ public class RoleServiceImpl implements RoleService {
         for (Integer menuId : role.getMenuIds()) {
             RoleMenuKey roleMenu = new RoleMenuKey();
             roleMenu.setMenuId(menuId);
-            logger.info("menuId:"+menuId);
+            logger.info("menuId:" + menuId);
             roleMenu.setRoleId(role.getRoleId());
-            logger.info("roleId:"+role.getRoleId());
+            logger.info("roleId:" + role.getRoleId());
             list.add(roleMenu);
         }
         if (list.size() > 0) {
@@ -140,6 +144,7 @@ public class RoleServiceImpl implements RoleService {
 
     /**
      * 根绝输入的角色名判断角色是否唯一
+     *
      * @param role
      * @return
      */
@@ -147,7 +152,7 @@ public class RoleServiceImpl implements RoleService {
     public String checkRoleNameUnique(Role role) {
         //获取到该角色当前的roleId
         Integer roleId = null == role.getRoleId() ? -1 : role.getRoleId();
-        logger.info("roleId:"+roleId);
+        logger.info("roleId:" + roleId);
         Role info = roleMapper.checkRoleNameUnique(role.getRoleName());
         //判断数据库中查询到的用户id跟用户传递进来的用户id进行比较
         if (StringUtils.isNotNull(info) && info.getRoleId() != roleId) {
@@ -158,6 +163,7 @@ public class RoleServiceImpl implements RoleService {
 
     /**
      * 修改角色
+     *
      * @param role
      * @return
      */
@@ -165,7 +171,7 @@ public class RoleServiceImpl implements RoleService {
     public int updateRole(Role role) {
         //修改角色信息
         role.setCreateBy(ShiroUtils.getLoginName());
-        logger.info("roleId:"+role.getRoleId());
+        logger.info("roleId:" + role.getRoleId());
         roleMapper.updateByPrimaryKey(role);
         //删除角色与菜单关联
         roleMenuMapper.deleteRoleMenuByRoleId(role.getRoleId());
@@ -174,6 +180,7 @@ public class RoleServiceImpl implements RoleService {
 
     /**
      * 根据角色id,查找使用该角色的人数
+     *
      * @param roleId
      * @return
      */
@@ -184,6 +191,7 @@ public class RoleServiceImpl implements RoleService {
 
     /**
      * 根据roleIDs批量删除角色
+     *
      * @param roleIds
      * @return
      */
@@ -191,13 +199,30 @@ public class RoleServiceImpl implements RoleService {
     public int deleteRoleByIds(Integer[] roleIds) throws BizException {
         int count = 0;
         for (Integer roleId : roleIds) {
-            logger.info("roleId:"+roleId);
+            logger.info("roleId:" + roleId);
             Role role = findOne(roleId);
             count = countUserRoleByRoleId(roleId);
             if (count > 0) {
-                throw new BizException(BizException.CODE_PARM_LACK, "用户" + role.getRoleName()+ "不能删除");
+                throw new BizException(BizException.CODE_PARM_LACK, "用户" + role.getRoleName() + "不能删除");
             }
         }
         return count;
+    }
+
+    /**
+     * 根据用户id查找角色权限
+     * @param userId
+     * @return
+     */
+    @Override
+    public Set <String> selectRoleKeys(Integer userId) {
+        List <Role> roles = roleMapper.selectRolesByUserId(userId);
+        Set <String> perms = new HashSet <>();
+        for (Role perm : roles) {
+            if (StringUtils.isNotNull(roles)) {
+                perms.addAll(Arrays.asList(perm.getRoleKey().trim().split(",")));
+            }
+        }
+        return perms;
     }
 }

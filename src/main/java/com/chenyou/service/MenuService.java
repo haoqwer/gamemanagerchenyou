@@ -6,6 +6,7 @@ import com.mysql.jdbc.MysqlErrorNumbers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface MenuService {
 
@@ -20,6 +21,7 @@ public interface MenuService {
 
     /**
      * 根据menuId查询该菜单下的子菜单的数量
+     *
      * @param parentId
      * @return
      */
@@ -28,29 +30,31 @@ public interface MenuService {
 
     /**
      * 查看菜单拥有数量
+     *
      * @param menuId
      * @return
      */
     public int selectCountRoleMenuByMenuId(Integer menuId);
 
-    public  int delete(Integer menuId);
+    public int delete(Integer menuId);
 
     /**
      * 获取到上级菜单名称
      * 如果id为0则为主目录
      */
-    public  Menu findMenuByMenuId(Integer parentId);
-
+    public Menu findMenuByMenuId(Integer parentId);
 
 
     /**
      * 查询出所有的菜单
+     *
      * @return
      */
-    public List<Menu> findAllMenu();
+    public List <Menu> findAllMenu();
 
     /**
      * 增加menu
+     *
      * @param menu
      * @return
      */
@@ -58,6 +62,7 @@ public interface MenuService {
 
     /**
      * 修改menu
+     *
      * @param menu
      * @return
      */
@@ -66,16 +71,18 @@ public interface MenuService {
 
     /**
      * 加载角色的菜单列表树
+     *
      * @param role 角色对象
      * @return 菜单列表
      */
-    public List<Map<String, Object>> roleMenuTreeData(Role role);
+    public List <Map <String, Object>> roleMenuTreeData(Role role);
 
     /**
      * 查询所有的菜单
+     *
      * @return
      */
-    public List<Map<String,Object>> menuTreeData();
+    public List <Map <String, Object>> menuTreeData();
 
 
     /**
@@ -85,10 +92,11 @@ public interface MenuService {
 
     /**
      * 根据userId查询对应的权限菜单集合
+     *
      * @param userId
      * @return
      */
-    public List<Menu> selectListMenuByUserId(Integer userId);
+    public Set <String> selectListMenuByUserId(Integer userId);
 
 
 }
