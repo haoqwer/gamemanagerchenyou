@@ -22,9 +22,8 @@
             <value>
                 /static/css/** = anon
                 /static/fonts/** = anon
-                /static/images/** = anon
+                /static/img/** = anon
                 /static/js/** = anon
-                /static/lib/** = anon
                 /login.html/** = anon
                 /login.do = anon
                 /member-list.html = perms["admin"]

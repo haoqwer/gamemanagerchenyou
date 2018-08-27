@@ -10,6 +10,7 @@ import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.UserService;
 import com.chenyou.utils.MD5Utils;
 import com.chenyou.utils.ShiroUtils;
+import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
@@ -118,7 +119,7 @@ public class UserServiceImpl implements UserService {
             //用户名不是唯一
             return UserConstants.USER_NAME_NOT_UNIQUE;
         }
-        return UserConstants.USER_NAME_NOT_UNIQUE;
+        return UserConstants.USER_NAME_UNIQUE;
     }
 
     /**
@@ -131,7 +132,7 @@ public class UserServiceImpl implements UserService {
         Integer userId = null == user.getUserId() ? -1 : user.getUserId();
         logger.info("phonNumber"+user.getPhonenumber());
         User u = userMapper.checkPhoneUnique(user.getPhonenumber());
-        if (null != u && u.getUserId() != userId) {
+        if (StringUtils.isNotNull(u) && u.getUserId() != userId) {
             return UserConstants.USER_PHONE_NOT_UNIQUE;
         }
         return  UserConstants.USER_PHONE_UNIQUE;
@@ -193,7 +194,6 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int updateUser(User user) {
-
         Integer userId = user.getUserId();
         String loginName = ShiroUtils.getLoginName();
         user.setCreateBy(loginName);

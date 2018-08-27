@@ -1,5 +1,6 @@
 package com.chenyou.service.impl;
 
+import com.chenyou.base.constant.UserConstants;
 import com.chenyou.mapper.MenuMapper;
 import com.chenyou.mapper.RoleMenuMapper;
 import com.chenyou.pojo.Menu;
@@ -41,9 +42,9 @@ public class MenuServiceImpl implements MenuService {
         logger.info("menuId:" + menuId);
         Menu info = menuMapper.checkMenuNameUnique(menu.getMenuName());
         if (null != info && menuId != info.getMenuId()) {
-            return "1";
+            return UserConstants.MENU_NAME_NOT_UNIQUE;
         }
-        return "0";
+        return  UserConstants.MENU_NAME_UNIQUE;
     }
 
     /**

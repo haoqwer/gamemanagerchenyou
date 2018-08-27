@@ -170,7 +170,7 @@
         values (#{menuId,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER},
         #{orderNum,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{menuType,jdbcType=CHAR},
         #{perms,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+       sysdate(), #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
         #{remark,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.chenyou.pojo.Menu">
@@ -414,7 +414,7 @@
         create_by = #{createBy,jdbcType=VARCHAR},
         create_time = #{createTime,jdbcType=TIMESTAMP},
         update_by = #{updateBy,jdbcType=VARCHAR},
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        update_time = sysdate(),
         remark = #{remark,jdbcType=VARCHAR}
         where menu_id = #{menuId,jdbcType=INTEGER}
     </update>
