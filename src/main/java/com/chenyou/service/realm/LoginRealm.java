@@ -28,7 +28,7 @@ public class LoginRealm extends AuthorizingRealm {
 
     /**
      * 进行权限校验
-     *
+     *角色关键字、菜单关键字进行权限认证
      * @param principals
      * @return
      */
