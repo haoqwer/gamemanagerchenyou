@@ -4,11 +4,10 @@ import com.chenyou.base.constant.UserConstants;
 import com.chenyou.mapper.MenuMapper;
 import com.chenyou.mapper.RoleMenuMapper;
 import com.chenyou.pojo.Menu;
+import com.chenyou.pojo.MenuExample;
 import com.chenyou.pojo.Role;
 import com.chenyou.service.MenuService;
-import com.chenyou.utils.ShiroUtils;
 import com.chenyou.utils.StringUtils;
-import com.sun.glass.ui.delegate.MenuItemDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +53,9 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public int selectCountMenuByParentId(Integer parentId) {
+    public int countChildMenuByParentId(Integer parentId) {
         logger.info("parentId:" + parentId);
-        return menuMapper.selectCountMenuByParentId(parentId);
+        return menuMapper.countChildMenuByParentId(parentId);
     }
 
     /**
@@ -66,9 +65,9 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public int selectCountRoleMenuByMenuId(Integer menuId) {
+    public int countRoleByRoleMenuId(Integer menuId) {
         logger.info("menuId:" + menuId);
-        return roleMenuMapper.selectCountRoleMenuByMenuId(menuId);
+        return roleMenuMapper.countRoleByRoleMenuId(menuId);
     }
 
     /**
@@ -78,7 +77,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public int delete(Integer menuId) {
+    public int removeMenu(Integer menuId) {
         logger.info("menuId:" + menuId);
         return menuMapper.deleteByPrimaryKey(menuId);
     }
@@ -90,9 +89,9 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public Menu findMenuByMenuId(Integer menuId) {
+    public Menu getMenuByMenuId(Integer menuId) {
         logger.info("menuId:" + menuId);
-        return menuMapper.selectMenuById(menuId);
+        return menuMapper.getMenuByMenuId(menuId);
     }
 
 
@@ -102,14 +101,15 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public List <Menu> findAllMenu() {
-        return menuMapper.selectByExample(null);
+    public List <Menu> listMenu() {
+        MenuExample example=new MenuExample();
+        example.setOrderByClause("order_num asc");
+        return menuMapper.selectByExample(example);
     }
 
     @Override
-    public int addMenu(Menu menu) {
+    public int saveMenu(Menu menu) {
         logger.info("menuId:" + menu.getMenuId());
-        menu.setCreateBy(ShiroUtils.getLoginName());
         return menuMapper.insert(menu);
     }
 
@@ -133,10 +133,10 @@ public class MenuServiceImpl implements MenuService {
         Integer roleId = role.getRoleId();
         List <Map <String, Object>> trees = new ArrayList <>();
         //获取到所有的菜单对象
-        List <Menu> menus = menuMapper.selectMenuAll();
+        List <Menu> menus = menuMapper.listMenu();
         if (StringUtils.isNotNull(roleId)) {
             //角色id存在
-            List <String> roleMenuList = menuMapper.selectMenuTree(roleId);
+            List <String> roleMenuList = menuMapper.listMenutreePermByRoleId(roleId);
             trees = getTrees(menus, true, roleMenuList, true);
         } else {
             //角色id不存在
@@ -196,7 +196,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List <Map <String, Object>> menuTreeData() {
         List <Map <String, Object>> trees = new ArrayList <>();
-        List <Menu> menuList = menuMapper.selectMenuAll();
+        List <Menu> menuList = menuMapper.listMenu();
         trees = getTrees(menuList, false, null, false);
         return trees;
     }
@@ -209,7 +209,7 @@ public class MenuServiceImpl implements MenuService {
      */
     @Override
     public Menu findMenu(Integer menuId) {
-        return menuMapper.selectMenuById(menuId);
+        return menuMapper.getMenuByMenuId(menuId);
     }
 
     /**
@@ -220,14 +220,27 @@ public class MenuServiceImpl implements MenuService {
      */
     @Override
     public Set <String> selectListMenuByUserId(Integer userId) {
-        List <String> perms = menuMapper.selectListMenuByUserId(userId);
-        Set<String> permSet=new HashSet <>();
-        for(String perm:perms) {
+        List<String> perms = menuMapper.listPermsByUserId(userId);
+        Set<String> permsSet = new HashSet<>();
+        for (String perm : perms)
+        {
             if (StringUtils.isNotEmpty(perm))
             {
-                permSet.addAll(Arrays.asList(perm.trim().split(",")));
+                permsSet.addAll(Arrays.asList(perm.trim().split(",")));
             }
         }
-        return  permSet;
+        return permsSet;
+
     }
+
+
+
+
+        @Override
+    public List <Menu> listMenusByUserId(Integer userId) {
+        return menuMapper.listMenusByUserId(userId);
+    }
+
+
+
 }

@@ -8,12 +8,14 @@ import com.chenyou.mapper.UserRoleMapper;
 import com.chenyou.pojo.Role;
 import com.chenyou.pojo.RoleExample;
 import com.chenyou.pojo.RoleMenuKey;
+import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.RoleService;
-import com.chenyou.utils.ShiroUtils;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,7 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public Role findOne(Integer roleId) {
+    public Role getRoleByRoleId(Integer roleId) {
         return roleMapper.selectByPrimaryKey(roleId);
     }
 
@@ -59,13 +61,15 @@ public class RoleServiceImpl implements RoleService {
     public PageResult findPage(int pageNum, int pageSize) {
         logger.info("pageNum" + pageNum + "---pageSize:" + pageSize);
         PageHelper.startPage(pageNum, pageSize);
-        Page <Role> page = (Page <Role>) roleMapper.selectByExample(null);
+        RoleExample example=new RoleExample();
+        example.setOrderByClause("create_time asc");
+        Page <Role> page = (Page <Role>) roleMapper.selectByExample(example);
         return new PageResult(page.getTotal(), page.getResult());
     }
 
 
     @Override
-    public List <Role> findAllRole() {
+    public List <Role> listRole() {
         return roleMapper.selectByExample(null);
     }
 
@@ -81,9 +85,11 @@ public class RoleServiceImpl implements RoleService {
     public PageResult findPage(Role role, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         RoleExample example = new RoleExample();
+        example.setOrderByClause("create_time asc");
         RoleExample.Criteria criteria = example.createCriteria();
         if (null != role.getRoleName()) {
-            criteria.andRoleNameEqualTo(role.getRoleName());
+           // criteria.andRoleNameEqualTo(role.getRoleName());
+            criteria.andRoleNameLike("%"+role.getRoleName()+"%");
         }
         Page <Role> page = (Page <Role>) roleMapper.selectByExample(example);
         return new PageResult(page.getTotal(), page.getResult());
@@ -97,7 +103,7 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public List <Role> selectRolesByUserId(Integer userId) {
+    public List <Role> listRoleByUserId(Integer userId) {
         logger.info("userId:" + userId);
         List <Role> userRoles = roleMapper.selectRolesByUserId(userId);
         return userRoles;
@@ -110,9 +116,11 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public int insertRole(Role role) {
+    public int saveRole(Role role) {
         //新增角色的时候将角色与权限也保存
-        role.setCreateBy(ShiroUtils.getLoginName());
+//        Subject subject = SecurityUtils.getSubject();
+//        User user = (User) subject.getPrincipal();
+//        role.setCreateBy(user.getLoginName());
         //新增角色
         roleMapper.insert(role);
         //新增角色与菜单关联中间表
@@ -170,7 +178,9 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public int updateRole(Role role) {
         //修改角色信息
-        role.setCreateBy(ShiroUtils.getLoginName());
+//        Subject subject = SecurityUtils.getSubject();
+//        User user = (User) subject.getPrincipal();
+//        role.setCreateBy(user.getLoginName());
         logger.info("roleId:" + role.getRoleId());
         roleMapper.updateByPrimaryKey(role);
         //删除角色与菜单关联
@@ -196,14 +206,17 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public int deleteRoleByIds(Integer[] roleIds) throws BizException {
+    public int removeRoleByRoleIds(Integer[] roleIds) throws BizException {
         int count = 0;
         for (Integer roleId : roleIds) {
             logger.info("roleId:" + roleId);
-            Role role = findOne(roleId);
+            Role role = getRoleByRoleId(roleId);
             count = countUserRoleByRoleId(roleId);
             if (count > 0) {
                 throw new BizException(BizException.CODE_PARM_LACK, "用户" + role.getRoleName() + "不能删除");
+            }else {
+                roleMenuMapper.deleteRoleMenuByRoleId(roleId);
+                roleMapper.deleteByPrimaryKey(roleId);
             }
         }
         return count;
@@ -215,7 +228,7 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public Set <String> selectRoleKeys(Integer userId) {
+    public Set <String> getRoleKeys(Integer userId) {
         List <Role> roles = roleMapper.selectRolesByUserId(userId);
         Set <String> perms = new HashSet <>();
         for (Role perm : roles) {

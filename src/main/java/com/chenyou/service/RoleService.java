@@ -15,22 +15,22 @@ public interface RoleService {
      * @param pageSize
      * @return
      */
-    public PageResult findPage(int pageNum, int pageSize);
+     PageResult findPage(int pageNum, int pageSize);
 
     /**
      * 查找所有的角色
-     *
+     *在用户添加页面中显示所有的角色
      * @return
      */
-    public List <Role> findAllRole();
+     List <Role> listRole();
 
     /**
      * 查找对应的角色
-     *
+     *在修改时展示页面的Role消息
      * @param roleId
      * @return
      */
-    public Role findOne(Integer roleId);
+     Role getRoleByRoleId(Integer roleId);
 
     /**
      * 根据条件查询，展示对应的角色
@@ -40,15 +40,15 @@ public interface RoleService {
      * @param pageSize
      * @return
      */
-    public PageResult findPage(Role role, int pageNum, int pageSize);
+     PageResult findPage(Role role, int pageNum, int pageSize);
 
     /**
      * 根据用户userId查找对应的角色
-     *
+     *在用户修改时展示的页面
      * @param userId
      * @return
      */
-    public List <Role> selectRolesByUserId(Integer userId);
+     List <Role> listRoleByUserId(Integer userId);
 
     /**
      * 新增角色
@@ -56,7 +56,7 @@ public interface RoleService {
      * @param role
      * @return
      */
-    public int insertRole(Role role);
+     int saveRole(Role role);
 
     /**
      * 根据输入的角色名判断输入的角色是否唯一
@@ -64,7 +64,7 @@ public interface RoleService {
      * @param role
      * @return
      */
-    public String checkRoleNameUnique(Role role);
+     String checkRoleNameUnique(Role role);
 
     /**
      * 修改角色
@@ -72,7 +72,7 @@ public interface RoleService {
      * @param role
      * @return
      */
-    public int updateRole(Role role);
+     int updateRole(Role role);
 
     /**
      * 通过查询角色id查询到使用该角色的人数
@@ -80,7 +80,7 @@ public interface RoleService {
      * @param roleId
      * @return
      */
-    public int countUserRoleByRoleId(Integer roleId);
+     int countUserRoleByRoleId(Integer roleId);
 
     /**
      * 删除角色
@@ -88,7 +88,7 @@ public interface RoleService {
      * @param roleIds
      * @return
      */
-    public int deleteRoleByIds(Integer[] roleIds) throws BizException;
+     int removeRoleByRoleIds(Integer[] roleIds) throws BizException;
 
     /**
      * 用户id查找角色的关键字
@@ -96,7 +96,7 @@ public interface RoleService {
      * @param userId
      * @return
      */
-    public Set <String> selectRoleKeys(Integer userId);
+     Set <String> getRoleKeys(Integer userId);
 
 
 }

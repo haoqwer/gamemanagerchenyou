@@ -1,11 +1,13 @@
 package com.chenyou.service.realm;
 
+import com.chenyou.mapper.UserMapper;
 import com.chenyou.pojo.Menu;
 import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
 import com.chenyou.service.MenuService;
 import com.chenyou.service.RoleService;
 import com.chenyou.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -13,6 +15,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 
 public class LoginRealm extends AuthorizingRealm {
@@ -26,6 +29,10 @@ public class LoginRealm extends AuthorizingRealm {
     @Autowired
     private MenuService menuService;
 
+
+    @Autowired
+    private UserMapper userMapper;
+
     /**
      * 进行权限校验
      *角色关键字、菜单关键字进行权限认证
@@ -36,7 +43,7 @@ public class LoginRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         User user = (User) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.setRoles(roleService.selectRoleKeys(user.getUserId()));
+        info.setRoles(roleService.getRoleKeys(user.getUserId()));
         info.setStringPermissions(menuService.selectListMenuByUserId(user.getUserId()));
         return info;
     }
@@ -46,6 +53,7 @@ public class LoginRealm extends AuthorizingRealm {
      *
      * @param token
      * @return
+     *
      * @throws AuthenticationException
      */
     @Override
@@ -57,6 +65,9 @@ public class LoginRealm extends AuthorizingRealm {
         try {
             //去数据库中查找该用户名是否存在用户
             user = userService.userLogin(loginName);
+            user.setLoginDate(new Date());
+            user.setLoginIp(SecurityUtils.getSubject().getSession().getHost());
+            userMapper.updateByPrimaryKey(user);
             return new SimpleAuthenticationInfo(user, user.getPassword(), this.getName());
         } catch (Exception e) {
             e.printStackTrace();

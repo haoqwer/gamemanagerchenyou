@@ -94,7 +94,17 @@ public interface UserMapper {
      */
     int updateByPrimaryKey(User record);
 
+    /**
+     * 检验登录名是否唯一
+     * @param loginName
+     * @return
+     */
     int checkLoginNameUnique(String loginName);
 
+    /**
+     * 检验手机号是否唯一
+     * @param phone
+     * @return
+     */
     User checkPhoneUnique(String phone);
 }

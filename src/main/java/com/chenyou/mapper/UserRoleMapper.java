@@ -77,14 +77,14 @@ public interface UserRoleMapper {
      * @param userRoles
      * @return
      */
-    public int batchUserRole(List<UserRoleKey> userRoles);
+     int batchUserRole(List<UserRoleKey> userRoles);
 
-    public int countUserRoleByRoleId(Integer roleId);
+     int countUserRoleByRoleId(Integer roleId);
 
     /**
      * 删除用户与角色的中间表
      * @param userId
      * @return
      */
-    public int deleteUserRoleByUserId(Integer userId);
+     int deleteUserRoleByUserId(Integer userId);
 }

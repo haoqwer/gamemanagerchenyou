@@ -8,25 +8,24 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
     <!-- 配置shire的过滤器工厂 -->
+    <!-- 配置shire的过滤器工厂 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <!-- 注入安全管理器：securityManager -->
         <property name="securityManager" ref="securityManager"/>
         <!-- 未登录跳转界面：loginUrl -->
-        <property name="loginUrl" value="/login_error.html"/>
+        <property name="loginUrl" value="/login.html"/>
         <!-- 登录成功跳转界面：successUrl -->
-        <property name="successUrl" value="/"/>
+        <property name="successUrl" value="/index.html"/>
         <!-- 权限不足跳转界面：unauthorizedUrl -->
         <property name="unauthorizedUrl" value="/unauthorizedUrl.html"/>
         <!-- 校验规则：filterChainDefinitions -->
         <property name="filterChainDefinitions">
             <value>
-                /static/css/** = anon
-                /static/fonts/** = anon
-                /static/img/** = anon
-                /static/js/** = anon
-                /login.html/** = anon
+                /static/** = anon
+                /login.html = anon
                 /login.do = anon
-                /member-list.html = perms["admin"]
+                /login_error.html=anon
+                /** = authc
             </value>
         </property>
     </bean>

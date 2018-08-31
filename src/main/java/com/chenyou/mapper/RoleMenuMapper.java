@@ -74,9 +74,18 @@ public interface RoleMenuMapper {
 
      int countUserRoleByRoleId(Integer roleId);
 
-     int selectCountRoleMenuByMenuId(Integer menuId);
+    /**
+     * 查询使用菜单的角色个数
+     * @param menuId
+     * @return
+     */
+     int countRoleByRoleMenuId(Integer menuId);
 
-//    根据角色id删除，角色菜单的中间表
+    /**
+     * 根据角色id删除，角色菜单的中间表
+     * @param roleId
+     * @return
+     */
      int deleteRoleMenuByRoleId(Integer roleId);
 
 

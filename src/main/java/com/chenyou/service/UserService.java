@@ -10,7 +10,7 @@ public interface UserService {
      * @param loginName
      * @return
      */
-    public User userLogin(String loginName);
+     User userLogin(String loginName);
 
     /**
      * 查看所有用户
@@ -18,7 +18,7 @@ public interface UserService {
      * @param pageSize
      * @return
      */
-    public PageResult findPage(int pageNum,int pageSize);
+     PageResult findPage(int pageNum,int pageSize);
 
     /**
      * 根据条件查询用户
@@ -27,56 +27,56 @@ public interface UserService {
      * @param pageSize
      * @return
      */
-    public PageResult findPage(User user,int pageNum,int pageSize);
+     PageResult findPage(User user,int pageNum,int pageSize);
 
     /**
      * 添加用户时,校验登录名是否唯一
      * @param loginName
      * @return
      */
-    public String checkLoginNameUnique(String  loginName);
+     String checkLoginNameUnique(String  loginName);
 
     /**
      * 校验手机号是否唯一
      * @param user
      * @return
      */
-    public String checkPhoneUnique(User user);
+     String checkPhoneUnique(User user);
 
     /**
      * 新增用户
      * @param user
      * @return
      */
-    public  int insertUser(User user);
+      int saveUser(User user);
 
     /**
      * 用户管理时查看用户和修改时展现的用户
      * @param userId
      * @return
      */
-    public User selectUserByUserId(Integer userId);
+     User getUserByUserId(Integer userId);
 
     /**
      * 修改用户
      * @param user
      * @return
      */
-    public int updateUser(User user);
+     int updateUser(User user);
 
     /**
      * 用户修改密码
      * @param user
      * @return
      */
-    public  int update(User user);
+      int changePassword(User user);
 
     /**
      * 用户删除
      * @param userIds
      * @return
      */
-    public void deleUserByIds(Integer[] userIds);
+     void removeUserByUserId(Integer[] userIds);
 
 
 

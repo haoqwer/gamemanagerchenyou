@@ -553,11 +553,11 @@ public class User {
      */
     private List<Integer> roleIds;
 
-    public List<Integer> getRoleIds() {
+    public List <Integer> getRoleIds() {
         return roleIds;
     }
 
-    public void setRoleIds(List<Integer> roleIds) {
+    public void setRoleIds(List <Integer> roleIds) {
         this.roleIds = roleIds;
     }
 

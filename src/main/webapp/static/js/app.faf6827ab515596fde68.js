@@ -19,110 +19,218 @@ webpackJsonp([1], {
     }, NHnr: function (e, t, a) {
         "use strict";
         Object.defineProperty(t, "__esModule", {value: !0});
-        var l = a("7+uW"), n = {
+        var n = a("7+uW"), l = {
             render: function () {
                 var e = this.$createElement, t = this._self._c || e;
                 return t("div", {attrs: {id: "app"}}, [t("router-view")], 1)
             }, staticRenderFns: []
         };
-        var i = a("VU/8")({name: "App"}, n, !1, function (e) {
+        var i = a("VU/8")({name: "App"}, l, !1, function (e) {
             a("HwS2")
-        }, null, null).exports, r = a("/ocq"), s = {
-            name: "loginPage", data: function () {
-                return {
-                    ruleForm2: {user: "", pass: ""}, rules2: {
-                        user: [{
-                            validator: function (e, t, a) {
-                                "" === t ? a(new Error("请输入用户名")) : a()
-                            }, trigger: "blur"
-                        }], pass: [{
-                            validator: function (e, t, a) {
-                                "" === t ? a(new Error("请输入密码")) : a()
-                            }, trigger: "blur"
-                        }]
-                    }
-                }
-            }, methods: {
-                submitForm: function (e) {
-                    var t = this;
-                    "123" === this.ruleForm2.user && "123" === this.ruleForm2.pass ? (localStorage.setItem("user", this.ruleForm2.user), localStorage.setItem("password", this.ruleForm2.pass), this.$router.push("/management/admin-management")) : this.$alert("用户名或者密码错误", "登录失败", {
-                        confirmButtonText: "确定",
-                        center: !0
-                    }).then(function () {
-                        t.$refs[e].resetFields()
-                    }).catch(function () {
-                        t.$refs[e].resetFields()
-                    })
-                }, resetForm: function (e) {
-                    this.$refs[e].resetFields()
-                }
-            }
-        }, o = {
+        }, null, null).exports, r = a("/ocq"), s = a("zwpc"), o = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
-                return a("el-container", {staticClass: "container"}, [a("img", {
-                    staticClass: "logo",
-                    attrs: {src: "./static/img/logo.png", alt: "图片不见啦"}
-                }), e._v(" "), a("el-form", {
-                    ref: "ruleForm2",
-                    staticClass: "demo-ruleForm",
-                    attrs: {
-                        model: e.ruleForm2,
-                        align: "center",
-                        "status-icon": "",
-                        rules: e.rules2,
-                        "label-width": "80px"
-                    }
-                }, [a("el-form-item", {
-                    attrs: {
-                        label: "用户名:",
-                        prop: "user"
-                    }
-                }, [a("el-input", {
-                    attrs: {"prefix-icon": "el-icon-message", placeholder: "请输入用户名", type: "text"},
-                    model: {
-                        value: e.ruleForm2.user, callback: function (t) {
-                            e.$set(e.ruleForm2, "user", t)
-                        }, expression: "ruleForm2.user"
-                    }
-                })], 1), e._v(" "), a("el-form-item", {
-                    attrs: {
-                        label: "密码:",
-                        prop: "pass"
-                    }
-                }, [a("el-input", {
-                    attrs: {
-                        "prefix-icon": "el-icon-view",
-                        placeholder: "请输入密码",
-                        type: "password",
-                        "auto-complete": "off"
-                    }, model: {
-                        value: e.ruleForm2.pass, callback: function (t) {
-                            e.$set(e.ruleForm2, "pass", t)
-                        }, expression: "ruleForm2.pass"
-                    }
-                })], 1), e._v(" "), a("el-button", {
-                    staticStyle: {background: "#008dad", color: "#fff"},
-                    on: {
-                        click: function (t) {
-                            e.submitForm("ruleForm2")
+                return a("div", {staticClass: "calculator"}, [a("button", {staticClass: "toggle-button"}, [e.changeMode ? a("p", {on: {click: e.changeModeEvent}}, [e._v("显示高级模式     ⚈")]) : a("p", {on: {click: e.changeModeEvent}}, [e._v("显示基础模式     ⚆")]), e._v(" "), a("i", {
+                    staticClass: "el-icon-error",
+                    on: {click: e.closeThis}
+                })]), e._v(" "), a("div", {staticClass: "results"}, [a("input", {
+                    directives: [{
+                        name: "model",
+                        rawName: "v-model",
+                        value: e.current,
+                        expression: "current"
+                    }], staticClass: "input", domProps: {value: e.current}, on: {
+                        input: function (t) {
+                            t.target.composing || (e.current = t.target.value)
                         }
                     }
-                }, [e._v("提交")]), e._v(" "), a("el-button", {
-                    staticStyle: {background: "#008dad", color: "#fff"},
-                    on: {
+                })]), e._v(" "), e.changeMode ? a("div", {staticClass: "mode"}, [a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("7")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("8")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("9")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("*")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("<=")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("清空")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("4")]), e._v(" "), a("button", {
+                    staticClass: "button", on: {
                         click: function (t) {
-                            e.resetForm("ruleForm2")
+                            e.press(t)
                         }
                     }
-                }, [e._v("重置")])], 1)], 1)
+                }, [e._v("5")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("6")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("/")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("(")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v(")")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("1")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("2")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("3")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("-")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("x ²")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("±")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("0")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v(".")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("%")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("+")]), e._v(" "), a("button", {
+                    staticClass: "button equal-sign",
+                    on: {click: e.press}
+                }, [e._v("=")])]) : a("div", {staticClass: "mode"}, [a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("sin")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("cos")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("tan")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("x^")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("<=")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("清空")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("log")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("ln")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("e")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("∘")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("rad")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("√")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("7")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("8   ")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("9")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("/")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("x ²")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("x !")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("4")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("5")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("6")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("*")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("(")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v(")")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("1")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("2")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("3")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("-")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("%")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("±")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("0")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v(".")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("π")]), e._v(" "), a("button", {
+                    staticClass: "button",
+                    on: {click: e.press}
+                }, [e._v("+")]), e._v(" "), a("button", {
+                    staticClass: "button equal-sign",
+                    on: {click: e.press}
+                }, [e._v("=")])])])
             }, staticRenderFns: []
         };
-        var c = a("VU/8")(s, o, !1, function (e) {
-            a("eqFV")
-        }, "data-v-5bfab3ba", null).exports, p = {
-            name: "management", data: function () {
+        var c = function (e) {
+            a("hRnl")
+        }, p = {
+            name: "management",
+            data: function () {
                 return {
+                    showCalc: !1,
                     editPswDialog: !1,
                     nav: [{
                         title: "概况",
@@ -171,25 +279,21 @@ webpackJsonp([1], {
                         }, {title: "玩家信息查询", path: "/management/playerInfoSearch"}]
                     }, {
                         title: "后台管理",
-                        child: [{title: "管理员管理", path: "/management/admin-management"}, {
+                        child: [{title: "用户管理", path: "/management/admin-management"}, {
                             title: "角色管理",
                             path: "/management/role-management"
                         }, {title: "菜单管理", path: "/management/listManagement"}]
                     }, {title: "推送设置", child: ["消息发布"]}]
                 }
-            }, mounted: function () {
-                var e = this, t = localStorage.getItem("user"), a = localStorage.getItem("password");
-                "123" === t && "123" === a || this.$alert("你的身份认证已经过期, 请重新登录", "登陆过期", {
-                    confirmButtonText: "确定",
-                    center: !0
-                }).then(function () {
-                    localStorage.removeItem("user"), localStorage.removeItem("password"), e.$router.push("/")
-                }).catch(function () {
-                    localStorage.removeItem("user"), localStorage.removeItem("password"), e.$router.push("/")
-                })
-            }, methods: {
+            },
+            components: {calculator: a("VU/8")(s.a, o, !1, c, "data-v-50b00b46", null).exports},
+            mounted: function () {
+            },
+            methods: {
                 showEditPswDialog: function (e) {
                     "0" === e ? this.editPswDialog = !0 : "1" === e && (localStorage.removeItem("user"), localStorage.removeItem("password"), this.$router.push("/"))
+                }, toggleCalc: function () {
+                    this.showCalc = !this.showCalc
                 }
             }
         }, u = {
@@ -208,12 +312,12 @@ webpackJsonp([1], {
                         "text-color": "#fff",
                         "active-text-color": "#ffd04b"
                     }
-                }, e._l(e.nav, function (t, l) {
+                }, e._l(e.nav, function (t, n) {
                     return a("el-submenu", {
-                        key: "-" + l,
-                        attrs: {index: l + ""}
-                    }, [a("template", {slot: "title"}, [e._v(e._s(t.title))]), e._v(" "), e._l(t.child, function (t, n) {
-                        return a("el-menu-item-group", {key: l + "--" + n}, [a("el-menu-item", {attrs: {index: t.path || l + "-" + n}}, [e._v(e._s(t.title || t))])], 1)
+                        key: "-" + n,
+                        attrs: {index: n + ""}
+                    }, [a("template", {slot: "title"}, [e._v(e._s(t.title))]), e._v(" "), e._l(t.child, function (t, l) {
+                        return a("el-menu-item-group", {key: n + "--" + l}, [a("el-menu-item", {attrs: {index: t.path || n + "-" + l}}, [e._v(e._s(t.title || t))])], 1)
                     })], 2)
                 }))], 1), e._v(" "), a("div", {
                     staticStyle: {
@@ -227,7 +331,8 @@ webpackJsonp([1], {
                 }), e._v(" "), a("el-dropdown-menu", {
                     attrs: {slot: "dropdown"},
                     slot: "dropdown"
-                }, [a("el-dropdown-item", {attrs: {command: "0"}}, [a("i", {staticClass: "el-icon-edit"}), e._v("修改密码")]), e._v(" "), a("el-dropdown-item", {attrs: {command: "1"}}, [a("i", {staticClass: "el-icon-circle-close"}), e._v("退出")])], 1)], 1), e._v(" "), a("span", {staticStyle: {color: "#fff"}}, [e._v("你好, 九伐中原")])], 1), e._v(" "), a("router-view"), e._v(" "), a("el-footer", {
+                }, [a("el-dropdown-item", {attrs: {command: "0"}}, [a("i", {staticClass: "el-icon-edit"}), e._v("修改密码")]), e._v(" "), a("el-dropdown-item", {attrs: {command: "1"}}, [a("i", {staticClass: "el-icon-circle-close"}), e._v("" +
+                    "退出")])], 1)], 1), e._v(" "), a("span", {staticStyle: {color: "#fff"}}, [e._v("你好, 九伐中原")])], 1), e._v(" "), a("router-view"), e._v(" "), a("el-footer", {
                     staticStyle: {
                         "line-height": "60px",
                         "font-size": "12px",
@@ -261,17 +366,20 @@ webpackJsonp([1], {
                             e.editPswDialog = !1
                         }
                     }
-                }, [e._v("确 定")])], 1)], 1)], 1)
+                }, [e._v("确 定")])], 1)], 1), e._v(" "), a("div", {staticClass: "tool-fix"}, [a("img", {
+                    attrs: {src: "./static/img/calculator.gif"},
+                    on: {click: e.toggleCalc}
+                })]), e._v(" "), e.showCalc ? a("calculator", {on: {hideMsg: e.toggleCalc}}) : e._e()], 1)
             }, staticRenderFns: []
         };
         var g = a("VU/8")(p, u, !1, function (e) {
-            a("ie0/")
-        }, "data-v-34a2bee0", null).exports, d = a("gRE1"), h = a.n(d), m = a("fZjL"), v = a.n(m), b = {
+            a("rc81")
+        }, "data-v-2fa295c4", null).exports, d = a("gRE1"), h = a.n(d), v = a("fZjL"), m = a.n(v), _ = {
             name: "admin-system", data: function () {
                 for (var e = [], t = 0; t < 100; t++) e.push({
-                    name: "勃勃",
+                    name: "司马仲达",
                     pwd: "",
-                    raceName: "诸葛亮" + t + "号",
+                    raceName: "司马懿" + t + "号",
                     phone: "15172712800" + t,
                     character: "吃瓜群众",
                     state: "关禁闭"
@@ -327,9 +435,9 @@ webpackJsonp([1], {
                 }, viewDetail: function (e) {
                     var t = this;
                     this.viewDetailDialog = !0;
-                    var a = v()(e.row), l = h()(e.row);
+                    var a = m()(e.row), n = h()(e.row);
                     this.state.viewInfo = [], a.forEach(function (e, a) {
-                        t.state.viewInfo.push({name: t.formatName(e), value: l[a]})
+                        t.state.viewInfo.push({name: t.formatName(e), value: n[a]})
                     })
                 }, editInfo: function (e) {
                     this.editDialog = !0, this.state.editInfo = e.row
@@ -337,7 +445,7 @@ webpackJsonp([1], {
                     this.newUserDialog = !0
                 }
             }
-        }, _ = {
+        }, b = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("el-tabs", {
@@ -765,11 +873,11 @@ webpackJsonp([1], {
                 }, [e._v("确 定")])], 1)], 1)], 1)
             }, staticRenderFns: []
         };
-        var f = a("VU/8")(b, _, !1, function (e) {
+        var f = a("VU/8")(_, b, !1, function (e) {
             a("HDdk")
         }, "data-v-e798c84e", null).exports, y = {
             name: "admin-system", data: function () {
-                for (var e = [], t = 0; t < 100; t++) e.push({name: "admin" + t, label: "admin管理员"});
+                for (var e = [], t = 0; t < 100; t++) e.push({name: "丞相" + t, label: "诸葛亮"});
                 return {
                     newUserDialog: !1,
                     editDialog: !1,
@@ -825,9 +933,9 @@ webpackJsonp([1], {
                 }, viewDetail: function (e) {
                     var t = this;
                     this.viewDetailDialog = !0;
-                    var a = v()(e.row), l = h()(e.row);
+                    var a = m()(e.row), n = h()(e.row);
                     this.state.viewInfo = [], a.forEach(function (e, a) {
-                        t.state.viewInfo.push({name: t.formatName(e), value: l[a]})
+                        t.state.viewInfo.push({name: t.formatName(e), value: n[a]})
                     })
                 }, editInfo: function (e) {
                     this.editDialog = !0, this.state.editInfo = e.row
@@ -1145,9 +1253,9 @@ webpackJsonp([1], {
                 }, [e._v("确 定")])], 1)], 1)], 1)
             }, staticRenderFns: []
         };
-        var z = a("VU/8")(y, w, !1, function (e) {
+        var x = a("VU/8")(y, w, !1, function (e) {
             a("/vOn")
-        }, "data-v-f71eedb6", null).exports, x = {
+        }, "data-v-f71eedb6", null).exports, z = {
             name: "list-management", data: function () {
                 for (var e = [], t = 0; t < 100; t++) e.push({
                     id: t + 1,
@@ -1208,9 +1316,9 @@ webpackJsonp([1], {
                 }, viewDetail: function (e) {
                     var t = this;
                     this.viewDetailDialog = !0;
-                    var a = v()(e.row), l = h()(e.row);
+                    var a = m()(e.row), n = h()(e.row);
                     this.state.viewInfo = [], a.forEach(function (e, a) {
-                        t.state.viewInfo.push({name: t.formatName(e), value: l[a]})
+                        t.state.viewInfo.push({name: t.formatName(e), value: n[a]})
                     })
                 }, editInfo: function (e) {
                     this.editDialog = !0, this.state.editInfo = e.row
@@ -1612,7 +1720,7 @@ webpackJsonp([1], {
                 }, [e._v("确 定")])], 1)], 1)], 1)
             }, staticRenderFns: []
         };
-        var S = a("VU/8")(x, C, !1, function (e) {
+        var k = a("VU/8")(z, C, !1, function (e) {
             a("eGeP")
         }, "data-v-4f272c24", null).exports, D = {
             render: function () {
@@ -1709,7 +1817,7 @@ webpackJsonp([1], {
                 }, [e._v("\n            87.33\n        ")])], 1)], 1)
             }, staticRenderFns: []
         };
-        var k = a("VU/8")({
+        var S = a("VU/8")({
             name: "overview", data: function () {
                 return {servers: [{value: "选项1", label: "牛逼服务器"}]}
             }
@@ -2071,7 +2179,7 @@ webpackJsonp([1], {
             }
         }, j, !1, function (e) {
             a("CeZa")
-        }, "data-v-0a553e28", null).exports, F = {
+        }, "data-v-0a553e28", null).exports, E = {
             name: "active-player", data: function () {
                 for (var e = [], t = 0; t < 100; t++) e.push({date: "2018-8-4 14:35", retain: Math.pow(t, 2)});
                 return {
@@ -2093,7 +2201,7 @@ webpackJsonp([1], {
                     this.tableData = this.item.slice(t, t + e)
                 }
             }
-        }, I = {
+        }, R = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("div", {
@@ -2143,9 +2251,9 @@ webpackJsonp([1], {
                 })], 1)
             }, staticRenderFns: []
         };
-        var R = a("VU/8")(F, I, !1, function (e) {
+        var I = a("VU/8")(E, R, !1, function (e) {
             a("r2Q6")
-        }, "data-v-361c2e28", null).exports, E = {
+        }, "data-v-361c2e28", null).exports, M = {
             name: "active-player", data: function () {
                 for (var e = [], t = 0; t < 100; t++) e.push({
                     date: "2018-8-4 14:35",
@@ -2171,7 +2279,7 @@ webpackJsonp([1], {
                     this.tableData = this.item.slice(t, t + e)
                 }
             }
-        }, $ = {
+        }, F = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("div", {
@@ -2228,7 +2336,7 @@ webpackJsonp([1], {
                 })], 1)
             }, staticRenderFns: []
         };
-        var M = a("VU/8")(E, $, !1, function (e) {
+        var $ = a("VU/8")(M, F, !1, function (e) {
             a("W0FJ")
         }, "data-v-2b9240d0", null).exports, N = {
             name: "loss-player", data: function () {
@@ -2256,7 +2364,7 @@ webpackJsonp([1], {
                     this.tableData = this.item.slice(t, t + e)
                 }
             }
-        }, T = {
+        }, O = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("div", {
@@ -2313,9 +2421,9 @@ webpackJsonp([1], {
                 })], 1)
             }, staticRenderFns: []
         };
-        var A = a("VU/8")(N, T, !1, function (e) {
+        var T = a("VU/8")(N, O, !1, function (e) {
             a("X1ur")
-        }, "data-v-35ceb3f0", null).exports, B = {
+        }, "data-v-35ceb3f0", null).exports, A = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("el-tabs", {
@@ -2432,7 +2540,7 @@ webpackJsonp([1], {
                 })], 1)], 1)
             }, staticRenderFns: []
         };
-        var H = a("VU/8")({
+        var L = a("VU/8")({
             name: "admin-system", data: function () {
                 for (var e = [], t = 0; t < 100; t++) e.push({one: t, count: 0});
                 return {
@@ -2454,9 +2562,9 @@ webpackJsonp([1], {
                     this.tableData = this.item.slice(t, t + e)
                 }
             }
-        }, B, !1, function (e) {
+        }, A, !1, function (e) {
             a("Omf/")
-        }, "data-v-1f70671f", null).exports, L = {
+        }, "data-v-1f70671f", null).exports, B = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("div", {
@@ -2527,7 +2635,7 @@ webpackJsonp([1], {
                 })], 1)
             }, staticRenderFns: []
         };
-        var O = a("VU/8")({
+        var H = a("VU/8")({
             name: "online-user", data: function () {
                 for (var e = [], t = 0; t < 100; t++) e.push({date: "2018-8-4 14:35", onlineUser: t + "%"});
                 return {
@@ -2549,7 +2657,7 @@ webpackJsonp([1], {
                     this.tableData = this.item.slice(t, t + e)
                 }
             }
-        }, L, !1, function (e) {
+        }, B, !1, function (e) {
             a("u9Y3")
         }, "data-v-3f94e4cf", null).exports, J = {
             render: function () {
@@ -2601,7 +2709,7 @@ webpackJsonp([1], {
                 })], 1)
             }, staticRenderFns: []
         };
-        var G = a("VU/8")({
+        var q = a("VU/8")({
             name: "active-player", data: function () {
                 for (var e = [], t = 0; t < 20; t++) e.push({vip: "vip" + t, number_of_people: t * t});
                 return {
@@ -2625,7 +2733,7 @@ webpackJsonp([1], {
             }
         }, J, !1, function (e) {
             a("K/X1")
-        }, "data-v-2e0b1841", null).exports, q = {
+        }, "data-v-2e0b1841", null).exports, K = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("div", {
@@ -2675,7 +2783,7 @@ webpackJsonp([1], {
                 })], 1)
             }, staticRenderFns: []
         };
-        var K = a("VU/8")({
+        var W = a("VU/8")({
             name: "active-player", data: function () {
                 for (var e = [], t = 0; t < 20; t++) e.push({rank: "等级" + t, number_of_rank: t * t});
                 return {
@@ -2697,9 +2805,9 @@ webpackJsonp([1], {
                     this.tableData = this.item.slice(t, t + e)
                 }
             }
-        }, q, !1, function (e) {
+        }, K, !1, function (e) {
             a("S1wc")
-        }, "data-v-13fea2ac", null).exports, Q = {
+        }, "data-v-13fea2ac", null).exports, G = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("div", {
@@ -2737,7 +2845,7 @@ webpackJsonp([1], {
                 })], 1)
             }, staticRenderFns: []
         };
-        var X = a("VU/8")({
+        var Q = a("VU/8")({
             name: "active-player", data: function () {
                 for (var e = [], t = 0; t < 20; t++) e.push({community: "区服" + t, number_of_community: t * t});
                 return {tableData: e.slice(0, 10), page_size: 10, current_page: 1, item: e}
@@ -2752,9 +2860,9 @@ webpackJsonp([1], {
                     this.tableData = this.item.slice(t, t + e)
                 }
             }
-        }, Q, !1, function (e) {
+        }, G, !1, function (e) {
             a("JG7b")
-        }, "data-v-a7866d1e", null).exports, W = {
+        }, "data-v-a7866d1e", null).exports, X = {
             name: "task-information", data: function () {
                 for (var e = [], t = 0; t < 20; t++) e.push({list: t, number: Math.pow(t, t)});
                 return {
@@ -2826,7 +2934,7 @@ webpackJsonp([1], {
                 })], 1)
             }, staticRenderFns: []
         };
-        var Y = a("VU/8")(W, Z, !1, function (e) {
+        var Y = a("VU/8")(X, Z, !1, function (e) {
             a("LVDI")
         }, "data-v-62424cc3", null).exports, ee = {
             render: function () {
@@ -3130,7 +3238,7 @@ webpackJsonp([1], {
                 })], 1)], 1)
             }, staticRenderFns: []
         };
-        var le = a("VU/8")({
+        var ne = a("VU/8")({
             name: "rank-information", data: function () {
                 for (var e = [], t = 0; t < 100; t++) e.push({one: t, count: 0});
                 return {
@@ -3154,7 +3262,7 @@ webpackJsonp([1], {
             }
         }, ae, !1, function (e) {
             a("D0cx")
-        }, "data-v-09f64f57", null).exports, ne = {
+        }, "data-v-09f64f57", null).exports, le = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("div", {
@@ -3293,7 +3401,7 @@ webpackJsonp([1], {
                     this.tableData = this.item.slice(t, t + e)
                 }
             }
-        }, ne, !1, function (e) {
+        }, le, !1, function (e) {
             a("JOUd")
         }, "data-v-4525147a", null).exports, re = {
             render: function () {
@@ -3681,7 +3789,7 @@ webpackJsonp([1], {
         };
         var he = a("VU/8")({
             name: "admin-system", data: function () {
-                for (var e = [], t = 0; t < 100; t++) e.push({one: t, count: 0, name: "九伐中原"});
+                for (var e = [], t = 0; t < 100; t++) e.push({one: t, count: 0, name: "猪猪侠"});
                 return {
                     page_size: 10,
                     current_page: 1,
@@ -3703,7 +3811,7 @@ webpackJsonp([1], {
             }
         }, de, !1, function (e) {
             a("c5tj")
-        }, "data-v-3d174416", null).exports, me = {
+        }, "data-v-3d174416", null).exports, ve = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("div", {
@@ -3834,7 +3942,7 @@ webpackJsonp([1], {
                 })], 1)
             }, staticRenderFns: []
         };
-        var ve = a("VU/8")({
+        var me = a("VU/8")({
             name: "loss-player", data: function () {
                 for (var e = [], t = 0; t < 100; t++) e.push({
                     date: "2018-8-4 14:35",
@@ -3870,9 +3978,9 @@ webpackJsonp([1], {
                     this.tableData = this.item.slice(t, t + e)
                 }
             }
-        }, me, !1, function (e) {
+        }, ve, !1, function (e) {
             a("GbUp")
-        }, "data-v-16534002", null).exports, be = {
+        }, "data-v-16534002", null).exports, _e = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("div", {
@@ -3917,7 +4025,7 @@ webpackJsonp([1], {
                 })], 1)
             }, staticRenderFns: []
         };
-        var _e = a("VU/8")({
+        var be = a("VU/8")({
             name: "user-rank", data: function () {
                 for (var e = [], t = 0; t < 100; t++) e.push({billingPoint: "计费点" + t, count: t, count1: t});
                 return {
@@ -3939,7 +4047,7 @@ webpackJsonp([1], {
                     this.tableData = this.item.slice(t, t + e)
                 }
             }
-        }, be, !1, function (e) {
+        }, _e, !1, function (e) {
             a("HhBa")
         }, "data-v-7fadc6b6", null).exports, fe = {
             render: function () {
@@ -4066,9 +4174,9 @@ webpackJsonp([1], {
                 }, [a("el-col", {attrs: {span: 2}}, [e._v("道具")]), e._v(" "), a("el-col", {attrs: {span: 6}}, [a("el-input", {attrs: {placeholder: "请输入内容"}})], 1)], 1), e._v(" "), a("div", {staticStyle: {"margin-top": "20px"}}, [a("el-button", [e._v("清 空")]), e._v(" "), a("el-button", {attrs: {type: "primary"}}, [e._v("确 定")])], 1)], 1)
             }, staticRenderFns: []
         };
-        var ze = a("VU/8")({name: "system-mail"}, we, !1, function (e) {
+        var xe = a("VU/8")({name: "system-mail"}, we, !1, function (e) {
             a("DeHJ")
-        }, "data-v-3e51d30e", null).exports, xe = {
+        }, "data-v-3e51d30e", null).exports, ze = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("div", {attrs: {align: "center"}}, [a("el-row", {
@@ -4089,9 +4197,9 @@ webpackJsonp([1], {
                 })], 1)], 1), e._v(" "), a("div", {staticStyle: {"margin-top": "20px"}}, [a("el-button", [e._v("清 空")]), e._v(" "), a("el-button", {attrs: {type: "primary"}}, [e._v("确 定")])], 1)], 1)
             }, staticRenderFns: []
         };
-        var Ce = a("VU/8")({name: "inform-management"}, xe, !1, function (e) {
+        var Ce = a("VU/8")({name: "inform-management"}, ze, !1, function (e) {
             a("oJEQ")
-        }, "data-v-30560a41", null).exports, Se = {
+        }, "data-v-30560a41", null).exports, ke = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("div", {attrs: {align: "center"}}, [a("el-row", {
@@ -4108,9 +4216,9 @@ webpackJsonp([1], {
                 })], 1)], 1), e._v(" "), a("div", {staticStyle: {"margin-top": "20px"}}, [a("el-button", [e._v("清 空")]), e._v(" "), a("el-button", {attrs: {type: "primary"}}, [e._v("查 询")])], 1)], 1)
             }, staticRenderFns: []
         };
-        var De = a("VU/8")({name: "chat-monitor"}, Se, !1, function (e) {
+        var De = a("VU/8")({name: "chat-monitor"}, ke, !1, function (e) {
             a("a2N3")
-        }, "data-v-2e0cfe1e", null).exports, ke = {
+        }, "data-v-2e0cfe1e", null).exports, Se = {
             render: function () {
                 var e = this, t = e.$createElement, a = e._self._c || t;
                 return a("div", {attrs: {align: "center"}}, [a("el-row", {
@@ -4127,20 +4235,16 @@ webpackJsonp([1], {
                 })], 1)], 1), e._v(" "), a("div", {staticStyle: {"margin-top": "20px"}}, [a("el-button", {attrs: {type: "primary"}}, [e._v("查 询")]), e._v(" "), a("el-button", {attrs: {type: "danger"}}, [e._v("修 改")])], 1)], 1)
             }, staticRenderFns: []
         };
-        var Ve = a("VU/8")({name: "chat-monitor"}, ke, !1, function (e) {
+        var Ve = a("VU/8")({name: "chat-monitor"}, Se, !1, function (e) {
             a("BcMH")
         }, "data-v-94c24ed6", null).exports;
-        l.default.use(r.a);
+        n.default.use(r.a);
         var Pe = new r.a({
-            routes: [{path: "/", name: "loginPage", component: c}, {
-                path: "/management",
+            routes: [{
+                path: "/",
                 name: "management",
                 component: g,
-                children: [{
-                    path: "/management/playerInfoSearch",
-                    name: "playerInfoSearch",
-                    component: Ve
-                }, {
+                children: [{path: "/", name: "playerInfoSearch", component: Ve}, {
                     path: "/management/chatMonitor",
                     name: "chatMonitor",
                     component: De
@@ -4148,14 +4252,14 @@ webpackJsonp([1], {
                     path: "/management/informManagement",
                     name: "informManagement",
                     component: Ce
-                }, {path: "/management/systemMail", name: "systemMail", component: ze}, {
+                }, {path: "/management/systemMail", name: "systemMail", component: xe}, {
                     path: "/management/gameOpen",
                     name: "gameOpen",
                     component: ye
                 }, {
                     path: "/management/rankInformation",
                     name: "rankInformation",
-                    component: le
+                    component: ne
                 }, {
                     path: "/management/outputExpends",
                     name: "outputExpends",
@@ -4167,15 +4271,15 @@ webpackJsonp([1], {
                 }, {path: "/management/daily", name: "daily", component: P}, {
                     path: "/management/listManagement",
                     name: "listManagement",
-                    component: S
+                    component: k
                 }, {
                     path: "/management/billingPointAnalysis",
                     name: "billingPointAnalysis",
-                    component: _e
+                    component: be
                 }, {
                     path: "/management/rechargeEveryDay",
                     name: "rechargeEveryDay",
-                    component: ve
+                    component: me
                 }, {
                     path: "/management/activityRank",
                     name: "activityRank",
@@ -4191,11 +4295,11 @@ webpackJsonp([1], {
                 }, {
                     path: "/management/loosLvPlayer",
                     name: "loosLvPlayer",
-                    component: H
+                    component: L
                 }, {
                     path: "/management/loosPlayer",
                     name: "loosPlayer",
-                    component: A
+                    component: T
                 }, {
                     path: "/management/gameUserRank",
                     name: "gameUserRank",
@@ -4207,19 +4311,19 @@ webpackJsonp([1], {
                 }, {
                     path: "/management/gameBehaviorNumber",
                     name: "gameBehaviorNumber",
-                    component: X
+                    component: Q
                 }, {
                     path: "/management/gameBehaviorRank",
                     name: "gameBehaviorRank",
-                    component: K
+                    component: W
                 }, {
                     path: "/management/gameBehaviorVip",
                     name: "gameBehaviorVip",
-                    component: G
+                    component: q
                 }, {
                     path: "/management/onlineUser",
                     name: "onlineUser",
-                    component: O
+                    component: H
                 }, {
                     path: "/management/admin-management",
                     name: "adminSystem",
@@ -4227,20 +4331,20 @@ webpackJsonp([1], {
                 }, {
                     path: "/management/role-management",
                     name: "roleManagement",
-                    component: z
-                }, {path: "/management/overview", name: "overview", component: k}, {
+                    component: x
+                }, {path: "/management/overview", name: "overview", component: S}, {
                     path: "/management/newPlayer",
                     name: "newPlayer",
                     component: U
                 }, {
                     path: "/management/activePlayer",
                     name: "activePlayer",
-                    component: R
-                }, {path: "/management/retainPlayer", name: "retainPlayer", component: M}]
+                    component: I
+                }, {path: "/management/retainPlayer", name: "retainPlayer", component: $}]
             }]
         }), je = a("zL8q"), Ue = a.n(je);
         a("tvR6");
-        l.default.use(Ue.a), l.default.config.productionTip = !1, new l.default({
+        n.default.use(Ue.a), n.default.config.productionTip = !1, new n.default({
             el: "#app",
             router: Pe,
             components: {App: i},
@@ -4255,12 +4359,40 @@ webpackJsonp([1], {
     }, a2N3: function (e, t) {
     }, c5tj: function (e, t) {
     }, eGeP: function (e, t) {
-    }, eqFV: function (e, t) {
-    }, "ie0/": function (e, t) {
+    }, hRnl: function (e, t) {
     }, oJEQ: function (e, t) {
     }, ogPK: function (e, t) {
     }, r2Q6: function (e, t) {
+    }, rc81: function (e, t) {
     }, tvR6: function (e, t) {
     }, u9Y3: function (e, t) {
+    }, zwpc: function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_math_log10__ = __webpack_require__("j9JH"),
+            __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_math_log10___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_math_log10__);
+        __webpack_exports__.a = {
+            name: "calculator", data: function () {
+                return {current: "", changeMode: !0}
+            }, methods: {
+                press: function press(event) {
+                    var me = this, key = event.target.textContent;
+                    if ("=" != key && "清空" != key && "*" != key && "/" != key && "√" != key && "x ²" != key && "%" != key && "<=" != key && "±" != key && "sin" != key && "cos" != key && "tan" != key && "log" != key && "ln" != key && "x^" != key && "x !" != key && "π" != key && "e" != key && "rad" != key && "∘" != key) me.current += key; else if ("=" === key) if (me.current.indexOf("^") > -1) {
+                        var base = me.current.slice(0, me.current.indexOf("^")),
+                            exponent = me.current.slice(me.current.indexOf("^") + 1);
+                        me.current = eval("Math.pow(" + base + "," + exponent + ")")
+                    } else me.current = eval(me.current); else if ("清空" === key) me.current = ""; else if ("*" === key) me.current += "*"; else if ("/" === key) me.current += "/"; else if ("+" === key) me.current += "+"; else if ("-" === key) me.current += "-"; else if ("±" === key) "-" === me.current.charAt(0) ? me.current = me.current.slice(1) : me.current = "-" + me.current; else if ("<=" === key) me.current = me.current.substring(0, me.current.length - 1); else if ("%" === key) me.current = me.current / 100; else if ("π" === key) me.current = me.current * Math.PI; else if ("x ²" === key) me.current = eval(me.current * me.current); else if ("√" === key) me.current = Math.sqrt(me.current); else if ("sin" === key) me.current = Math.sin(me.current); else if ("cos" === key) me.current = Math.cos(me.current); else if ("tan" === key) me.current = Math.tan(me.current); else if ("log" === key) me.current = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_math_log10___default()(me.current); else if ("ln" === key) me.current = Math.log(me.current); else if ("x^" === key) me.current += "^"; else if ("x !" === key) {
+                        var number = 1;
+                        if (0 === me.current) me.current = "1"; else if (me.current < 0) me.current = NaN; else {
+                            for (var _number = 1, i = me.current; i > 0; i--) _number *= i;
+                            me.current = _number
+                        }
+                    } else "e" === key ? me.current = Math.exp(me.current) : "rad" === key ? me.current = me.current * (Math.PI / 180) : "∘" === key && (me.current = me.current * (180 / Math.PI))
+                }, changeModeEvent: function () {
+                    this.changeMode = !this.changeMode
+                }, closeThis: function () {
+                    this.$emit("hideMsg")
+                }
+            }
+        }
     }
 }, ["NHnr"]);

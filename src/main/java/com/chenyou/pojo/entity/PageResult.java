@@ -26,4 +26,12 @@ public class PageResult {
     public void setRows(List rows) {
         this.rows = rows;
     }
+
+    @Override
+    public String toString() {
+        return "PageResult{" +
+                "total=" + total +
+                ", rows=" + rows +
+                '}';
+    }
 }

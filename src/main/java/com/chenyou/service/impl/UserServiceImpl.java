@@ -9,11 +9,12 @@ import com.chenyou.pojo.UserRoleKey;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.UserService;
 import com.chenyou.utils.MD5Utils;
-import com.chenyou.utils.ShiroUtils;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private static  final Logger logger=LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -48,17 +49,18 @@ public class UserServiceImpl implements UserService {
     public User userLogin(String loginName) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
-        logger.info("loginName:"+loginName);
+        logger.info("loginName:" + loginName);
         if (null != loginName && loginName.length() > 0) {
             criteria.andLoginNameEqualTo(loginName);
         }
-        List<User> users = userMapper.selectByExample(example);
+        List <User> users = userMapper.selectByExample(example);
         //判断用户状态是否锁定，如果锁定返回null,表示登录失败!
-        if ("0".equals(users.get(0).getStatus())) {
-            return users.get(0);
-        } else {
-            return null;
-        }
+//        if ("0".equals(users.get(0).getStatus())) {
+//            return users.get(0);
+//        } else {
+//            return null;
+//        }
+        return users.get(0);
     }
 
     /**
@@ -70,9 +72,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public PageResult findPage(int pageNum, int pageSize) {
-        logger.info("pageNum:"+pageNum+"--pageSize:"+pageSize);
+        logger.info("pageNum:" + pageNum + "--pageSize:" + pageSize);
         PageHelper.startPage(pageNum, pageSize);
-        Page<User> page = (Page<User>) userMapper.selectByExample(null);
+        UserExample example=new UserExample();
+        example.setOrderByClause("create_time asc");
+        Page<User> page = (Page <User>) userMapper.selectByExample(example);
         return new PageResult(page.getTotal(), page.getResult());
     }
 
@@ -88,32 +92,34 @@ public class UserServiceImpl implements UserService {
     public PageResult findPage(User user, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         UserExample example = new UserExample();
+        example.setOrderByClause("create_time asc");
         UserExample.Criteria criteria = example.createCriteria();
         if (null != user.getUserName() && user.getUserName().length() > 0) {
-            logger.info("username:"+user.getUserName());
+            logger.info("username:" + user.getUserName());
             criteria.andUserNameLike("%" + user.getUserName() + "%");
         }
         if (null != user.getLoginName() && user.getLoginName().length() > 0) {
-            logger.info("loginName:"+user.getLoginName());
+            logger.info("loginName:" + user.getLoginName());
             criteria.andLoginNameLike("%" + user.getLoginName() + "%");
         }
         if (null != user.getPhonenumber() && user.getPhonenumber().length() > 0) {
-            logger.info("phonNumber:"+user.getPhonenumber());
+            logger.info("phonNumber:" + user.getPhonenumber());
             criteria.andPhonenumberLike("%" + user.getPhonenumber() + "%");
         }
-        Page<User> page = (Page<User>) userMapper.selectByExample(example);
+        Page <User> page = (Page <User>) userMapper.selectByExample(example);
         return new PageResult(page.getTotal(), page.getResult());
     }
 
 
     /**
-     *添加用户时,校验登录名是否唯一
+     * 添加用户时,校验登录名是否唯一
+     *
      * @param loginNmae
      * @return
      */
     @Override
     public String checkLoginNameUnique(String loginNmae) {
-        logger.info("loginName:"+loginNmae);
+        logger.info("loginName:" + loginNmae);
         int count = userMapper.checkLoginNameUnique(loginNmae);
         if (count > 0) {
             //用户名不是唯一
@@ -123,33 +129,35 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *添加用户时,校验手机号是否唯一
+     * 添加用户时,校验手机号是否唯一
+     *
      * @param user
      * @return
      */
     @Override
     public String checkPhoneUnique(User user) {
         Integer userId = null == user.getUserId() ? -1 : user.getUserId();
-        logger.info("phonNumber"+user.getPhonenumber());
+        logger.info("phonNumber" + user.getPhonenumber());
         User u = userMapper.checkPhoneUnique(user.getPhonenumber());
         if (StringUtils.isNotNull(u) && u.getUserId() != userId) {
             return UserConstants.USER_PHONE_NOT_UNIQUE;
         }
-        return  UserConstants.USER_PHONE_UNIQUE;
+        return UserConstants.USER_PHONE_UNIQUE;
     }
 
     /**
      * 新增用户与角色相关联的中间表
+     *
      * @param user
      */
     public void insertUserRole(User user) {
         //让用户与角色进行关联
-        List<UserRoleKey> userRoles = new ArrayList<>();
+        List <UserRoleKey> userRoles = new ArrayList <>();
         for (Integer roleId : user.getRoleIds()) {
-            logger.info("roleId:"+roleId);
+            logger.info("roleId:" + roleId);
             UserRoleKey ur = new UserRoleKey();
             ur.setUserId(user.getUserId());
-            logger.info("userId:"+user.getUserId());
+            logger.info("userId:" + user.getUserId());
             ur.setRoleId(roleId);
             userRoles.add(ur);
         }
@@ -165,9 +173,9 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public int insertUser(User user) {
+    public int saveUser(User user) {
         //新增用户的时候，首先新增用户
-        user.setCreateBy(ShiroUtils.getLoginName());
+        //  user.setCreateBy(ShiroUtils.getLoginName());
         user.setPassword(MD5Utils.md5(user.getPassword()));
         int rows = userMapper.insert(user);
         //新增用户与角色关联
@@ -177,12 +185,13 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 用户管理时查看用户和修改时展现的用户
+     *
      * @param userId
      * @return
      */
     @Override
-    public User selectUserByUserId(Integer userId) {
-        logger.info("userId:"+userId);
+    public User getUserByUserId(Integer userId) {
+        logger.info("userId:" + userId);
         return userMapper.selectByPrimaryKey(userId);
     }
 
@@ -195,25 +204,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateUser(User user) {
         Integer userId = user.getUserId();
-        String loginName = ShiroUtils.getLoginName();
-        user.setCreateBy(loginName);
+//        user.setCreateBy(u.getLoginName());
         userRoleMapper.deleteUserRoleByUserId(userId);
         insertUserRole(user);
         return userMapper.updateByPrimaryKey(user);
     }
 
     @Override
-    public int update(User user) {
+    public int changePassword(User user) {
         return userMapper.updateByPrimaryKey(user);
     }
 
     /**
      * 用户删除
+     *
      * @param userIds
      * @return
      */
     @Override
-    public void deleUserByIds(Integer[] userIds) {
+    public void removeUserByUserId(Integer[] userIds) {
         for (Integer userid : userIds) {
             //先删除用户与角色管联的中间表
             userRoleMapper.deleteUserRoleByUserId(userid);

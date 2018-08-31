@@ -64,4 +64,12 @@ public class RoleMenuKey {
     public void setMenuId(Integer menuId) {
         this.menuId = menuId;
     }
+
+    @Override
+    public String toString() {
+        return "RoleMenuKey{" +
+                "roleId=" + roleId +
+                ", menuId=" + menuId +
+                '}';
+    }
 }

@@ -210,8 +210,8 @@
       (#{item.roleId},#{item.menuId})
     </foreach>
   </insert>
-
-  <select id="selectCountRoleMenuByMenuId"   resultType="Integer">
+  <!--查询菜单下角色的个数-->
+  <select id="countRoleByRoleMenuId"   resultType="Integer">
         select count(*) from sys_role_menu where menu_id=#{menuId}
   </select>
 

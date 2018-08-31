@@ -10,9 +10,7 @@ import com.chenyou.utils.MD5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.parser.Entity;
 import java.util.List;
@@ -33,7 +31,7 @@ public class UserController {
      * @param rows
      * @return
      */
-    @RequestMapping("/findPage")
+    @RequestMapping(value = "/findPage",method = RequestMethod.GET)
     public PageResult findPage(int page, int rows) {
         return userService.findPage(page, rows);
     }
@@ -45,8 +43,8 @@ public class UserController {
      * @param rows
      * @return
      */
-    @RequestMapping("/search")
-    public PageResult search(@RequestBody User user, int page, int rows) {
+    @RequestMapping(value = "/search",method = RequestMethod.GET)
+    public PageResult search( User user, int page, int rows) {
         return userService.findPage(user, page, rows);
     }
 
@@ -55,7 +53,7 @@ public class UserController {
      * @param loginName
      * @return
      */
-    @RequestMapping("/checkLoginNameUnique")
+    @RequestMapping(value = "/checkLoginNameUnique",method = RequestMethod.GET)
     public String checkLoginNameUnique(String loginName) {
         String uniqueFlag = "0";
         if (null != loginName) {
@@ -69,7 +67,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping("/checkPhoneUnique")
+    @RequestMapping(value = "/checkPhoneUnique",method = RequestMethod.POST)
     public String checkPhonUnique(User user) {
         String uniqueFlag = "0";
         if (null != user) {
@@ -82,9 +80,9 @@ public class UserController {
      * 添加用户时，展现所有角色供用户选择
      * @return
      */
-    @RequestMapping("/findAllRole")
+    @RequestMapping(value = "/findAllRole",method = RequestMethod.GET)
     public List <Role> findAllRole() {
-        List <Role> roles = roleServic.findAllRole();
+        List <Role> roles = roleServic.listRole();
         return roles;
     }
 
@@ -92,10 +90,13 @@ public class UserController {
      * 用户新增
      * @return
      */
-    @RequestMapping("/insertUser")
-    public Result insertUser(User user){
+    @RequestMapping(value = "/saveUser",method = RequestMethod.POST)
+    public Result saveUser(User user){
         try {
-            int count = userService.insertUser(user);
+            Subject subject = SecurityUtils.getSubject();
+            User u = (User) subject.getPrincipal();
+            user.setCreateBy(u.getUserName());
+            int count = userService.saveUser(user);
             return new Result(true,"用户新增!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,15 +109,20 @@ public class UserController {
      * @param userId
      * @return
      */
-    @RequestMapping("/findOne")
+    @RequestMapping(value = "/getUserByUserId",method = RequestMethod.GET)
     public User selectuserByUserId(Integer userId) {
-        User user = userService.selectUserByUserId(userId);
+        User user = userService.getUserByUserId(userId);
         return user;
     }
 
-    @RequestMapping("selectListRoleByUserId")
+    /**
+     * 根据用户查询角色
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "selectListRoleByUserId",method = RequestMethod.GET)
     public List<Role> selectListRoleByUserId(Integer userId){
-        List <Role> roles = roleServic.selectRolesByUserId(userId);
+        List <Role> roles = roleServic.listRoleByUserId(userId);
         return roles;
     }
 
@@ -125,9 +131,12 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping("/updateUser")
+    @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
     public Result updateUser(User user) {
         try {
+            Subject subject = SecurityUtils.getSubject();
+            User u = (User) subject.getPrincipal();
+            user.setCreateBy(u.getUserName());
             int count = userService.updateUser(user);
             return new Result(true, "用户修改成功!");
         } catch (Exception e) {
@@ -143,7 +152,7 @@ public class UserController {
      * @param operPassword
      * @return
      */
-    @RequestMapping("/changepwd")
+    @RequestMapping(value = "/changepwd",method = RequestMethod.POST)
     public Result changepwd(String oldPassword, String operPassword) {
         //获取到当前用户
         Subject subject = SecurityUtils.getSubject();
@@ -154,7 +163,7 @@ public class UserController {
             if (null != oldPassword && password.equals(MD5Utils.md5(oldPassword))) {
                 //进行修改密码操作
                 user.setPassword(operPassword);
-                userService.update(user);
+                userService.changePassword(user);
                 return new Result(true, "修改密码成功!");
             } else {
                 return new Result(false, "原始密码失败!");
@@ -169,10 +178,10 @@ public class UserController {
      * @param userIds
      * @return
      */
-    @RequestMapping("/delete")
+    @RequestMapping(value = "/removeUserByUserId",method =RequestMethod.GET)
     public Result delete(Integer[] userIds) {
         try {
-            userService.deleUserByIds(userIds);
+            userService.removeUserByUserId(userIds);
             return new Result(true, "删除成功!");
         } catch (Exception e) {
             e.printStackTrace();

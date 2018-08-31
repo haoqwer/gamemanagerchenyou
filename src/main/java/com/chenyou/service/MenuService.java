@@ -17,7 +17,7 @@ public interface MenuService {
      * @param menu
      * @return
      */
-    public String checkMenuNameUnique(Menu menu);
+     String checkMenuNameUnique(Menu menu);
 
     /**
      * 根据menuId查询该菜单下的子菜单的数量
@@ -25,24 +25,20 @@ public interface MenuService {
      * @param parentId
      * @return
      */
-    public int selectCountMenuByParentId(Integer parentId);
+     int countChildMenuByParentId(Integer parentId);
+
+    int countRoleByRoleMenuId(Integer menuId);
 
 
-    /**
-     * 查看菜单拥有数量
-     *
-     * @param menuId
-     * @return
-     */
-    public int selectCountRoleMenuByMenuId(Integer menuId);
 
-    public int delete(Integer menuId);
+
+     int removeMenu(Integer menuId);
 
     /**
      * 获取到上级菜单名称
      * 如果id为0则为主目录
      */
-    public Menu findMenuByMenuId(Integer parentId);
+     Menu getMenuByMenuId(Integer parentId);
 
 
     /**
@@ -50,7 +46,7 @@ public interface MenuService {
      *
      * @return
      */
-    public List <Menu> findAllMenu();
+     List <Menu> listMenu();
 
     /**
      * 增加menu
@@ -58,7 +54,7 @@ public interface MenuService {
      * @param menu
      * @return
      */
-    public int addMenu(Menu menu);
+     int saveMenu(Menu menu);
 
     /**
      * 修改menu
@@ -66,7 +62,7 @@ public interface MenuService {
      * @param menu
      * @return
      */
-    public int updateMenu(Menu menu);
+     int updateMenu(Menu menu);
 
 
     /**
@@ -75,20 +71,20 @@ public interface MenuService {
      * @param role 角色对象
      * @return 菜单列表
      */
-    public List <Map <String, Object>> roleMenuTreeData(Role role);
+     List <Map <String, Object>> roleMenuTreeData(Role role);
 
     /**
      * 查询所有的菜单
      *
      * @return
      */
-    public List <Map <String, Object>> menuTreeData();
+     List <Map <String, Object>> menuTreeData();
 
 
     /**
      * 根据menuId查询对应的Menu
      */
-    public Menu findMenu(Integer menuId);
+     Menu findMenu(Integer menuId);
 
     /**
      * 根据userId查询对应的权限菜单集合
@@ -96,7 +92,15 @@ public interface MenuService {
      * @param userId
      * @return
      */
-    public Set <String> selectListMenuByUserId(Integer userId);
+     Set <String> selectListMenuByUserId(Integer userId);
+
+
+    /**
+     * 根据用户id查找对应的权限
+     * @param userId
+     * @return
+     */
+     List<Menu> listMenusByUserId(Integer userId);
 
 
 }

@@ -447,4 +447,25 @@ public class Menu {
     public void setParentName(String parentName) {
         this.parentName = parentName;
     }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "menuId=" + menuId +
+                ", menuName='" + menuName + '\'' +
+                ", parentId=" + parentId +
+                ", orderNum=" + orderNum +
+                ", url='" + url + '\'' +
+                ", menuType='" + menuType + '\'' +
+                ", perms='" + perms + '\'' +
+                ", icon='" + icon + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                ", parentName='" + parentName + '\'' +
+                ", children=" + children +
+                '}';
+    }
 }

@@ -94,6 +94,12 @@ public interface RoleMapper {
      */
     int updateByPrimaryKey(Role record);
 
+    /**
+     * 判断角色名是否唯一
+     * @param roleName
+     * @return
+     */
+
     Role checkRoleNameUnique(String roleName);
 
     /**
@@ -101,6 +107,8 @@ public interface RoleMapper {
      * @param userId 用户ID
      * @return 角色列表
      */
-    public List<Role> selectRolesByUserId(Integer userId);
+     List<Role> selectRolesByUserId(Integer userId);
+
+//     void  updateRole(Role role);
 
 }

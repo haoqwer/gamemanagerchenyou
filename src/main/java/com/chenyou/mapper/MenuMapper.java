@@ -3,6 +3,8 @@ package com.chenyou.mapper;
 import com.chenyou.pojo.Menu;
 import com.chenyou.pojo.MenuExample;
 import java.util.List;
+import java.util.Set;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface MenuMapper {
@@ -96,39 +98,53 @@ public interface MenuMapper {
 
     Menu checkMenuNameUnique(String menuName);
 
-    int selectCountMenuByParentId(Integer parentId);
-
     /**
-     * 获取到所哟的菜单集合
+     * 根据menuId获取子菜单个数
+     * @param parentId
      * @return
      */
-     List<Menu> selectMenuAll();
+    int countChildMenuByParentId(Integer parentId);
 
     /**
-     * 根据角色查询菜单
+     *
+     * @return
+     */
+     List<Menu> listMenu();
+
+    /**
+     * 根据角色查询菜单权限关键字
      * @param roleId
      * @return
      */
-     public List<String> selectMenuTree(Integer roleId);
+     public List<String> listMenutreePermByRoleId(Integer roleId);
 
     /**
      * 根据menuId查询对应的Menu
      * @param menuId
      * @return
      */
-     public Menu selectMenuById(Integer menuId);
+      Menu getMenuByMenuId(Integer menuId);
 
     /**
      * 根据父menuId查询对应的Menu
      * @param menuId
      * @return
      */
-    public Menu selectMenuById(Long menuId);
+     Menu getMenuByMenuId(Long menuId);
 
     /**
      * 根据userId查询对应的List<Menu>
      * @param userId
      * @return
      */
-    public List<String> selectListMenuByUserId(Integer userId);
+     List<String> selectListMenuByUserId(Integer userId);
+
+    /**
+     * 根据menuId查询对应的权限字符串
+     * @param userId
+     * @return
+     */
+     List<Menu> listMenusByUserId(Integer userId);
+
+     List<String> listPermsByUserId(Integer userId);
 }

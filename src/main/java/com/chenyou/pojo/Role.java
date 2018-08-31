@@ -339,4 +339,21 @@ public class Role {
     public void setMenuIds(List<Integer> menuIds) {
         this.menuIds = menuIds;
     }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleId=" + roleId +
+                ", roleName='" + roleName + '\'' +
+                ", roleKey='" + roleKey + '\'' +
+                ", roleSort=" + roleSort +
+                ", status='" + status + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                ", menuIds=" + menuIds +
+                '}';
+    }
 }
