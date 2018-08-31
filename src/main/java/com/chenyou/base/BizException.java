@@ -12,7 +12,8 @@ public class BizException extends Exception {
     public static final String CODE_PARM_LACK        = "BASE-1002";       //缺少必要参数
     public static final String CODE_PARM_ERROR       = "BASE-1003";       //参数错误
     public static final String CALL_SERVICE_ERROR    = "BASE-1004";       //调用服务异常
-    
+
+    //push
     private String code;
     public BizException(String code, String message) {
         super(message);
