@@ -7,13 +7,16 @@ import com.chenyou.pojo.entity.Result;
 import com.chenyou.service.RoleService;
 import com.chenyou.service.UserService;
 import com.chenyou.utils.MD5Utils;
+import com.chenyou.utils.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.parser.Entity;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -24,6 +27,18 @@ public class UserController {
 
     @Autowired
     private RoleService roleServic;
+
+
+    @RequestMapping(value = "/countListUser", method = RequestMethod.GET)
+    public Map<String, Object> countListUser() {
+        Map<String, Object> map = new HashMap<>();
+        int count = userService.countListUser();
+        map.put("count", count);
+        return map;
+    }
+
+
+
 
     /**
      * 查看所有用户
@@ -54,12 +69,17 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/checkLoginNameUnique",method = RequestMethod.GET)
-    public String checkLoginNameUnique(String loginName) {
-        String uniqueFlag = "0";
-        if (null != loginName) {
-            uniqueFlag = userService.checkLoginNameUnique(loginName);
+    public Result checkLoginNameUnique(String loginName) {
+
+        if(StringUtils.isNotEmpty(loginName)){
+          if("0".equals(userService.checkLoginNameUnique(loginName))){
+              return new Result(true,"用户名唯一!");
+          }else{
+              return new Result(false,"用户名已经存在!");
+          }
+        }else{
+            return  new Result(false,"用户名不能为空!");
         }
-        return uniqueFlag;
     }
 
     /**
@@ -68,12 +88,17 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/checkPhoneUnique",method = RequestMethod.POST)
-    public String checkPhonUnique(User user) {
-        String uniqueFlag = "0";
-        if (null != user) {
-            uniqueFlag = userService.checkPhoneUnique(user);
+    public Result checkPhonUnique(User user) {
+      // String uniqueFlag = "0";
+        if(StringUtils.isNull(user)){
+           return new Result(false,"手机号不能为空!");
+        }else{
+          if("0".equals(userService.checkPhoneUnique(user))){
+              return new Result(true,"手机号唯一");
+          }else{
+              return new Result(false,"手机号已经存在!");
+          }
         }
-        return uniqueFlag;
     }
 
     /**
@@ -92,12 +117,18 @@ public class UserController {
      */
     @RequestMapping(value = "/saveUser",method = RequestMethod.POST)
     public Result saveUser(User user){
+
         try {
-            Subject subject = SecurityUtils.getSubject();
-            User u = (User) subject.getPrincipal();
-            user.setCreateBy(u.getUserName());
-            int count = userService.saveUser(user);
-            return new Result(true,"用户新增!");
+            if(StringUtils.isNotEmpty(user.getLoginName())&&StringUtils.isNotEmpty(user.getUserName())&&StringUtils.isNotEmpty(user.getPhonenumber())
+          ){
+                Subject subject = SecurityUtils.getSubject();
+                User u = (User) subject.getPrincipal();
+                user.setCreateBy(u.getUserName());
+                int count = userService.saveUser(user);
+                return new Result(true,"用户新增!");
+            }else {
+                return new Result(false,"添加用户信息不能为空!");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false,"用户新增失败!");

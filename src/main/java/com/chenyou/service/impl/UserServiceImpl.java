@@ -1,8 +1,10 @@
 package com.chenyou.service.impl;
 
 import com.chenyou.base.constant.UserConstants;
+import com.chenyou.mapper.RoleMapper;
 import com.chenyou.mapper.UserMapper;
 import com.chenyou.mapper.UserRoleMapper;
+import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.UserExample;
 import com.chenyou.pojo.UserRoleKey;
@@ -13,6 +15,7 @@ import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
+import org.apache.poi.hssf.record.formula.functions.Lognormdist;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -35,6 +38,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
 
     /**
      * 根据用户名查找用户是否存在
@@ -63,6 +69,17 @@ public class UserServiceImpl implements UserService {
         return users.get(0);
     }
 
+
+    /**
+     * 返回所有用户的个数
+     * @return
+     */
+    @Override
+    public int countListUser() {
+        int count = userMapper.countByExample(null);
+        return count;
+    }
+
     /**
      * 查看所有用户
      *
@@ -76,7 +93,15 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(pageNum, pageSize);
         UserExample example=new UserExample();
         example.setOrderByClause("create_time asc");
-        Page<User> page = (Page <User>) userMapper.selectByExample(example);
+        List<User> users = userMapper.selectByExample(null);
+        for(User user:users){
+            if(!StringUtils.isNull(user)){
+                List<Role> roles = roleMapper.selectRolesByUserId(user.getUserId());
+                user.setRoles(roles);
+            }
+        }
+//        Page<User> page = (Page <User>) userMapper.selectByExample(example);
+        Page<User> page=(Page<User>)users;
         return new PageResult(page.getTotal(), page.getResult());
     }
 
@@ -106,7 +131,15 @@ public class UserServiceImpl implements UserService {
             logger.info("phonNumber:" + user.getPhonenumber());
             criteria.andPhonenumberLike("%" + user.getPhonenumber() + "%");
         }
-        Page <User> page = (Page <User>) userMapper.selectByExample(example);
+//        Page <User> page = (Page <User>) userMapper.selectByExample(example);
+        List<User> users = userMapper.selectByExample(example);
+        for(User u :users){
+            if(!StringUtils.isNull(u)){
+                List<Role> roles = roleMapper.selectRolesByUserId(u.getUserId());
+                u.setRoles(roles);
+            }
+        }
+        Page<User> page=(Page<User>)users;
         return new PageResult(page.getTotal(), page.getResult());
     }
 
@@ -176,6 +209,7 @@ public class UserServiceImpl implements UserService {
     public int saveUser(User user) {
         //新增用户的时候，首先新增用户
         //  user.setCreateBy(ShiroUtils.getLoginName());
+        user.setStatus("0");
         user.setPassword(MD5Utils.md5(user.getPassword()));
         int rows = userMapper.insert(user);
         //新增用户与角色关联

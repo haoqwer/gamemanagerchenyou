@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/role")
@@ -28,8 +30,17 @@ public class RoleController {
      * @return
      */
     @RequestMapping("listRole")
-    public List <Role> listRole() {
-        return roleService.listRole();
+    public Map<String,Object> listRole() {
+        Map<String,Object> map =new HashMap<>();
+        List<Role> roles = roleService.listRole();
+        if(null !=roles && roles.size()>0){
+            map.put("success",true);
+            map.put("data",roles);
+        }else  {
+            map.put("success","false");
+            map.put("message","角色为空!");
+        }
+        return map;
     }
 
     /**
@@ -95,7 +106,7 @@ public class RoleController {
     /**
      * 根据roleId查找对应的角色
      *
-     * @param roleID
+     * @param roleId
      * @return
      */
     @RequestMapping(value = "/findOne", method = RequestMethod.GET)
@@ -140,6 +151,9 @@ public class RoleController {
             return new Result(false, "删除失败!");
         }
     }
+
+
+
 
 
 }

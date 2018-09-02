@@ -78,7 +78,7 @@ public class ServiceTest {
     @Test
     public void test_checktelephoneUnique() {
         User user = new User();
-        user.setPhonenumber("16675331736");
+        user.setPhonenumber("13098381432");
         String flag = userService.checkPhoneUnique(user);
         System.out.println(flag);
     }

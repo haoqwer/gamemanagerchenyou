@@ -44,6 +44,12 @@ public interface UserService {
      String checkPhoneUnique(User user);
 
     /**
+     * 返回所有的用户个数
+     * @return
+     */
+    int countListUser();
+
+    /**
      * 新增用户
      * @param user
      * @return
