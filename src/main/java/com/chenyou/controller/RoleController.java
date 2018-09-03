@@ -1,5 +1,6 @@
 package com.chenyou.controller;
 
+import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
 import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
@@ -30,7 +31,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping("listRole")
-    public Map<String,Object> listRole() {
+    public Map<String,Object> listRole()  throws BizException{
         Map<String,Object> map =new HashMap<>();
         List<Role> roles = roleService.listRole();
         if(null !=roles && roles.size()>0){
@@ -51,7 +52,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping(value = "/findPage", method = RequestMethod.GET)
-    public PageResult findPage(int page, int rows) {
+    public PageResult findPage(int page, int rows)  throws BizException{
         return roleService.findPage(page, rows);
     }
 
@@ -64,7 +65,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public PageResult search(Role role, int page, int rows) {
+    public PageResult search(Role role, int page, int rows)  throws BizException{
         return roleService.findPage(role, page, rows);
     }
 
@@ -75,18 +76,17 @@ public class RoleController {
      * @return
      */
     @RequestMapping(value = "/saveRole", method = RequestMethod.POST)
-    public Result saveRole(Role role) {
-        try {
-            Subject subject = SecurityUtils.getSubject();
-            User u = (User) subject.getPrincipal();
-            role.setCreateBy(u.getUserName());
-            roleService.saveRole(role);
-            return new Result(true, "角色增加成功!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false, "角色增加失败!");
-        }
+    public Map<String,Object> saveRole(Role role)  throws BizException{
+        Map<String,Object> resultMap=new HashMap <>();
+        Subject subject = SecurityUtils.getSubject();
+        User u = (User) subject.getPrincipal();
+        role.setCreateBy(u.getUserName());
+        resultMap.put(ApplicationConstants.TAG_DATA,roleService.saveRole(role));
+        resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
+        return resultMap;
     }
+
+
 
     /**
      * 校验角色名是否唯一
@@ -95,7 +95,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping(value = "/checkRoleNameUnique", method = RequestMethod.POST)
-    public String checkRoleNameUnique(Role role) {
+    public String checkRoleNameUnique(Role role)  throws BizException{
         String uniqueFlag = "0";
         if (null != role) {
             uniqueFlag = roleService.checkRoleNameUnique(role);
@@ -110,7 +110,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping(value = "/findOne", method = RequestMethod.GET)
-    public Role findOne(Integer roleId) {
+    public Role findOne(Integer roleId)  throws BizException{
         return roleService.getRoleByRoleId(roleId);
     }
 

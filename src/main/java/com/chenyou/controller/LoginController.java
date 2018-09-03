@@ -1,5 +1,6 @@
 package com.chenyou.controller;
 
+import com.chenyou.base.BizException;
 import com.chenyou.pojo.Menu;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.Result;
@@ -34,7 +35,7 @@ public class LoginController   {
     /**
      * 进行登录验证
      */
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
     public Result login (String loginName, String password, HttpServletRequest request) {
         //获取到subject主体
@@ -66,7 +67,7 @@ public class LoginController   {
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public Map <String, Object> map() {
+    public Map <String, Object> map()  throws BizException {
         Map <String, Object> map = new HashMap <>();
         //获取到用户
 //        User user = ShiroUtils.getUser();

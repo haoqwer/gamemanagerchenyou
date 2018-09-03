@@ -107,4 +107,9 @@ public interface UserMapper {
      * @return
      */
     User checkPhoneUnique(String phone);
+
+    User getUserByLoginName(String loginName);
+
+
+    void updateLoginInfo(User user);
 }

@@ -1,5 +1,6 @@
 package com.chenyou.controller;
 
+import com.chenyou.base.BizException;
 import com.chenyou.pojo.Menu;
 import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
@@ -24,7 +25,7 @@ public class MenuController {
     private MenuService menuService;
 
     @RequestMapping(value = "/listMenu",method = RequestMethod.GET)
-    public List<Menu> listMenu(){
+    public List<Menu> listMenu() throws BizException {
         return menuService.listMenu();
     }
 
@@ -34,7 +35,7 @@ public class MenuController {
      * @return
      */
     @RequestMapping(value = "/roleMenuTreeData",method = RequestMethod.GET)
-    public List <Map <String, Object>> roleMenuTreeData(Role role) {
+    public List <Map <String, Object>> roleMenuTreeData(Role role)  throws BizException {
         List <Map <String, Object>> tree = menuService.roleMenuTreeData(role);
         return tree;
     }
@@ -45,7 +46,7 @@ public class MenuController {
      * @return
      */
     @RequestMapping(value = "/menuTreeData",method = RequestMethod.GET)
-    public List <Map <String, Object>> menuTreeData() {
+    public List <Map <String, Object>> menuTreeData()  throws BizException{
         List <Map <String, Object>> tree = menuService.menuTreeData();
         return tree;
     }
@@ -57,7 +58,7 @@ public class MenuController {
      * @return
      */
     @RequestMapping(value = "checkMenuNameUnique",method = RequestMethod.POST)
-    public String checkMenuNameUnique(Menu menu) {
+    public String checkMenuNameUnique(Menu menu)  throws BizException{
         String uniqueFlag = "0";
         if (null != menu) {
             uniqueFlag = menuService.checkMenuNameUnique(menu);
@@ -71,7 +72,7 @@ public class MenuController {
      * @return
      */
     @RequestMapping(value = "/deleteMenu",method = RequestMethod.GET)
-    public Result delete(Integer menuId) {
+    public Result delete(Integer menuId) throws BizException {
         if (menuService.countChildMenuByParentId(menuId) > 0) {
             return new Result(false, "存在子菜单不允许删除");
         }
@@ -88,7 +89,7 @@ public class MenuController {
      * @return
      */
     @RequestMapping(value = "/addMenuparentId",method = RequestMethod.GET)
-        public Menu findMenuByMenuId(Integer parentId) {
+        public Menu findMenuByMenuId(Integer parentId)  throws BizException{
         Menu menu=null;
         if (0 != parentId) {
             return menuService.getMenuByMenuId(parentId);
@@ -106,7 +107,7 @@ public class MenuController {
      * @return
      */
     @RequestMapping(value = "/saveMenu",method = RequestMethod.POST)
-    public int inserMenu(Menu menu) {
+    public int inserMenu(Menu menu)  throws BizException{
         Subject subject = SecurityUtils.getSubject();
         User u = (User) subject.getPrincipal();
         menu.setCreateBy(u.getUserName());
@@ -115,7 +116,7 @@ public class MenuController {
 
 
     @RequestMapping(value = "/getMenuByMenuId",method = RequestMethod.GET)
-        public Menu getMenuByMenuId(Integer menuId) {
+        public Menu getMenuByMenuId(Integer menuId) throws BizException {
         return menuService.getMenuByMenuId(menuId);
     }
 
@@ -125,7 +126,7 @@ public class MenuController {
      * @return
      */
     @RequestMapping(value = "/updateMenu",method = RequestMethod.POST)
-    public Result updateMenu(Menu menu) {
+    public Result updateMenu(Menu menu) throws BizException {
         try {
             Subject subject = SecurityUtils.getSubject();
             User u = (User) subject.getPrincipal();

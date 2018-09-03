@@ -1,5 +1,6 @@
 package com.chenyou.service.impl;
 
+import com.chenyou.base.BizException;
 import com.chenyou.base.constant.UserConstants;
 import com.chenyou.mapper.MenuMapper;
 import com.chenyou.mapper.RoleMenuMapper;
@@ -36,7 +37,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public String checkMenuNameUnique(Menu menu) {
+    public String checkMenuNameUnique(Menu menu) throws BizException {
         Integer menuId = null == menu.getMenuId() ? -1 : menu.getMenuId();
         logger.info("menuId:" + menuId);
         Menu info = menuMapper.checkMenuNameUnique(menu.getMenuName());
@@ -53,7 +54,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public int countChildMenuByParentId(Integer parentId) {
+    public int countChildMenuByParentId(Integer parentId) throws BizException{
         logger.info("parentId:" + parentId);
         return menuMapper.countChildMenuByParentId(parentId);
     }
@@ -65,7 +66,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public int countRoleByRoleMenuId(Integer menuId) {
+    public int countRoleByRoleMenuId(Integer menuId) throws BizException{
         logger.info("menuId:" + menuId);
         return roleMenuMapper.countRoleByRoleMenuId(menuId);
     }
@@ -77,7 +78,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public int removeMenu(Integer menuId) {
+    public int removeMenu(Integer menuId) throws BizException{
         logger.info("menuId:" + menuId);
         return menuMapper.deleteByPrimaryKey(menuId);
     }
@@ -89,7 +90,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public Menu getMenuByMenuId(Integer menuId) {
+    public Menu getMenuByMenuId(Integer menuId) throws BizException{
         logger.info("menuId:" + menuId);
         return menuMapper.getMenuByMenuId(menuId);
     }
@@ -101,21 +102,21 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public List <Menu> listMenu() {
+    public List <Menu> listMenu() throws BizException{
         MenuExample example=new MenuExample();
         example.setOrderByClause("order_num asc");
         return menuMapper.selectByExample(example);
     }
 
     @Override
-    public int saveMenu(Menu menu) {
+    public int saveMenu(Menu menu) throws BizException{
         logger.info("menuId:" + menu.getMenuId());
         return menuMapper.insert(menu);
     }
 
 
     @Override
-    public int updateMenu(Menu menu) {
+    public int updateMenu(Menu menu)throws BizException {
         logger.info("menuId:" + menu.getMenuId());
         return menuMapper.updateByPrimaryKey(menu);
     }
@@ -127,7 +128,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public List <Map <String, Object>> roleMenuTreeData(Role role) {
+    public List <Map <String, Object>> roleMenuTreeData(Role role) throws BizException{
         logger.info("roleId:" + role.getRoleId());
         //获取到角色id
         Integer roleId = role.getRoleId();
@@ -152,7 +153,7 @@ public class MenuServiceImpl implements MenuService {
      * @param permsFlag    是否显示权限的标识
      * @return
      */
-    public List <Map <String, Object>> getTrees(List <Menu> menuList, boolean isCheck, List <String> roleMenuList, boolean permsFlag) {
+    public List <Map <String, Object>> getTrees(List <Menu> menuList, boolean isCheck, List <String> roleMenuList, boolean permsFlag) throws BizException{
         List <Map <String, Object>> trees = new ArrayList <>();
         for (Menu menu : menuList) {
             Map <String, Object> deptMap = new HashMap <>();
@@ -177,7 +178,7 @@ public class MenuServiceImpl implements MenuService {
      * @param permsFlag
      * @return
      */
-    private Object transMenuName(Menu menu, List <String> roleMenuList, boolean permsFlag) {
+    private Object transMenuName(Menu menu, List <String> roleMenuList, boolean permsFlag) throws BizException{
         //buffer流
         StringBuffer sb = new StringBuffer();
         sb.append(menu.getMenuName());
@@ -194,7 +195,7 @@ public class MenuServiceImpl implements MenuService {
      * @return 菜单列表
      */
     @Override
-    public List <Map <String, Object>> menuTreeData() {
+    public List <Map <String, Object>> menuTreeData() throws BizException{
         List <Map <String, Object>> trees = new ArrayList <>();
         List <Menu> menuList = menuMapper.listMenu();
         trees = getTrees(menuList, false, null, false);
@@ -208,7 +209,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public Menu findMenu(Integer menuId) {
+    public Menu findMenu(Integer menuId)throws BizException {
         return menuMapper.getMenuByMenuId(menuId);
     }
 
@@ -219,7 +220,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public Set <String> selectListMenuByUserId(Integer userId) {
+    public Set <String> selectListMenuByUserId(Integer userId) throws BizException{
         List<String> perms = menuMapper.listPermsByUserId(userId);
         Set<String> permsSet = new HashSet<>();
         for (String perm : perms)
@@ -237,7 +238,7 @@ public class MenuServiceImpl implements MenuService {
 
 
         @Override
-    public List <Menu> listMenusByUserId(Integer userId) {
+    public List <Menu> listMenusByUserId(Integer userId) throws BizException {
         return menuMapper.listMenusByUserId(userId);
     }
 

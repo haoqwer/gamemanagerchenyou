@@ -1,5 +1,6 @@
 package com.chenyou.service.realm;
 
+import com.chenyou.base.BizException;
 import com.chenyou.mapper.UserMapper;
 import com.chenyou.pojo.Menu;
 import com.chenyou.pojo.Role;
@@ -40,11 +41,19 @@ public class LoginRealm extends AuthorizingRealm {
      * @return
      */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals)  {
         User user = (User) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.setRoles(roleService.getRoleKeys(user.getUserId()));
-        info.setStringPermissions(menuService.selectListMenuByUserId(user.getUserId()));
+        try {
+            info.setRoles(roleService.getRoleKeys(user.getUserId()));
+        } catch (BizException e) {
+            e.printStackTrace();
+        }
+        try {
+            info.setStringPermissions(menuService.selectListMenuByUserId(user.getUserId()));
+        } catch (BizException e) {
+            e.printStackTrace();
+        }
         return info;
     }
 
@@ -65,9 +74,9 @@ public class LoginRealm extends AuthorizingRealm {
         try {
             //去数据库中查找该用户名是否存在用户
             user = userService.userLogin(loginName);
-            user.setLoginDate(new Date());
-            user.setLoginIp(SecurityUtils.getSubject().getSession().getHost());
-            userMapper.updateByPrimaryKey(user);
+//            user.setLoginDate(new Date());
+//            user.setLoginIp(SecurityUtils.getSubject().getSession().getHost());
+//            userMapper.updateLoginInfo(user);
             return new SimpleAuthenticationInfo(user, user.getPassword(), this.getName());
         } catch (Exception e) {
             e.printStackTrace();

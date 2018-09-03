@@ -1,18 +1,20 @@
 package com.chenyou.controller;
 
+import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+/**
+ * Created by maobg on 2015/7/14.
+ */
 public class BaseController {
     private static Log logger = LogFactory.getLog(BaseController.class);
     @ExceptionHandler(Exception.class)
@@ -26,9 +28,9 @@ public class BaseController {
             String errorMsg = "";
             if(logger.isDebugEnabled())
                 errorMsg = bizException.getMessage();
-            resultMap.put("sc", bizException.getCode());
-            resultMap.put("msg",errorMsg);
-            resultMap.put("ErrorMsg",errorMsg);
+            resultMap.put(ApplicationConstants.TAG_SC, bizException.getCode());
+            resultMap.put(ApplicationConstants.TAG_SC_MSG,errorMsg);
+            resultMap.put(ApplicationConstants.TAG_SC_ERRORMSG,errorMsg);
         }
         else
         {
@@ -46,8 +48,9 @@ public class BaseController {
             else{
                 buf.append(ex.toString());
             }
-            resultMap.put("sc", "-99999");
-            resultMap.put("ErrorMsg", buf.toString());
+
+            resultMap.put(ApplicationConstants.TAG_SC, "-99999");
+            resultMap.put(ApplicationConstants.TAG_SC_ERRORMSG, buf.toString());
         }
         return resultMap;
     }

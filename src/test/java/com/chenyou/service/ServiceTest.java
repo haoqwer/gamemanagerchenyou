@@ -36,7 +36,7 @@ public class ServiceTest {
     private LoginRealm loginRealm;
 
     @Test
-    public void findUserByloginName() {
+    public void findUserByloginName() throws  BizException {
         User user = userService.userLogin("admin");
         System.out.println(user);
 
@@ -46,7 +46,7 @@ public class ServiceTest {
      * 测试添加用户
      */
     @Test
-    public void test_insertUser() {
+    public void test_insertUser() throws  BizException {
         List <Integer> roleIds = new ArrayList <>();
         roleIds.add(Integer.valueOf(1));
         roleIds.add(Integer.valueOf(2));
@@ -66,7 +66,7 @@ public class ServiceTest {
      * 返回值1重复,0代表不重复
      */
     @Test
-    public void test_loginNameunique() {
+    public void test_loginNameunique() throws  BizException {
         String flag = userService.checkLoginNameUnique("admin");
         System.out.println(flag);
     }
@@ -76,7 +76,7 @@ public class ServiceTest {
      * 返回值1代表重复，0代表不重复
      */
     @Test
-    public void test_checktelephoneUnique() {
+    public void test_checktelephoneUnique() throws  BizException {
         User user = new User();
         user.setPhonenumber("13098381432");
         String flag = userService.checkPhoneUnique(user);
@@ -87,7 +87,7 @@ public class ServiceTest {
      * 分页显示数据
      */
     @Test
-    public void test_queryUserAll() {
+    public void test_queryUserAll()throws  BizException  {
         PageResult page = userService.findPage(1, 10);
         System.out.println(page.getTotal());
         System.out.println(page.getRows());
@@ -97,7 +97,7 @@ public class ServiceTest {
      * 根据条件查询数据进行分页
      */
     @Test
-    public void test_findPage() {
+    public void test_findPage() throws  BizException {
         User user = new User();
         user.setUserName("admin");
         PageResult page = userService.findPage(user, 1, 10);
@@ -109,7 +109,7 @@ public class ServiceTest {
      * 删除用户
      */
     @Test
-    public void test_deleteUser() {
+    public void test_deleteUser() throws  BizException {
         Integer[] integers = new Integer[2];
         integers[0] = Integer.valueOf(43);
         userService.removeUserByUserId(integers);
@@ -119,7 +119,7 @@ public class ServiceTest {
      * 修改用户
      */
     @Test
-    public void test_updateUser() {
+    public void test_updateUser() throws  BizException {
         List <Integer> integers = new ArrayList <>();
         integers.add(Integer.valueOf(1));
         User user = new User();
@@ -135,7 +135,7 @@ public class ServiceTest {
      * 用户进来显示的权限
      */
     @Test
-    public void test_listMenusByUserId() {
+    public void test_listMenusByUserId() throws  BizException {
         List <Menu> menus = menuService.listMenusByUserId(1);
         for (Menu menu : menus) {
             System.out.println(menu);
@@ -147,7 +147,7 @@ public class ServiceTest {
      * 同时增加与角色管理的菜单
      */
     @Test
-    public void test_saveRole() {
+    public void test_saveRole() throws  BizException {
         List <Integer> menuIds = new ArrayList <>();
         menuIds.add(Integer.valueOf(1));
         menuIds.add(Integer.valueOf(2));
@@ -166,7 +166,7 @@ public class ServiceTest {
      * 根据条件查询对应的角色
      */
     @Test
-    public void test_searchRole() {
+    public void test_searchRole() throws  BizException {
         Role role = new Role();
         role.setRoleName("老");
         PageResult page = roleService.findPage(role, 1, 10);
@@ -178,7 +178,7 @@ public class ServiceTest {
      * 检验角色名称是否唯一
      */
     @Test
-    public void test_checkroleNameUnique() {
+    public void test_checkroleNameUnique() throws  BizException {
         Role role = new Role();
         role.setRoleName("管理员");
         String s = roleService.checkRoleNameUnique(role);
@@ -189,7 +189,7 @@ public class ServiceTest {
      * 通过角色id找到角色
      */
     @Test
-    public void test_getRoleByRoleId() {
+    public void test_getRoleByRoleId() throws  BizException {
         Role role = roleService.getRoleByRoleId(2);
         System.out.println("role:" + role);
     }
@@ -207,7 +207,7 @@ public class ServiceTest {
      * 修改角色
      */
     @Test
-    public void test_updateRole() {
+    public void test_updateRole() throws  BizException {
         List <Integer> menuIds = new ArrayList <>();
         menuIds.add(1);
         Role role = new Role();
@@ -223,7 +223,7 @@ public class ServiceTest {
      * 查询所有的菜单
      */
     @Test
-    public void test_listMenu() {
+    public void test_listMenu() throws  BizException {
         List <Menu> menus = menuService.listMenu();
         for (Menu menu : menus) {
             System.out.println(menu);
@@ -235,7 +235,7 @@ public class ServiceTest {
      * 增加菜单
      */
     @Test
-    public void test_saveMenu() {
+    public void test_saveMenu()throws  BizException  {
         Menu menu = new Menu();
         menu.setParentId(0);
         menu.setMenuName("后台管理");
@@ -248,7 +248,7 @@ public class ServiceTest {
      * 检验菜单名是否唯一
      */
     @Test
-    public void test_checkMenuNameUnique() {
+    public void test_checkMenuNameUnique()throws  BizException  {
         Menu menu = new Menu();
         menu.setMenuName("后台管理");
         String flag = menuService.checkMenuNameUnique(menu);
@@ -260,7 +260,7 @@ public class ServiceTest {
      * 查询该菜单类型下面有几个子菜单
      */
     @Test
-    public void test_selectCountMenuByParentId() {
+    public void test_selectCountMenuByParentId() throws  BizException {
         int i = menuService.countChildMenuByParentId(0);
         System.out.println("count" + i);
 
@@ -270,7 +270,7 @@ public class ServiceTest {
      * 查询角色下拥有菜单的个数
      */
     @Test
-    public void test_countRoleByRoleMenuId() {
+    public void test_countRoleByRoleMenuId() throws  BizException {
         int i = menuService.countRoleByRoleMenuId(1);
         System.out.println("count" + i);
     }
@@ -279,7 +279,7 @@ public class ServiceTest {
      * 删除菜单
      */
     @Test
-    public void test_removeMenuByMenuId() {
+    public void test_removeMenuByMenuId() throws  BizException {
         int i = menuService.removeMenu(11);
         System.out.println("i" + i);
     }
@@ -288,14 +288,14 @@ public class ServiceTest {
      * 根据mmenuId查询到menu
      */
     @Test
-    public void test_getMenuByMenuId() {
+    public void test_getMenuByMenuId()throws  BizException  {
         Menu menu = menuService.getMenuByMenuId(10);
         System.out.println(menu);
 
     }
 
     @Test
-    public void test_updateMenu() {
+    public void test_updateMenu() throws  BizException {
         Menu menu = new Menu();
         menu.setMenuName("测试修改管理");
         menu.setMenuId(10);
@@ -314,7 +314,7 @@ public class ServiceTest {
      * 根绝传入的用户id查询所有的角色权限
      */
     @Test
-    public void listRolePermission(){
+    public void listRolePermission()throws  BizException {
         User user=new User();
         user.setUserId(1);
         Set <String> roleKeys = roleService.getRoleKeys(user.getUserId());
@@ -327,7 +327,7 @@ public class ServiceTest {
      * 根据传入用户userid查询所有的菜单权限关键字
      */
     @Test
-    public void listMenuPermission(){
+    public void listMenuPermission()throws  BizException {
         User user=new User();
         user.setUserId(1);
         Set <String> strings = menuService.selectListMenuByUserId(user.getUserId());

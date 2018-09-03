@@ -1,5 +1,7 @@
 package com.chenyou.controller;
 
+import com.chenyou.Constants.ApplicationConstants;
+import com.chenyou.base.BizException;
 import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.PageResult;
@@ -7,20 +9,18 @@ import com.chenyou.pojo.entity.Result;
 import com.chenyou.service.RoleService;
 import com.chenyou.service.UserService;
 import com.chenyou.utils.MD5Utils;
-import com.chenyou.utils.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController{
 
     @Autowired
     private UserService userService;
@@ -30,7 +30,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/countListUser", method = RequestMethod.GET)
-    public Map<String, Object> countListUser() {
+    public Map<String, Object> countListUser()  throws BizException {
         Map<String, Object> map = new HashMap<>();
         int count = userService.countListUser();
         map.put("count", count);
@@ -47,7 +47,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/findPage",method = RequestMethod.GET)
-    public PageResult findPage(int page, int rows) {
+    public PageResult findPage(int page, int rows) throws BizException {
         return userService.findPage(page, rows);
     }
 
@@ -59,7 +59,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/search",method = RequestMethod.GET)
-    public PageResult search( User user, int page, int rows) {
+    public PageResult search( User user, int page, int rows) throws BizException {
         return userService.findPage(user, page, rows);
     }
 
@@ -69,17 +69,21 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/checkLoginNameUnique",method = RequestMethod.GET)
-    public Result checkLoginNameUnique(String loginName) {
+    public Map<String,Object> checkLoginNameUnique(String loginName) throws BizException {
 
-        if(StringUtils.isNotEmpty(loginName)){
-          if("0".equals(userService.checkLoginNameUnique(loginName))){
-              return new Result(true,"用户名唯一!");
-          }else{
-              return new Result(false,"用户名已经存在!");
-          }
-        }else{
-            return  new Result(false,"用户名不能为空!");
-        }
+//        if(StringUtils.isNotEmpty(loginName)){
+//          if("0".equals(userService.checkLoginNameUnique(loginName))){
+//              return new Result(true,"用户名唯一!");
+//          }else{
+//              return new Result(false,"用户名已经存在!");
+//          }
+//        }else{
+//            return  new Result(false,"用户名不能为空!");
+//        }
+        Map<String,Object> resultMap=new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA,userService.checkLoginNameUnique(loginName));
+        resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
+        return resultMap;
     }
 
     /**
@@ -88,17 +92,11 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/checkPhoneUnique",method = RequestMethod.POST)
-    public Result checkPhonUnique(User user) {
-      // String uniqueFlag = "0";
-        if(StringUtils.isNull(user)){
-           return new Result(false,"手机号不能为空!");
-        }else{
-          if("0".equals(userService.checkPhoneUnique(user))){
-              return new Result(true,"手机号唯一");
-          }else{
-              return new Result(false,"手机号已经存在!");
-          }
-        }
+    public Map<String,Object> checkPhonUnique(User user) throws BizException {
+        Map<String,Object> resultMap=new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA,userService.checkPhoneUnique(user));
+        resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
+        return resultMap;
     }
 
     /**
@@ -106,7 +104,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/findAllRole",method = RequestMethod.GET)
-    public List <Role> findAllRole() {
+    public List <Role> findAllRole() throws BizException {
         List <Role> roles = roleServic.listRole();
         return roles;
     }
@@ -116,23 +114,14 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/saveUser",method = RequestMethod.POST)
-    public Result saveUser(User user){
-
-        try {
-            if(StringUtils.isNotEmpty(user.getLoginName())&&StringUtils.isNotEmpty(user.getUserName())&&StringUtils.isNotEmpty(user.getPhonenumber())
-          ){
-                Subject subject = SecurityUtils.getSubject();
-                User u = (User) subject.getPrincipal();
-                user.setCreateBy(u.getUserName());
-                int count = userService.saveUser(user);
-                return new Result(true,"用户新增!");
-            }else {
-                return new Result(false,"添加用户信息不能为空!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false,"用户新增失败!");
-        }
+    public Map<String,Object>  saveUser(User user) throws BizException{
+        Subject subject = SecurityUtils.getSubject();
+        User u = (User) subject.getPrincipal();
+        user.setCreateBy(u.getUserName());
+        Map <String, Object> resultMap = new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA, userService.saveUser(user));
+        resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
+        return resultMap;
     }
 
     /**
@@ -141,7 +130,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/getUserByUserId",method = RequestMethod.GET)
-    public User selectuserByUserId(Integer userId) {
+    public User selectuserByUserId(Integer userId)  throws BizException{
         User user = userService.getUserByUserId(userId);
         return user;
     }
@@ -152,9 +141,12 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "selectListRoleByUserId",method = RequestMethod.GET)
-    public List<Role> selectListRoleByUserId(Integer userId){
+    public Map<String,Object> selectListRoleByUserId(Integer userId) throws BizException{
+        Map<String,Object> resultMap=new HashMap <>();
         List <Role> roles = roleServic.listRoleByUserId(userId);
-        return roles;
+        resultMap.put(ApplicationConstants.TAG_DATA,roles);
+        resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
+        return resultMap;
     }
 
     /**
@@ -163,7 +155,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
-    public Result updateUser(User user) {
+    public Result updateUser(User user) throws BizException {
         try {
             Subject subject = SecurityUtils.getSubject();
             User u = (User) subject.getPrincipal();
@@ -184,7 +176,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/changepwd",method = RequestMethod.POST)
-    public Result changepwd(String oldPassword, String operPassword) {
+    public Result changepwd(String oldPassword, String operPassword)  throws BizException{
         //获取到当前用户
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
@@ -200,7 +192,7 @@ public class UserController {
                 return new Result(false, "原始密码失败!");
             }
         } else {
-            return new Result(false, "不好意思用户不存在!");
+           throw new BizException(BizException.CODE_PARM_LACK,"不好意思用户存在!");
         }
     }
 
@@ -210,14 +202,11 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/removeUserByUserId",method =RequestMethod.GET)
-    public Result delete(Integer[] userIds) {
-        try {
-            userService.removeUserByUserId(userIds);
-            return new Result(true, "删除成功!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false, "删除失败!");
-        }
+    public Map<String,Object> delete(Integer[] userIds)  throws BizException{
+        Map<String,Object> resultMap=new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA,userService.removeUserByUserId(userIds));
+        resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
+        return resultMap;
     }
 
 }

@@ -15,14 +15,14 @@ public interface RoleService {
      * @param pageSize
      * @return
      */
-     PageResult findPage(int pageNum, int pageSize);
+     PageResult findPage(int pageNum, int pageSize) throws BizException;
 
     /**
      * 查找所有的角色
      *在用户添加页面中显示所有的角色
      * @return
      */
-     List <Role> listRole();
+     List <Role> listRole() throws BizException;
 
     /**
      * 查找对应的角色
@@ -30,7 +30,7 @@ public interface RoleService {
      * @param roleId
      * @return
      */
-     Role getRoleByRoleId(Integer roleId);
+     Role getRoleByRoleId(Integer roleId) throws BizException;
 
     /**
      * 根据条件查询，展示对应的角色
@@ -40,7 +40,7 @@ public interface RoleService {
      * @param pageSize
      * @return
      */
-     PageResult findPage(Role role, int pageNum, int pageSize);
+     PageResult findPage(Role role, int pageNum, int pageSize) throws BizException;
 
     /**
      * 根据用户userId查找对应的角色
@@ -48,7 +48,7 @@ public interface RoleService {
      * @param userId
      * @return
      */
-     List <Role> listRoleByUserId(Integer userId);
+     List <Role> listRoleByUserId(Integer userId) throws BizException;
 
     /**
      * 新增角色
@@ -56,7 +56,7 @@ public interface RoleService {
      * @param role
      * @return
      */
-     int saveRole(Role role);
+     int saveRole(Role role) throws BizException;
 
     /**
      * 根据输入的角色名判断输入的角色是否唯一
@@ -64,7 +64,7 @@ public interface RoleService {
      * @param role
      * @return
      */
-     String checkRoleNameUnique(Role role);
+     String checkRoleNameUnique(Role role) throws BizException;
 
     /**
      * 修改角色
@@ -72,7 +72,7 @@ public interface RoleService {
      * @param role
      * @return
      */
-     int updateRole(Role role);
+     int updateRole(Role role) throws BizException;
 
     /**
      * 通过查询角色id查询到使用该角色的人数
@@ -80,7 +80,7 @@ public interface RoleService {
      * @param roleId
      * @return
      */
-     int countUserRoleByRoleId(Integer roleId);
+     int countUserRoleByRoleId(Integer roleId) throws BizException;
 
     /**
      * 删除角色
@@ -96,7 +96,7 @@ public interface RoleService {
      * @param userId
      * @return
      */
-     Set <String> getRoleKeys(Integer userId);
+     Set <String> getRoleKeys(Integer userId) throws BizException;
 
 
 }

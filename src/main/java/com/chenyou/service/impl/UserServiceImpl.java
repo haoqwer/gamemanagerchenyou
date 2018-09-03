@@ -1,5 +1,6 @@
 package com.chenyou.service.impl;
 
+import com.chenyou.base.BizException;
 import com.chenyou.base.constant.UserConstants;
 import com.chenyou.mapper.RoleMapper;
 import com.chenyou.mapper.UserMapper;
@@ -10,6 +11,7 @@ import com.chenyou.pojo.UserExample;
 import com.chenyou.pojo.UserRoleKey;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.UserService;
+import com.chenyou.utils.ChenyouUtils;
 import com.chenyou.utils.MD5Utils;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
@@ -52,21 +54,12 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public User userLogin(String loginName) {
-        UserExample example = new UserExample();
-        UserExample.Criteria criteria = example.createCriteria();
-        logger.info("loginName:" + loginName);
-        if (null != loginName && loginName.length() > 0) {
-            criteria.andLoginNameEqualTo(loginName);
+    public User userLogin(String loginName) throws BizException {
+        if (StringUtils.isEmpty(loginName)) {
+            throw new BizException(BizException.CODE_PARM_LACK, "请输入用户名！");
         }
-        List <User> users = userMapper.selectByExample(example);
-        //判断用户状态是否锁定，如果锁定返回null,表示登录失败!
-//        if ("0".equals(users.get(0).getStatus())) {
-//            return users.get(0);
-//        } else {
-//            return null;
-//        }
-        return users.get(0);
+        User user = userMapper.getUserByLoginName(loginName);
+        return user;
     }
 
 
@@ -75,7 +68,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public int countListUser() {
+    public int countListUser() throws BizException{
         int count = userMapper.countByExample(null);
         return count;
     }
@@ -88,7 +81,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public PageResult findPage(int pageNum, int pageSize) {
+    public PageResult findPage(int pageNum, int pageSize)  throws BizException{
         logger.info("pageNum:" + pageNum + "--pageSize:" + pageSize);
         PageHelper.startPage(pageNum, pageSize);
         UserExample example=new UserExample();
@@ -100,7 +93,6 @@ public class UserServiceImpl implements UserService {
                 user.setRoles(roles);
             }
         }
-//        Page<User> page = (Page <User>) userMapper.selectByExample(example);
         Page<User> page=(Page<User>)users;
         return new PageResult(page.getTotal(), page.getResult());
     }
@@ -114,7 +106,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public PageResult findPage(User user, int pageNum, int pageSize) {
+    public PageResult findPage(User user, int pageNum, int pageSize) throws BizException {
         PageHelper.startPage(pageNum, pageSize);
         UserExample example = new UserExample();
         example.setOrderByClause("create_time asc");
@@ -151,7 +143,10 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public String checkLoginNameUnique(String loginNmae) {
+    public String checkLoginNameUnique(String loginNmae) throws BizException{
+        if(StringUtils.isEmpty(loginNmae)){
+            throw  new BizException(BizException.CODE_PARM_LACK,"缺少loginName!");
+        }
         logger.info("loginName:" + loginNmae);
         int count = userMapper.checkLoginNameUnique(loginNmae);
         if (count > 0) {
@@ -168,7 +163,13 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public String checkPhoneUnique(User user) {
+    public String checkPhoneUnique(User user)  throws BizException{
+        if(StringUtils.isEmpty(user.getPhonenumber())){
+            throw new BizException(BizException.CODE_PARM_LACK,"phonenumber不能为空");
+        }
+        if(! ChenyouUtils.isMobile(user.getPhonenumber())){
+            throw new BizException(BizException.CODE_PARM_ERROR,"phonenumber格式错误");
+        }
         Integer userId = null == user.getUserId() ? -1 : user.getUserId();
         logger.info("phonNumber" + user.getPhonenumber());
         User u = userMapper.checkPhoneUnique(user.getPhonenumber());
@@ -183,7 +184,7 @@ public class UserServiceImpl implements UserService {
      *
      * @param user
      */
-    public void insertUserRole(User user) {
+    public void insertUserRole(User user)  throws BizException{
         //让用户与角色进行关联
         List <UserRoleKey> userRoles = new ArrayList <>();
         for (Integer roleId : user.getRoleIds()) {
@@ -206,14 +207,38 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public int saveUser(User user) {
+    public int saveUser(User user)  throws BizException{
         //新增用户的时候，首先新增用户
         //  user.setCreateBy(ShiroUtils.getLoginName());
-        user.setStatus("0");
-        user.setPassword(MD5Utils.md5(user.getPassword()));
-        int rows = userMapper.insert(user);
-        //新增用户与角色关联
-        insertUserRole(user);
+        if(StringUtils.isNull(user)){
+            throw  new BizException(BizException.CODE_PARM_LACK,"用户信息不能为空!");
+        }
+        if(StringUtils.isEmpty(user.getLoginName())){
+            throw  new BizException(BizException.CODE_PARM_LACK,"缺少登录名!");
+        }
+        if(StringUtils.isEmpty(user.getPassword())){
+            throw new BizException(BizException.CODE_PARM_LACK,"缺少用户密码!");
+        }
+        if(StringUtils.isEmpty(user.getUserName())){
+            throw new BizException(BizException.CODE_PARM_LACK,"缺少用户姓名!");
+        }
+        if(StringUtils.isEmpty(user.getPhonenumber())){
+            throw  new BizException(BizException.CODE_PARM_LACK,"缺少用户手机号码!");
+        }
+        if (0 ==user.getRoleIds().size()) {
+            throw new BizException(BizException.CODE_PARM_LACK,"请选择一个角色!");
+        }
+        int rows=0;
+        try {
+            user.setStatus("0");
+            user.setPassword(MD5Utils.md5(user.getPassword()));
+             rows = userMapper.insert(user);
+            //新增用户与角色关联
+            insertUserRole(user);
+        }catch (Exception ex){
+            ex.printStackTrace();
+          logger.error(ex.getMessage());
+        }
         return rows;
     }
 
@@ -224,7 +249,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public User getUserByUserId(Integer userId) {
+    public User getUserByUserId(Integer userId)  throws BizException{
         logger.info("userId:" + userId);
         return userMapper.selectByPrimaryKey(userId);
     }
@@ -236,7 +261,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public int updateUser(User user) {
+    public int updateUser(User user)  throws BizException{
         Integer userId = user.getUserId();
 //        user.setCreateBy(u.getLoginName());
         userRoleMapper.deleteUserRoleByUserId(userId);
@@ -245,7 +270,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int changePassword(User user) {
+    public int changePassword(User user)throws BizException {
+        if(StringUtils.isEmpty(user.getPassword())){
+            throw new  BizException(BizException.CODE_PARM_LACK,"新密码不能为空!");
+        }
         return userMapper.updateByPrimaryKey(user);
     }
 
@@ -256,12 +284,23 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public void removeUserByUserId(Integer[] userIds) {
-        for (Integer userid : userIds) {
-            //先删除用户与角色管联的中间表
-            userRoleMapper.deleteUserRoleByUserId(userid);
-            //再删除用户表
-            userMapper.deleteByPrimaryKey(userid);
+    public int removeUserByUserId(Integer[] userIds)  throws BizException{
+        if(userIds.length==0){
+            throw  new BizException(BizException.CODE_PARM_LACK,"请输入你要选择删除掉的用户!");
         }
+        int rows=0;
+        int count=0;
+        for (Integer userid : userIds) {
+
+            try {
+                //先删除用户与角色管联的中间表
+              rows=  userRoleMapper.deleteUserRoleByUserId(userid);
+                //再删除用户表
+                count=userMapper.deleteByPrimaryKey(userid);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return rows+count;
     }
 }

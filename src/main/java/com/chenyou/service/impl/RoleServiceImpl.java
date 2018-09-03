@@ -46,7 +46,7 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public Role getRoleByRoleId(Integer roleId) {
+    public Role getRoleByRoleId(Integer roleId) throws BizException{
         return roleMapper.selectByPrimaryKey(roleId);
     }
 
@@ -58,7 +58,7 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public PageResult findPage(int pageNum, int pageSize) {
+    public PageResult findPage(int pageNum, int pageSize) throws BizException{
         logger.info("pageNum" + pageNum + "---pageSize:" + pageSize);
         PageHelper.startPage(pageNum, pageSize);
         RoleExample example=new RoleExample();
@@ -69,7 +69,7 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
-    public List <Role> listRole() {
+    public List <Role> listRole()throws BizException {
         return roleMapper.selectByExample(null);
     }
 
@@ -82,7 +82,7 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public PageResult findPage(Role role, int pageNum, int pageSize) {
+    public PageResult findPage(Role role, int pageNum, int pageSize) throws BizException{
         PageHelper.startPage(pageNum, pageSize);
         RoleExample example = new RoleExample();
         example.setOrderByClause("create_time asc");
@@ -103,7 +103,10 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public List <Role> listRoleByUserId(Integer userId) {
+    public List <Role> listRoleByUserId(Integer userId) throws BizException{
+        if(null==userId){
+            throw new BizException(BizException.CODE_PARM_LACK,"当前不能没有用户!");
+        }
         logger.info("userId:" + userId);
         List <Role> userRoles = roleMapper.selectRolesByUserId(userId);
         return userRoles;
@@ -116,15 +119,30 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public int saveRole(Role role) {
+    public int saveRole(Role role) throws BizException{
+        int count=0;
+        int rows=0;
         //新增角色的时候将角色与权限也保存
 //        Subject subject = SecurityUtils.getSubject();
 //        User user = (User) subject.getPrincipal();
 //        role.setCreateBy(user.getLoginName());
-        //新增角色
-        roleMapper.insert(role);
-        //新增角色与菜单关联中间表
-        return insertRoleMenu(role);
+        if (StringUtils.isEmpty(role.getRoleName())) {
+            throw new BizException(BizException.CODE_PARM_LACK, "角色名不能为空!");
+        }
+        if (StringUtils.isEmpty(role.getRoleKey())) {
+            throw new BizException(BizException.CODE_PARM_LACK, "角色关键字不能为空!");
+        }
+        try {
+            //新增角色
+            role.setStatus("0");
+            roleMapper.insert(role);
+            //新增角色与菜单关联中间表
+            count = insertRoleMenu(role);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count+rows;
     }
 
     /**
@@ -133,7 +151,7 @@ public class RoleServiceImpl implements RoleService {
      * @param role
      * @return
      */
-    public int insertRoleMenu(Role role) {
+    public int insertRoleMenu(Role role) throws BizException{
         int rows = 1;
         List <RoleMenuKey> list = new ArrayList <>();
         for (Integer menuId : role.getMenuIds()) {
@@ -157,7 +175,7 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public String checkRoleNameUnique(Role role) {
+    public String checkRoleNameUnique(Role role) throws BizException{
         //获取到该角色当前的roleId
         Integer roleId = null == role.getRoleId() ? -1 : role.getRoleId();
         logger.info("roleId:" + roleId);
@@ -176,7 +194,7 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public int updateRole(Role role) {
+    public int updateRole(Role role) throws BizException{
         //修改角色信息
 //        Subject subject = SecurityUtils.getSubject();
 //        User user = (User) subject.getPrincipal();
@@ -195,7 +213,7 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public int countUserRoleByRoleId(Integer roleId) {
+    public int countUserRoleByRoleId(Integer roleId)throws BizException {
         return userRoleMapper.countUserRoleByRoleId(roleId);
     }
 
@@ -228,7 +246,7 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public Set <String> getRoleKeys(Integer userId) {
+    public Set <String> getRoleKeys(Integer userId) throws BizException{
         List <Role> roles = roleMapper.selectRolesByUserId(userId);
         Set <String> perms = new HashSet <>();
         for (Role perm : roles) {
