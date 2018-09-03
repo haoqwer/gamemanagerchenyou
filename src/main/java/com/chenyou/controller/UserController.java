@@ -155,17 +155,21 @@ public class UserController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
-    public Result updateUser(User user) throws BizException {
-        try {
-            Subject subject = SecurityUtils.getSubject();
-            User u = (User) subject.getPrincipal();
-            user.setCreateBy(u.getUserName());
-            int count = userService.updateUser(user);
-            return new Result(true, "用户修改成功!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false, "用户修改失败!");
-        }
+    public Map<String,Object> updateUser(User user) throws BizException {
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put(ApplicationConstants.TAG_DATA,userService.updateUser(user));
+        resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
+        return resultMap;
+//        try {
+//            Subject subject = SecurityUtils.getSubject();
+//            User u = (User) subject.getPrincipal();
+//            user.setCreateBy(u.getUserName());
+//            int count = userService.updateUser(user);
+//            return new Result(true, "用户修改成功!");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new Result(false, "用户修改失败!");
+//        }
     }
 
     /**

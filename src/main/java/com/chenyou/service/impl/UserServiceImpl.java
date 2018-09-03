@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService {
         int count = userMapper.checkLoginNameUnique(loginNmae);
         if (count > 0) {
             //用户名不是唯一
-            return UserConstants.USER_NAME_NOT_UNIQUE;
+            throw new BizException(BizException.CODE_PARM_LACK,"登录名"+loginNmae+"已经存在");
         }
         return UserConstants.USER_NAME_UNIQUE;
     }
@@ -165,10 +165,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public String checkPhoneUnique(User user)  throws BizException{
         if(StringUtils.isEmpty(user.getPhonenumber())){
-            throw new BizException(BizException.CODE_PARM_LACK,"phonenumber不能为空");
+            throw new BizException(BizException.CODE_PARM_LACK,"手机号不能为空");
         }
         if(! ChenyouUtils.isMobile(user.getPhonenumber())){
-            throw new BizException(BizException.CODE_PARM_ERROR,"phonenumber格式错误");
+            throw new BizException(BizException.CODE_PARM_ERROR,"手机号格式错误");
         }
         Integer userId = null == user.getUserId() ? -1 : user.getUserId();
         logger.info("phonNumber" + user.getPhonenumber());
@@ -185,6 +185,9 @@ public class UserServiceImpl implements UserService {
      * @param user
      */
     public void insertUserRole(User user)  throws BizException{
+        if(StringUtils.isNull(user)){
+            throw  new BizException(BizException.CODE_PARM_LACK,"不好意思该用户消息不存在!");
+        }
         //让用户与角色进行关联
         List <UserRoleKey> userRoles = new ArrayList <>();
         for (Integer roleId : user.getRoleIds()) {
@@ -228,6 +231,13 @@ public class UserServiceImpl implements UserService {
         if (0 ==user.getRoleIds().size()) {
             throw new BizException(BizException.CODE_PARM_LACK,"请选择一个角色!");
         }
+        //如果用户名重复和手机号重复的情况下也抛出异常
+      if(checkLoginNameUnique(user.getLoginName())=="1"){
+          throw new BizException(BizException.CODE_PARM_ERROR,"用户名"+user.getLoginName()+"已经存在!");
+      }
+      if(checkPhoneUnique(user)=="1"){
+          throw new BizException(BizException.CODE_PARM_ERROR,"手机号"+user.getPhonenumber()+"已经存在!");
+      }
         int rows=0;
         try {
             user.setStatus("0");
@@ -262,11 +272,20 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int updateUser(User user)  throws BizException{
-        Integer userId = user.getUserId();
+        int count=0;
+        if(null == user.getUserId()){
+            throw new BizException(BizException.CODE_PARM_LACK,"不好意思该用户不存在!");
+        }
+//        Integer userId = user.getUserId();
 //        user.setCreateBy(u.getLoginName());
-        userRoleMapper.deleteUserRoleByUserId(userId);
-        insertUserRole(user);
-        return userMapper.updateByPrimaryKey(user);
+        try {
+            userRoleMapper.deleteUserRoleByUserId(user.getUserId());
+            insertUserRole(user);
+             count = userMapper.updateByPrimaryKey(user);
+        } catch (BizException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override
