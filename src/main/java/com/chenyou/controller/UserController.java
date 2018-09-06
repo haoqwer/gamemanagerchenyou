@@ -205,11 +205,6 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/removeUserByUserId",method =RequestMethod.GET)
     public Map<String,Object> delete(Integer[] userIds)  throws BizException{
         Map<String,Object> resultMap=new HashMap <>();
-        Subject subject = SecurityUtils.getSubject();
-        User user = (User) subject.getPrincipal();
-        if(user.getLoginName().equals("admin")){
-            throw new BizException(BizException.CODE_PARM_LACK,"不能删除管理员账户!");
-        }
         resultMap.put(ApplicationConstants.TAG_DATA,userService.removeUserByUserId(userIds));
         resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
         return resultMap;

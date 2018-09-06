@@ -283,6 +283,18 @@ public class UserServiceImpl implements UserService {
         if(null == user.getUserId()){
             throw new BizException(BizException.CODE_PARM_LACK,"不好意思该用户不存在!");
         }
+        if(StringUtils.isEmpty(user.getPhonenumber())){
+            throw new BizException(BizException.CODE_PARM_LACK,"手机号不能为空");
+        }
+        if(! ChenyouUtils.isMobile(user.getPhonenumber())){
+            throw new BizException(BizException.CODE_PARM_ERROR,"手机号格式错误");
+        }
+        Integer userId = null == user.getUserId() ? -1 : user.getUserId();
+        logger.info("phonNumber" + user.getPhonenumber());
+        User u = userMapper.checkPhoneUnique(user.getPhonenumber());
+        if (StringUtils.isNotNull(u) && u.getUserId() != userId) {
+            throw new BizException(BizException.CODE_PARM_LACK,"手机号"+user.getPhonenumber()+"已经存在!");
+        }
 //        Integer userId = user.getUserId();
 //        user.setCreateBy(u.getLoginName());
         try {
@@ -321,10 +333,14 @@ public class UserServiceImpl implements UserService {
         if(userIds.length==0){
             throw  new BizException(BizException.CODE_PARM_LACK,"请输入你要选择删除掉的用户!");
         }
+
         int rows=0;
         int count=0;
         for (Integer userid : userIds) {
-
+            User user = getUserByUserId(userid);
+            if(user.getUserName().equals("admin")){
+                throw new BizException(BizException.CODE_PARM_ERROR,"不能删除管理员账户!");
+            }
             try {
                 //先删除用户与角色管联的中间表
               rows=  userRoleMapper.deleteUserRoleByUserId(userid);
