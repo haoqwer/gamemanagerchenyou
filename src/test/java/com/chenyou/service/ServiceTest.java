@@ -51,9 +51,9 @@ public class ServiceTest {
         roleIds.add(Integer.valueOf(1));
         roleIds.add(Integer.valueOf(2));
         User user = new User();
-//        user.setUserId(null);
+//        user.setUserId(null);a
         user.setUserName("郝");
-        user.setLoginName("li");
+        user.setLoginName("2");
         user.setPassword("hao");
         user.setPhonenumber("16675331736");
         user.setRemark("用户");
@@ -123,7 +123,7 @@ public class ServiceTest {
         List <Integer> integers = new ArrayList <>();
         integers.add(Integer.valueOf(1));
         User user = new User();
-        user.setUserId(45);
+        user.setUserId(53);
         user.setUserName("郝文杰");
         user.setLoginName("hao");
         user.setRoleIds(integers);
@@ -154,7 +154,7 @@ public class ServiceTest {
         menuIds.add(Integer.valueOf(3));
         menuIds.add(Integer.valueOf(4));
         Role role = new Role();
-        role.setRoleName("老板");
+        role.setRoleName("ha");
         role.setRoleKey("leader");
         role.setRemark("这是老板的角色");
         role.setMenuIds(menuIds);
@@ -211,8 +211,8 @@ public class ServiceTest {
         List <Integer> menuIds = new ArrayList <>();
         menuIds.add(1);
         Role role = new Role();
-        role.setRoleId(13);
-        role.setRoleName("老板");
+        role.setRoleId(16);
+        role.setRoleName("1");
         role.setMenuIds(menuIds);
         role.setRoleKey("hao");
         roleService.updateRole(role);

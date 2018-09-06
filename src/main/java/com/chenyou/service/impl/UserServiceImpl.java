@@ -16,10 +16,6 @@ import com.chenyou.utils.MD5Utils;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-
-import org.apache.poi.hssf.record.formula.functions.Lognormdist;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,7 +170,7 @@ public class UserServiceImpl implements UserService {
         logger.info("phonNumber" + user.getPhonenumber());
         User u = userMapper.checkPhoneUnique(user.getPhonenumber());
         if (StringUtils.isNotNull(u) && u.getUserId() != userId) {
-            return UserConstants.USER_PHONE_NOT_UNIQUE;
+           throw new BizException(BizException.CODE_PARM_LACK,"手机号"+user.getPhonenumber()+"已经存在!");
         }
         return UserConstants.USER_PHONE_UNIQUE;
     }
@@ -199,7 +195,12 @@ public class UserServiceImpl implements UserService {
             userRoles.add(ur);
         }
         if (userRoles.size() > 0) {
-            userRoleMapper.batchUserRole(userRoles);
+
+            try {
+                userRoleMapper.batchUserRole(userRoles);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -232,7 +233,7 @@ public class UserServiceImpl implements UserService {
             throw new BizException(BizException.CODE_PARM_LACK,"请选择一个角色!");
         }
         //如果用户名重复和手机号重复的情况下也抛出异常
-      if(checkLoginNameUnique(user.getLoginName())=="1"){
+      if(checkLoginNameUnique(user.getLoginName()).equals("1")){
           throw new BizException(BizException.CODE_PARM_ERROR,"用户名"+user.getLoginName()+"已经存在!");
       }
       if(checkPhoneUnique(user)=="1"){
@@ -261,7 +262,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUserId(Integer userId)  throws BizException{
         logger.info("userId:" + userId);
-        return userMapper.selectByPrimaryKey(userId);
+        User user=new User();
+        try {
+             user=userMapper.selectByPrimaryKey(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     /**
@@ -290,10 +297,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int changePassword(User user)throws BizException {
+        int count=0;
         if(StringUtils.isEmpty(user.getPassword())){
             throw new  BizException(BizException.CODE_PARM_LACK,"新密码不能为空!");
         }
-        return userMapper.updateByPrimaryKey(user);
+
+        try {
+            count= userMapper.updateByPrimaryKey(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     /**

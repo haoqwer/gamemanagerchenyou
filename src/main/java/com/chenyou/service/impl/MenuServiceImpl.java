@@ -42,7 +42,7 @@ public class MenuServiceImpl implements MenuService {
         logger.info("menuId:" + menuId);
         Menu info = menuMapper.checkMenuNameUnique(menu.getMenuName());
         if (null != info && menuId != info.getMenuId()) {
-            return UserConstants.MENU_NAME_NOT_UNIQUE;
+            throw  new BizException(BizException.CODE_PARM_LACK,"菜单名称"+menu.getMenuName()+"已经重复!");
         }
         return  UserConstants.MENU_NAME_UNIQUE;
     }
@@ -80,7 +80,13 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public int removeMenu(Integer menuId) throws BizException{
         logger.info("menuId:" + menuId);
-        return menuMapper.deleteByPrimaryKey(menuId);
+        int count=0;
+        try {
+             count=menuMapper.deleteByPrimaryKey(menuId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     /**
@@ -92,7 +98,13 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public Menu getMenuByMenuId(Integer menuId) throws BizException{
         logger.info("menuId:" + menuId);
-        return menuMapper.getMenuByMenuId(menuId);
+        Menu menu = null;
+        try {
+            menu = menuMapper.getMenuByMenuId(menuId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return menu;
     }
 
 
@@ -103,6 +115,7 @@ public class MenuServiceImpl implements MenuService {
      */
     @Override
     public List <Menu> listMenu() throws BizException{
+
         MenuExample example=new MenuExample();
         example.setOrderByClause("order_num asc");
         return menuMapper.selectByExample(example);
@@ -110,8 +123,20 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public int saveMenu(Menu menu) throws BizException{
-        logger.info("menuId:" + menu.getMenuId());
-        return menuMapper.insert(menu);
+        int count=0;
+        if(StringUtils.isEmpty(menu.getMenuName())){
+            throw new BizException(BizException.CODE_PARM_LACK,"菜单名称不能为空");
+        }
+        if(StringUtils.isEmpty(menu.getPerms())){
+            throw new BizException(BizException.CODE_PARM_LACK,"权限关键字不能为null!");
+        }
+        try {
+            logger.info("menuId:" + menu.getMenuId());
+            count = menuMapper.insert(menu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
 

@@ -1,4 +1,4 @@
---1.用户信息表
+#--1.用户信息表
 drop table if exists sys_user;
 create table sys_user (
   user_id 			int(11) 		not null auto_increment    comment '用户ID',
@@ -23,9 +23,9 @@ create table sys_user (
 insert into sys_user values(1,  'admin', 'admin', 'chenyou@163.com', '15888888888', '0', 'e10adc3949ba59abbe56e057f20f883e', '111111', '0', '0', '127.0.0.1', '2018-03-16 11-33-00', 'admin', '2018-03-16 11-33-00', 'admin', '2018-03-16 11-33-00', '管理员');
 insert into sys_user values(2,  'test',  'test',  'chenyou@qq.com',  '15666666666', '0', 'e10adc3949ba59abbe56e057f20f883e', '222222', '0', '0', '127.0.0.1', '2018-03-16 11-33-00', 'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '测试员');
 
------------------
---2.角色表
------------------
+#-------------------
+#----2.角色表
+#-------------------
 drop table if exists sys_role;
 create table sys_role (
   role_id 			int(11) 		not null auto_increment    comment '角色ID',
@@ -42,9 +42,9 @@ create table sys_role (
 ) engine=innodb auto_increment=100 default charset=utf8 comment = '角色信息表';
 insert into sys_role values('1', '管理员',   'admin',  1,  '0', 'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '管理员');
 insert into sys_role values('2', '普通角色', 'common', 2,  '0', 'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '普通角色');
------------------
---3.权限表
------------------
+#-------------------
+#----3.权限表
+#-------------------
 drop table if exists sys_menu;
 create table sys_menu (
   menu_id 			int(11) 		not null auto_increment    comment '菜单ID',
@@ -63,7 +63,7 @@ create table sys_menu (
   primary key (menu_id)
 ) engine=innodb auto_increment=2000 default charset=utf8 comment = '菜单权限表';
 
---一级菜单
+#----一级菜单
 insert into sys_menu values('1', '概况', '0', '1', '#', 'M',  '', 'fa fa-gear',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '概况');
 insert into sys_menu values('2', '游戏玩家', '0', '2', '#', 'M',  '', 'fa fa-video-camera', 'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '游戏玩家');
 insert into sys_menu values('3', '在线分析', '0', '3', '#', 'M', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '在线分析');
@@ -74,7 +74,7 @@ insert into sys_menu values('7', '活动分析', '0', '7', '#', 'M',  '', 'fa fa
 insert into sys_menu values('8', '游戏管理', '0', '8', '#', 'M',  '', 'fa fa-video-camera', 'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '游戏管理');
 insert into sys_menu values('9', '后台管理', '0', '9', '#', 'M', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '后台管理');
 insert into sys_menu values('10', '推送设置', '0', '10', '#', 'M', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '推送设置');
---二级菜单
+#----二级菜单
 insert into sys_menu values('11', '游戏概况', '1', '11', '#', 'C', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '游戏概况');
 insert into sys_menu values('12', '日报', '1', '12', '#', 'C', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '日报');
 insert into sys_menu values('13', '新增玩家', '2', '13', '#', 'C', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '新增玩家');
@@ -105,7 +105,7 @@ insert into sys_menu values('37', '用户管理', '9', '37', '#', 'C', '', 'fa f
 insert into sys_menu values('38', '角色管理', '9', '38', '#', 'C', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '角色管理');
 insert into sys_menu values('39', '菜单管理', '9', '39', '#', 'C', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '菜单管理');
 insert into sys_menu values('40', '玩家留存', '10', '40', '#', 'C', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '玩家留存');
---三级菜单
+#----三级菜单
 insert into sys_menu values('41', '用户类', '12', '41', '#', 'F', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '用户类');
 insert into sys_menu values('42', '收入类', '12', '42', '#', 'F', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '收入类');
 insert into sys_menu values('43', '渠道统计', '12', '43', '#', 'F', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '渠道统计');
@@ -137,9 +137,9 @@ insert into sys_menu values('62', '菜单修改', '39', '62', '#', 'F', '', 'fa 
 insert into sys_menu values('63', '菜单查询', '39', '63', '#', 'F', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '菜单查询');
 insert into sys_menu values('64', '菜单删除', '39', '64', '#', 'F', '', 'fa fa-bars',         'admin', '2018-03-16 11-33-00', 'ry', '2018-03-16 11-33-00', '菜单删除');
 
------------------
---4.用户对应角色表N-->1
------------------
+#-------------------
+#----4.用户对应角色表N-->1
+#-------------------
 drop table if exists sys_user_role;
 create table sys_user_role (
   user_id 	int(11) not null comment '用户ID',
@@ -149,9 +149,9 @@ create table sys_user_role (
 insert into sys_user_role values ('1', '1');
 insert into sys_user_role values ('2', '2');
 
------------------
---5.角色对应权限表1-->N
------------------
+#-------------------
+#----5.角色对应权限表1-->N
+#-------------------
 drop table if exists sys_role_menu;
 create table sys_role_menu (
   role_id 	int(11) not null comment '角色ID',
@@ -161,5 +161,7 @@ create table sys_role_menu (
 insert into sys_role_menu values ('1', '1');
 insert into sys_role_menu values ('1', '2');
 insert into sys_role_menu values ('1', '3');
+
+
 
 

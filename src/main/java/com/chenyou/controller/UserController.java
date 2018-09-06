@@ -9,6 +9,7 @@ import com.chenyou.pojo.entity.Result;
 import com.chenyou.service.RoleService;
 import com.chenyou.service.UserService;
 import com.chenyou.utils.MD5Utils;
+import com.chenyou.utils.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,24 +181,20 @@ public class UserController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/changepwd",method = RequestMethod.POST)
-    public Result changepwd(String oldPassword, String operPassword)  throws BizException{
-        //获取到当前用户
+    public Map<String,Object> changepwd(String oldPassword, String operPassword)  throws BizException{
+        Map<String,Object> resultMap=new HashMap <>();
+        if(StringUtils.isEmpty(oldPassword)){
+            throw new BizException(BizException.CODE_PARM_LACK,"原始密码不能为空!");
+        }
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
-        //获取到原密码
-        String password = user.getPassword();
-        if (null != user) {
-            if (null != oldPassword && password.equals(MD5Utils.md5(oldPassword))) {
-                //进行修改密码操作
-                user.setPassword(operPassword);
-                userService.changePassword(user);
-                return new Result(true, "修改密码成功!");
-            } else {
-                return new Result(false, "原始密码失败!");
-            }
-        } else {
-           throw new BizException(BizException.CODE_PARM_LACK,"不好意思用户存在!");
+        if(StringUtils.isNull(user)){
+            throw new BizException(BizException.CODE_PARM_ERROR,"当前用户不存在");
         }
+        user.setPassword(operPassword);
+        resultMap.put(ApplicationConstants.TAG_DATA,userService.changePassword(user));
+        resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
+        return resultMap;
     }
 
     /**
@@ -208,6 +205,11 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/removeUserByUserId",method =RequestMethod.GET)
     public Map<String,Object> delete(Integer[] userIds)  throws BizException{
         Map<String,Object> resultMap=new HashMap <>();
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User) subject.getPrincipal();
+        if(user.getLoginName().equals("admin")){
+            throw new BizException(BizException.CODE_PARM_LACK,"不能删除管理员账户!");
+        }
         resultMap.put(ApplicationConstants.TAG_DATA,userService.removeUserByUserId(userIds));
         resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
         return resultMap;

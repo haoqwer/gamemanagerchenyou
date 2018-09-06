@@ -14,12 +14,17 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.List;
 
 public class LoginRealm extends AuthorizingRealm {
+
+
+    private static  final Logger logger=LoggerFactory.getLogger(LoginRealm.class);
 
     @Autowired
     private UserService userService;
@@ -70,13 +75,14 @@ public class LoginRealm extends AuthorizingRealm {
         //获取到令牌
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
         String loginName = usernamePasswordToken.getUsername();
+        logger.info("loginName"+loginName);
         User user;
         try {
             //去数据库中查找该用户名是否存在用户
             user = userService.userLogin(loginName);
-//            user.setLoginDate(new Date());
-//            user.setLoginIp(SecurityUtils.getSubject().getSession().getHost());
-//            userMapper.updateLoginInfo(user);
+            user.setLoginDate(new Date());
+            user.setLoginIp(SecurityUtils.getSubject().getSession().getHost());
+            userMapper.updateLoginInfo(user);
             return new SimpleAuthenticationInfo(user, user.getPassword(), this.getName());
         } catch (Exception e) {
             e.printStackTrace();

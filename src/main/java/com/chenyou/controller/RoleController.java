@@ -95,12 +95,11 @@ public class RoleController {
      * @return
      */
     @RequestMapping(value = "/checkRoleNameUnique", method = RequestMethod.POST)
-    public String checkRoleNameUnique(Role role)  throws BizException{
-        String uniqueFlag = "0";
-        if (null != role) {
-            uniqueFlag = roleService.checkRoleNameUnique(role);
-        }
-        return uniqueFlag;
+    public Map<String,Object> checkRoleNameUnique(Role role)  throws BizException{
+        Map <String, Object> resultMap = new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA, roleService.checkRoleNameUnique(role));
+        resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
+        return resultMap;
     }
 
     /**
@@ -121,39 +120,27 @@ public class RoleController {
      * @return
      */
     @RequestMapping(value = "/updateRole", method = RequestMethod.POST)
-    public Result update(Role role) {
-        try {
-            Subject subject = SecurityUtils.getSubject();
-            User u = (User) subject.getPrincipal();
-            role.setCreateBy(u.getUserName());
-            roleService.updateRole(role);
-            return new Result(true, "角色修改成功!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false, "角色修改失败!!");
-        }
+    public Map<String,Object> update(Role role) throws BizException {
+        Subject subject = SecurityUtils.getSubject();
+        User u = (User) subject.getPrincipal();
+        role.setCreateBy(u.getUserName());
+        Map <String, Object> resultMap = new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA, roleService.updateRole(role));
+        return resultMap;
     }
 
     /**
      * 删除角色
-     *
      * @param roleIds
      * @return
      * @throws BizException
      */
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public Result delete(Integer[] roleIds) throws BizException {
-        try {
-            roleService.removeRoleByRoleIds(roleIds);
-            return new Result(true, "删除成功!");
-        } catch (BizException e) {
-            e.printStackTrace();
-            return new Result(false, "删除失败!");
-        }
+    public Map<String,Object> delete(Integer[] roleIds) throws BizException {
+        Map<String,Object> resultMap=new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA ,roleService.removeRoleByRoleIds(roleIds));
+        resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
+        return resultMap;
     }
-
-
-
-
 
 }

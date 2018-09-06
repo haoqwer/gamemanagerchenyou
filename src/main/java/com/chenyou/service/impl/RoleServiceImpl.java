@@ -47,7 +47,13 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public Role getRoleByRoleId(Integer roleId) throws BizException{
-        return roleMapper.selectByPrimaryKey(roleId);
+        Role role = new Role();
+        try {
+            role = roleMapper.selectByPrimaryKey(roleId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return role;
     }
 
     /**
@@ -62,7 +68,7 @@ public class RoleServiceImpl implements RoleService {
         logger.info("pageNum" + pageNum + "---pageSize:" + pageSize);
         PageHelper.startPage(pageNum, pageSize);
         RoleExample example=new RoleExample();
-        example.setOrderByClause("create_time asc");
+        example.setOrderByClause("role_sort asc");
         Page <Role> page = (Page <Role>) roleMapper.selectByExample(example);
         return new PageResult(page.getTotal(), page.getResult());
     }
@@ -85,7 +91,7 @@ public class RoleServiceImpl implements RoleService {
     public PageResult findPage(Role role, int pageNum, int pageSize) throws BizException{
         PageHelper.startPage(pageNum, pageSize);
         RoleExample example = new RoleExample();
-        example.setOrderByClause("create_time asc");
+        example.setOrderByClause("role_sort asc");
         RoleExample.Criteria criteria = example.createCriteria();
         if (null != role.getRoleName()) {
            // criteria.andRoleNameEqualTo(role.getRoleName());
@@ -104,12 +110,17 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public List <Role> listRoleByUserId(Integer userId) throws BizException{
+        List<Role> listRole=null;
         if(null==userId){
             throw new BizException(BizException.CODE_PARM_LACK,"当前不能没有用户!");
         }
         logger.info("userId:" + userId);
-        List <Role> userRoles = roleMapper.selectRolesByUserId(userId);
-        return userRoles;
+        try {
+            listRole = roleMapper.selectRolesByUserId(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listRole;
     }
 
     /**
@@ -131,6 +142,12 @@ public class RoleServiceImpl implements RoleService {
         }
         if (StringUtils.isEmpty(role.getRoleKey())) {
             throw new BizException(BizException.CODE_PARM_LACK, "角色关键字不能为空!");
+        }
+        if(null == role.getRoleSort()){
+            throw new BizException(BizException.CODE_PARM_LACK,"排序数字不能为空!");
+        }
+        if(checkRoleNameUnique(role).equals("1")){
+            throw new BizException(BizException.CODE_PARM_LACK,"用户角色名"+role.getRoleName()+"已经存在!");
         }
         try {
             //新增角色
@@ -182,7 +199,8 @@ public class RoleServiceImpl implements RoleService {
         Role info = roleMapper.checkRoleNameUnique(role.getRoleName());
         //判断数据库中查询到的用户id跟用户传递进来的用户id进行比较
         if (StringUtils.isNotNull(info) && info.getRoleId() != roleId) {
-            return UserConstants.ROLE_NAME_NOT_UNIQUE;
+//            return UserConstants.ROLE_NAME_NOT_UNIQUE;
+            throw new BizException(BizException.CODE_PARM_LACK,"不好意思用户名"+role.getRoleName()+"已经存在!");
         }
         return UserConstants.ROLE_NAME_UNIQUE;
     }
@@ -226,6 +244,9 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public int removeRoleByRoleIds(Integer[] roleIds) throws BizException {
         int count = 0;
+        if(roleIds.length==0){
+            throw  new BizException(BizException.CODE_PARM_ERROR,"请选择你要删除的数据!");
+        }
         for (Integer roleId : roleIds) {
             logger.info("roleId:" + roleId);
             Role role = getRoleByRoleId(roleId);
@@ -233,8 +254,12 @@ public class RoleServiceImpl implements RoleService {
             if (count > 0) {
                 throw new BizException(BizException.CODE_PARM_LACK, "用户" + role.getRoleName() + "不能删除");
             }else {
-                roleMenuMapper.deleteRoleMenuByRoleId(roleId);
-                roleMapper.deleteByPrimaryKey(roleId);
+                try {
+                    roleMenuMapper.deleteRoleMenuByRoleId(roleId);
+                    roleMapper.deleteByPrimaryKey(roleId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         return count;
@@ -248,6 +273,9 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Set <String> getRoleKeys(Integer userId) throws BizException{
         List <Role> roles = roleMapper.selectRolesByUserId(userId);
+        if (roles == null || roles.size() == 0) {
+            throw new BizException(BizException.CODE_PARM_LACK, "当前用户为空");
+        }
         Set <String> perms = new HashSet <>();
         for (Role perm : roles) {
             if (StringUtils.isNotNull(roles)) {

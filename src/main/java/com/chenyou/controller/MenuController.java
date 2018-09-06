@@ -1,5 +1,6 @@
 package com.chenyou.controller;
 
+import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
 import com.chenyou.pojo.Menu;
 import com.chenyou.pojo.Role;
@@ -72,15 +73,16 @@ public class MenuController {
      * @return
      */
     @RequestMapping(value = "/deleteMenu",method = RequestMethod.GET)
-    public Result delete(Integer menuId) throws BizException {
+    public Map<String,Object> delete(Integer menuId) throws BizException {
+        Map <String, Object> resultMap = new HashMap <>();
         if (menuService.countChildMenuByParentId(menuId) > 0) {
-            return new Result(false, "存在子菜单不允许删除");
+            throw new BizException(BizException.CODE_PARM_ERROR, "存在子菜单不允许删除!");
         }
         if (menuService.countRoleByRoleMenuId(menuId) > 0) {
-            return new Result(false, "菜案已分配，不允许删除");
+            throw new BizException(BizException.CODE_PARM_ERROR, "菜案已分配，不允许删除!");
         }
-        menuService.removeMenu(menuId);
-        return new Result(true, "删除成功!");
+        resultMap.put(ApplicationConstants.TAG_DATA, menuService.removeMenu(menuId));
+        return resultMap;
     }
 
     /**
@@ -107,11 +109,13 @@ public class MenuController {
      * @return
      */
     @RequestMapping(value = "/saveMenu",method = RequestMethod.POST)
-    public int inserMenu(Menu menu)  throws BizException{
+    public Map<String,Object> inserMenu(Menu menu)  throws BizException{
         Subject subject = SecurityUtils.getSubject();
         User u = (User) subject.getPrincipal();
         menu.setCreateBy(u.getUserName());
-        return menuService.saveMenu(menu);
+        Map<String,Object> map=new HashMap <>();
+        map.put(ApplicationConstants.TAG_DATA,menuService.saveMenu(menu));
+        return map;
     }
 
 
