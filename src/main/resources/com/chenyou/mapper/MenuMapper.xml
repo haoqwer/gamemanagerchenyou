@@ -399,15 +399,9 @@
         set menu_name = #{menuName,jdbcType=VARCHAR},
         parent_id = #{parentId,jdbcType=INTEGER},
         order_num = #{orderNum,jdbcType=INTEGER},
-        url = #{url,jdbcType=VARCHAR},
         menu_type = #{menuType,jdbcType=CHAR},
-        perms = #{perms,jdbcType=VARCHAR},
-        icon = #{icon,jdbcType=VARCHAR},
-        create_by = #{createBy,jdbcType=VARCHAR},
-        create_time = #{createTime,jdbcType=TIMESTAMP},
         update_by = #{updateBy,jdbcType=VARCHAR},
         update_time = sysdate(),
-        remark = #{remark,jdbcType=VARCHAR}
         where menu_id = #{menuId,jdbcType=INTEGER}
     </update>
 

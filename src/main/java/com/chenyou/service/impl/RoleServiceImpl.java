@@ -68,7 +68,8 @@ public class RoleServiceImpl implements RoleService {
         logger.info("pageNum" + pageNum + "---pageSize:" + pageSize);
         PageHelper.startPage(pageNum, pageSize);
         RoleExample example=new RoleExample();
-        example.setOrderByClause("role_sort asc");
+        //  role_sort is null,role_sort asc
+        example.setOrderByClause(" role_sort is null,role_sort asc");
         Page <Role> page = (Page <Role>) roleMapper.selectByExample(example);
         return new PageResult(page.getTotal(), page.getResult());
     }
@@ -168,7 +169,10 @@ public class RoleServiceImpl implements RoleService {
      * @param role
      * @return
      */
-    public int insertRoleMenu(Role role) throws BizException{
+    public int insertRoleMenu(Role role) throws BizException {
+        if(role.getMenuIds().isEmpty()){
+            throw new BizException(BizException.CODE_PARM_LACK,"菜单选项不能为null");
+        }
         int rows = 1;
         List <RoleMenuKey> list = new ArrayList <>();
         for (Integer menuId : role.getMenuIds()) {
@@ -205,6 +209,17 @@ public class RoleServiceImpl implements RoleService {
         return UserConstants.ROLE_NAME_UNIQUE;
     }
 
+    public  void updateCheckRoleNameunique(Role role,String roleName) throws BizException {
+        Integer roleId = null == role.getRoleId() ? -1 : role.getRoleId();
+        logger.info("roleId:" + roleId);
+        Role info = roleMapper.checkRoleNameUnique(role.getRoleName());
+        //判断数据库中查询到的用户id跟用户传递进来的用户id进行比较
+        if (StringUtils.isNotNull(info) && info.getRoleId() != roleId) {
+//            return UserConstants.ROLE_NAME_NOT_UNIQUE;
+            throw new BizException(BizException.CODE_PARM_LACK,"不好意思用户名"+role.getRoleName()+"已经存在!");
+        }
+    }
+
     /**
      * 修改角色
      *
@@ -217,7 +232,22 @@ public class RoleServiceImpl implements RoleService {
 //        Subject subject = SecurityUtils.getSubject();
 //        User user = (User) subject.getPrincipal();
 //        role.setCreateBy(user.getLoginName());
+        //获取到当前用户的名称
+        Role r = getRoleByRoleId(role.getRoleId());
         logger.info("roleId:" + role.getRoleId());
+        if (StringUtils.isEmpty(role.getRoleName())) {
+            throw new BizException(BizException.CODE_PARM_LACK, "角色名不能为空!");
+        }
+        if (StringUtils.isEmpty(role.getRoleKey())) {
+            throw new BizException(BizException.CODE_PARM_LACK, "角色关键字不能为空!");
+        }
+        if(null == role.getRoleSort()){
+            throw new BizException(BizException.CODE_PARM_LACK,"排序数字不能为空!");
+        }
+//        if(checkRoleNameUnique(role).equals("1")){
+//            throw new BizException(BizException.CODE_PARM_LACK,"用户角色名"+role.getRoleName()+"已经存在!");
+//        }
+        updateCheckRoleNameunique(role,r.getRoleName());
         roleMapper.updateByPrimaryKey(role);
         //删除角色与菜单关联
         roleMenuMapper.deleteRoleMenuByRoleId(role.getRoleId());

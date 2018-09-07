@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String checkLoginNameUnique(String loginNmae) throws BizException{
         if(StringUtils.isEmpty(loginNmae)){
-            throw  new BizException(BizException.CODE_PARM_LACK,"缺少loginName!");
+            throw  new BizException(BizException.CODE_PARM_LACK,"用户名不能为null!");
         }
         logger.info("loginName:" + loginNmae);
         int count = userMapper.checkLoginNameUnique(loginNmae);
@@ -150,6 +150,20 @@ public class UserServiceImpl implements UserService {
             throw new BizException(BizException.CODE_PARM_LACK,"登录名"+loginNmae+"已经存在");
         }
         return UserConstants.USER_NAME_UNIQUE;
+    }
+
+
+    public void updateUserCheckLoginNameUnique(String loginNmae,String updateLoginName) throws BizException {
+        if(StringUtils.isEmpty(loginNmae)){
+            throw  new BizException(BizException.CODE_PARM_LACK,"缺少loginName!");
+        }
+        logger.info("loginName:" + loginNmae);
+        int count = userMapper.checkLoginNameUnique(loginNmae);
+        if(count>0){
+            if(!loginNmae.equals(updateLoginName)){
+                throw new BizException(BizException.CODE_PARM_LACK,"登录名"+loginNmae+"已经存在");
+            }
+        }
     }
 
     /**
@@ -173,6 +187,20 @@ public class UserServiceImpl implements UserService {
            throw new BizException(BizException.CODE_PARM_LACK,"手机号"+user.getPhonenumber()+"已经存在!");
         }
         return UserConstants.USER_PHONE_UNIQUE;
+    }
+
+    public void updateCheckPhonUnique(User user) throws BizException {
+        if(StringUtils.isEmpty(user.getPhonenumber())){
+            throw new BizException(BizException.CODE_PARM_LACK,"手机号不能为空");
+        }
+        if(! ChenyouUtils.isMobile(user.getPhonenumber())){
+            throw new BizException(BizException.CODE_PARM_ERROR,"手机号格式错误");
+        }
+        Integer userId = null == user.getUserId() ? -1 : user.getUserId();
+        User u = userMapper.checkPhoneUnique(user.getPhonenumber());
+        if (StringUtils.isNotNull(u) && u.getUserId() != userId) {
+            throw new BizException(BizException.CODE_PARM_LACK,"手机号"+user.getPhonenumber()+"已经存在!");
+        }
     }
 
     /**
@@ -279,31 +307,31 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int updateUser(User user)  throws BizException{
-        int count=0;
-        if(null == user.getUserId()){
-            throw new BizException(BizException.CODE_PARM_LACK,"不好意思该用户不存在!");
+        int count = 0;
+        //修改的时候首先获取到用户名和手机号
+        User uu = getUserByUserId(user.getUserId());
+        //新增用户的时候，首先新增用户
+        //  user.setCreateBy(ShiroUtils.getLoginName());
+        if(StringUtils.isNull(user)){
+            throw  new BizException(BizException.CODE_PARM_LACK,"用户信息不能为空!");
+        }
+        if(StringUtils.isEmpty(user.getLoginName())){
+            throw  new BizException(BizException.CODE_PARM_LACK,"缺少登录名!");
+        }
+        if(StringUtils.isEmpty(user.getUserName())){
+            throw new BizException(BizException.CODE_PARM_LACK,"缺少用户姓名!");
         }
         if(StringUtils.isEmpty(user.getPhonenumber())){
-            throw new BizException(BizException.CODE_PARM_LACK,"手机号不能为空");
+            throw  new BizException(BizException.CODE_PARM_LACK,"缺少用户手机号码!");
         }
-        if(! ChenyouUtils.isMobile(user.getPhonenumber())){
-            throw new BizException(BizException.CODE_PARM_ERROR,"手机号格式错误");
+        if (0 ==user.getRoleIds().size()) {
+            throw new BizException(BizException.CODE_PARM_LACK,"请选择一个角色!");
         }
-        Integer userId = null == user.getUserId() ? -1 : user.getUserId();
-        logger.info("phonNumber" + user.getPhonenumber());
-        User u = userMapper.checkPhoneUnique(user.getPhonenumber());
-        if (StringUtils.isNotNull(u) && u.getUserId() != userId) {
-            throw new BizException(BizException.CODE_PARM_LACK,"手机号"+user.getPhonenumber()+"已经存在!");
-        }
-//        Integer userId = user.getUserId();
-//        user.setCreateBy(u.getLoginName());
-        try {
-            userRoleMapper.deleteUserRoleByUserId(user.getUserId());
-            insertUserRole(user);
-             count = userMapper.updateByPrimaryKey(user);
-        } catch (BizException e) {
-            e.printStackTrace();
-        }
+        updateUserCheckLoginNameUnique(user.getLoginName(),uu.getUserName());
+        userRoleMapper.deleteUserRoleByUserId(user.getUserId());
+        updateCheckPhonUnique(user);
+        insertUserRole(user);
+        count = userMapper.updateByPrimaryKey(user);
         return count;
     }
 
@@ -338,7 +366,7 @@ public class UserServiceImpl implements UserService {
         int count=0;
         for (Integer userid : userIds) {
             User user = getUserByUserId(userid);
-            if(user.getUserName().equals("admin")){
+            if(user.getLoginName().equals("admin")){
                 throw new BizException(BizException.CODE_PARM_ERROR,"不能删除管理员账户!");
             }
             try {

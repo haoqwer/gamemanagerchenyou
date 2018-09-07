@@ -453,7 +453,6 @@
         email = #{email,jdbcType=VARCHAR},
         phonenumber = #{phonenumber,jdbcType=VARCHAR},
         sex = #{sex,jdbcType=CHAR},
-        password = #{password,jdbcType=VARCHAR},
         salt = #{salt,jdbcType=VARCHAR},
         status = #{status,jdbcType=CHAR},
         del_flag = #{delFlag,jdbcType=CHAR},

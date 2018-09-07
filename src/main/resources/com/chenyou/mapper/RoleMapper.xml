@@ -355,8 +355,6 @@
         set role_name = #{roleName,jdbcType=VARCHAR},
         role_key = #{roleKey,jdbcType=VARCHAR},
         role_sort = #{roleSort,jdbcType=INTEGER},
-        status = #{status,jdbcType=CHAR},
-        create_by = #{createBy,jdbcType=VARCHAR},
         update_by = #{updateBy,jdbcType=VARCHAR},
         update_time = sysdate(),
         remark = #{remark,jdbcType=VARCHAR}

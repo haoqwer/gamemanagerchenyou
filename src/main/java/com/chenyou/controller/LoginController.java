@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 @RestController
-public class LoginController   {
+public class LoginController {
 
     private static Log logger = LogFactory.getLog(LoginController.class);
 
@@ -35,23 +35,23 @@ public class LoginController   {
     /**
      * 进行登录验证
      */
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Result login (String loginName, String password, HttpServletRequest request) {
+    public Result login(String loginName, String password, HttpServletRequest request) {
         //获取到subject主体
-        Subject subject =SecurityUtils.getSubject();
+        Subject subject = SecurityUtils.getSubject();
         //创建令牌
-        UsernamePasswordToken token=new UsernamePasswordToken(loginName,MD5Utils.md5(password));
+        UsernamePasswordToken token = new UsernamePasswordToken(loginName, MD5Utils.md5(password));
         try {
             //进行验证
             subject.login(token);
             User user = (User) subject.getPrincipal();
             //将登录的user放入到session
-            request.getSession().setAttribute("user",user);
-            return new Result(true,"登录成功!!!");
+            request.getSession().setAttribute("user", user);
+            return new Result(true, "登录成功!!!");
         } catch (AuthenticationException e) {
             e.printStackTrace();
-            return  new Result(false,"登录失败!!!");
+            return new Result(false, "登录失败!!!");
         }
     }
 
@@ -60,14 +60,14 @@ public class LoginController   {
      */
 
     @RequestMapping("/logout")
-    public String logout(){
+    public String logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return "login";
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public Map <String, Object> map()  throws BizException {
+    public Map <String, Object> map() throws BizException {
         Map <String, Object> map = new HashMap <>();
         //获取到用户
 //        User user = ShiroUtils.getUser();
@@ -81,7 +81,7 @@ public class LoginController   {
     }
 
     @RequestMapping("/getUser")
-    public User getUser(){
+    public User getUser() {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
         return user;

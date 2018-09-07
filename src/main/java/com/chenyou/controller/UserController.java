@@ -5,10 +5,9 @@ import com.chenyou.base.BizException;
 import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.PageResult;
-import com.chenyou.pojo.entity.Result;
 import com.chenyou.service.RoleService;
 import com.chenyou.service.UserService;
-import com.chenyou.utils.MD5Utils;
+import com.chenyou.service.facade.UserServerFacade;
 import com.chenyou.utils.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -28,6 +27,9 @@ public class UserController extends BaseController{
 
     @Autowired
     private RoleService roleServic;
+
+    @Autowired
+    private UserServerFacade userServerFacade;
 
 
     @RequestMapping(value = "/countListUser", method = RequestMethod.GET)
@@ -157,6 +159,9 @@ public class UserController extends BaseController{
      */
     @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
     public Map<String,Object> updateUser(User user) throws BizException {
+        Subject subject = SecurityUtils.getSubject();
+        User uu = (User) subject.getPrincipal();
+        user.setCreateBy(uu.getUserName());
         Map<String,Object> resultMap=new HashMap<>();
         resultMap.put(ApplicationConstants.TAG_DATA,userService.updateUser(user));
         resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
@@ -208,6 +213,16 @@ public class UserController extends BaseController{
         resultMap.put(ApplicationConstants.TAG_DATA,userService.removeUserByUserId(userIds));
         resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
         return resultMap;
+    }
+
+
+    /**
+     * httpClient调用
+     */
+    @RequestMapping("/transfer")
+    public List <com.chenyou.net.pojo.User> listUser() throws BizException {
+        List <com.chenyou.net.pojo.User> users = userServerFacade.listUser(1, 20);
+        return users;
     }
 
 }

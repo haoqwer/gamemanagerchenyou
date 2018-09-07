@@ -117,7 +117,7 @@ public class MenuServiceImpl implements MenuService {
     public List <Menu> listMenu() throws BizException{
 
         MenuExample example=new MenuExample();
-        example.setOrderByClause("order_num asc");
+        example.setOrderByClause("order_num is null,order_num asc");
         return menuMapper.selectByExample(example);
     }
 
@@ -185,6 +185,7 @@ public class MenuServiceImpl implements MenuService {
             deptMap.put("id", menu.getMenuId());
             deptMap.put("pId", menu.getParentId());
             deptMap.put("name", transMenuName(menu, roleMenuList, permsFlag));
+            deptMap.put("type",menu.getMenuType());
             if (isCheck) {
                 deptMap.put("chcked", roleMenuList.contains(menu.getMenuId() + menu.getPerms()));
             } else {
