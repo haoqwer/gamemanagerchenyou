@@ -327,7 +327,7 @@ public class UserServiceImpl implements UserService {
         if (0 ==user.getRoleIds().size()) {
             throw new BizException(BizException.CODE_PARM_LACK,"请选择一个角色!");
         }
-        updateUserCheckLoginNameUnique(user.getLoginName(),uu.getUserName());
+        updateUserCheckLoginNameUnique(user.getLoginName(),uu.getLoginName());
         userRoleMapper.deleteUserRoleByUserId(user.getUserId());
         updateCheckPhonUnique(user);
         insertUserRole(user);

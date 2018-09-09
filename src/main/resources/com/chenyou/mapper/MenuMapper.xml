@@ -453,5 +453,8 @@
 		where ur.user_id = #{userId} and m.menu_type in ('M', 'C')
 		order by m.order_num
 	</select>
+    <select id="listMenuByParentId" parameterType="Integer" resultMap="BaseResultMap">
+        select * from sys_menu where parent_id=#{parentId};
+    </select>
 
 </mapper>

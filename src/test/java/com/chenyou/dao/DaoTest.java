@@ -30,6 +30,10 @@ public class DaoTest {
     @Resource
     private RoleMenuMapper roleMenuMapper;
 
+
+    @Resource
+    private MenuMapper menuMapper;
+
     @Test
     public void test_userinsert() {
         List <Integer> roleIds = new ArrayList <>();
@@ -75,6 +79,18 @@ public class DaoTest {
     @Test
     public void test_removeRoleMenuByRoleId(){
         roleMenuMapper.deleteRoleMenuByRoleId(7);
+    }
+
+    @Test
+    public void test_cengji(){
+        List<Menu> menus = menuMapper.listMenu();
+        for(Menu menu:menus){
+            System.out.println(menu);
+        }
+        //1-10根据1查询下面的所有
+//        System.out.println("打印出一级菜单");
+        //将一级的进行遍历
+
     }
 
 

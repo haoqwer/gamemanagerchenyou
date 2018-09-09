@@ -147,4 +147,7 @@ public interface MenuMapper {
      List<Menu> listMenusByUserId(Integer userId);
 
      List<String> listPermsByUserId(Integer userId);
+
+
+   List<Menu> listMenuByParentId(Integer parentId);
 }
