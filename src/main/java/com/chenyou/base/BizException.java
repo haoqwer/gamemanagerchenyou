@@ -1,6 +1,5 @@
 package com.chenyou.base;
 
-
 public class BizException extends Exception {
 
     //基本错误定义

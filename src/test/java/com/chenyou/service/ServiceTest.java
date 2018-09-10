@@ -6,15 +6,12 @@ import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.realm.LoginRealm;
-import com.chenyou.utils.StringUtils;
-import org.apache.http.impl.cookie.PublicSuffixListParser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.lang.management.MemoryUsage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -333,6 +330,17 @@ public class ServiceTest {
         Set <String> strings = menuService.selectListMenuByUserId(user.getUserId());
         for(String s:strings){
             System.out.println(s);
+        }
+    }
+
+
+    @Test
+    public  void listRolePerms() throws  BizException{
+        User user=new User();
+        user.setUserId(1);
+        Set <String> roleKeys = roleService.getRoleKeys(user.getUserId());
+        for(String s:roleKeys){
+            System.out.println(s+"====");
         }
     }
 

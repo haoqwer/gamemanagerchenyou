@@ -21,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/role")
-public class RoleController {
+public class RoleController  extends BaseController{
 
     @Autowired
     private RoleService roleService;

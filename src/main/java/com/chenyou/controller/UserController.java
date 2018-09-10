@@ -10,6 +10,7 @@ import com.chenyou.service.UserService;
 import com.chenyou.service.facade.UserServerFacade;
 import com.chenyou.utils.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +50,7 @@ public class UserController extends BaseController{
      * @param rows
      * @return
      */
+    @RequiresPermissions("hao")
     @RequestMapping(value = "/findPage",method = RequestMethod.GET)
     public PageResult findPage(int page, int rows) throws BizException {
         return userService.findPage(page, rows);
@@ -219,7 +221,7 @@ public class UserController extends BaseController{
     /**
      * httpClient调用
      */
-    @RequestMapping("/transfer")
+        @RequestMapping("/transfer")
     public List <com.chenyou.net.pojo.User> listUser() throws BizException {
         List <com.chenyou.net.pojo.User> users = userServerFacade.listUser(1, 20);
         return users;
