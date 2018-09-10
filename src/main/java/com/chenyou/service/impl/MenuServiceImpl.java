@@ -155,14 +155,13 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List <Map <String, Object>> roleMenuTreeData(Role role) throws BizException{
         logger.info("roleId:" + role.getRoleId());
-        List<Menu> menus =new ArrayList<>();
+       // List<Menu> menus =new ArrayList<>();
         //获取到角色id
         Integer roleId = role.getRoleId();
         List <Map <String, Object>> trees = new ArrayList <>();
         //获取到所有的菜单对象
 //         List <Menu> menus = menuMapper.listMenu();
-      //首先遍历所有的一级id
-
+        List<Menu> menus = menuMapper.listMenu();
         if (StringUtils.isNotNull(roleId)) {
             //角色id存在
             List <String> roleMenuList = menuMapper.listMenutreePermByRoleId(roleId);
@@ -215,7 +214,7 @@ public class MenuServiceImpl implements MenuService {
         sb.append(menu.getMenuName());
         if (permsFlag) {
             //增加权限标识
-            sb.append("<font color=\"#888\">&nbsp;&nbsp;&nbsp;" + menu.getPerms() + "</font>");
+            sb.append("" + menu.getPerms() );
         }
         return sb.toString();
     }

@@ -105,7 +105,7 @@
                       d="M170.666667 170.666667C123.733333 170.666667 85.333333 209.066667 85.333333 256L85.333333 768C85.333333 814.933333 123.733333 853.333333 170.666667 853.333333L853.333333 853.333333C900.266667 853.333333 938.666667 814.933333 938.666667 768L938.666667 256C938.666667 209.066667 900.266667 170.666667 853.333333 170.666667L170.666667 170.666667zM170.666667 256 853.333333 256 853.333333 768 170.666667 768 170.666667 256zM213.333333 281.333333 213.333333 366.666667 512 554.666667 810.666667 366.666667 810.666667 281.333333 512 469.333333 213.333333 281.333333z"/>
             </svg>
             <label for="username">用户名:</label>
-            <input type="text" placeholder="请输入用户名" name="loginName" autocomplete="off" id="username"/>
+            <input type="text" placeholder="请输入用户名" name="loginName" readonly autocomplete="off" id="username"/>
         </div>
         <div class="password">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 1029 1024" width="20" height="20">
@@ -115,7 +115,7 @@
                       fill="#c0c4cc"/>
             </svg>
             <label for="password">密码:</label>
-            <input type="password" placeholder="请输入密码" autocomplete="new-password" name="password" id="password"/>
+            <input type="password" placeholder="请输入密码" autocomplete="off" readonly name="password" id="password"/>
         </div>
         <div class="buttons">
             <div class="submit">提交</div>
@@ -132,8 +132,17 @@
             password.value = ''
             username.value = ''
         })
-
+        password.addEventListener('keydown', function (e) {
+            if (e.keyCode === 13) {
+                login()
+            }
+        })
         var submit = document.querySelector('.buttons>.submit')
+
+        setTimeout(() => {
+            username.removeAttribute('readonly')
+            password.removeAttribute('readonly')
+        }, 100)
 
         submit.addEventListener('click', function () {
             // 登录

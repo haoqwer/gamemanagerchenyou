@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String checkLoginNameUnique(String loginNmae) throws BizException{
         if(StringUtils.isEmpty(loginNmae)){
-            throw  new BizException(BizException.CODE_PARM_LACK,"用户名不能为null!");
+            throw  new BizException(BizException.CODE_PARM_LACK,"用户名不能为空!");
         }
         logger.info("loginName:" + loginNmae);
         int count = userMapper.checkLoginNameUnique(loginNmae);

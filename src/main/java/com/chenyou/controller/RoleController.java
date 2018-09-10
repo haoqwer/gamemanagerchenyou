@@ -64,7 +64,7 @@ public class RoleController {
      * @param rows
      * @return
      */
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     public PageResult search(Role role, int page, int rows)  throws BizException{
         return roleService.findPage(role, page, rows);
     }

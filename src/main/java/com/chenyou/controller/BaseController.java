@@ -2,8 +2,8 @@ package com.chenyou.controller;
 
 import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,7 +16,9 @@ import java.util.Map;
  * Created by maobg on 2015/7/14.
  */
 public class BaseController {
-    private static Log logger = LogFactory.getLog(BaseController.class);
+
+    private static  final Logger logger= LoggerFactory.getLogger(BaseController.class);
+
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Map<String,Object> ExceptionHandler(Exception ex) {
@@ -26,7 +28,7 @@ public class BaseController {
         if(ex instanceof BizException){
             BizException bizException = (BizException) ex;
             String errorMsg = "";
-            if(logger.isDebugEnabled())
+//            if(logger.isDebugEnabled())
                 errorMsg = bizException.getMessage();
             resultMap.put(ApplicationConstants.TAG_SC, bizException.getCode());
             resultMap.put(ApplicationConstants.TAG_SC_MSG,errorMsg);

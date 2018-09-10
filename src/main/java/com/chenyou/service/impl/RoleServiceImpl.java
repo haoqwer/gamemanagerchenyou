@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Transactional
@@ -132,6 +134,7 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public int saveRole(Role role) throws BizException{
+
         int count=0;
         int rows=0;
         //新增角色的时候将角色与权限也保存
@@ -147,9 +150,20 @@ public class RoleServiceImpl implements RoleService {
         if(null == role.getRoleSort()){
             throw new BizException(BizException.CODE_PARM_LACK,"排序数字不能为空!");
         }
+        String regex = "^[0-9]*$";
+        Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(role.getRoleSort().toString());
+        if(m.matches()){
+            throw new BizException(BizException.CODE_PARM_LACK,"请输入数字!");
+        }
+
+
+
+
         if(checkRoleNameUnique(role).equals("1")){
             throw new BizException(BizException.CODE_PARM_LACK,"用户角色名"+role.getRoleName()+"已经存在!");
         }
+
         try {
             //新增角色
             role.setStatus("0");
