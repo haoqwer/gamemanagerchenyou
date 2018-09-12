@@ -37,7 +37,7 @@ public class SelectServerChannelController {
      * 获取到所有的渠道数据
      * @return
      */
-    @RequestMapping(value = "/listchannel", method = RequestMethod.GET)
+    @RequestMapping(value = "/listChannel", method = RequestMethod.GET)
     public Map <String, Object> listchannel() {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, channelService.listChannel());
