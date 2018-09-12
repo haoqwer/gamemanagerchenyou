@@ -210,7 +210,7 @@ public class MenuServiceImpl implements MenuService {
         sb.append(menu.getMenuName());
         if (permsFlag) {
             //增加权限标识
-            sb.append("<font color=\"#888\">&nbsp;&nbsp;&nbsp;" + menu.getPerms() + "</font>");
+            sb.append( menu.getPerms());
         }
         return sb.toString();
     }

@@ -43,7 +43,8 @@ public class MenuController extends BaseController {
     }
 
     /**
-     * 获取到加载时的菜单树
+     * 获取
+     * 到加载时的菜单树
      *
      * @return
      */

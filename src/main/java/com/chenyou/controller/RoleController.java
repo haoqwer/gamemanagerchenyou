@@ -64,7 +64,7 @@ public class RoleController  extends BaseController{
      * @param rows
      * @return
      */
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     public PageResult search(Role role, int page, int rows)  throws BizException{
         return roleService.findPage(role, page, rows);
     }
@@ -81,6 +81,7 @@ public class RoleController  extends BaseController{
         Subject subject = SecurityUtils.getSubject();
         User u = (User) subject.getPrincipal();
         role.setCreateBy(u.getUserName());
+        role.setUpdateBy(u.getUserName());
         resultMap.put(ApplicationConstants.TAG_DATA,roleService.saveRole(role));
         resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
         return resultMap;

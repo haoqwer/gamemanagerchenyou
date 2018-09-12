@@ -111,6 +111,7 @@
     </div>
 
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script>
         !function () {
             var reset = document.querySelector('.buttons>.reset')
@@ -120,10 +121,10 @@
                 username.value = ''
             })
 
-            password.addEventListener('keydown', function (e) {
-              if (e.keyCode === 13) {
-                login()
-              }
+            password.addEventListener('keydown', function (event) {
+                if (event.keyCode === 13) {
+                    login()
+                }
             })
 
             var submit = document.querySelector('.buttons>.submit')
@@ -134,18 +135,18 @@
 
             // 登录
             function login () {
-              $.post({
-                url: '/login.do',
-                data: {
-                  loginName: username.value,
-                  password: password.value
-                },
-                success (val) {
-                  if (val) {
-                    window.location = '/index.html'
-                  }
-                }
-              })
+                $.post({
+                    url: '/login.do',
+                    data: {
+                        loginName: username.value,
+                        password: password.value
+                    },
+                    success (val) {
+                        if (val) {
+                            window.location = '/index.html'
+                        }
+                    }
+                })
             }
         }()
     </script>

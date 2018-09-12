@@ -15,6 +15,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +66,8 @@ public class UserController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/search",method = RequestMethod.GET)
-    public PageResult search( User user, int page, int rows) throws BizException {
+    public PageResult search(User user, int page, int rows, HttpServletRequest request) throws BizException, UnsupportedEncodingException {
+        String userName = new String(request.getParameter("userName").getBytes("ISO8859-1"), "utf-8");
         return userService.findPage(user, page, rows);
     }
 
@@ -123,6 +126,7 @@ public class UserController extends BaseController{
         Subject subject = SecurityUtils.getSubject();
         User u = (User) subject.getPrincipal();
         user.setCreateBy(u.getUserName());
+        user.setUpdateBy(u.getUserName());
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, userService.saveUser(user));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);

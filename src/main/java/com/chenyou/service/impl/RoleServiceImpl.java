@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Transactional
@@ -132,8 +134,8 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public int saveRole(Role role) throws BizException{
-        int count=0;
-        int rows=0;
+        int count = 0;
+        int rows = 0;
         //新增角色的时候将角色与权限也保存
 //        Subject subject = SecurityUtils.getSubject();
 //        User user = (User) subject.getPrincipal();
@@ -144,11 +146,16 @@ public class RoleServiceImpl implements RoleService {
         if (StringUtils.isEmpty(role.getRoleKey())) {
             throw new BizException(BizException.CODE_PARM_LACK, "角色关键字不能为空!");
         }
-        if(null == role.getRoleSort()){
-            throw new BizException(BizException.CODE_PARM_LACK,"排序数字不能为空!");
+        if (null == role.getRoleSort()) {
+            throw new BizException(BizException.CODE_PARM_LACK, "排序数字不能为空!");
         }
-        if(checkRoleNameUnique(role).equals("1")){
-            throw new BizException(BizException.CODE_PARM_LACK,"用户角色名"+role.getRoleName()+"已经存在!");
+        Pattern p = Pattern.compile("-?[0-9]+");
+        Matcher m = p.matcher(Integer.toString(role.getRoleSort()));
+        if (!m.matches()) {
+            throw new BizException(BizException.CODE_PARM_LACK, "排序请输入数字");
+        }
+        if (checkRoleNameUnique(role).equals("1")) {
+            throw new BizException(BizException.CODE_PARM_LACK, "角色名" + role.getRoleName() + "已经存在!");
         }
         try {
             //新增角色
@@ -156,11 +163,10 @@ public class RoleServiceImpl implements RoleService {
             roleMapper.insert(role);
             //新增角色与菜单关联中间表
             count = insertRoleMenu(role);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return count+rows;
+        return count + rows;
     }
 
     /**
@@ -274,7 +280,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public int removeRoleByRoleIds(Integer[] roleIds) throws BizException {
         int count = 0;
-        if(roleIds.length==0){
+        if(roleIds.toString().length()==0){
             throw  new BizException(BizException.CODE_PARM_ERROR,"请选择你要删除的数据!");
         }
         for (Integer roleId : roleIds) {
@@ -282,7 +288,7 @@ public class RoleServiceImpl implements RoleService {
             Role role = getRoleByRoleId(roleId);
             count = countUserRoleByRoleId(roleId);
             if (count > 0) {
-                throw new BizException(BizException.CODE_PARM_LACK, "用户" + role.getRoleName() + "不能删除");
+                throw new BizException(BizException.CODE_PARM_LACK, "用户" + role.getRoleName() + "角色不能删除(使用该角色的人数有)"+count+"人");
             }else {
                 try {
                     roleMenuMapper.deleteRoleMenuByRoleId(roleId);
