@@ -12,13 +12,8 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by maobg on 2015/7/14.
- */
 public class BaseController {
-
-    private static  final Logger logger= LoggerFactory.getLogger(BaseController.class);
-
+    private static  final Logger logger=LoggerFactory.getLogger(BaseController.class);
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Map<String,Object> ExceptionHandler(Exception ex) {
@@ -28,11 +23,11 @@ public class BaseController {
         if(ex instanceof BizException){
             BizException bizException = (BizException) ex;
             String errorMsg = "";
-//            if(logger.isDebugEnabled())
-                errorMsg = bizException.getMessage();
+            if(logger.isDebugEnabled())
+            errorMsg = bizException.getMessage();
             resultMap.put(ApplicationConstants.TAG_SC, bizException.getCode());
-            resultMap.put(ApplicationConstants.TAG_SC_MSG,errorMsg);
-            resultMap.put(ApplicationConstants.TAG_SC_ERRORMSG,errorMsg);
+            resultMap.put(ApplicationConstants.TAG_SC_MSG, errorMsg);
+            resultMap.put(ApplicationConstants.TAG_SC_ERRORMSG, errorMsg);
         }
         else
         {
@@ -56,4 +51,6 @@ public class BaseController {
         }
         return resultMap;
     }
+
+
 }

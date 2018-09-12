@@ -21,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/role")
-public class RoleController {
+public class RoleController  extends BaseController{
 
     @Autowired
     private RoleService roleService;
@@ -81,6 +81,7 @@ public class RoleController {
         Subject subject = SecurityUtils.getSubject();
         User u = (User) subject.getPrincipal();
         role.setCreateBy(u.getUserName());
+        role.setUpdateBy(u.getUserName());
         resultMap.put(ApplicationConstants.TAG_DATA,roleService.saveRole(role));
         resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
         return resultMap;

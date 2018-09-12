@@ -1,10 +1,12 @@
 package com.chenyou.controller;
 
+import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
 import com.chenyou.pojo.Menu;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.Result;
 import com.chenyou.service.MenuService;
+import com.chenyou.service.UserService;
 import com.chenyou.utils.MD5Utils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,12 +27,16 @@ import java.util.Map;
 import java.util.Set;
 
 @RestController
-public class LoginController {
+public class LoginController extends  BaseController{
 
     private static Log logger = LogFactory.getLog(LoginController.class);
 
     @Autowired
     private MenuService menuService;
+
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 进行登录验证
@@ -75,15 +81,16 @@ public class LoginController {
         User user = (User) subject.getPrincipal();
         //根据用户id查询对应的权限
         List <Menu> menus = menuService.listMenusByUserId(user.getUserId());
-        map.put("menus", menus);
-        map.put("user", user);
+        map.put(ApplicationConstants.TAG_DATA, menus);
+        map.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
         return map;
     }
 
     @RequestMapping("/getUser")
-    public User getUser() {
+    public User getUser() throws BizException {
         Subject subject = SecurityUtils.getSubject();
-        User user = (User) subject.getPrincipal();
+        User u = (User) subject.getPrincipal();
+        User user = userService.getUserByUserId(u.getUserId());
         return user;
     }
 

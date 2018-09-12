@@ -6,15 +6,17 @@ import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.realm.LoginRealm;
-import com.chenyou.utils.StringUtils;
-import org.apache.http.impl.cookie.PublicSuffixListParser;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.lang.management.MemoryUsage;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -336,5 +338,43 @@ public class ServiceTest {
         }
     }
 
+
+    @Test
+    public  void listRolePerms() throws  BizException{
+        User user=new User();
+        user.setUserId(1);
+        Set <String> roleKeys = roleService.getRoleKeys(user.getUserId());
+        for(String s:roleKeys){
+            System.out.println(s+"====");
+        }
+    }
+
+
+    @Test
+    public void test_border() throws IOException {
+        Workbook wb = new HSSFWorkbook();
+        Sheet sheet = wb.createSheet("new sheet");
+        //创建一列，在其中加入多个单元格，列索引号从 0 开始，单元格的索引号也是从 0
+        //开始.
+        Row row = sheet.createRow(1);
+        //创建一个单元格，并在其中加入内容.
+        Cell cell = row.createCell(1);
+        cell.setCellValue(4);
+        //设置单元格边框为四周环绕.
+        CellStyle style = wb.createCellStyle();
+        style.setBorderBottom(CellStyle.BORDER_THIN);
+        style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+        style.setBorderLeft(CellStyle.BORDER_THIN);
+        style.setLeftBorderColor(IndexedColors.GREEN.getIndex());
+        style.setBorderRight(CellStyle.BORDER_THIN);
+        style.setRightBorderColor(IndexedColors.BLUE.getIndex());
+        style.setBorderTop(CellStyle.BORDER_MEDIUM_DASHED);
+        style.setTopBorderColor(IndexedColors.BLACK.getIndex());
+        cell.setCellStyle(style);
+        //将输出流写入一个文件
+        FileOutputStream fileOut = new FileOutputStream("workbook.xls");
+        wb.write(fileOut);
+        fileOut.close();
+    }
 
 }

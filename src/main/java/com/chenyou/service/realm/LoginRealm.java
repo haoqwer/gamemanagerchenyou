@@ -24,7 +24,7 @@ import java.util.List;
 public class LoginRealm extends AuthorizingRealm {
 
 
-    private static  final Logger logger=LoggerFactory.getLogger(LoginRealm.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginRealm.class);
 
     @Autowired
     private UserService userService;
@@ -41,12 +41,13 @@ public class LoginRealm extends AuthorizingRealm {
 
     /**
      * 进行权限校验
-     *角色关键字、菜单关键字进行权限认证
+     * 角色关键字、菜单关键字进行权限认证
+     *
      * @param principals
      * @return
      */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals)  {
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         User user = (User) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         try {
@@ -67,7 +68,6 @@ public class LoginRealm extends AuthorizingRealm {
      *
      * @param token
      * @return
-     *
      * @throws AuthenticationException
      */
     @Override
@@ -75,7 +75,7 @@ public class LoginRealm extends AuthorizingRealm {
         //获取到令牌
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
         String loginName = usernamePasswordToken.getUsername();
-        logger.info("loginName"+loginName);
+        logger.info("loginName" + loginName);
         User user;
         try {
             //去数据库中查找该用户名是否存在用户

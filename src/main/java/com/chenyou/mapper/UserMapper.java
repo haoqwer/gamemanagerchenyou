@@ -112,4 +112,6 @@ public interface UserMapper {
 
 
     void updateLoginInfo(User user);
+
+    User getUserByUserId(Integer userId);
 }

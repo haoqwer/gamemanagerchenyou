@@ -128,15 +128,26 @@
 <script>
     !function () {
         var reset = document.querySelector('.buttons>.reset')
+
         reset.addEventListener('click', function () {
             password.value = ''
             username.value = ''
         })
 
+        password.addEventListener('keydown', function (e) {
+            if (e.keyCode === 13) {
+                login()
+            }
+        })
+
         var submit = document.querySelector('.buttons>.submit')
 
         submit.addEventListener('click', function () {
-            // 登录
+            login()
+        })
+
+        // 登录
+        function login () {
             $.post({
                 url: '/login.do',
                 data: {
@@ -144,14 +155,12 @@
                     password: password.value
                 },
                 success (val) {
-                    if (val.success) {
+                    if (val) {
                         window.location = '/index.html'
-                    }else{
-                        window.location = '/login_error.html'
                     }
                 }
             })
-        })
+        }
     }()
 </script>
 </body>

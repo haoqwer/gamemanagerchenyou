@@ -7,6 +7,7 @@ import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.Result;
 import com.chenyou.service.MenuService;
+import com.sun.xml.internal.rngom.parse.host.Base;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/menu")
-public class MenuController {
+public class MenuController extends BaseController {
 
     @Autowired
     private MenuService menuService;
@@ -42,7 +43,8 @@ public class MenuController {
     }
 
     /**
-     * 获取到加载时的菜单树
+     * 获取
+     * 到加载时的菜单树
      *
      * @return
      */

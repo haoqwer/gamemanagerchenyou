@@ -1,16 +1,18 @@
 package com.chenyou.Matcher;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import com.chenyou.base.BizException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class IntegerFlag {
     public static void main(String[] args) {
-        List<Integer> i=new ArrayList<>();
-        if(i.isEmpty()){
-            System.out.println(i.isEmpty());
-        }
-        if(i.size()==0){
-            System.out.println("空");
-        }
+        Pattern p = Pattern.compile("-?[0-9]+");
+        Matcher m = p.matcher("ee");
+        boolean mm = m.matches();
+        System.out.println(mm);
+
+
     }
 }

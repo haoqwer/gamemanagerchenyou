@@ -292,7 +292,7 @@ public class UserServiceImpl implements UserService {
         logger.info("userId:" + userId);
         User user=new User();
         try {
-             user=userMapper.selectByPrimaryKey(userId);
+             user=userMapper.getUserByUserId(userId);
         } catch (Exception e) {
             e.printStackTrace();
         }
