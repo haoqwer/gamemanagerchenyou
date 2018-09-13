@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50549
 File Encoding         : 65001
 
-Date: 2018-09-12 22:05:00
+Date: 2018-09-13 22:14:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -224,15 +224,13 @@ CREATE TABLE `sys_user` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, null, '0:0:0:0:0:0:0:1', '2018-09-12 21:52:32', 'admin', '2018-03-16 11:33:00', null, '2018-09-10 18:07:51', '管理员');
-INSERT INTO `sys_user` VALUES ('57', 'manager', '辰优科技', null, '18888888888', null, '1d0258c2440a8d19e716292b231e3190', null, null, null, null, null, 'admin', '2018-09-07 11:40:25', null, '2018-09-12 14:31:47', '666666');
-INSERT INTO `sys_user` VALUES ('58', 'test', 'test', null, '15888888888', null, '098f6bcd4621d373cade4e832627b4f6', null, null, null, null, null, 'admin', '2018-09-07 13:34:55', null, '2018-09-10 14:30:49', '测试');
-INSERT INTO `sys_user` VALUES ('59', 'hao', 'hao', null, '16675331736', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, null, null, null, 'admin', null, null, '2018-09-10 18:07:36', '角色是boss');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, null, '0:0:0:0:0:0:0:1', '2018-09-13 22:13:50', 'admin', '2018-03-16 11:33:00', null, '2018-09-10 18:07:51', '管理员');
+INSERT INTO `sys_user` VALUES ('60', '华中有为', '华为', null, '13530873562', null, 'c1aafc7e23f24ba11aae492f5caa2d97', null, '0', null, null, null, 'admin', '2018-09-13 13:48:22', 'admin', null, '通讯大佬');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -262,10 +260,7 @@ INSERT INTO `sys_user_role` VALUES ('40', '2');
 INSERT INTO `sys_user_role` VALUES ('52', '1');
 INSERT INTO `sys_user_role` VALUES ('56', '1');
 INSERT INTO `sys_user_role` VALUES ('56', '14');
-INSERT INTO `sys_user_role` VALUES ('57', '2');
-INSERT INTO `sys_user_role` VALUES ('58', '2');
-INSERT INTO `sys_user_role` VALUES ('58', '14');
-INSERT INTO `sys_user_role` VALUES ('59', '14');
+INSERT INTO `sys_user_role` VALUES ('60', '14');
 
 -- ----------------------------
 -- Table structure for t_about_game
@@ -298,17 +293,73 @@ INSERT INTO `t_about_game` VALUES ('2', 'node_360_2', '2018-09-11 11:09:21', '1'
 DROP TABLE IF EXISTS `t_active_player`;
 CREATE TABLE `t_active_player` (
   `active_id` int(11) NOT NULL COMMENT '活跃玩家id',
+  `show_time` datetime NOT NULL COMMENT '记录时间',
   `active_player_count` int(11) NOT NULL COMMENT '活跃玩家个数',
   `server_id` int(11) DEFAULT NULL,
   `channel_id` int(11) DEFAULT NULL,
-  `show_time` datetime NOT NULL,
   PRIMARY KEY (`active_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='活跃玩家(游戏玩家)';
 
 -- ----------------------------
 -- Records of t_active_player
 -- ----------------------------
-INSERT INTO `t_active_player` VALUES ('1', '2', '1', '1', '2018-09-11 00:00:00');
+INSERT INTO `t_active_player` VALUES ('1', '2018-09-13 00:00:00', '99999', '1', '1');
+INSERT INTO `t_active_player` VALUES ('2', '2018-09-04 19:24:30', '11111111', '2', '2');
+
+-- ----------------------------
+-- Table structure for t_activity_num
+-- ----------------------------
+DROP TABLE IF EXISTS `t_activity_num`;
+CREATE TABLE `t_activity_num` (
+  `activity_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '活动编号',
+  `activity_number` varchar(64) NOT NULL COMMENT '活动编号',
+  `activity_player_count` int(11) NOT NULL COMMENT '活动参与玩家数',
+  `consume_ingot` int(11) DEFAULT NULL COMMENT '活动消耗元宝',
+  `server_id` int(11) DEFAULT NULL,
+  `server_name` varchar(16) NOT NULL,
+  `record_time` datetime NOT NULL COMMENT '记录时间',
+  PRIMARY KEY (`activity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_activity_num
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_activity_output
+-- ----------------------------
+DROP TABLE IF EXISTS `t_activity_output`;
+CREATE TABLE `t_activity_output` (
+  `id` int(11) NOT NULL,
+  `prop_id` int(11) NOT NULL COMMENT '道具Id',
+  `out` varchar(64) NOT NULL,
+  `consume` varchar(64) NOT NULL,
+  `server_id` int(11) NOT NULL,
+  `server_name` varchar(64) NOT NULL,
+  `recorde_time` datetime NOT NULL COMMENT '记录时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_activity_output
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_activity_rank
+-- ----------------------------
+DROP TABLE IF EXISTS `t_activity_rank`;
+CREATE TABLE `t_activity_rank` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gang_id` int(11) NOT NULL COMMENT '帮派排行',
+  `gang_name` varchar(16) NOT NULL COMMENT '帮派名称',
+  `server_id` int(11) NOT NULL,
+  `server_name` varchar(16) NOT NULL COMMENT '帮派区服',
+  `record_time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_activity_rank
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_add_newplayer
@@ -316,7 +367,7 @@ INSERT INTO `t_active_player` VALUES ('1', '2', '1', '1', '2018-09-11 00:00:00')
 DROP TABLE IF EXISTS `t_add_newplayer`;
 CREATE TABLE `t_add_newplayer` (
   `newplayer_id` int(11) NOT NULL COMMENT '新增id',
-  `register_time` datetime NOT NULL,
+  `register_time` datetime NOT NULL COMMENT '注册时间',
   `register_plant` int(11) NOT NULL COMMENT '注册设备',
   `register_player` int(11) NOT NULL COMMENT '注册玩家',
   `server_id` int(11) DEFAULT NULL,
@@ -327,7 +378,41 @@ CREATE TABLE `t_add_newplayer` (
 -- ----------------------------
 -- Records of t_add_newplayer
 -- ----------------------------
-INSERT INTO `t_add_newplayer` VALUES ('1', '2018-09-11 00:00:00', '1', '1', '1', '1');
+INSERT INTO `t_add_newplayer` VALUES ('1', '2018-09-13 00:00:00', '10000', '99999', '1', '1');
+
+-- ----------------------------
+-- Table structure for t_away_grade
+-- ----------------------------
+DROP TABLE IF EXISTS `t_away_grade`;
+CREATE TABLE `t_away_grade` (
+  `grade_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '流失等级',
+  `game_grade` varchar(64) NOT NULL COMMENT '流失等级名称',
+  `count_player` int(11) NOT NULL COMMENT '用户数量',
+  `server_id` int(11) DEFAULT NULL,
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`grade_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='流失等级';
+
+-- ----------------------------
+-- Records of t_away_grade
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_away_output
+-- ----------------------------
+DROP TABLE IF EXISTS `t_away_output`;
+CREATE TABLE `t_away_output` (
+  `away_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '流失关卡id',
+  `away_output` varchar(64) NOT NULL COMMENT '流失关卡',
+  `count_player` int(11) NOT NULL COMMENT '用户数量',
+  `server_id` int(11) DEFAULT NULL,
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`away_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='流失关卡';
+
+-- ----------------------------
+-- Records of t_away_output
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_away_player
@@ -335,18 +420,18 @@ INSERT INTO `t_add_newplayer` VALUES ('1', '2018-09-11 00:00:00', '1', '1', '1',
 DROP TABLE IF EXISTS `t_away_player`;
 CREATE TABLE `t_away_player` (
   `away_id` int(11) NOT NULL,
+  `record_time` datetime NOT NULL COMMENT '记录时间',
   `add_player` int(11) NOT NULL COMMENT '自增用户',
   `away_player` int(11) NOT NULL COMMENT '流失用户',
   `server_id` int(11) DEFAULT NULL,
   `channel_id` int(11) DEFAULT NULL,
-  `record_time` datetime NOT NULL COMMENT '记录时间',
   PRIMARY KEY (`away_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='玩家流失(游戏玩家)';
 
 -- ----------------------------
 -- Records of t_away_player
 -- ----------------------------
-INSERT INTO `t_away_player` VALUES ('1', '1', '1', '1', '1', '2018-09-11 20:14:16');
+INSERT INTO `t_away_player` VALUES ('1', '2018-09-13 19:43:16', '99999', '9999', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_channel
@@ -380,15 +465,41 @@ CREATE TABLE `t_channel_count` (
   `time_leave` varchar(16) NOT NULL COMMENT ' 次留',
   `threeday_leave` varchar(16) NOT NULL COMMENT '三日留存',
   `week_leave` varchar(16) NOT NULL COMMENT '周留存',
+  `pay_arup` double NOT NULL,
   `server_id` int(11) DEFAULT NULL COMMENT '分区区服id',
-  `count_time` datetime NOT NULL,
+  `count_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`channel_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='渠道统计(用户)';
 
 -- ----------------------------
 -- Records of t_channel_count
 -- ----------------------------
-INSERT INTO `t_channel_count` VALUES ('1', '2', '3', '4', '5', '6', '7.00', '8', '9', '0', '1', '2018-09-11 00:00:00');
+INSERT INTO `t_channel_count` VALUES ('1', '360', '100000', '50000', '9999', '88%', '8.88', '90%', '70%', '90%', '9.99', '1', '2018-09-11 00:00:00');
+
+-- ----------------------------
+-- Table structure for t_channel_summary
+-- ----------------------------
+DROP TABLE IF EXISTS `t_channel_summary`;
+CREATE TABLE `t_channel_summary` (
+  `channel_id` int(11) NOT NULL AUTO_INCREMENT,
+  `channel_name` varchar(16) NOT NULL COMMENT '渠道名称',
+  `activate_player` int(11) DEFAULT NULL COMMENT '激活玩家',
+  `register_player` int(11) DEFAULT NULL COMMENT '注册玩家',
+  `active_player` int(11) DEFAULT NULL COMMENT '活跃玩家',
+  `recharge_player` int(11) DEFAULT NULL COMMENT '充值玩家',
+  `time_leave` varchar(16) DEFAULT NULL COMMENT '次留',
+  `threeday_leave` varchar(16) DEFAULT NULL COMMENT '3留',
+  `sevenday_leave` varchar(16) DEFAULT NULL COMMENT '7留',
+  `pay_rate` varchar(16) DEFAULT NULL COMMENT '付费率',
+  `recharge_money` int(11) DEFAULT NULL COMMENT '充值金额',
+  `pay_ap` double(11,2) DEFAULT NULL COMMENT '付费ap',
+  `register_ap` double(11,2) DEFAULT NULL COMMENT '注册ap',
+  PRIMARY KEY (`channel_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='渠道数据汇总(渠道数据)';
+
+-- ----------------------------
+-- Records of t_channel_summary
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_cyuser_count
@@ -399,22 +510,139 @@ CREATE TABLE `t_cyuser_count` (
   `avg_online_users` int(11) NOT NULL COMMENT '平均在线用户数',
   `avg_gametime` int(11) NOT NULL COMMENT '平均游戏时长',
   `avg_login_num` int(11) NOT NULL COMMENT '平均登录次数',
+  `active_user` int(11) NOT NULL COMMENT '活跃用户',
   `activate_user` int(11) NOT NULL COMMENT '激活用户',
+  `register_user` int(11) NOT NULL COMMENT '注册用户',
   `peak_online` int(11) NOT NULL COMMENT '峰值在线',
   `day_leave` varchar(16) NOT NULL COMMENT '一日次留',
   `threeday_leave` varchar(16) NOT NULL COMMENT '三日留存',
-  `savenday_leave` varchar(16) NOT NULL COMMENT '七日留存',
+  `sevenday_leave` varchar(16) NOT NULL COMMENT '七日留存',
   `month_leave` varchar(16) NOT NULL COMMENT '30日留存',
   `server_id` int(11) DEFAULT NULL COMMENT '服务器id',
   `channel_id` int(11) DEFAULT NULL COMMENT '渠道id',
-  `count_time` date NOT NULL COMMENT '统计时间',
+  `count_time` datetime NOT NULL COMMENT '统计时间',
   PRIMARY KEY (`user_count_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='用户类(日报)';
 
 -- ----------------------------
 -- Records of t_cyuser_count
 -- ----------------------------
-INSERT INTO `t_cyuser_count` VALUES ('1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '2018-09-11');
+INSERT INTO `t_cyuser_count` VALUES ('1', '9999', '100', '100009', '9999', '8888', '10086', '10010', '123', '1234', '1111', '12345', '1', '1', '2018-09-11 00:00:00');
+
+-- ----------------------------
+-- Table structure for t_everyday_recharge
+-- ----------------------------
+DROP TABLE IF EXISTS `t_everyday_recharge`;
+CREATE TABLE `t_everyday_recharge` (
+  `recharge_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '每日充值id',
+  `recharge_time` datetime DEFAULT NULL COMMENT '时间段',
+  `recharge_user_count` int(11) DEFAULT NULL COMMENT '充值人数',
+  `recharge_first_user` int(11) DEFAULT NULL COMMENT '首充人数',
+  `recharge_count` int(11) DEFAULT NULL COMMENT '充值次数',
+  `recharge_first_count` int(11) DEFAULT NULL COMMENT '首充次数',
+  `recharge_money` int(11) DEFAULT NULL COMMENT '充值金额',
+  `recharge_first_money` int(11) DEFAULT NULL COMMENT '首充金额',
+  `recharge_ingot` int(11) DEFAULT NULL COMMENT '充值元宝',
+  `recharge_first_ingot` int(11) DEFAULT NULL COMMENT '首冲元宝',
+  `arpu` double(11,2) DEFAULT NULL,
+  `first_arpu` double(11,2) DEFAULT NULL,
+  `server_id` int(11) DEFAULT NULL,
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`recharge_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='充值统计(每日充值)';
+
+-- ----------------------------
+-- Records of t_everyday_recharge
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_force_rank
+-- ----------------------------
+DROP TABLE IF EXISTS `t_force_rank`;
+CREATE TABLE `t_force_rank` (
+  `force_id` int(11) NOT NULL COMMENT '势力榜id',
+  `force_rank` int(11) NOT NULL COMMENT '排名顺序',
+  `player_name` varchar(16) NOT NULL COMMENT '玩家名',
+  `force_value` int(11) NOT NULL COMMENT '势力 值',
+  `server_id` int(11) NOT NULL,
+  `server_name` varchar(16) DEFAULT NULL COMMENT '区服名称',
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`force_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='势力榜(游戏行为统计)';
+
+-- ----------------------------
+-- Records of t_force_rank
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_gang_count
+-- ----------------------------
+DROP TABLE IF EXISTS `t_gang_count`;
+CREATE TABLE `t_gang_count` (
+  `gang_id` int(11) NOT NULL,
+  `server_name` varchar(64) NOT NULL COMMENT '区服名称',
+  `gang_num` int(11) DEFAULT NULL COMMENT '帮派数量',
+  `channel_id` int(11) DEFAULT NULL,
+  `server_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='帮派数量(游戏行为统计)';
+
+-- ----------------------------
+-- Records of t_gang_count
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_gang_grade
+-- ----------------------------
+DROP TABLE IF EXISTS `t_gang_grade`;
+CREATE TABLE `t_gang_grade` (
+  `gang_id` int(11) NOT NULL AUTO_INCREMENT,
+  `gong_grade` varchar(16) NOT NULL COMMENT '等级区间',
+  `gong_count` int(11) NOT NULL COMMENT '数量',
+  `server_id` int(11) DEFAULT NULL,
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`gang_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_gang_grade
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_gang_rank
+-- ----------------------------
+DROP TABLE IF EXISTS `t_gang_rank`;
+CREATE TABLE `t_gang_rank` (
+  `gang_id` int(11) NOT NULL,
+  `gang_rank` int(11) NOT NULL COMMENT '排名',
+  `player_name` varchar(64) NOT NULL COMMENT '玩家名',
+  `force_value` int(11) NOT NULL COMMENT '势力值',
+  `gang_grade` varchar(16) NOT NULL COMMENT '帮派等级',
+  `server_id` int(11) NOT NULL,
+  `server_name` varchar(16) NOT NULL COMMENT '所属区服',
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`gang_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_gang_rank
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_grade_player
+-- ----------------------------
+DROP TABLE IF EXISTS `t_grade_player`;
+CREATE TABLE `t_grade_player` (
+  `grade_id` int(11) NOT NULL AUTO_INCREMENT,
+  `grade_section` varchar(12) NOT NULL COMMENT '等级区间',
+  `grade_player` int(11) DEFAULT NULL COMMENT '人数',
+  `server_id` int(11) DEFAULT NULL,
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`grade_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户等级(游戏行为统计)';
+
+-- ----------------------------
+-- Records of t_grade_player
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_income_class
@@ -430,14 +658,70 @@ CREATE TABLE `t_income_class` (
   `count_rate_user` int(11) NOT NULL COMMENT '付费玩家',
   `server_id` int(11) DEFAULT NULL COMMENT '服务器id',
   `channel_id` int(11) DEFAULT NULL COMMENT '渠道id',
-  `recorde_time` datetime NOT NULL,
+  `recorde_time` datetime NOT NULL COMMENT '记录时间',
   PRIMARY KEY (`in_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='收入类(用户)';
 
 -- ----------------------------
 -- Records of t_income_class
 -- ----------------------------
-INSERT INTO `t_income_class` VALUES ('1', '2.00', '3.00', '4', '5', '6', '7', '1', '1', '2018-09-11 00:00:00');
+INSERT INTO `t_income_class` VALUES ('1', '11.11', '12.22', '8888888', '99%', '100000000', '999999999', '1', '1', '2018-09-13 00:00:00');
+
+-- ----------------------------
+-- Table structure for t_intimacy_rank
+-- ----------------------------
+DROP TABLE IF EXISTS `t_intimacy_rank`;
+CREATE TABLE `t_intimacy_rank` (
+  `tintimacy_id` int(11) NOT NULL AUTO_INCREMENT,
+  `intimate_rank` int(11) NOT NULL COMMENT '排名',
+  `player_name` varchar(16) NOT NULL COMMENT '玩家名',
+  `fous_value` int(11) NOT NULL COMMENT '势力值',
+  `server_id` int(11) NOT NULL,
+  `server_name` varchar(16) NOT NULL COMMENT '玩家所在的区服名称',
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`tintimacy_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_intimacy_rank
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_level_rank
+-- ----------------------------
+DROP TABLE IF EXISTS `t_level_rank`;
+CREATE TABLE `t_level_rank` (
+  `level_id` int(11) NOT NULL AUTO_INCREMENT,
+  `level_rank` int(11) NOT NULL COMMENT '排名',
+  `player_name` varchar(16) NOT NULL COMMENT '玩家名',
+  `force_value` int(11) NOT NULL COMMENT '势力值',
+  `server_id` int(11) NOT NULL,
+  `server_name` varchar(16) DEFAULT NULL COMMENT '玩家获得所属区服',
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`level_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_level_rank
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_login_day
+-- ----------------------------
+DROP TABLE IF EXISTS `t_login_day`;
+CREATE TABLE `t_login_day` (
+  `login_day_id` int(11) NOT NULL AUTO_INCREMENT,
+  `count_day` int(11) NOT NULL COMMENT '登录天数',
+  `count_num` int(11) NOT NULL COMMENT '用户数量',
+  `server_id` int(11) DEFAULT NULL,
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`login_day_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='登录天数';
+
+-- ----------------------------
+-- Records of t_login_day
+-- ----------------------------
+INSERT INTO `t_login_day` VALUES ('1', '1', '100000', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_ltv_count
@@ -445,6 +729,7 @@ INSERT INTO `t_income_class` VALUES ('1', '2.00', '3.00', '4', '5', '6', '7', '1
 DROP TABLE IF EXISTS `t_ltv_count`;
 CREATE TABLE `t_ltv_count` (
   `ltv_id` int(11) NOT NULL AUTO_INCREMENT,
+  `recorde_time` datetime NOT NULL COMMENT '记录时间',
   `oneday_ltv` int(11) NOT NULL COMMENT '一日ltv',
   `twoday_ltv` int(11) NOT NULL COMMENT '2日ltv',
   `threeday_ltv` int(11) NOT NULL COMMENT '3日ltv',
@@ -462,7 +747,80 @@ CREATE TABLE `t_ltv_count` (
 -- ----------------------------
 -- Records of t_ltv_count
 -- ----------------------------
-INSERT INTO `t_ltv_count` VALUES ('1', '2', '3', '4', '5', '6', '7', '8', '9', '1', '1', '1');
+INSERT INTO `t_ltv_count` VALUES ('1', '2018-09-11 00:00:00', '123', '1234', '456', '789', '9999', '66666', '88888', '9999', '66666', '1', '1');
+
+-- ----------------------------
+-- Table structure for t_onlineplayer_count
+-- ----------------------------
+DROP TABLE IF EXISTS `t_onlineplayer_count`;
+CREATE TABLE `t_onlineplayer_count` (
+  `online_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '在线id',
+  `record_time` varchar(32) NOT NULL COMMENT '记录年月日',
+  `show_time_hour` varchar(16) NOT NULL COMMENT '展示时间',
+  `online_player_count` int(11) NOT NULL COMMENT '在线用户数量',
+  `allplayer_coun` int(11) NOT NULL COMMENT '在线用户总人数',
+  `server_id` int(11) DEFAULT NULL,
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`online_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='在线用户(在线分析)';
+
+-- ----------------------------
+-- Records of t_onlineplayer_count
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_out_consume
+-- ----------------------------
+DROP TABLE IF EXISTS `t_out_consume`;
+CREATE TABLE `t_out_consume` (
+  `out_consume_id` int(11) NOT NULL AUTO_INCREMENT,
+  `goods` varchar(64) NOT NULL COMMENT '物品',
+  `out` int(11) NOT NULL COMMENT '产出',
+  `consume` int(11) NOT NULL COMMENT '消耗',
+  `server_id` int(11) DEFAULT NULL,
+  `channel_id` int(11) DEFAULT NULL,
+  `record_time` datetime DEFAULT NULL COMMENT '记录时间',
+  PRIMARY KEY (`out_consume_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_out_consume
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_person_rank
+-- ----------------------------
+DROP TABLE IF EXISTS `t_person_rank`;
+CREATE TABLE `t_person_rank` (
+  `person_rank_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '个人排行',
+  `player_name` varchar(16) NOT NULL COMMENT '玩家名称',
+  `server_name` varchar(16) NOT NULL COMMENT '区服',
+  `server_id` int(11) NOT NULL,
+  `record_time` datetime NOT NULL,
+  PRIMARY KEY (`person_rank_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_person_rank
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_point_analyse
+-- ----------------------------
+DROP TABLE IF EXISTS `t_point_analyse`;
+CREATE TABLE `t_point_analyse` (
+  `charging_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '计费点id',
+  `charging_time` varchar(16) NOT NULL COMMENT '计费点时间段',
+  `buy_num_user` int(11) DEFAULT NULL COMMENT '购买人数',
+  `recharge_first_buyuser` int(11) DEFAULT NULL COMMENT '首充购买人数',
+  `server_id` int(11) DEFAULT NULL,
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`charging_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='计费点分析(充值统计)';
+
+-- ----------------------------
+-- Records of t_point_analyse
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_retain_player
@@ -470,18 +828,19 @@ INSERT INTO `t_ltv_count` VALUES ('1', '2', '3', '4', '5', '6', '7', '8', '9', '
 DROP TABLE IF EXISTS `t_retain_player`;
 CREATE TABLE `t_retain_player` (
   `retain_id` int(11) NOT NULL AUTO_INCREMENT,
+  `show_time` datetime NOT NULL COMMENT '展示时间',
   `oneday_retain` varchar(16) NOT NULL COMMENT '留存',
+  `threeday_retain` varchar(16) NOT NULL,
   `weekly_retain` varchar(16) NOT NULL COMMENT '七留',
   `server_id` int(11) DEFAULT NULL,
   `channel_id` int(11) DEFAULT NULL,
-  `show_time` datetime NOT NULL,
   PRIMARY KEY (`retain_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='玩家留存(游戏玩家)';
 
 -- ----------------------------
 -- Records of t_retain_player
 -- ----------------------------
-INSERT INTO `t_retain_player` VALUES ('1', '1', '1', '1', '1', '2018-09-11 00:00:00');
+INSERT INTO `t_retain_player` VALUES ('1', '2018-09-13 00:00:00', '90%', '90%', '88%', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_server
@@ -499,3 +858,37 @@ CREATE TABLE `t_server` (
 -- ----------------------------
 INSERT INTO `t_server` VALUES ('1', 'node_360_1', '1');
 INSERT INTO `t_server` VALUES ('2', 'node_360_2', '2');
+
+-- ----------------------------
+-- Table structure for t_task_message
+-- ----------------------------
+DROP TABLE IF EXISTS `t_task_message`;
+CREATE TABLE `t_task_message` (
+  `task_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '任务id',
+  `task_list` varchar(255) NOT NULL COMMENT '任务列表',
+  `now_progress_num` int(11) DEFAULT NULL COMMENT '当前进度人数',
+  `server_id` int(11) DEFAULT NULL,
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`task_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_task_message
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_vip_count
+-- ----------------------------
+DROP TABLE IF EXISTS `t_vip_count`;
+CREATE TABLE `t_vip_count` (
+  `vip_id` int(11) NOT NULL AUTO_INCREMENT,
+  `vip_grade` varchar(12) NOT NULL COMMENT 'vip区间',
+  `vip_online_count` int(11) DEFAULT NULL COMMENT '人数',
+  `server_id` int(11) DEFAULT NULL,
+  `channel_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`vip_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='vip人数(游戏行为统计)';
+
+-- ----------------------------
+-- Records of t_vip_count
+-- ----------------------------

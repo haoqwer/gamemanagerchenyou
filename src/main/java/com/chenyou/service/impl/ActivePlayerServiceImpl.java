@@ -1,10 +1,12 @@
 package com.chenyou.service.impl;
 
+import com.chenyou.base.BizException;
 import com.chenyou.mapper.ActivePlayerMapper;
 import com.chenyou.pojo.ActivePlayer;
 import com.chenyou.pojo.ActivePlayerExample;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.ActivePlayerService;
+import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ public class ActivePlayerServiceImpl implements ActivePlayerService {
     private ActivePlayerMapper activePlayerMapper;
 
     @Override
-    public PageResult listActviePlayer(Integer serverId, Integer channelId, int pageSize, int rows) {
+    public PageResult listActviePlayer(Integer serverId, Integer channelId, int pageSize, int rows) throws BizException {
         PageHelper.startPage(pageSize, rows);
         ActivePlayerExample example = new ActivePlayerExample();
         example.setOrderByClause("show_time desc");
@@ -33,6 +35,9 @@ public class ActivePlayerServiceImpl implements ActivePlayerService {
             criteria.andChannelIdEqualTo(channelId);
         }
         List <ActivePlayer> list = activePlayerMapper.selectByExample(example);
+        if(StringUtils.isEmpty(list)){
+            throw new BizException(BizException.CODE_RESULT_NULL,"不好意思,当前没有数据!");
+        }
         Page <ActivePlayer> page = (Page <ActivePlayer>) list;
         return new PageResult(page.getTotal(), page.getResult());
     }

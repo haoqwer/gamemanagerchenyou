@@ -35,7 +35,7 @@ public class AddNewPlayerServiceImpl implements AddNewPlayerService {
         }
         List <AddNewplayer> list = addNewplayerMapper.selectByExample(example);
         if (list.size() == 0 || list.isEmpty()) {
-            throw new BizException(BizException.CODE_RESULT_NULL, "返回数据为空");
+            throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
         }
         Page <AddNewplayer> page = (Page <AddNewplayer>) list;
         return new PageResult(page.getTotal(), page.getResult());

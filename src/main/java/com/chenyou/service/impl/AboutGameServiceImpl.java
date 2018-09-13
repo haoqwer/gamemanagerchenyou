@@ -32,7 +32,7 @@ public class AboutGameServiceImpl implements AboutGameService {
         }
         List <AboutGame> listAboutGame = aboutGameMapper.selectByExample(example);
         if (listAboutGame.size() == 0 || listAboutGame.isEmpty()) {
-            throw new BizException(BizException.CODE_NO_LONIN, "当前数据为空");
+            throw new BizException(BizException.CODE_NO_LONIN, "不好意思,当前没有数据!");
         }
         return listAboutGame.get(0);
     }

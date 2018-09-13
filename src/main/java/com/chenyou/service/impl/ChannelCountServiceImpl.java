@@ -7,6 +7,7 @@ import com.chenyou.pojo.ChannelCountExample;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.ChannelCountService;
 import com.chenyou.utils.DateUtil;
+import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class ChannelCountServiceImpl  implements ChannelCountService {
         ChannelCountExample example = new ChannelCountExample();
         example.setOrderByClause("count_time desc");
         ChannelCountExample.Criteria criteria = example.createCriteria();
-        if (parse!= "") {
+        if (!StringUtils.isEmpty(parse)) {
             criteria.andCountTimeEqualTo(DateUtil.parse(parse));
         }
         if (serverId != null) {
@@ -39,7 +40,7 @@ public class ChannelCountServiceImpl  implements ChannelCountService {
         }
         List <ChannelCount> list = channelCountMapper.selectByExample(example);
         if (list.size() == 0 || list.isEmpty()) {
-            throw new BizException(BizException.CODE_RESULT_NULL, "返回数据为空");
+            throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
         }
         Page <ChannelCount> page = (Page <ChannelCount>) list;
         return new PageResult(page.getTotal(), page.getResult());

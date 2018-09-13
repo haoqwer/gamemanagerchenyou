@@ -55,7 +55,7 @@ public class ServiceTestHtml {
 
     @Test
     public  void test_listInCome() throws ParseException, BizException {
-        PageResult pageResult = inComeClassService.listInCome("2018-09-11", null, null,1,10);
+        PageResult pageResult = inComeClassService.listInCome("2018-09-13", null, null,1,10);
         List rows = pageResult.getRows();
         for(Object userCount:rows){
             System.out.println(userCount);
@@ -73,7 +73,7 @@ public class ServiceTestHtml {
     }
 
     @Test
-    public void test_ltvCount(){
+    public void test_ltvCount() throws BizException {
         List <LtvCount> list = ltvCountService.listLtvCount(1, null);
         for (LtvCount ltvCount : list) {
             System.out.println("ltvCount" + ltvCount);

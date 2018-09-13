@@ -1,5 +1,6 @@
 package com.chenyou.service;
 
+import com.chenyou.base.BizException;
 import com.chenyou.mapper.RetainPlayerMapper;
 import com.chenyou.pojo.AwayPlayer;
 import com.chenyou.pojo.entity.PageResult;
@@ -23,7 +24,7 @@ public class GamePlayerTest {
     private AwayPlayerService awayPlayerService;
 
     @Test
-    public  void  test_listActivePlayer(){
+    public  void  test_listActivePlayer() throws BizException {
         PageResult pageResult = activePlayerService.listActviePlayer(null, null, 1, 10);
         System.out.println(pageResult.getTotal());
         for(Object obj:pageResult.getRows()){
@@ -32,7 +33,7 @@ public class GamePlayerTest {
     }
 
     @Test
-    public void test_listRetainPlayer(){
+    public void test_listRetainPlayer() throws BizException {
         PageResult pageResult = retainPlayerService.listRetainPlayer(null, null, 1, 10);
         System.out.println(pageResult.getTotal());
         for(Object obj:pageResult.getRows()){
@@ -41,8 +42,8 @@ public class GamePlayerTest {
     }
 
     @Test
-    public void test_listAwayPlayer(){
-        PageResult pageResult = awayPlayerService.listAwayPlayer(null, null, 1, 10);
+    public void test_listAwayPlayer() throws BizException {
+        PageResult pageResult = awayPlayerService.listAwayPlayer(1, 1, 1, 10);
         System.out.println(pageResult.getTotal());
         for(Object obj:pageResult.getRows()){
             System.out.println(obj);

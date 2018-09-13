@@ -7,6 +7,7 @@ import com.chenyou.pojo.CyUserCountExample;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.CyUserCountService;
 import com.chenyou.utils.DateUtil;
+import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class CyUserCountServiceImpl  implements CyUserCountService {
         PageHelper.startPage(pageSize,rows);
         Date date=null;
         //获取到时间
-        if( "" !=parse){
+        if(! StringUtils.isEmpty(parse)){
              date = DateUtil.parse(parse);
         }
         CyUserCountExample example=new CyUserCountExample();
@@ -55,7 +56,7 @@ public class CyUserCountServiceImpl  implements CyUserCountService {
 
         List <CyUserCount> listuserCount = userCountMapper.selectByExample(example);
         if(listuserCount.size()==0 || listuserCount.isEmpty()){
-            throw  new BizException(BizException.CODE_NO_LONIN,"当前数据为空!");
+            throw  new BizException(BizException.CODE_NO_LONIN,"不好意思,当前没有数据!");
         }
         Page<CyUserCount> page=(Page<CyUserCount>)listuserCount;
         return new PageResult(page.getTotal(),page.getResult());

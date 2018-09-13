@@ -93,7 +93,7 @@ public class GeneralController extends  BaseController {
     }
 
     @RequestMapping(value = "/listLtvCount", method = RequestMethod.GET)
-    public Map <String, Object> listLtvCount(Integer serverId, Integer channelId) {
+    public Map <String, Object> listLtvCount(Integer serverId, Integer channelId) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, ltvCountService.listLtvCount(serverId, channelId));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);

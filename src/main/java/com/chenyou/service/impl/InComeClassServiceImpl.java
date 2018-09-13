@@ -7,6 +7,7 @@ import com.chenyou.pojo.IncomeClassExample;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.InComeClassService;
 import com.chenyou.utils.DateUtil;
+import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class InComeClassServiceImpl implements InComeClassService {
         IncomeClassExample example=new IncomeClassExample();
         example.setOrderByClause("recorde_time desc");
         IncomeClassExample.Criteria criteria = example.createCriteria();
-        if(parse != ""){
+        if(!StringUtils.isEmpty(parse)){
             criteria.andRecordeTimeEqualTo(DateUtil.parse(parse));
         }
         if(serverId != null){
@@ -41,7 +42,7 @@ public class InComeClassServiceImpl implements InComeClassService {
         }
         List <IncomeClass> list = incomeClassMapper.selectByExample(example);
         if(list.size()==0||list.isEmpty()){
-            throw new BizException(BizException.CODE_NO_LONIN,"当前数据为空!");
+            throw new BizException(BizException.CODE_NO_LONIN,"不好意思,当前没有数据!!");
         }
         Page<IncomeClass> page=(Page<IncomeClass>) list;
         return new PageResult(page.getTotal(),page.getResult());
