@@ -96,4 +96,13 @@ public class Server {
     public void setChannelId(Integer channelId) {
         this.channelId = channelId;
     }
+
+    @Override
+    public String toString() {
+        return "Server{" +
+                "serverId=" + serverId +
+                ", serverName='" + serverName + '\'' +
+                ", channelId=" + channelId +
+                '}';
+    }
 }

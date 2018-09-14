@@ -160,4 +160,15 @@ public class AwayOutPut {
     public void setChannelId(Integer channelId) {
         this.channelId = channelId;
     }
+
+    @Override
+    public String toString() {
+        return "AwayOutPut{" +
+                "awayId=" + awayId +
+                ", awayOutput='" + awayOutput + '\'' +
+                ", countPlayer=" + countPlayer +
+                ", serverId=" + serverId +
+                ", channelId=" + channelId +
+                '}';
+    }
 }

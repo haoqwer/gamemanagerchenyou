@@ -10,6 +10,8 @@ import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,9 @@ import java.util.List;
 @Service
 @Transactional
 public class ChannelCountServiceImpl  implements ChannelCountService {
+
+    private static  final Logger logger=LoggerFactory.getLogger(ChannelCountServiceImpl.class);
+
     @Autowired
     private ChannelCountMapper channelCountMapper;
 

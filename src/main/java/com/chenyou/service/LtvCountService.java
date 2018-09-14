@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface LtvCountService {
     List<LtvCount> listLtvCount(Integer serverId, Integer channelId) throws BizException;
+
+    List<LtvCount> listLtvCount() throws BizException;
 }

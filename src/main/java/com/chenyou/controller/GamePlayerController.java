@@ -38,7 +38,15 @@ public class GamePlayerController extends BaseController {
     @Autowired
     private AwayOutputService awayOutputService;
 
-
+    /**
+     * 新增玩家
+     * @param serverId
+     * @param channelId
+     * @param page
+     * @param rows
+     * @return
+     * @throws BizException
+     */
     @RequestMapping(value = "/listAddNewPlayer", method = RequestMethod.GET)
     public Map <String, Object> listAddNewPlayer(Integer serverId, Integer channelId, int page, int rows) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -47,7 +55,15 @@ public class GamePlayerController extends BaseController {
         return resultMap;
     }
 
-
+    /**
+     * 活跃玩家
+     * @param serverId
+     * @param channelId
+     * @param page
+     * @param rows
+     * @return
+     * @throws BizException
+     */
     @RequestMapping(value = "/listActivePlayer", method = RequestMethod.GET)
     public Map <String, Object> listActivePlayer(Integer serverId, Integer channelId, int page, int rows) throws BizException {
         //获取到活跃玩家的数据
@@ -57,6 +73,15 @@ public class GamePlayerController extends BaseController {
         return resultMap;
     }
 
+    /**
+     * 玩家留存
+     * @param serverId
+     * @param channelId
+     * @param page
+     * @param rows
+     * @return
+     * @throws BizException
+     */
     @RequestMapping(value = "/listRetainPlayer")
     public Map <String, Object> listRetainPlayer(Integer serverId, Integer channelId, int page, int rows) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -66,6 +91,15 @@ public class GamePlayerController extends BaseController {
     }
 
 
+    /**
+     * 玩家流失
+     * @param serverId
+     * @param channelId
+     * @param page
+     * @param rows
+     * @return
+     * @throws BizException
+     */
     @RequestMapping(value = "/listAwayPlayer", method = RequestMethod.GET)
     public Map <String, Object> listAwayPlayer(Integer serverId, Integer channelId, int page, int rows) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -74,6 +108,15 @@ public class GamePlayerController extends BaseController {
         return resultMap;
     }
 
+    /**
+     * 登录天数
+     * @param serverId
+     * @param channelId
+     * @param page
+     * @param rows
+     * @return
+     * @throws BizException
+     */
     @RequestMapping(value = "listLoginDay", method = RequestMethod.GET)
     public Map <String, Object> listLoginDay(Integer serverId, Integer channelId, int page, int rows) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -82,6 +125,15 @@ public class GamePlayerController extends BaseController {
         return resultMap;
     }
 
+    /**
+     * 流失等级
+     * @param serverId
+     * @param channelId
+     * @param page
+     * @param rows
+     * @return
+     * @throws BizException
+     */
     @RequestMapping(value = "listAwayGrade", method = RequestMethod.GET)
     public Map <String, Object> listAwayGrade(Integer serverId, Integer channelId, int page, int rows) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -90,6 +142,15 @@ public class GamePlayerController extends BaseController {
         return resultMap;
     }
 
+    /**
+     * 流失关卡
+     * @param serverId
+     * @param channelId
+     * @param page
+     * @param rows
+     * @return
+     * @throws BizException
+     */
     @RequestMapping(value = "listAwayOutput", method = RequestMethod.GET)
     public Map <String, Object> listAwayOutput(Integer serverId, Integer channelId, int page, int rows) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();

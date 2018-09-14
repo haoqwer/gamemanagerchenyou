@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50549
 File Encoding         : 65001
 
-Date: 2018-09-13 22:14:09
+Date: 2018-09-14 21:57:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -229,8 +229,8 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, null, '0:0:0:0:0:0:0:1', '2018-09-13 22:13:50', 'admin', '2018-03-16 11:33:00', null, '2018-09-10 18:07:51', '管理员');
-INSERT INTO `sys_user` VALUES ('60', '华中有为', '华为', null, '13530873562', null, 'c1aafc7e23f24ba11aae492f5caa2d97', null, '0', null, null, null, 'admin', '2018-09-13 13:48:22', 'admin', null, '通讯大佬');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, 'e10adc3949ba59abbe56e057f20f883e', null, null, null, '0:0:0:0:0:0:0:1', '2018-09-14 14:13:17', 'admin', '2018-03-16 11:33:00', null, '2018-09-10 18:07:51', '管理员');
+INSERT INTO `sys_user` VALUES ('2', '3', '3', '4', '5', '0', '3', '3', '0', '0', '3', '2018-09-25 13:24:22', '3', '2018-09-11 13:24:10', '', null, '3');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -260,7 +260,6 @@ INSERT INTO `sys_user_role` VALUES ('40', '2');
 INSERT INTO `sys_user_role` VALUES ('52', '1');
 INSERT INTO `sys_user_role` VALUES ('56', '1');
 INSERT INTO `sys_user_role` VALUES ('56', '14');
-INSERT INTO `sys_user_role` VALUES ('60', '14');
 
 -- ----------------------------
 -- Table structure for t_about_game
@@ -319,11 +318,12 @@ CREATE TABLE `t_activity_num` (
   `server_name` varchar(16) NOT NULL,
   `record_time` datetime NOT NULL COMMENT '记录时间',
   PRIMARY KEY (`activity_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_activity_num
 -- ----------------------------
+INSERT INTO `t_activity_num` VALUES ('1', '11111', '1111111', '222', '1', '360', '2018-09-12 21:32:37');
 
 -- ----------------------------
 -- Table structure for t_activity_output
@@ -342,6 +342,7 @@ CREATE TABLE `t_activity_output` (
 -- ----------------------------
 -- Records of t_activity_output
 -- ----------------------------
+INSERT INTO `t_activity_output` VALUES ('1', '1', '222', '3333', '1', '360', '2018-09-12 21:41:35');
 
 -- ----------------------------
 -- Table structure for t_activity_rank
@@ -391,11 +392,12 @@ CREATE TABLE `t_away_grade` (
   `server_id` int(11) DEFAULT NULL,
   `channel_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`grade_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='流失等级';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='流失等级';
 
 -- ----------------------------
 -- Records of t_away_grade
 -- ----------------------------
+INSERT INTO `t_away_grade` VALUES ('1', '王者级别', '9999', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_away_output
@@ -408,11 +410,12 @@ CREATE TABLE `t_away_output` (
   `server_id` int(11) DEFAULT NULL,
   `channel_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`away_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='流失关卡';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='流失关卡';
 
 -- ----------------------------
 -- Records of t_away_output
 -- ----------------------------
+INSERT INTO `t_away_output` VALUES ('1', '第一千零八关', '88888', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_away_player
@@ -495,11 +498,12 @@ CREATE TABLE `t_channel_summary` (
   `pay_ap` double(11,2) DEFAULT NULL COMMENT '付费ap',
   `register_ap` double(11,2) DEFAULT NULL COMMENT '注册ap',
   PRIMARY KEY (`channel_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='渠道数据汇总(渠道数据)';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='渠道数据汇总(渠道数据)';
 
 -- ----------------------------
 -- Records of t_channel_summary
 -- ----------------------------
+INSERT INTO `t_channel_summary` VALUES ('1', '360', '9999', '99999', '9999', '999', '8.87', '6.66', '9.25', '3.88', '100000', '10.00', '60000.00');
 
 -- ----------------------------
 -- Table structure for t_cyuser_count
@@ -549,11 +553,12 @@ CREATE TABLE `t_everyday_recharge` (
   `server_id` int(11) DEFAULT NULL,
   `channel_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`recharge_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='充值统计(每日充值)';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='充值统计(每日充值)';
 
 -- ----------------------------
 -- Records of t_everyday_recharge
 -- ----------------------------
+INSERT INTO `t_everyday_recharge` VALUES ('1', '2018-09-11 10:08:15', '6666', '666', '10000', '8888', '999', '999999', '16668', '388888', '1.10', '1.05', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_force_rank
@@ -573,6 +578,7 @@ CREATE TABLE `t_force_rank` (
 -- ----------------------------
 -- Records of t_force_rank
 -- ----------------------------
+INSERT INTO `t_force_rank` VALUES ('1', '99999', '龙哥', '1000000', '1', '1区', '1');
 
 -- ----------------------------
 -- Table structure for t_gang_count
@@ -589,6 +595,7 @@ CREATE TABLE `t_gang_count` (
 -- ----------------------------
 -- Records of t_gang_count
 -- ----------------------------
+INSERT INTO `t_gang_count` VALUES ('1', '超强王者', '88888', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_gang_grade
@@ -601,11 +608,12 @@ CREATE TABLE `t_gang_grade` (
   `server_id` int(11) DEFAULT NULL,
   `channel_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`gang_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_gang_grade
 -- ----------------------------
+INSERT INTO `t_gang_grade` VALUES ('1', '超强王者', '888888', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_gang_rank
@@ -626,6 +634,7 @@ CREATE TABLE `t_gang_rank` (
 -- ----------------------------
 -- Records of t_gang_rank
 -- ----------------------------
+INSERT INTO `t_gang_rank` VALUES ('1', '1', '龙哥', '888888', '1008', '1', '千年盛世1区', '1');
 
 -- ----------------------------
 -- Table structure for t_grade_player
@@ -638,11 +647,12 @@ CREATE TABLE `t_grade_player` (
   `server_id` int(11) DEFAULT NULL,
   `channel_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`grade_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户等级(游戏行为统计)';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='用户等级(游戏行为统计)';
 
 -- ----------------------------
 -- Records of t_grade_player
 -- ----------------------------
+INSERT INTO `t_grade_player` VALUES ('1', '天外飞仙第一关', '100000', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_income_class
@@ -680,11 +690,12 @@ CREATE TABLE `t_intimacy_rank` (
   `server_name` varchar(16) NOT NULL COMMENT '玩家所在的区服名称',
   `channel_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`tintimacy_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_intimacy_rank
 -- ----------------------------
+INSERT INTO `t_intimacy_rank` VALUES ('1', '1', '龙哥', '8888888', '1', '千年盛世1区', '1');
 
 -- ----------------------------
 -- Table structure for t_level_rank
@@ -699,11 +710,12 @@ CREATE TABLE `t_level_rank` (
   `server_name` varchar(16) DEFAULT NULL COMMENT '玩家获得所属区服',
   `channel_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`level_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_level_rank
 -- ----------------------------
+INSERT INTO `t_level_rank` VALUES ('1', '1', '龙哥', '66666', '1', '千年盛世1区', '1');
 
 -- ----------------------------
 -- Table structure for t_login_day
@@ -742,12 +754,13 @@ CREATE TABLE `t_ltv_count` (
   `server_id` int(11) DEFAULT NULL COMMENT '分区区服id',
   `channel_id` int(11) DEFAULT NULL COMMENT '渠道id',
   PRIMARY KEY (`ltv_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='LTV概况';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='LTV概况';
 
 -- ----------------------------
 -- Records of t_ltv_count
 -- ----------------------------
 INSERT INTO `t_ltv_count` VALUES ('1', '2018-09-11 00:00:00', '123', '1234', '456', '789', '9999', '66666', '88888', '9999', '66666', '1', '1');
+INSERT INTO `t_ltv_count` VALUES ('2', '2018-09-13 14:09:44', '345', '234', '666', '888', '999', '1111', '1111', '2222', '6666', '2', '2');
 
 -- ----------------------------
 -- Table structure for t_onlineplayer_count
@@ -762,11 +775,12 @@ CREATE TABLE `t_onlineplayer_count` (
   `server_id` int(11) DEFAULT NULL,
   `channel_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`online_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='在线用户(在线分析)';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='在线用户(在线分析)';
 
 -- ----------------------------
 -- Records of t_onlineplayer_count
 -- ----------------------------
+INSERT INTO `t_onlineplayer_count` VALUES ('1', '1:00', '1:00', '99999', '88888', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_out_consume
@@ -781,11 +795,12 @@ CREATE TABLE `t_out_consume` (
   `channel_id` int(11) DEFAULT NULL,
   `record_time` datetime DEFAULT NULL COMMENT '记录时间',
   PRIMARY KEY (`out_consume_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_out_consume
 -- ----------------------------
+INSERT INTO `t_out_consume` VALUES ('1', '铭文', '50', '400', '1', '1', '2018-09-04 18:19:48');
 
 -- ----------------------------
 -- Table structure for t_person_rank
@@ -816,11 +831,12 @@ CREATE TABLE `t_point_analyse` (
   `server_id` int(11) DEFAULT NULL,
   `channel_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`charging_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='计费点分析(充值统计)';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='计费点分析(充值统计)';
 
 -- ----------------------------
 -- Records of t_point_analyse
 -- ----------------------------
+INSERT INTO `t_point_analyse` VALUES ('1', '计费点0', '100000', '99999', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_retain_player
@@ -870,11 +886,12 @@ CREATE TABLE `t_task_message` (
   `server_id` int(11) DEFAULT NULL,
   `channel_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`task_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_task_message
 -- ----------------------------
+INSERT INTO `t_task_message` VALUES ('1', '1', '888888', '1', '1');
 
 -- ----------------------------
 -- Table structure for t_vip_count
@@ -887,8 +904,9 @@ CREATE TABLE `t_vip_count` (
   `server_id` int(11) DEFAULT NULL,
   `channel_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`vip_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='vip人数(游戏行为统计)';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='vip人数(游戏行为统计)';
 
 -- ----------------------------
 -- Records of t_vip_count
 -- ----------------------------
+INSERT INTO `t_vip_count` VALUES ('1', '1', '100000', '1', '1');

@@ -36,4 +36,13 @@ public class LtvCountServiceImpl implements LtvCountService {
         }
         return list;
     }
+
+    @Override
+    public List <LtvCount> listLtvCount() throws BizException {
+        List <LtvCount> list = ltvCountMapper.selectByExample(null);
+        if(StringUtils.isEmpty(list)){
+            throw new BizException(BizException.CODE_RESULT_NULL,"不好意思，当前没有数据!");
+        }
+        return list;
+    }
 }

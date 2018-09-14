@@ -8,6 +8,8 @@ import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.AddNewPlayerService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,8 @@ import java.util.List;
 @Service
 @Transactional
 public class AddNewPlayerServiceImpl implements AddNewPlayerService {
+
+    private static  final Logger logger=LoggerFactory.getLogger(AddNewPlayerServiceImpl.class);
 
     @Autowired
     private AddNewplayerMapper addNewplayerMapper;
@@ -28,9 +32,11 @@ public class AddNewPlayerServiceImpl implements AddNewPlayerService {
         example.setOrderByClause("register_time desc");
         AddNewplayerExample.Criteria criteria = example.createCriteria();
         if (null != serverId) {
+            logger.info("serverId:"+serverId);
             criteria.andServerIdEqualTo(serverId);
         }
         if (null != channelId) {
+            logger.info("channelId:"+channelId);
             criteria.andChannelIdEqualTo(channelId);
         }
         List <AddNewplayer> list = addNewplayerMapper.selectByExample(example);

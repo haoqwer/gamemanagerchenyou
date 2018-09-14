@@ -4,5 +4,5 @@ import com.chenyou.base.BizException;
 import com.chenyou.pojo.AboutGame;
 
 public interface AboutGameService {
-    AboutGame getAboutGame(Integer ServerId,Integer channelId) throws BizException;
+    AboutGame getAboutGame(Integer serverId,Integer channelId) throws BizException;
 }

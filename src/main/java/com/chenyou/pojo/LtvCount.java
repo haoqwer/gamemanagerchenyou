@@ -418,4 +418,24 @@ public class LtvCount {
     public void setChannelId(Integer channelId) {
         this.channelId = channelId;
     }
+
+
+    @Override
+    public String toString() {
+        return "LtvCount{" +
+                "ltvId=" + ltvId +
+                ", recordeTime=" + recordeTime +
+                ", onedayLtv=" + onedayLtv +
+                ", twodayLtv=" + twodayLtv +
+                ", threedayLtv=" + threedayLtv +
+                ", fourdayLtv=" + fourdayLtv +
+                ", fivedayLtv=" + fivedayLtv +
+                ", sixdayLtv=" + sixdayLtv +
+                ", sevendayLtv=" + sevendayLtv +
+                ", fifteendayLtv=" + fifteendayLtv +
+                ", thirtydayLtv=" + thirtydayLtv +
+                ", serverId=" + serverId +
+                ", channelId=" + channelId +
+                '}';
+    }
 }

@@ -12,14 +12,17 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *在线用户
+ */
 @RestController
 @RequestMapping("/online")
-public class OnlinePlayerController {
+public class OnlinePlayerController  extends  BaseController{
 
     @Autowired
     private OnlinePlayerCountService onlinePlayerCountService;
 
-    @RequestMapping(value = "/listOnlinePlayerCount",method = RequestMethod.GET)
+        @RequestMapping(value = "/listOnlinePlayerCount",method = RequestMethod.GET)
     public Map<String,Object> listOnlinePlayerCount(String parse, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, onlinePlayerCountService.listOnlinePlayerCount(parse, serverId, channelId, page, rows));

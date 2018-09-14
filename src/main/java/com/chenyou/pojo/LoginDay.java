@@ -160,4 +160,15 @@ public class LoginDay {
     public void setChannelId(Integer channelId) {
         this.channelId = channelId;
     }
+
+    @Override
+    public String toString() {
+        return "LoginDay{" +
+                "loginDayId=" + loginDayId +
+                ", countDay=" + countDay +
+                ", countNum=" + countNum +
+                ", serverId=" + serverId +
+                ", channelId=" + channelId +
+                '}';
+    }
 }

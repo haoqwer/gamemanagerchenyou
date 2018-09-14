@@ -9,6 +9,7 @@ import com.chenyou.service.OnlinePlayerCountService;
 import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +28,9 @@ public class OnlinePlayerCountServiceImpl implements OnlinePlayerCountService {
     @Override
     public PageResult listOnlinePlayerCount(String parse, Integer serverId, Integer channelId, int pageNum, int pageSize) throws ParseException, BizException {
         Date date = null;
+        PageHelper.startPage(pageNum,pageSize);
         OnlineplayerCountExample example = new OnlineplayerCountExample();
-        example.setOrderByClause("record_time desc)");
+        example.setOrderByClause("record_time desc");
         OnlineplayerCountExample.Criteria criteria = example.createCriteria();
         if (!StringUtils.isEmpty(parse)) {
             criteria.andRecordTimeEqualTo(parse);

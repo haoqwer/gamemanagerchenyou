@@ -51,6 +51,7 @@ public class RoleServiceImpl implements RoleService {
     public Role getRoleByRoleId(Integer roleId) throws BizException{
         Role role = new Role();
         try {
+            logger.info("roleId:"+roleId);
             role = roleMapper.selectByPrimaryKey(roleId);
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,6 +99,7 @@ public class RoleServiceImpl implements RoleService {
         RoleExample.Criteria criteria = example.createCriteria();
         if (null != role.getRoleName()) {
            // criteria.andRoleNameEqualTo(role.getRoleName());
+            logger.info("roleName:"+role.getRoleName());
             criteria.andRoleNameLike("%"+role.getRoleName()+"%");
         }
         Page <Role> page = (Page <Role>) roleMapper.selectByExample(example);
@@ -161,6 +163,7 @@ public class RoleServiceImpl implements RoleService {
             //新增角色
             role.setStatus("0");
             roleMapper.insert(role);
+            logger.info("roleName:"+role.getRoleName());
             //新增角色与菜单关联中间表
             count = insertRoleMenu(role);
         } catch (Exception e) {

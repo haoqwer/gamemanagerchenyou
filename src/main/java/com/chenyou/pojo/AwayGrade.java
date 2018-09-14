@@ -160,4 +160,15 @@ public class AwayGrade {
     public void setChannelId(Integer channelId) {
         this.channelId = channelId;
     }
+
+    @Override
+    public String toString() {
+        return "AwayGrade{" +
+                "gradeId=" + gradeId +
+                ", gameGrade='" + gameGrade + '\'' +
+                ", countPlayer=" + countPlayer +
+                ", serverId=" + serverId +
+                ", channelId=" + channelId +
+                '}';
+    }
 }

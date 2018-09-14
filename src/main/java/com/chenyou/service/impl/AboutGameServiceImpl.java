@@ -6,6 +6,8 @@ import com.chenyou.pojo.AboutGame;
 import com.chenyou.pojo.AboutGameExample;
 import com.chenyou.service.AboutGameService;
 import com.chenyou.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,16 +18,20 @@ import java.util.List;
 @Transactional
 public class AboutGameServiceImpl implements AboutGameService {
 
+
+    private static  final  Logger logger=LoggerFactory.getLogger(AboutGame.class);
+
     @Autowired
     private AboutGameMapper aboutGameMapper;
 
     @Override
-    public AboutGame getAboutGame(Integer ServerId,Integer channelId) throws BizException {
+    public AboutGame getAboutGame(Integer serverId,Integer channelId) throws BizException {
         //根据区服或者渠道来查询对应的游戏概况的数据
         AboutGameExample example = new AboutGameExample();
         AboutGameExample.Criteria criteria = example.createCriteria();
-        if (ServerId != null) {
-            criteria.andServerIdEqualTo(ServerId);
+        if (serverId != null) {
+            logger.info("serverId:"+serverId);
+            criteria.andServerIdEqualTo(serverId);
         }
         if (channelId != null) {
             criteria.andChannelIdEqualTo(channelId);

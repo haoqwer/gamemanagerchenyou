@@ -9,6 +9,8 @@ import com.chenyou.service.ActivePlayerService;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,8 @@ import java.util.List;
 @Service
 @Transactional
 public class ActivePlayerServiceImpl implements ActivePlayerService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ActivePlayerServiceImpl.class);
 
     @Autowired
     private ActivePlayerMapper activePlayerMapper;
@@ -29,9 +33,11 @@ public class ActivePlayerServiceImpl implements ActivePlayerService {
         example.setOrderByClause("show_time desc");
         ActivePlayerExample.Criteria criteria = example.createCriteria();
         if (null != serverId) {
+            logger.info("serverId:"+serverId);
             criteria.andServerIdEqualTo(serverId);
         }
         if (null != channelId) {
+            logger.info("channelId:"+channelId);
             criteria.andChannelIdEqualTo(channelId);
         }
         List <ActivePlayer> list = activePlayerMapper.selectByExample(example);

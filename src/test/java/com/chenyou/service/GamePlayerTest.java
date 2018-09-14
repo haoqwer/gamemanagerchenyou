@@ -23,6 +23,15 @@ public class GamePlayerTest {
     @Autowired
     private AwayPlayerService awayPlayerService;
 
+    @Autowired
+    private LoginDayService loginDayService;
+
+    @Autowired
+    private AwayGradeService awayGradeService;
+
+    @Autowired
+    private AwayOutputService awayOutputService;
+
     @Test
     public  void  test_listActivePlayer() throws BizException {
         PageResult pageResult = activePlayerService.listActviePlayer(null, null, 1, 10);
@@ -49,6 +58,38 @@ public class GamePlayerTest {
             System.out.println(obj);
         }
     }
+
+    @Test
+    public void test_listLoginDay() throws BizException {
+        PageResult pageResult = loginDayService.listLoginDay(null, null, 1, 10);
+        System.out.println(pageResult.getTotal());
+        for(Object obj:pageResult.getRows()){
+            System.out.println(obj);
+        }
+    }
+
+
+    @Test
+    public  void test_listAwayGrade() throws BizException {
+        PageResult pageResult = awayGradeService.listAwayGradeServiceImpl(null, null, 1, 10);
+        System.out.println(pageResult.getTotal());
+        for(Object obj:pageResult.getRows()){
+            System.out.println(obj);
+        }
+    }
+
+    @Test
+    public  void test_listAwayOutput() throws BizException {
+        PageResult pageResult = awayOutputService.listAwayOutputService(2, null, 1, 10);
+        System.out.println(pageResult.getTotal());
+        for(Object obj:pageResult.getRows()){
+            System.out.println(obj);
+        }
+    }
+
+
+
+
 
 
 
