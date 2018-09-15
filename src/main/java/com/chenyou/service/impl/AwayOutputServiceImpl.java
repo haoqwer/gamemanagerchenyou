@@ -1,16 +1,14 @@
 package com.chenyou.service.impl;
 
 import com.chenyou.base.BizException;
-import com.chenyou.mapper.AwayOutPutMapper;
-import com.chenyou.pojo.AwayOutPut;
-import com.chenyou.pojo.AwayOutPutExample;
+import com.chenyou.mapper.AwayOutputMapper;
+import com.chenyou.pojo.AwayOutput;
+import com.chenyou.pojo.AwayOutputExample;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.AwayOutputService;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,28 +19,27 @@ import java.util.List;
 @Transactional
 public class AwayOutputServiceImpl implements AwayOutputService {
 
-    private static  final Logger logger=LoggerFactory.getLogger(AwayOutputServiceImpl.class);
 
     @Autowired
-    private AwayOutPutMapper awayOutPutMapper;
+    private AwayOutputMapper awayOutputMapper;
 
     @Override
-    public PageResult listAwayOutputService(Integer serverId, Integer channelId, int pageNum, int pageSize) throws BizException {
-        PageHelper.startPage(pageNum, pageSize);
-        AwayOutPutExample example = new AwayOutPutExample();
-        example.setOrderByClause("count_player desc");
-        AwayOutPutExample.Criteria criteria = example.createCriteria();
-        if (null != serverId) {
+    public PageResult listAwayOutput(Integer serverId, Integer channelId, int pageNum, int pageSize) throws BizException {
+        PageHelper.startPage(pageNum,pageSize);
+        AwayOutputExample example=new AwayOutputExample();
+        example.setOrderByClause("count_player asc");
+        AwayOutputExample.Criteria criteria = example.createCriteria();
+        if(null !=serverId){
             criteria.andServerIdEqualTo(serverId);
         }
-        if (null != channelId) {
+        if(null !=channelId){
             criteria.andChannelIdEqualTo(channelId);
         }
-        List <AwayOutPut> list = awayOutPutMapper.selectByExample(example);
+        List<AwayOutput> list = awayOutputMapper.selectByExample(example);
         if(StringUtils.isEmpty(list)){
             throw new BizException(BizException.CODE_RESULT_NULL,"不好意思,当前没有数据!");
         }
-        Page <AwayOutPut> page = (Page <AwayOutPut>) list;
+        Page<AwayOutput> page = (Page <AwayOutput>) list;
         return new PageResult(page.getTotal(), page.getResult());
     }
 }

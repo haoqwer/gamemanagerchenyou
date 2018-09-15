@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.security.Security;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -187,25 +188,18 @@ public class UserController extends BaseController{
     /**
      * 修改密码
      *
-     * @param oldPassword
-     * @param operPassword
+     * @param
+     * @param
      * @return
      */
     @RequestMapping(value = "/changepwd",method = RequestMethod.POST)
-    public Map<String,Object> changepwd(String oldPassword, String operPassword)  throws BizException{
-        Map<String,Object> resultMap=new HashMap <>();
-        if(StringUtils.isEmpty(oldPassword)){
-            throw new BizException(BizException.CODE_PARM_LACK,"原始密码不能为空!");
-        }
+    public Map<String,Object> changepwd(String  oldPassword, String newPassword,String againPassword)  throws BizException{
         Subject subject = SecurityUtils.getSubject();
-        User user = (User) subject.getPrincipal();
-        if(StringUtils.isNull(user)){
-            throw new BizException(BizException.CODE_PARM_ERROR,"当前用户不存在");
-        }
-        user.setPassword(operPassword);
-        resultMap.put(ApplicationConstants.TAG_DATA,userService.changePassword(user));
+        User u = (User) subject.getPrincipal();
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put(ApplicationConstants.TAG_DATA,userService.changePassword(u.getLoginName(),oldPassword,newPassword,againPassword));
         resultMap.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
-        return resultMap;
+        return  resultMap;
     }
 
     /**

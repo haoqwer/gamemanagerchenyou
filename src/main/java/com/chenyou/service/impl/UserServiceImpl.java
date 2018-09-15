@@ -339,18 +339,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int changePassword(User user) throws BizException {
-        int count = 0;
-        if (StringUtils.isEmpty(user.getPassword())) {
-            throw new BizException(BizException.CODE_PARM_LACK, "新密码不能为空!");
+    public int changePassword(String loginName,String  oldPassword, String newPassword,String againPassword) throws BizException {
+        //首先查到原始的用户
+        User uu=null;
+        User user = userMapper.getUserByLoginName(loginName);
+        if(StringUtils.isNull(user)){
+            throw new BizException(BizException.CODE_PARM_ERROR,"不好意思当前用户不存在!");
         }
-
-        try {
-            count = userMapper.updateByPrimaryKey(user);
-        } catch (Exception e) {
-            e.printStackTrace();
+        //判断两次输入的密码是否一致
+        String  password = user.getPassword();
+        String ss = MD5Utils.md5(oldPassword);
+        System.out.println(ss);
+        if(ss.equals(password)){
+            //接着判断两次输入的密码是否一致
+            if(newPassword.equals(againPassword)){
+               user.setPassword(MD5Utils.md5(againPassword));
+                int i = userMapper.updateByPrimaryKeySelective(user);
+                return i;
+            }else {
+                throw new BizException(BizException.CODE_PARM_ERROR,"不好意思两次输入密码不一致!");
+            }
+        }else{
+            throw new BizException(BizException.CODE_PARM_ERROR,"不好意思原密码输入错误!");
         }
-        return count;
     }
 
     /**

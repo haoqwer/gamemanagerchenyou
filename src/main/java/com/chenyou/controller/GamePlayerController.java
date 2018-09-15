@@ -142,21 +142,14 @@ public class GamePlayerController extends BaseController {
         return resultMap;
     }
 
-    /**
-     * 流失关卡
-     * @param serverId
-     * @param channelId
-     * @param page
-     * @param rows
-     * @return
-     * @throws BizException
-     */
+
     @RequestMapping(value = "listAwayOutput", method = RequestMethod.GET)
     public Map <String, Object> listAwayOutput(Integer serverId, Integer channelId, int page, int rows) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, awayOutputService.listAwayOutputService(serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, awayOutputService.listAwayOutput(serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
+
 
 }

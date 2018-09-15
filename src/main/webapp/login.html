@@ -142,8 +142,10 @@
                         password: password.value
                     },
                     success (val) {
-                        if (val) {
+                        if (val.success) {
                             window.location = '/index.html'
+                        } else {
+                            alert('账号名或密码错误')
                         }
                     }
                 })

@@ -1,12 +1,14 @@
 package com.chenyou.poi;
 
 
+import com.chenyou.utils.MD5Utils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.junit.Test;
+import sun.security.provider.MD5;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -110,6 +112,7 @@ public class PoiTest {
 
 
 
+
     @Test
     public  void test_foreach() throws IOException {
         //遍历单元格
@@ -118,6 +121,21 @@ public class PoiTest {
         for(Row   row :sheet){
             System.out.println(row.getCell(0).getStringCellValue());
         }
+    }
+
+    @Test
+    public  void test_equal(){
+        String s="123456";
+        String s1 = MD5Utils.md5(s);
+        String s2 = MD5Utils.md5(s);
+        if(s1.equals(s2)){
+            System.out.println("-------");
+        }
+
+
+    if("e10adc3949ba59abbe56e057f20f883e".equals("e10adc3949ba59abbe56e057f20f883e")){
+        System.out.println("----");
+    }
     }
 
 

@@ -520,4 +520,9 @@
         where user_id = #{userId,jdbcType=INTEGER}
     </select>
 
+    <!--根据登录名查找密码-->
+    <select id="getPasswordByLoginName"  parameterType="String" resultMap="BaseResultMap">
+        select  * from sys_user where login_name=#{loginName}
+    </select>
+
 </mapper>

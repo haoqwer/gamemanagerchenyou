@@ -21,10 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 public class LoginController extends  BaseController{
@@ -57,7 +54,7 @@ public class LoginController extends  BaseController{
             return new Result(true, "登录成功!!!");
         } catch (AuthenticationException e) {
             e.printStackTrace();
-            return new Result(false, "登录失败!!!");
+            return new Result(false, "用户名和密码错误!!!");
         }
     }
 
@@ -81,9 +78,40 @@ public class LoginController extends  BaseController{
         User user = (User) subject.getPrincipal();
         //根据用户id查询对应的权限
         List <Menu> menus = menuService.listMenusByUserId(user.getUserId());
-        map.put(ApplicationConstants.TAG_DATA, menus);
+        List<Map<String, Object>> trees = getTrees(menus, false, null, false);
+        map.put(ApplicationConstants.TAG_DATA, trees);
         map.put(ApplicationConstants.TAG_SC,ApplicationConstants.SC_OK);
         return map;
+    }
+
+
+    public List <Map <String, Object>> getTrees(List <Menu> menuList, boolean isCheck, List <String> roleMenuList, boolean permsFlag) throws BizException{
+        List <Map <String, Object>> trees = new ArrayList<>();
+        for (Menu menu : menuList) {
+            Map <String, Object> deptMap = new HashMap <>();
+            deptMap.put("id", menu.getMenuId());
+            deptMap.put("pId", menu.getParentId());
+            deptMap.put("name", transMenuName(menu, roleMenuList, permsFlag));
+            deptMap.put("type",menu.getMenuType());
+            if (isCheck) {
+                deptMap.put("chcked", roleMenuList.contains(menu.getMenuId() + menu.getPerms()));
+            } else {
+                deptMap.put("chcked", false);
+            }
+            trees.add(deptMap);
+        }
+        return trees;
+    }
+
+    private Object transMenuName(Menu menu, List <String> roleMenuList, boolean permsFlag) throws BizException{
+        //buffer流
+        StringBuffer sb = new StringBuffer();
+        sb.append(menu.getMenuName());
+        if (permsFlag) {
+            //增加权限标识
+            sb.append( menu.getPerms());
+        }
+        return sb.toString();
     }
 
     @RequestMapping("/getUser")

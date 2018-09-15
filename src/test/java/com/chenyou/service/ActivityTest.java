@@ -1,5 +1,6 @@
 package com.chenyou.service;
 
+import com.chenyou.base.BizException;
 import com.chenyou.pojo.entity.PageResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,8 @@ public class ActivityTest {
 
     @Autowired
     private ActivityOutputService activityOutputService;
+    @Autowired
+    private OutConsumeService outConsumeService;
 
     @Test
     public void  test_activityNum() throws ParseException {
@@ -31,6 +34,15 @@ public class ActivityTest {
     @Test
     public void test_ActivityoutPut() throws ParseException {
         PageResult pageResult = activityOutputService.listActivityOutput(null, 1, 1, 10);
+        System.out.println(pageResult.getTotal());
+        for (Object obj : pageResult.getRows()) {
+            System.out.println(obj);
+        }
+    }
+
+    @Test
+    public void oun() throws ParseException, BizException {
+        PageResult pageResult = outConsumeService.listOutConsume("2018-09-04 18:19:48" ,null, null, 1,10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);

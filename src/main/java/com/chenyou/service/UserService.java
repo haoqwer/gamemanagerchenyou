@@ -73,10 +73,10 @@ public interface UserService {
 
     /**
      * 用户修改密码
-     * @param user
+     * @param
      * @return
      */
-      int changePassword(User user) throws BizException;
+      int changePassword(String loginName,String  oldPassword, String newPassword,String againPassword) throws BizException;
 
     /**
      * 用户删除

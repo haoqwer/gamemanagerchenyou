@@ -27,7 +27,6 @@ public class OnlinePlayerCountServiceImpl implements OnlinePlayerCountService {
 
     @Override
     public PageResult listOnlinePlayerCount(String parse, Integer serverId, Integer channelId, int pageNum, int pageSize) throws ParseException, BizException {
-        Date date = null;
         PageHelper.startPage(pageNum,pageSize);
         OnlineplayerCountExample example = new OnlineplayerCountExample();
         example.setOrderByClause("record_time desc");

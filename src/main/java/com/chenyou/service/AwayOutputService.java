@@ -4,5 +4,6 @@ import com.chenyou.base.BizException;
 import com.chenyou.pojo.entity.PageResult;
 
 public interface AwayOutputService {
-    PageResult listAwayOutputService(Integer serverId,Integer channelId,int pageNum,int pageSize) throws BizException;
+
+    PageResult listAwayOutput(Integer serverId,Integer channelId,int pageNum,int pageSize) throws BizException;
 }

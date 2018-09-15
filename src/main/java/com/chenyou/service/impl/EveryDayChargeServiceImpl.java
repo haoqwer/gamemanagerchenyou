@@ -6,6 +6,7 @@ import com.chenyou.pojo.EvervyDayRechargeExample;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.EverydayChargeService;
 import com.chenyou.utils.DateUtil;
+import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ public class EveryDayChargeServiceImpl implements EverydayChargeService {
         EvervyDayRechargeExample example = new EvervyDayRechargeExample();
         example.setOrderByClause("recharge_time desc");
         EvervyDayRechargeExample.Criteria criteria = example.createCriteria();
-        if (null != parse) {
+        if (! StringUtils.isEmpty(parse)) {
             criteria.andRechargeTimeEqualTo(DateUtil.parse(parse));
         }
         if (null != serverId) {
