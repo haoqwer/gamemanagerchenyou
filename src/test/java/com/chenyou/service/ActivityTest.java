@@ -24,7 +24,7 @@ public class ActivityTest {
 
     @Test
     public void  test_activityNum() throws ParseException {
-        PageResult pageResult = activityNumService.listActivityNum(null, 1, 1, 10);
+        PageResult pageResult = activityNumService.listActivityNum(null,null, 1, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -33,7 +33,7 @@ public class ActivityTest {
 
     @Test
     public void test_ActivityoutPut() throws ParseException {
-        PageResult pageResult = activityOutputService.listActivityOutput(null, 1, 1, 10);
+        PageResult pageResult = activityOutputService.listActivityOutput(null, null,1, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);

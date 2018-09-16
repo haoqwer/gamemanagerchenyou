@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,22 +26,34 @@ public class PersonRankServiceImpl implements PersonRankService {
     private PersonRankMapper personRankMapper;
 
     @Override
-    public PageResult listActivityRank(String parse, Integer serverId, int pageNum, int pageSize) throws ParseException, BizException {
-        PageHelper.startPage(pageNum,pageSize);
-        PersonRankExample example=new PersonRankExample();
+    public PageResult listActivityRank(String startTime, String endTime, Integer serverId, int pageNum, int pageSize) throws ParseException, BizException {
+        PageHelper.startPage(pageNum, pageSize);
+        PersonRankExample example = new PersonRankExample();
         example.setOrderByClause("record_time desc");
         PersonRankExample.Criteria criteria = example.createCriteria();
-        if(! StringUtils.isEmpty(parse)){
-            criteria.andRecordTimeEqualTo(DateUtil.parse(parse));
+        Date start = null;
+        Date end = null;
+        Date temp = null;
+        if (!StringUtils.isEmpty(startTime)) {
+            start = DateUtil.parse(startTime);
         }
-        if(null !=serverId){
+        if (!StringUtils.isEmpty(endTime)) {
+            end = DateUtil.parse(endTime);
+        }
+        if (start.after(end)) {
+            temp = end;
+            end = start;
+            start = temp;
+        }
+        criteria.andRecordTimeBetween(start, end);
+        if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }
-        List<PersonRank> list = personRankMapper.selectByExample(example);
+        List <PersonRank> list = personRankMapper.selectByExample(example);
         if (StringUtils.isEmpty(list)) {
             throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
         }
-        Page<PersonRank> page = (Page <PersonRank>) list;
+        Page <PersonRank> page = (Page <PersonRank>) list;
         return new PageResult(page.getTotal(), page.getResult());
     }
 }

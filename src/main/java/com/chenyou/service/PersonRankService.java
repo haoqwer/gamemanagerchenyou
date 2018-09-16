@@ -6,5 +6,5 @@ import com.chenyou.pojo.entity.PageResult;
 import java.text.ParseException;
 
 public interface PersonRankService {
-    PageResult listActivityRank(String parse, Integer serverId, int pageNum, int pageSize) throws ParseException, BizException;
+    PageResult listActivityRank(String startTime,String endTime, Integer serverId, int pageNum, int pageSize) throws ParseException, BizException;
 }

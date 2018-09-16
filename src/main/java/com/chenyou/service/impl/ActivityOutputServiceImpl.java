@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,12 +25,27 @@ public class ActivityOutputServiceImpl implements ActivityOutputService {
     private ActivityOutputMapper activityOutputMapper;
 
     @Override
-    public PageResult listActivityOutput(String parse, Integer serverId, int pageNum, int pageSize) throws ParseException {
+    public PageResult listActivityOutput(String startTime,String endTime, Integer serverId, int pageNum, int pageSize) throws ParseException {
         PageHelper.startPage(pageNum,pageSize);
         ActivityOutputExample example=new ActivityOutputExample();
         ActivityOutputExample.Criteria criteria = example.createCriteria();
-        if(! StringUtils.isEmpty(parse)){
-            criteria.andRecordeTimeEqualTo(DateUtil.parse(parse));
+        Date start = null;
+        Date end = null;
+        Date temp = null;
+        if (!StringUtils.isEmpty(startTime)) {
+            start = DateUtil.parse(startTime);
+        }
+        if (!StringUtils.isEmpty(endTime)) {
+            end = DateUtil.parse(endTime);
+        }
+        if (start.after(end)) {
+            temp = end;
+            end = start;
+            start = temp;
+        }
+        criteria.andRecordeTimeBetween(start,end);
+        if (null != serverId) {
+            criteria.andServerIdEqualTo(serverId);
         }
         if(null !=serverId){
             criteria.andServerIdEqualTo(serverId);

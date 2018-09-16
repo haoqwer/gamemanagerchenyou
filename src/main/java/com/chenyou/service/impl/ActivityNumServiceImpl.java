@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,18 +27,30 @@ public class ActivityNumServiceImpl implements ActivityNumService {
     private ActivityNumMapper activityNumMapper;
 
     @Override
-    public PageResult listActivityNum(String parse, Integer serverId, int pageNum, int pageSize) throws ParseException {
-        PageHelper.startPage(pageNum,pageSize);
-        ActivityNumExample example=new ActivityNumExample();
+    public PageResult listActivityNum(String startTime,String endTime, Integer serverId, int pageNum, int pageSize) throws ParseException {
+        PageHelper.startPage(pageNum, pageSize);
+        ActivityNumExample example = new ActivityNumExample();
         ActivityNumExample.Criteria criteria = example.createCriteria();
-        if(!StringUtils.isEmpty(parse)){
-            criteria.andRecordTimeEqualTo(DateUtil.parse(parse));
+        Date start = null;
+        Date end = null;
+        Date temp = null;
+        if (!StringUtils.isEmpty(startTime)) {
+            start = DateUtil.parse(startTime);
         }
-        if(null != serverId){
+        if (!StringUtils.isEmpty(endTime)) {
+            end = DateUtil.parse(endTime);
+        }
+        if (start.after(end)) {
+            temp = end;
+            end = start;
+            start = temp;
+        }
+        criteria.andRecordTimeBetween(start, end);
+        if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }
         List <ActivityNum> list = activityNumMapper.selectByExample(example);
-        Page<ActivityNum> page=(Page<ActivityNum>)list;
-        return new PageResult(page.getTotal(),page.getResult());
+        Page <ActivityNum> page = (Page <ActivityNum>) list;
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }

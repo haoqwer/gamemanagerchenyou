@@ -17,7 +17,10 @@ import javax.annotation.Resource;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -375,6 +378,17 @@ public class ServiceTest {
         FileOutputStream fileOut = new FileOutputStream("workbook.xls");
         wb.write(fileOut);
         fileOut.close();
+    }
+
+    @Test
+    public void test_TimeEqual() throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Date date=new Date();
+        String s="2018-08-12";
+        Date d = sdf.parse(s);
+        if(d.after(date)){
+            System.out.println("----");
+        }
     }
 
 }

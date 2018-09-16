@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,14 +27,26 @@ public class ActivityRankServiceImpl  implements ActivityRankService {
     private ActivityRankMapper activityRankMapper;
 
     @Override
-    public PageResult listActivityRank(String parse, Integer serverId,int pageNum,int pageSize) throws ParseException, BizException {
+    public PageResult listActivityRank(String startTime,String endTime, Integer serverId,int pageNum,int pageSize) throws ParseException, BizException {
         PageHelper.startPage(pageNum,pageSize);
         ActivityRankExample example=new ActivityRankExample();
         example.setOrderByClause("record_time");
         ActivityRankExample.Criteria criteria = example.createCriteria();
-        if(! StringUtils.isEmpty(parse)){
-            criteria.andRecordTimeEqualTo(DateUtil.parse(parse));
+        Date start = null;
+        Date end = null;
+        Date temp = null;
+        if (!StringUtils.isEmpty(startTime)) {
+            start = DateUtil.parse(startTime);
         }
+        if (!StringUtils.isEmpty(endTime)) {
+            end = DateUtil.parse(endTime);
+        }
+        if (start.after(end)) {
+            temp = end;
+            end = start;
+            start = temp;
+        }
+        criteria.andRecordTimeBetween(start,end);
         if(null !=serverId){
             criteria.andServerIdEqualTo(serverId);
         }

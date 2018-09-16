@@ -6,5 +6,5 @@ import java.text.ParseException;
 
 public interface ActivityNumService {
 
-    PageResult listActivityNum(String parse, Integer serverId, int pageNum, int pageSize) throws ParseException;
+    PageResult listActivityNum(String startTime,String endTime, Integer serverId, int pageNum, int pageSize) throws ParseException;
 }

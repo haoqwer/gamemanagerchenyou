@@ -68,14 +68,14 @@ public class RechargeTestAndOnlin {
         }
     }
 
-    @Test
-    public void test_listEveryDayCharge() throws ParseException {
-        PageResult pageResult = everydayChargeService.listEveryDayCharget(null, null, null, 1, 10);
-        System.out.println(pageResult.getTotal());
-        for (Object obj : pageResult.getRows()) {
-            System.out.println(obj);
-        }
-    }
+//    @Test
+//    public void test_listEveryDayCharge() throws ParseException, BizException {
+//        PageResult pageResult = everydayChargeService.listEveryDayCharget(null, null, null, 1, 10);
+//        System.out.println(pageResult.getTotal());
+//        for (Object obj : pageResult.getRows()) {
+//            System.out.println(obj);
+//        }
+//    }
 
     @Test
     public void test_listPointAnalyseService() throws BizException {

@@ -34,13 +34,13 @@ public class RechargeController  extends  BaseController{
      * @return
      * @throws ParseException
      */
-    @RequestMapping(value = "/listEveryDayCharge", method = RequestMethod.GET)
-    public Map <String, Object> listEveryDayCharge(String parse, Integer serverId, Integer channelId, int page, int rows) throws ParseException {
-        Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, everyDayChargeService.listEveryDayCharget(parse, serverId, channelId, page, rows));
-        resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
-        return resultMap;
-    }
+//    @RequestMapping(value = "/listEveryDayCharge", method = RequestMethod.GET)
+//    public Map <String, Object> listEveryDayCharge(String parse, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
+//        Map <String, Object> resultMap = new HashMap <>();
+//        resultMap.put(ApplicationConstants.TAG_DATA, everyDayChargeService.listEveryDayCharget(parse, serverId, channelId, page, rows));
+//        resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
+//        return resultMap;
+//    }
 
     /**
      * 计费点分析
