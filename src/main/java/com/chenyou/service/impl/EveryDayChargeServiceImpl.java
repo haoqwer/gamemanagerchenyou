@@ -34,9 +34,15 @@ public class EveryDayChargeServiceImpl implements EverydayChargeService {
 
     @Override
     public PageResult listEveryDayCharget(String startTime,String endTime, Integer serverId, Integer channelId, int pageNum, int pageSize) throws ParseException, BizException {
-        Date start = null;
+        Date start =null;
         Date end = null;
         Date temp = null;
+        if(!StringUtils.isEmpty(startTime)){
+            start=DateUtil.parse(startTime);
+        }
+        if(!StringUtils.isEmpty(endTime)){
+            end=DateUtil.parse(endTime);
+        }
         PageHelper.startPage(pageNum, pageSize);
         EvervyDayRechargeExample example = new EvervyDayRechargeExample();
         example.setOrderByClause("recharge_time desc");

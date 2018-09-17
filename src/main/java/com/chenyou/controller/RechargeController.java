@@ -26,7 +26,7 @@ public class RechargeController  extends  BaseController{
 
     /**
      * 每日充值
-     * @param parse
+     * @param
      * @param serverId
      * @param channelId
      * @param page
@@ -34,13 +34,13 @@ public class RechargeController  extends  BaseController{
      * @return
      * @throws ParseException
      */
-//    @RequestMapping(value = "/listEveryDayCharge", method = RequestMethod.GET)
-//    public Map <String, Object> listEveryDayCharge(String parse, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
-//        Map <String, Object> resultMap = new HashMap <>();
-//        resultMap.put(ApplicationConstants.TAG_DATA, everyDayChargeService.listEveryDayCharget(parse, serverId, channelId, page, rows));
-//        resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
-//        return resultMap;
-//    }
+    @RequestMapping(value = "/listEveryDayCharge", method = RequestMethod.GET)
+    public Map <String, Object> listEveryDayCharge(String start,String end, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
+        Map <String, Object> resultMap = new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA, everyDayChargeService.listEveryDayCharget(start,end, serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
+        return resultMap;
+    }
 
     /**
      * 计费点分析

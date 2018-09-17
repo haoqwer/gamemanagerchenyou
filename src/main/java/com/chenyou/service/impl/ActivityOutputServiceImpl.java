@@ -27,12 +27,18 @@ public class ActivityOutputServiceImpl implements ActivityOutputService {
 
     @Override
     public PageResult listActivityOutput(String startTime, String endTime, Integer serverId, int pageNum, int pageSize) throws ParseException {
+        Date start =null;
+        Date end = null;
+        Date temp = null;
+        if(!StringUtils.isEmpty(startTime)){
+            start=DateUtil.parse(startTime);
+        }
+        if(!StringUtils.isEmpty(endTime)){
+            end=DateUtil.parse(endTime);
+        }
         PageHelper.startPage(pageNum, pageSize);
         ActivityOutPutExample example = new ActivityOutPutExample();
         ActivityOutPutExample.Criteria criteria = example.createCriteria();
-        Date start = null;
-        Date end = null;
-        Date temp = null;
         if(!StringUtils.isEmpty(startTime) && StringUtils.isEmpty(endTime)){
             criteria.andRecordeTimeEqualTo(DateUtil.parse(startTime));
         }

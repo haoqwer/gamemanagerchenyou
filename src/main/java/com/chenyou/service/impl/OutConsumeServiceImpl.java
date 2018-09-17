@@ -27,7 +27,7 @@ public class OutConsumeServiceImpl implements OutConsumeService {
         PageHelper.startPage(pageNum,pageSize);
         OutConsumeExample example=new OutConsumeExample();
         OutConsumeExample.Criteria criteria = example.createCriteria();
-        if(! StringUtils.isEmpty(parse)){
+        if(!StringUtils.isEmpty(parse)){
             criteria.andRecordTimeEqualTo(DateUtil.parse(parse));
         }
         if(null !=serverId){

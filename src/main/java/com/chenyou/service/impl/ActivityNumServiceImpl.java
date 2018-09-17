@@ -29,12 +29,18 @@ public class ActivityNumServiceImpl implements ActivityNumService {
 
     @Override
     public PageResult listActivityNum(String startTime,String endTime, Integer serverId, int pageNum, int pageSize) throws ParseException {
+        Date start =null;
+        Date end = null;
+        Date temp = null;
+        if(!StringUtils.isEmpty(startTime)){
+            start=DateUtil.parse(startTime);
+        }
+        if(!StringUtils.isEmpty(endTime)){
+            end=DateUtil.parse(endTime);
+        }
         PageHelper.startPage(pageNum, pageSize);
         ActivityNumExample example = new ActivityNumExample();
         ActivityNumExample.Criteria criteria = example.createCriteria();
-        Date start = null;
-        Date end = null;
-        Date temp = null;
         //时间段的逻辑思维,判断传入的日期是否为空，1.都为空2.一个为空3.两个都不为空
        if(!StringUtils.isEmpty(startTime) && StringUtils.isEmpty(endTime)){
           criteria.andRecordTimeEqualTo(DateUtil.parse(startTime));
