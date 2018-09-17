@@ -41,18 +41,21 @@ public class EveryDayChargeServiceImpl implements EverydayChargeService {
         EvervyDayRechargeExample example = new EvervyDayRechargeExample();
         example.setOrderByClause("recharge_time desc");
         EvervyDayRechargeExample.Criteria criteria = example.createCriteria();
-        if (!StringUtils.isEmpty(startTime)) {
-            start = DateUtil.parse(startTime);
+        //时间段的逻辑思维,判断传入的日期是否为空，1.都为空2.一个为空3.两个都不为空
+        if(!StringUtils.isEmpty(startTime) && StringUtils.isEmpty(endTime)){
+            criteria.andRechargeTimeEqualTo(DateUtil.parse(startTime));
         }
-        if (!StringUtils.isEmpty(endTime)) {
-            end = DateUtil.parse(endTime);
+        if(StringUtils.isEmpty(startTime)&& !StringUtils.isEmpty(endTime)){
+            criteria.andRechargeTimeEqualTo(DateUtil.parse(endTime));
         }
-        if (end.after(start)) {
-            temp=end;
-            end=start;
-            start=temp;
+        if(!StringUtils.isEmpty(startTime)&& !StringUtils.isEmpty(endTime)){
+            if (start.after(end)) {
+                temp = end;
+                end = start;
+                start = temp;
+                criteria.andRechargeTimeBetween(start, end);
+            }
         }
-        criteria.andRechargeTimeBetween(start, end);
         if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }

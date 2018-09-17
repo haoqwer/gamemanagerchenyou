@@ -211,7 +211,7 @@
         <!--</table>-->
 
         <!--流失关卡-->
-        <table tableName="t_out_consume" domainObjectName="ConsumOut"
+        <table tableName="t_out_consume" domainObjectName="OutConsume"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
@@ -430,12 +430,12 @@
         <!--</table>-->
 
 
-        <!--<table tableName="t_activity_output" domainObjectName="ActivityOutPut"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="t_activity_output" domainObjectName="ActivityOutPut"
+        enableCountByExample="true" enableUpdateByExample="true"
+        enableDeleteByExample="true" enableSelectByExample="true"
+        selectByExampleQueryId="true">
+        <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
         <!--<table tableName="t_activity_rank" domainObjectName="ActivityRank"-->
         <!--enableCountByExample="true" enableUpdateByExample="true"-->
         <!--enableDeleteByExample="true" enableSelectByExample="true"-->

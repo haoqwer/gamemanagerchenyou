@@ -35,18 +35,20 @@ public class ActivityRankServiceImpl  implements ActivityRankService {
         Date start = null;
         Date end = null;
         Date temp = null;
-        if (!StringUtils.isEmpty(startTime)) {
-            start = DateUtil.parse(startTime);
+        if(!StringUtils.isEmpty(startTime) && StringUtils.isEmpty(endTime)){
+            criteria.andRecordTimeEqualTo(DateUtil.parse(startTime));
         }
-        if (!StringUtils.isEmpty(endTime)) {
-            end = DateUtil.parse(endTime);
+        if(StringUtils.isEmpty(startTime)&& !StringUtils.isEmpty(endTime)){
+            criteria.andRecordTimeEqualTo(DateUtil.parse(endTime));
         }
-        if (start.after(end)) {
-            temp = end;
-            end = start;
-            start = temp;
+        if(!StringUtils.isEmpty(startTime)&& !StringUtils.isEmpty(endTime)){
+            if (start.after(end)) {
+                temp = end;
+                end = start;
+                start = temp;
+                criteria.andRecordTimeBetween(start, end);
+            }
         }
-        criteria.andRecordTimeBetween(start,end);
         if(null !=serverId){
             criteria.andServerIdEqualTo(serverId);
         }

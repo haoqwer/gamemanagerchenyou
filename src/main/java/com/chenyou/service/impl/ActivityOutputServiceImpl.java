@@ -1,8 +1,9 @@
 package com.chenyou.service.impl;
 
-import com.chenyou.mapper.ActivityOutputMapper;
-import com.chenyou.pojo.ActivityOutput;
-import com.chenyou.pojo.ActivityOutputExample;
+
+import com.chenyou.mapper.ActivityOutPutMapper;
+import com.chenyou.pojo.ActivityOutPut;
+import com.chenyou.pojo.ActivityOutPutExample;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.ActivityOutputService;
 import com.chenyou.utils.DateUtil;
@@ -22,36 +23,38 @@ import java.util.List;
 public class ActivityOutputServiceImpl implements ActivityOutputService {
 
     @Autowired
-    private ActivityOutputMapper activityOutputMapper;
+    private ActivityOutPutMapper activityOutPutMapper;
 
     @Override
-    public PageResult listActivityOutput(String startTime,String endTime, Integer serverId, int pageNum, int pageSize) throws ParseException {
-        PageHelper.startPage(pageNum,pageSize);
-        ActivityOutputExample example=new ActivityOutputExample();
-        ActivityOutputExample.Criteria criteria = example.createCriteria();
+    public PageResult listActivityOutput(String startTime, String endTime, Integer serverId, int pageNum, int pageSize) throws ParseException {
+        PageHelper.startPage(pageNum, pageSize);
+        ActivityOutPutExample example = new ActivityOutPutExample();
+        ActivityOutPutExample.Criteria criteria = example.createCriteria();
         Date start = null;
         Date end = null;
         Date temp = null;
-        if (!StringUtils.isEmpty(startTime)) {
-            start = DateUtil.parse(startTime);
+        if(!StringUtils.isEmpty(startTime) && StringUtils.isEmpty(endTime)){
+            criteria.andRecordeTimeEqualTo(DateUtil.parse(startTime));
         }
-        if (!StringUtils.isEmpty(endTime)) {
-            end = DateUtil.parse(endTime);
+        if(StringUtils.isEmpty(startTime)&& !StringUtils.isEmpty(endTime)){
+            criteria.andRecordeTimeEqualTo(DateUtil.parse(endTime));
         }
-        if (start.after(end)) {
-            temp = end;
-            end = start;
-            start = temp;
+        if(!StringUtils.isEmpty(startTime)&& !StringUtils.isEmpty(endTime)){
+            if (start.after(end)) {
+                temp = end;
+                end = start;
+                start = temp;
+                criteria.andRecordeTimeBetween(start, end);
+            }
         }
-        criteria.andRecordeTimeBetween(start,end);
         if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }
-        if(null !=serverId){
+        if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }
-        List <ActivityOutput> list = activityOutputMapper.selectByExample(example);
-        Page<ActivityOutput> page=(Page<ActivityOutput>)list;
-        return new PageResult(page.getTotal(),page.getResult());
+        List <ActivityOutPut> list = activityOutPutMapper.selectByExample(example);
+        Page <ActivityOutPut> page = (Page <ActivityOutPut>) list;
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }

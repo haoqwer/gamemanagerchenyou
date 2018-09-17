@@ -1,5 +1,8 @@
 package com.chenyou;
 
+import com.chenyou.utils.DateUtil;
+import com.chenyou.utils.StringUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,9 +10,25 @@ import java.util.Date;
 public class DateUt {
 
     public static void main(String[] args) throws ParseException {
-        Date date = parse("2018-09-11");
-        String formate = formate(date);
-        System.out.println(formate);
+        Date start = null;
+        Date end = null;
+        Date temp = null;
+        if (!StringUtils.isEmpty("2018-09-12")) {
+            start = DateUtil.parse("2018-09-12");
+        }
+        if (!StringUtils.isEmpty("2018-09-11")) {
+            end = DateUtil.parse("2018-09-11");
+        }
+        System.out.println("没有转换之前的日期start"+formate(start));
+        System.out.println("没有转换之前的日期end"+formate(end));
+        if (start.after(end)) {
+            temp = end;
+            end = start;
+            start = temp;
+            System.out.println("转换之后的start"+formate(start));
+            System.out.println("转换之后的end"+formate(end));
+        }
+
     }
 
     public  static  String formate(Date date){
@@ -24,4 +43,6 @@ public class DateUt {
         Date time = sdf.parse(date);
         return  time;
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.chenyou.service.impl;
 
+import com.chenyou.base.BizException;
 import com.chenyou.mapper.ActivityNumMapper;
 import com.chenyou.pojo.ActivityNum;
 import com.chenyou.pojo.ActivityNumExample;
@@ -34,18 +35,21 @@ public class ActivityNumServiceImpl implements ActivityNumService {
         Date start = null;
         Date end = null;
         Date temp = null;
-        if (!StringUtils.isEmpty(startTime)) {
-            start = DateUtil.parse(startTime);
-        }
-        if (!StringUtils.isEmpty(endTime)) {
-            end = DateUtil.parse(endTime);
-        }
-        if (start.after(end)) {
-            temp = end;
-            end = start;
-            start = temp;
-        }
-        criteria.andRecordTimeBetween(start, end);
+        //时间段的逻辑思维,判断传入的日期是否为空，1.都为空2.一个为空3.两个都不为空
+       if(!StringUtils.isEmpty(startTime) && StringUtils.isEmpty(endTime)){
+          criteria.andRecordTimeEqualTo(DateUtil.parse(startTime));
+       }
+       if(StringUtils.isEmpty(startTime)&& !StringUtils.isEmpty(endTime)){
+           criteria.andRecordTimeEqualTo(DateUtil.parse(endTime));
+       }
+       if(!StringUtils.isEmpty(startTime)&& !StringUtils.isEmpty(endTime)){
+           if (start.after(end)) {
+               temp = end;
+               end = start;
+               start = temp;
+               criteria.andRecordTimeBetween(start, end);
+           }
+       }
         if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }
