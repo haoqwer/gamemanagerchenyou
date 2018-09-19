@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
             throw new BizException(BizException.CODE_PARM_LACK, "请输入用户名！");
         }
         User user = userMapper.getUserByLoginName(loginName);
-        logger.info("loginName:"+loginName);
+        logger.info("loginName:" + loginName);
         return user;
     }
 
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int countListUser() throws BizException {
         int count = userMapper.countByExample(null);
-        logger.info("count:"+count);
+        logger.info("count:" + count);
         return count;
     }
 
@@ -339,28 +339,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int changePassword(String loginName,String  oldPassword, String newPassword,String againPassword) throws BizException {
+    public int changePassword(String loginName, String oldPassword, String newPassword, String againPassword) throws BizException {
         //首先查到原始的用户
-        User uu=null;
+        if (StringUtils.isEmpty(oldPassword)) {
+            throw new BizException(BizException.CODE_PARM_LACK, "原始密码必须输入!");
+        }
+        if (StringUtils.isEmpty(newPassword)) {
+            throw new BizException(BizException.CODE_PARM_LACK, "新密码必须输入!");
+        }
+        if (StringUtils.isEmpty(againPassword)) {
+            throw new BizException(BizException.CODE_PARM_LACK, "再次确认密码必须输入!");
+        }
+        User uu = null;
         User user = userMapper.getUserByLoginName(loginName);
-        if(StringUtils.isNull(user)){
-            throw new BizException(BizException.CODE_PARM_ERROR,"不好意思当前用户不存在!");
+        if (StringUtils.isNull(user)) {
+            throw new BizException(BizException.CODE_PARM_ERROR, "不好意思当前用户不存在!");
         }
         //判断两次输入的密码是否一致
-        String  password = user.getPassword();
+        String password = user.getPassword();
         String ss = MD5Utils.md5(oldPassword);
         System.out.println(ss);
-        if(ss.equals(password)){
+        if (ss.equals(password)) {
             //接着判断两次输入的密码是否一致
-            if(newPassword.equals(againPassword)){
-               user.setPassword(MD5Utils.md5(againPassword));
+            if (newPassword.equals(againPassword)) {
+                user.setPassword(MD5Utils.md5(againPassword));
                 int i = userMapper.updateByPrimaryKeySelective(user);
                 return i;
-            }else {
-                throw new BizException(BizException.CODE_PARM_ERROR,"不好意思两次输入密码不一致!");
+            } else {
+                throw new BizException(BizException.CODE_PARM_ERROR, "不好意思两次输入密码不一致!");
             }
-        }else{
-            throw new BizException(BizException.CODE_PARM_ERROR,"不好意思原密码输入错误!");
+        } else {
+            throw new BizException(BizException.CODE_PARM_ERROR, "不好意思原密码输入错误!");
         }
     }
 
@@ -386,7 +395,7 @@ public class UserServiceImpl implements UserService {
             try {
                 //先删除用户与角色管联的中间表
                 rows = userRoleMapper.deleteUserRoleByUserId(userid);
-                logger.info("userId"+userid);
+                logger.info("userId" + userid);
                 //再删除用户表
                 count = userMapper.deleteByPrimaryKey(userid);
             } catch (Exception e) {
