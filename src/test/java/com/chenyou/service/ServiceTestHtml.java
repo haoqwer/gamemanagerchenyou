@@ -47,7 +47,8 @@ public class ServiceTestHtml {
 
     @Test
     public void test_getUserCount() throws ParseException, BizException {
-        PageResult pageResult = userCountService.listUserCount("2018-09-11", null, null,1,10);
+        //"2018-09-25",
+        PageResult pageResult = userCountService.listUserCount(null, "2018-09-25", null,null,1,10);
         System.out.println(pageResult.getTotal());
         List rows = pageResult.getRows();
         for(Object userCount:rows){

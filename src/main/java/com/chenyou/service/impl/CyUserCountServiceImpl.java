@@ -30,24 +30,40 @@ public class CyUserCountServiceImpl implements CyUserCountService {
     private CyUserCountMapper userCountMapper;
 
     /**
-     * @param parse     日期
+     * @param
      * @param serverId
      * @param channelId
      * @return
      */
     @Override
-    public PageResult listUserCount(String parse, Integer serverId, Integer channelId, int pageSize, int rows) throws ParseException, BizException {
+    public PageResult listUserCount(String start, String end, Integer serverId, Integer channelId, int pageSize, int rows) throws ParseException, BizException {
         PageHelper.startPage(pageSize, rows);
-        Date date = null;
-        //获取到时间
-        if (!StringUtils.isEmpty(parse)) {
-            date = DateUtil.parse(parse);
-        }
+        Date startTime = null;
+        Date endTime = null;
+        Date temp = null;
         CyUserCountExample example = new CyUserCountExample();
         example.setOrderByClause("count_time desc");
         CyUserCountExample.Criteria criteria = example.createCriteria();
-        if (date != null) {
-            criteria.andCountTimeEqualTo(date);
+        //如果输入的两个时间都不为空
+        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            startTime = DateUtil.parse(start);
+            endTime = DateUtil.parse(end);
+            if (startTime.after(endTime)) {
+                //如果前面时间大于后面时间
+                temp = endTime;
+                endTime = startTime;
+                startTime = temp;
+                criteria.andCountTimeBetween(startTime, endTime);
+            } else {
+                criteria.andCountTimeBetween(startTime, endTime);
+            }
+        }
+        //如果其中一个为空
+        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+            criteria.andCountTimeEqualTo(DateUtil.parse(start));
+        }
+        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            criteria.andCountTimeEqualTo(DateUtil.parse(end));
         }
         if (null == serverId && null == channelId) {
             criteria.andServerIdIsNull();

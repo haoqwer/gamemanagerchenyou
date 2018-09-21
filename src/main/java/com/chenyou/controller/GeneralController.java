@@ -65,9 +65,9 @@ public class GeneralController extends  BaseController {
      * @throws ParseException
      */
     @RequestMapping(value = "/listUserCount", method = RequestMethod.GET)
-    public Map <String, Object> listUserCount(String parse, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
+    public Map <String, Object> listUserCount(String start,String end, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, userCountService.listUserCount(parse, serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, userCountService.listUserCount(start,end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
