@@ -52,9 +52,9 @@ public class RechargeController  extends  BaseController{
      * @throws BizException
      */
     @RequestMapping(value = "/listPointAnalyse", method = RequestMethod.GET)
-    public Map <String, Object> listPointAnalyse(Integer serverId, Integer channelId, int page, int rows) throws BizException {
+    public Map <String, Object> listPointAnalyse(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, pointAnalyseService.listPointAnalyse(serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, pointAnalyseService.listPointAnalyse(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }

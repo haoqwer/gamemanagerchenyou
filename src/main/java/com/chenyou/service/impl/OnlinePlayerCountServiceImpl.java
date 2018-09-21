@@ -26,13 +26,37 @@ public class OnlinePlayerCountServiceImpl implements OnlinePlayerCountService {
     private OnlineplayerCountMapper onlineplayerCountMapper;
 
     @Override
-    public PageResult listOnlinePlayerCount(String parse, Integer serverId, Integer channelId, int pageNum, int pageSize) throws ParseException, BizException {
+    public PageResult listOnlinePlayerCount(String start,String end, Integer serverId, Integer channelId, int pageNum, int pageSize) throws ParseException, BizException {
+        Date startTime = null;
+        Date endTime = null;
+        Date temp = null;
         PageHelper.startPage(pageNum,pageSize);
         OnlineplayerCountExample example = new OnlineplayerCountExample();
         example.setOrderByClause("record_time desc");
         OnlineplayerCountExample.Criteria criteria = example.createCriteria();
-        if (!StringUtils.isEmpty(parse)) {
-            criteria.andRecordTimeEqualTo(parse);
+        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            startTime = DateUtil.parse(start);
+            endTime = DateUtil.parse(end);
+            if (startTime.after(endTime)) {
+                //如果前面时间大于后面时间
+                temp = endTime;
+                endTime = startTime;
+                startTime = temp;
+                criteria.andRecordTimeBetween(startTime, endTime);
+            } else {
+                criteria.andRecordTimeBetween(startTime, endTime);
+            }
+        }
+        //如果其中一个为空
+        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+            criteria.andRecordTimeEqualTo(DateUtil.parse(start));
+        }
+        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            criteria.andRecordTimeEqualTo(DateUtil.parse(end));
+        }
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
         }
         if (serverId != null) {
             criteria.andServerIdEqualTo(serverId);

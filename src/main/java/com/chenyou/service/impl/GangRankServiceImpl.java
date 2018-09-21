@@ -29,6 +29,10 @@ public class GangRankServiceImpl implements GangRankService {
         GangRankExample example=new GangRankExample();
         example.setOrderByClause("gang_rank asc");
         GangRankExample.Criteria criteria = example.createCriteria();
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if(null !=serverId){
             criteria.andServerIdEqualTo(serverId);
         }

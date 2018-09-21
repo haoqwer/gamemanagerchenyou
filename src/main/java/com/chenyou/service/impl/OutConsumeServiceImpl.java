@@ -30,6 +30,11 @@ public class OutConsumeServiceImpl implements OutConsumeService {
         if(!StringUtils.isEmpty(parse)){
             criteria.andRecordTimeEqualTo(DateUtil.parse(parse));
         }
+
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if(null !=serverId){
             criteria.andServerIdEqualTo(serverId);
         }

@@ -6,6 +6,7 @@ import com.chenyou.pojo.GangGrade;
 import com.chenyou.pojo.GangGradeExample;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.GangGradeService;
+import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,11 +29,38 @@ public class GangGradeServiceImpl implements GangGradeService {
     private GangGradeMapper gangGradeMapper;
 
     @Override
-    public PageResult listGangGrade(Integer serverId, Integer channelId, int pageNum, int pageSize) throws BizException {
+    public PageResult listGangGrade(String start,String end,Integer serverId, Integer channelId, int pageNum, int pageSize) throws BizException, ParseException {
         PageHelper.startPage(pageNum, pageSize);
+        Date startTime = null;
+        Date endTime = null;
+        Date temp = null;
         GangGradeExample example = new GangGradeExample();
         example.setOrderByClause("gong_grade asc");
         GangGradeExample.Criteria criteria = example.createCriteria();
+        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            startTime = DateUtil.parse(start);
+            endTime = DateUtil.parse(end);
+            if (startTime.after(endTime)) {
+                //如果前面时间大于后面时间
+                temp = endTime;
+                endTime = startTime;
+                startTime = temp;
+                criteria.andShowTimeBetween(startTime, endTime);
+            } else {
+                criteria.andShowTimeBetween(startTime, endTime);
+            }
+        }
+        //如果其中一个为空
+        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+            criteria.andShowTimeEqualTo(DateUtil.parse(start));
+        }
+        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            criteria.andShowTimeEqualTo(DateUtil.parse(end));
+        }
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }

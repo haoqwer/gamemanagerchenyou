@@ -28,6 +28,10 @@ public class IntimacyRankServiceImpl implements IntimacyRankService {
         IntimacyRankExample example = new IntimacyRankExample();
         example.setOrderByClause("intimate_rank asc");
         IntimacyRankExample.Criteria criteria = example.createCriteria();
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }

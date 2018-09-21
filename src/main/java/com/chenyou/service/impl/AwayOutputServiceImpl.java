@@ -6,6 +6,7 @@ import com.chenyou.pojo.AwayOutput;
 import com.chenyou.pojo.AwayOutputExample;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.AwayOutputService;
+import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,22 +27,49 @@ public class AwayOutputServiceImpl implements AwayOutputService {
     private AwayOutputMapper awayOutputMapper;
 
     @Override
-    public PageResult listAwayOutput(Integer serverId, Integer channelId, int pageNum, int pageSize) throws BizException {
-        PageHelper.startPage(pageNum,pageSize);
-        AwayOutputExample example=new AwayOutputExample();
+    public PageResult listAwayOutput(String start,String end,Integer serverId, Integer channelId, int pageNum, int pageSize) throws BizException, ParseException {
+        Date startTime = null;
+        Date endTime = null;
+        Date temp = null;
+        PageHelper.startPage(pageNum, pageSize);
+        AwayOutputExample example = new AwayOutputExample();
         example.setOrderByClause("count_player asc");
         AwayOutputExample.Criteria criteria = example.createCriteria();
-        if(null !=serverId){
+        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            startTime = DateUtil.parse(start);
+            endTime = DateUtil.parse(end);
+            if (startTime.after(endTime)) {
+                //如果前面时间大于后面时间
+                temp = endTime;
+                endTime = startTime;
+                startTime = temp;
+                criteria.andShowTimeBetween(startTime, endTime);
+            } else {
+                criteria.andShowTimeBetween(startTime, endTime);
+            }
+        }
+        //如果其中一个为空
+        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+            criteria.andShowTimeEqualTo(DateUtil.parse(start));
+        }
+        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            criteria.andShowTimeEqualTo(DateUtil.parse(end));
+        }
+        if (serverId == null & channelId == null) {
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
+        if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }
-        if(null !=channelId){
+        if (null != channelId) {
             criteria.andChannelIdEqualTo(channelId);
         }
-        List<AwayOutput> list = awayOutputMapper.selectByExample(example);
-        if(StringUtils.isEmpty(list)){
-            throw new BizException(BizException.CODE_RESULT_NULL,"不好意思,当前没有数据!");
+        List <AwayOutput> list = awayOutputMapper.selectByExample(example);
+        if (StringUtils.isEmpty(list)) {
+            throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
         }
-        Page<AwayOutput> page = (Page <AwayOutput>) list;
+        Page <AwayOutput> page = (Page <AwayOutput>) list;
         return new PageResult(page.getTotal(), page.getResult());
     }
 }

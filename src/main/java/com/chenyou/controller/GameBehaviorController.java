@@ -61,41 +61,41 @@ public class GameBehaviorController extends BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "/listGradePalyer", method = RequestMethod.GET)
-    public Map <String, Object> listGradeplayer(Integer serverId, Integer channelId,  int page, int rows) throws BizException {
+    public Map <String, Object> listGradeplayer(String start,String end,Integer serverId, Integer channelId,  int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, gradePlayerService.listGradePlayer(serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, gradePlayerService.listGradePlayer(start,end,serverId,channelId,page,rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     @RequestMapping(value = "/listVipCount", method = RequestMethod.GET)
-    public Map <String, Object> listVipCount(Integer serverId, Integer channelId, int page, int rows) throws BizException {
+    public Map <String, Object> listVipCount(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, vipCountService.listVipCount(serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, vipCountService.listVipCount(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     @RequestMapping(value = "/listGangCount", method = RequestMethod.GET)
-    public Map <String, Object> listGangCount(Integer serverId, Integer channelId, int page, int rows) throws BizException {
+    public Map <String, Object> listGangCount(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, gangCountService.listGangCount(serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, gangCountService.listGangCount(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     @RequestMapping(value = "/listGangGrade", method = RequestMethod.GET)
-    public Map <String, Object> listGangGrade(Integer serverId, Integer channelId, int page, int rows) throws BizException {
+    public Map <String, Object> listGangGrade(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, gangGradeService.listGangGrade(serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, gangGradeService.listGangGrade(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     @RequestMapping(value = "/listForceRank", method = RequestMethod.GET)
-    public Map <String, Object> listForceRank(Integer serverId, Integer channelId, int page, int rows) throws BizException {
+    public Map <String, Object> listForceRank(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, forceRankService.listGorceRank(serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, forceRankService.listGorceRank(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }

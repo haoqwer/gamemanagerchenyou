@@ -53,6 +53,8 @@ public class ActivityRankServiceImpl  implements ActivityRankService {
                 end = start;
                 start = temp;
                 criteria.andRecordTimeBetween(start, end);
+            }else {
+                criteria.andRecordTimeBetween(start, end);
             }
         }
         if(null !=serverId){

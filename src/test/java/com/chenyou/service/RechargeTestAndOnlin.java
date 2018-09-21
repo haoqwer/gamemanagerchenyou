@@ -61,25 +61,7 @@ public class RechargeTestAndOnlin {
 
     @Test
     public void test_listOnlinePlayerCount() throws ParseException, BizException {
-        PageResult pageResult = onlinePlayerCountService.listOnlinePlayerCount(null, null, null, 1, 10);
-        System.out.println(pageResult.getTotal());
-        for (Object obj : pageResult.getRows()) {
-            System.out.println(obj);
-        }
-    }
-
-//    @Test
-//    public void test_listEveryDayCharge() throws ParseException, BizException {
-//        PageResult pageResult = everydayChargeService.listEveryDayCharget(null, null, null, 1, 10);
-//        System.out.println(pageResult.getTotal());
-//        for (Object obj : pageResult.getRows()) {
-//            System.out.println(obj);
-//        }
-//    }
-
-    @Test
-    public void test_listPointAnalyseService() throws BizException {
-        PageResult pageResult = pointAnalyseService.listPointAnalyse(null, null, 1, 10);
+        PageResult pageResult = onlinePlayerCountService.listOnlinePlayerCount(null,null,null, null, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -87,8 +69,8 @@ public class RechargeTestAndOnlin {
     }
 
     @Test
-    public void test_channelSummaryService() throws BizException {
-        PageResult pageResult = channelSummaryService.listChannelSummary(1, 10);
+    public void test_listEveryDayCharge() throws ParseException, BizException {
+        PageResult pageResult = everydayChargeService.listEveryDayCharget(null, null, null, null,1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -96,8 +78,8 @@ public class RechargeTestAndOnlin {
     }
 
     @Test
-    public void test_gradePlayerService() throws BizException {
-        PageResult pageResult = gradePlayerService.listGradePlayer(1, 1, 1, 10);
+    public void test_listPointAnalyseService() throws BizException, ParseException {
+        PageResult pageResult = pointAnalyseService.listPointAnalyse(null,null,null, null, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -105,8 +87,8 @@ public class RechargeTestAndOnlin {
     }
 
     @Test
-    public void test_testVipCount() throws BizException {
-        PageResult pageResult = vipCountService.listVipCount(1, 1, 1, 10);
+    public void test_channelSummaryService() throws BizException, ParseException {
+        PageResult pageResult = channelSummaryService.listChannelSummary(null,null,1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -114,8 +96,8 @@ public class RechargeTestAndOnlin {
     }
 
     @Test
-    public void test_listGangCount() throws BizException {
-        PageResult pageResult = gangCountService.listGangCount(1, 1, 1, 10);
+    public void test_gradePlayerService() throws BizException, ParseException {
+        PageResult pageResult = gradePlayerService.listGradePlayer(null,null,null,null,1,10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -123,8 +105,8 @@ public class RechargeTestAndOnlin {
     }
 
     @Test
-    public void test_GangGrade() throws BizException {
-        PageResult pageResult = gangGradeService.listGangGrade(1, 1, 1, 10);
+    public void test_testVipCount() throws BizException, ParseException {
+        PageResult pageResult = vipCountService.listVipCount(null,null,null, null, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -132,8 +114,26 @@ public class RechargeTestAndOnlin {
     }
 
     @Test
-    public  void test_forceRank() throws BizException {
-        PageResult pageResult = forceRankService.listGorceRank(1, 1, 1, 10);
+    public void test_listGangCount() throws BizException, ParseException {
+        PageResult pageResult = gangCountService.listGangCount(null,null,null, null, 1, 10);
+        System.out.println(pageResult.getTotal());
+        for (Object obj : pageResult.getRows()) {
+            System.out.println(obj);
+        }
+    }
+
+    @Test
+    public void test_GangGrade() throws BizException, ParseException {
+        PageResult pageResult = gangGradeService.listGangGrade(null,null,null, null, 1, 10);
+        System.out.println(pageResult.getTotal());
+        for (Object obj : pageResult.getRows()) {
+            System.out.println(obj);
+        }
+    }
+
+    @Test
+    public  void test_forceRank() throws BizException, ParseException {
+        PageResult pageResult = forceRankService.listGorceRank(null,null,null, null, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -142,7 +142,7 @@ public class RechargeTestAndOnlin {
 
     @Test
     public  void  test_listLevelRank() throws BizException {
-        PageResult pageResult = levelRankService.listLevelRank(1, 1, 1, 10);
+        PageResult pageResult = levelRankService.listLevelRank(null, null, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -151,7 +151,7 @@ public class RechargeTestAndOnlin {
 
     @Test
     public void test_IntimacyRank() throws BizException {
-        PageResult pageResult = intimacyRankService.listIntimacyRank(1, 1, 1, 10);
+        PageResult pageResult = intimacyRankService.listIntimacyRank(null, null, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -160,7 +160,7 @@ public class RechargeTestAndOnlin {
 
     @Test
     public  void test_listGangRank() throws BizException {
-        PageResult pageResult = gangRankService.listGangRank(1, 1, 1, 10);
+        PageResult pageResult = gangRankService.listGangRank(null, null, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);

@@ -3,10 +3,11 @@ package com.chenyou.service;
 import com.chenyou.base.BizException;
 import com.chenyou.pojo.LtvCount;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface LtvCountService {
-    List<LtvCount> listLtvCount(Integer serverId, Integer channelId) throws BizException;
+    List<LtvCount> listLtvCount(String start,String end,Integer serverId, Integer channelId) throws BizException, ParseException;
 
     List<LtvCount> listLtvCount() throws BizException;
 }

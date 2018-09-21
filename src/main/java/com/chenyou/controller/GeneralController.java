@@ -58,16 +58,16 @@ public class GeneralController extends  BaseController {
     /**
      * 日报--->用户类
      *
-     * @param parse
+     * @param
      * @param serverId
      * @param channelId
      * @return
      * @throws ParseException
      */
     @RequestMapping(value = "/listUserCount", method = RequestMethod.GET)
-    public Map <String, Object> listUserCount(String parse, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
+    public Map <String, Object> listUserCount(String start,String end, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, userCountService.listUserCount(parse, serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, userCountService.listUserCount(start,end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
@@ -75,7 +75,7 @@ public class GeneralController extends  BaseController {
     /**
      * 日报-->收入类
      *
-     * @param parse
+     * @param
      * @param serverId
      * @param channelId
      * @param page
@@ -85,16 +85,16 @@ public class GeneralController extends  BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "/listInCome", method = RequestMethod.GET)
-    public Map <String, Object> listInCome(String parse, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
+    public Map <String, Object> listInCome(String start,String end, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
-            resultMap.put(ApplicationConstants.TAG_DATA, inComeClassService.listInCome(parse, serverId, channelId, page, rows));
+            resultMap.put(ApplicationConstants.TAG_DATA, inComeClassService.listInCome(start,end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     /**
      * 渠道统计
-     * @param parse
+     * @param
      * @param serverId
      * @param channelId
      * @param page
@@ -104,9 +104,9 @@ public class GeneralController extends  BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "/listChannel", method = RequestMethod.GET)
-    public Map <String, Object> listChannel(String parse, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
+    public Map <String, Object> listChannel(String start,String end, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, channelCountService.listChannelCount(parse, serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, channelCountService.listChannelCount(start,end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
@@ -119,9 +119,9 @@ public class GeneralController extends  BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "/listLtvCount", method = RequestMethod.GET)
-    public Map <String, Object> listLtvCount(Integer serverId, Integer channelId) throws BizException {
+    public Map <String, Object> listLtvCount(String start,String end,Integer serverId, Integer channelId) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, ltvCountService.listLtvCount(serverId, channelId));
+        resultMap.put(ApplicationConstants.TAG_DATA, ltvCountService.listLtvCount(start,end,serverId, channelId));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
