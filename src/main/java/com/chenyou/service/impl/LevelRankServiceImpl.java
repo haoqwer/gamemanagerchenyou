@@ -31,6 +31,10 @@ public class LevelRankServiceImpl  implements LevelRankService {
         LevelRankExample example=new LevelRankExample();
         example.setOrderByClause("force_value asc");
         LevelRankExample.Criteria criteria = example.createCriteria();
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if(null !=serverId){
             criteria.andServerIdEqualTo(serverId);
         }

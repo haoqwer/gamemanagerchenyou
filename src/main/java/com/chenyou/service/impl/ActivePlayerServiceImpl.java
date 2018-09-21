@@ -32,17 +32,21 @@ public class ActivePlayerServiceImpl implements ActivePlayerService {
         ActivePlayerExample example = new ActivePlayerExample();
         example.setOrderByClause("show_time desc");
         ActivePlayerExample.Criteria criteria = example.createCriteria();
+        if (serverId == null && channelId == null) {
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if (null != serverId) {
-            logger.info("serverId:"+serverId);
+            logger.info("serverId:" + serverId);
             criteria.andServerIdEqualTo(serverId);
         }
         if (null != channelId) {
-            logger.info("channelId:"+channelId);
+            logger.info("channelId:" + channelId);
             criteria.andChannelIdEqualTo(channelId);
         }
         List <ActivePlayer> list = activePlayerMapper.selectByExample(example);
-        if(StringUtils.isEmpty(list)){
-            throw new BizException(BizException.CODE_RESULT_NULL,"不好意思,当前没有数据!");
+        if (StringUtils.isEmpty(list)) {
+            throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
         }
         Page <ActivePlayer> page = (Page <ActivePlayer>) list;
         return new PageResult(page.getTotal(), page.getResult());

@@ -24,22 +24,26 @@ public class LoginDayServiceImpl implements LoginDayService {
 
     @Override
     public PageResult listLoginDay(Integer serverId, Integer channelId, int pageNum, int pageSize) throws BizException {
-        PageHelper.startPage(pageNum,pageSize);
-        LoginDayExample example=new LoginDayExample();
+        PageHelper.startPage(pageNum, pageSize);
+        LoginDayExample example = new LoginDayExample();
         example.setOrderByClause("count_num");
         LoginDayExample.Criteria criteria = example.createCriteria();
         //进行条件选择
-        if(null != serverId){
+        if (serverId == null & channelId == null) {
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
+        if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }
-        if(null != channelId){
+        if (null != channelId) {
             criteria.andChannelIdEqualTo(channelId);
         }
         List <LoginDay> list = loginDayMapper.selectByExample(example);
-        if(StringUtils.isEmpty(list)){
-            throw new BizException(BizException.CODE_RESULT_NULL,"不好意思,当前没有数据!");
+        if (StringUtils.isEmpty(list)) {
+            throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
         }
-        Page<LoginDay> page=(Page<LoginDay>)list;
-        return new PageResult(page.getTotal(),page.getResult());
+        Page <LoginDay> page = (Page <LoginDay>) list;
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }

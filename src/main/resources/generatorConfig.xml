@@ -9,8 +9,8 @@
     <context id="mysqlTables" targetRuntime="MyBatis3">
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://47.104.227.113:3306/gm_db?characterEncoding=utf-8"
-                        userId="root" password="chenyou#123"/>
+                        connectionURL="jdbc:mysql://localhost:3306/chenyoumanager?characterEncoding=utf-8"
+                        userId="root" password="root"/>
 
 
         <javaTypeResolver>
@@ -30,143 +30,201 @@
         </javaClientGenerator>
 
         <!--<table tableName="t_server" domainObjectName="Server"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true"  >-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
 
-        <!--<table tableName="t_channel" domainObjectName="Channel"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true"  >-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
+        <!--页面中对应的表-->
 
+        <!--游戏概况-->
         <!--<table tableName="t_about_game" domainObjectName="AboutGame"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true"  >-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="about_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
+        <!--概况>日报>用户类-->
+      <!--  <table tableName="t_cyuser_count" domainObjectName="CyUserCount"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="user_count_id" sqlStatement="MySql" identity="true"/>
+        </table>-->
 
-        <!--<table tableName="t_cyuser_count" domainObjectName="CyUserCount"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true"  >-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-
+        <!--概况>日报>收入类-->
         <!--<table tableName="t_income_class" domainObjectName="IncomeClass"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true"  >-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="in_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
+        <!--概况>日报>渠道统计-->
+     <!--   <table tableName="t_channel_count" domainObjectName="ChannelCount"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="c_id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--概况>ltv概况-->
+      <!--  <table tableName="t_ltv_count" domainObjectName="LtvCount"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="ltv_id" sqlStatement="MySql" identity="true"/>
+        </table>-->
 
-        <!--<table tableName="t_channel_count" domainObjectName="ChannelCount"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true"  >-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-
+        <!--游戏玩家>新增玩家-->
         <!--<table tableName="t_add_newplayer" domainObjectName="AddNewplayer"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true"  >-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="newplayer_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-
+        <!--游戏玩家>活跃玩家-->
         <!--<table tableName="t_active_player" domainObjectName="ActivePlayer"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true"  >-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="active_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
+        <!--游戏玩家>玩家留存-->
         <!--<table tableName="t_retain_player" domainObjectName="RetainPlayer"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true"  >-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="retain_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
+        <!--游戏玩家>玩家流失-->
         <!--<table tableName="t_away_player" domainObjectName="AwayPlayer"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true"  >-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="away_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <!--&lt;!&ndash;渠道汇总&ndash;&gt;-->
+        <!--游戏玩家>登录天数-->
+        <!--<table tableName="t_login_day" domainObjectName="LoginDay"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="login_day_id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--游戏玩家>流失等级-->
+        <!--<table tableName="t_away_grade" domainObjectName="AwayGrade"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="grade_id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--游戏玩家>流失关卡-->
+        <!--<table tableName="t_away_output" domainObjectName="AwayOutput"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="away_id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--在线分析>在线用户-->
+        <!--<table tableName="t_onlineplayer_count" domainObjectName="OnlineplayerCount"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="online_id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--充值统计>每日充值-->
+        <!--<table tableName="t_everyday_recharge" domainObjectName="EvervyDayRecharge"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="recharge_id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+
+        <!--充值统计>计费点分析-->
+        <!--<table tableName="t_point_analyse" domainObjectName="PointAnalyse"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="charging_id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+
+        <!--渠道数据汇总-->
         <!--<table tableName="t_channel_summary" domainObjectName="ChannelSummary"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<generatedKey column="c_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <!--&lt;!&ndash;用户等级&ndash;&gt;-->
+        <!--游戏行为统计>用户等级-->
         <!--<table tableName="t_grade_player" domainObjectName="GradePlayer"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<generatedKey column="grade_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <!--&lt;!&ndash;vip人数&ndash;&gt;-->
+        <!--游戏行为统计>vip统计-->
         <!--<table tableName="t_vip_count" domainObjectName="VipCount"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<generatedKey column="vip_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <!--&lt;!&ndash;帮派数量&ndash;&gt;-->
+        <!--游戏行为统计>帮派数量-->
         <!--<table tableName="t_gang_count" domainObjectName="GangCount"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<generatedKey column="gang_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <!--&lt;!&ndash;帮派等级&ndash;&gt;-->
+
+        <!--游戏行为统计>帮派等级-->
         <!--<table tableName="t_gang_grade" domainObjectName="GangGrade"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<generatedKey column="gang_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <!--&lt;!&ndash;势力榜&ndash;&gt;-->
+
+        <!-- 势力榜-->
         <!--<table tableName="t_force_rank" domainObjectName="ForceRank"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<generatedKey column="force_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <!--&lt;!&ndash;关卡榜&ndash;&gt;-->
+        <!--关卡榜-->
         <!--<table tableName="t_level_rank" domainObjectName="LevelRank"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<generatedKey column="level_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <!--&lt;!&ndash;亲密榜&ndash;&gt;-->
+
+        <!--亲密榜-->
         <!--<table tableName="t_intimacy_rank" domainObjectName="IntimacyRank"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<generatedKey column="tintimacy_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
         <!--帮派榜-->
@@ -174,44 +232,35 @@
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<generatedKey column="gang_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
-
-        <!--&lt;!&ndash;任务消息&ndash;&gt;-->
+        <!--任务消息-->
         <!--<table tableName="t_task_message" domainObjectName="TaskMessage"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<generatedKey column="task_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <!--&lt;!&ndash;活动参与人数&ndash;&gt;-->
+        <!--产出与消耗-->
+        <!--<table tableName="t_out_consume" domainObjectName="OutConsume"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="out_consume_id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+
+        <!--活动参与人数-->
         <!--<table tableName="t_activity_num" domainObjectName="ActivityNum"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
                <!--enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--<generatedKey column="activity_id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-
-        <!--&lt;!&ndash;活动产出与消耗&ndash;&gt;-->
-        <!--<table tableName="t_activity_output" domainObjectName="ActivityOutput"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-        <!--&lt;!&ndash;帮派排行&ndash;&gt;-->
-        <!--<table tableName="t_activity_rank" domainObjectName="ActivityRank"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-        <!--流失关卡-->
-        <table tableName="t_out_consume" domainObjectName="OutConsume"
+        <!--活动产出与消耗-->
+        <table tableName="t_activity_output" domainObjectName="ActivityOutPut"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
@@ -219,269 +268,6 @@
         </table>
 
 
-
-
-        <!--
-        <table tableName="t_consume_info" domainObjectName="ConsumeInfo"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true"  >
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        -->
-
-        <!-- -->
-        <!--<table tableName="sys_user" domainObjectName="User"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-        <!--<table tableName="sys_role" domainObjectName="Role"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-        <!--<table tableName="sys_user_role" domainObjectName="UserRole"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-        <!--<table tableName="sys_menu" domainObjectName="Menu"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-
-        <!---->
-        <!--<table tableName="t_channel" domainObjectName="Channel"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_income_class" domainObjectName="IncomeClass"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_channel_count" domainObjectName="ChannelCount"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_ltv_count" domainObjectName="LtvCount"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_add_newplayer" domainObjectName="AddNewplayer"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_active_player" domainObjectName="ActivePlayer"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_retain_player" domainObjectName="RetainPlayer"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_away_player" domainObjectName="AwayPlayer"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_login_day" domainObjectName="LoginDay"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_away_grade" domainObjectName="AwayGrade"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-
-        <!--<table tableName="t_away_output" domainObjectName="AwayOutPut"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-        <!--<table tableName="t_onlineplayer_count" domainObjectName="OnlinePlayerCount"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_everyday_recharge" domainObjectName="EveryDayRecharge"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_point_analyse" domainObjectName="PonitAnalyse"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-        <!--<table tableName="t_channel_summary" domainObjectName="ChannelSummary"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_grade_player" domainObjectName="GradePlayer"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-        <!--<table tableName="t_vip_count" domainObjectName="VipCount"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_gang_count" domainObjectName="GangCount"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-
-        <!--<table tableName="t_gang_grade" domainObjectName="GangGrade"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_force_rank" domainObjectName="ForceRank"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-
-        <!--<table tableName="t_level_rank" domainObjectName="LevelRank"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_intimacy_rank" domainObjectName="IntimacyRank"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-        <!--<table tableName="t_gang_rank" domainObjectName="GangRank"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_task_message" domainObjectName="TaskMessage"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-        <!--<table tableName="t_out_consume" domainObjectName="OutConsume"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_activity_num" domainObjectName="ActivityNum"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-
-        <table tableName="t_activity_output" domainObjectName="ActivityOutPut"
-        enableCountByExample="true" enableUpdateByExample="true"
-        enableDeleteByExample="true" enableSelectByExample="true"
-        selectByExampleQueryId="true">
-        <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <!--<table tableName="t_activity_rank" domainObjectName="ActivityRank"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-        <!--<table tableName="t_login_day" domainObjectName="LoginDay"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-        <!--<table tableName="t_away_grade" domainObjectName="AwayGrade"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-
-        <!--<table tableName="t_away_output" domainObjectName="AwayOutPut"-->
-        <!--enableCountByExample="true" enableUpdateByExample="true"-->
-        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-        <!--selectByExampleQueryId="true">-->
-        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_onlineplayer_count" domainObjectName="OnlineplayerCount"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_everyday_recharge" domainObjectName="EvervyDayRecharge"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-        <!--<table tableName="t_point_analyse" domainObjectName="PointAnalyse"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
 
 
     </context>

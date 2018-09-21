@@ -28,6 +28,10 @@ public class TaskMessageServiceImpl implements TaskMessageService {
         TaskMessageExample example=new TaskMessageExample();
         example.setOrderByClause("task_list asc");
         TaskMessageExample.Criteria criteria = example.createCriteria();
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if(null !=serverId){
             criteria.andServerIdEqualTo(serverId);
         }

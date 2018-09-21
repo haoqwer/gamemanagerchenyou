@@ -24,21 +24,25 @@ public class RetainPlayerServiceImpl implements RetainPlayerService {
 
     @Override
     public PageResult listRetainPlayer(Integer serverId, Integer channelId, int pageSize, int rows) throws BizException {
-        PageHelper.startPage(pageSize,rows);
-        RetainPlayerExample example=new RetainPlayerExample();
+        PageHelper.startPage(pageSize, rows);
+        RetainPlayerExample example = new RetainPlayerExample();
         RetainPlayerExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("show_time desc");
-        if(null != serverId){
+        if (serverId == null & channelId == null) {
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
+        if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }
-        if(null != channelId){
+        if (null != channelId) {
             criteria.andChannelIdEqualTo(channelId);
         }
         List <RetainPlayer> list = retainPlayerMapper.selectByExample(example);
-        if(StringUtils.isEmpty(list)){
-            throw new BizException(BizException.CODE_RESULT_NULL,"不好意思,当前没有数据!");
+        if (StringUtils.isEmpty(list)) {
+            throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
         }
-        Page<RetainPlayer> page=(Page<RetainPlayer>)list;
-        return new PageResult(page.getTotal(),page.getResult());
+        Page <RetainPlayer> page = (Page <RetainPlayer>) list;
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }

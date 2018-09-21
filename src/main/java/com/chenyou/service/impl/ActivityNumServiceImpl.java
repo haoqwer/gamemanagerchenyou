@@ -54,6 +54,8 @@ public class ActivityNumServiceImpl implements ActivityNumService {
                end = start;
                start = temp;
                criteria.andRecordTimeBetween(start, end);
+           }else{
+               criteria.andRecordTimeBetween(start, end);
            }
        }
         if (null != serverId) {

@@ -31,6 +31,10 @@ public class GangGradeServiceImpl implements GangGradeService {
         GangGradeExample example = new GangGradeExample();
         example.setOrderByClause("gong_grade asc");
         GangGradeExample.Criteria criteria = example.createCriteria();
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }

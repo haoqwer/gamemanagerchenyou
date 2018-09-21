@@ -28,22 +28,26 @@ public class VipCountServiceImpl implements VipCountService {
 
     @Override
     public PageResult listVipCount(Integer serverId, Integer channelId, int pageNum, int pageSize) throws BizException {
-        PageHelper.startPage(pageNum,pageSize);
-        VipCountExample example=new VipCountExample();
+        PageHelper.startPage(pageNum, pageSize);
+        VipCountExample example = new VipCountExample();
         example.setOrderByClause("vip_online_count asc");
         VipCountExample.Criteria criteria = example.createCriteria();
-        if(null !=serverId){
+        if (serverId == null & channelId == null) {
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
+        if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }
-        if(null != channelId){
+        if (null != channelId) {
             criteria.andChannelIdEqualTo(channelId);
         }
         List <VipCount> list = vipCountMapper.selectByExample(example);
-        if(StringUtils.isEmpty(list)){
-            throw new BizException(BizException.CODE_RESULT_NULL,"不好意思,当前没有数据!");
+        if (StringUtils.isEmpty(list)) {
+            throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
         }
-        Page<VipCount> page=(Page<VipCount>)list;
-        return new PageResult(page.getTotal(),page.getResult());
+        Page <VipCount> page = (Page <VipCount>) list;
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }
 

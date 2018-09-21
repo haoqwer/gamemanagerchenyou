@@ -35,6 +35,10 @@ public class GradePlayerServiceImpl implements GradePlayerService {
         PageHelper.startPage(pageNum, pageSize);
         GradePlayerExample example = new GradePlayerExample();
         GradePlayerExample.Criteria criteria = example.createCriteria();
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }

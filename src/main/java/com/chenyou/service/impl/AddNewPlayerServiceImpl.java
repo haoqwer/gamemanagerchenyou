@@ -20,7 +20,7 @@ import java.util.List;
 @Transactional
 public class AddNewPlayerServiceImpl implements AddNewPlayerService {
 
-    private static  final Logger logger=LoggerFactory.getLogger(AddNewPlayerServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(AddNewPlayerServiceImpl.class);
 
     @Autowired
     private AddNewplayerMapper addNewplayerMapper;
@@ -31,12 +31,16 @@ public class AddNewPlayerServiceImpl implements AddNewPlayerService {
         AddNewplayerExample example = new AddNewplayerExample();
         example.setOrderByClause("register_time desc");
         AddNewplayerExample.Criteria criteria = example.createCriteria();
+        if (serverId == null && channelId == null) {
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if (null != serverId) {
-            logger.info("serverId:"+serverId);
+            logger.info("serverId:" + serverId);
             criteria.andServerIdEqualTo(serverId);
         }
         if (null != channelId) {
-            logger.info("channelId:"+channelId);
+            logger.info("channelId:" + channelId);
             criteria.andChannelIdEqualTo(channelId);
         }
         List <AddNewplayer> list = addNewplayerMapper.selectByExample(example);

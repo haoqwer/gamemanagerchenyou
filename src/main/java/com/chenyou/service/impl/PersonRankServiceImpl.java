@@ -52,6 +52,8 @@ public class PersonRankServiceImpl implements PersonRankService {
                 end = start;
                 start = temp;
                 criteria.andRecordTimeBetween(start, end);
+            }else {
+                criteria.andRecordTimeBetween(start, end);
             }
         }
         if (null != serverId) {

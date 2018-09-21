@@ -31,6 +31,10 @@ public class ForceRankServiceImpl implements ForceRankService {
         ForceRankExample example = new ForceRankExample();
         example.setOrderByClause("force_rank asc");
         ForceRankExample.Criteria criteria = example.createCriteria();
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }

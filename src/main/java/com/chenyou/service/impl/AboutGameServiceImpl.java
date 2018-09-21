@@ -19,28 +19,32 @@ import java.util.List;
 public class AboutGameServiceImpl implements AboutGameService {
 
 
-    private static  final  Logger logger=LoggerFactory.getLogger(AboutGame.class);
+    private static final Logger logger = LoggerFactory.getLogger(AboutGame.class);
 
     @Autowired
     private AboutGameMapper aboutGameMapper;
 
     @Override
-    public AboutGame getAboutGame(Integer serverId,Integer channelId) throws BizException {
+    public AboutGame getAboutGame(Integer serverId, Integer channelId) throws BizException {
         //根据区服或者渠道来查询对应的游戏概况的数据
         AboutGameExample example = new AboutGameExample();
         AboutGameExample.Criteria criteria = example.createCriteria();
-        if (serverId != null) {
-            logger.info("serverId:"+serverId);
+        logger.info("serverId:" + serverId);
+        if (null == serverId && null == channelId) {
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
+        if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }
-        if (channelId != null) {
+        if (null != channelId) {
             criteria.andChannelIdEqualTo(channelId);
         }
-        List <AboutGame> listAboutGame = aboutGameMapper.selectByExample(example);
-        if (listAboutGame.size() == 0 || listAboutGame.isEmpty()) {
+        List <AboutGame> list = aboutGameMapper.selectByExample(example);
+        if (StringUtils.isEmpty(list)) {
             throw new BizException(BizException.CODE_NO_LONIN, "不好意思,当前没有数据!");
         }
-        return listAboutGame.get(0);
+        return list.get(0);
     }
 
 }

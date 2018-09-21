@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.geom.AffineTransform;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -60,7 +59,13 @@ public class EveryDayChargeServiceImpl implements EverydayChargeService {
                 end = start;
                 start = temp;
                 criteria.andRechargeTimeBetween(start, end);
+            }else  {
+                criteria.andRechargeTimeBetween(start, end);
             }
+        }
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
         }
         if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);

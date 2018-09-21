@@ -22,46 +22,48 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CyUserCountServiceImpl  implements CyUserCountService {
+public class CyUserCountServiceImpl implements CyUserCountService {
 
-    private static  final Logger logger=LoggerFactory.getLogger(CyUserCountServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(CyUserCountServiceImpl.class);
 
     @Autowired
     private CyUserCountMapper userCountMapper;
 
     /**
-     *
-     * @param parse 日期
+     * @param parse     日期
      * @param serverId
      * @param channelId
      * @return
      */
     @Override
     public PageResult listUserCount(String parse, Integer serverId, Integer channelId, int pageSize, int rows) throws ParseException, BizException {
-        PageHelper.startPage(pageSize,rows);
-        Date date=null;
+        PageHelper.startPage(pageSize, rows);
+        Date date = null;
         //获取到时间
-        if(! StringUtils.isEmpty(parse)){
-             date = DateUtil.parse(parse);
+        if (!StringUtils.isEmpty(parse)) {
+            date = DateUtil.parse(parse);
         }
-        CyUserCountExample example=new CyUserCountExample();
+        CyUserCountExample example = new CyUserCountExample();
         example.setOrderByClause("count_time desc");
         CyUserCountExample.Criteria criteria = example.createCriteria();
-        if(date!=null){
+        if (date != null) {
             criteria.andCountTimeEqualTo(date);
         }
-        if(serverId !=null){
+        if (null == serverId && null == channelId) {
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
+        if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }
-        if(channelId!=null){
+        if (null != channelId) {
             criteria.andChannelIdEqualTo(channelId);
         }
-
-        List <CyUserCount> listuserCount = userCountMapper.selectByExample(example);
-        if(listuserCount.size()==0 || listuserCount.isEmpty()){
-            throw  new BizException(BizException.CODE_NO_LONIN,"不好意思,当前没有数据!");
+        List <CyUserCount> list = userCountMapper.selectByExample(example);
+        if (StringUtils.isEmpty(list)) {
+            throw new BizException(BizException.CODE_NO_LONIN, "不好意思,当前没有数据!");
         }
-        Page<CyUserCount> page=(Page<CyUserCount>)listuserCount;
-        return new PageResult(page.getTotal(),page.getResult());
+        Page <CyUserCount> page = (Page <CyUserCount>) list;
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }

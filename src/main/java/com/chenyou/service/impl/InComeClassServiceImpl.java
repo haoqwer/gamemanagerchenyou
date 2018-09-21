@@ -26,13 +26,16 @@ public class InComeClassServiceImpl implements InComeClassService {
 
     @Override
     public PageResult listInCome(String parse, Integer serverId, Integer channelId,int pageSize,int rows) throws ParseException, BizException {
-
         PageHelper.startPage(pageSize,rows);
         IncomeClassExample example=new IncomeClassExample();
         example.setOrderByClause("recorde_time desc");
         IncomeClassExample.Criteria criteria = example.createCriteria();
         if(!StringUtils.isEmpty(parse)){
             criteria.andRecordeTimeEqualTo(DateUtil.parse(parse));
+        }
+        if(null ==serverId && null ==channelId){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
         }
         if(serverId != null){
             criteria.andServerIdEqualTo(serverId);

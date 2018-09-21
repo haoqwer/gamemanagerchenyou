@@ -51,6 +51,8 @@ public class ActivityOutputServiceImpl implements ActivityOutputService {
                 end = start;
                 start = temp;
                 criteria.andRecordeTimeBetween(start, end);
+            }else{
+                criteria.andRecordeTimeBetween(start, end);
             }
         }
         if (null != serverId) {

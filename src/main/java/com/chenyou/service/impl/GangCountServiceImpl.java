@@ -31,6 +31,10 @@ public class GangCountServiceImpl implements GangCountService {
         GangCountExample example = new GangCountExample();
         example.setOrderByClause("gang_num asc");
         GangCountExample.Criteria criteria = example.createCriteria();
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }

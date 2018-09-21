@@ -28,6 +28,10 @@ public class PointAnalyseServiceImpl implements PointAnalyseService {
         PointAnalyseExample example=new PointAnalyseExample();
         example.setOrderByClause("charging_time desc");
         PointAnalyseExample.Criteria criteria = example.createCriteria();
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if(null !=serverId){
             criteria.andServerIdEqualTo(serverId);
         }

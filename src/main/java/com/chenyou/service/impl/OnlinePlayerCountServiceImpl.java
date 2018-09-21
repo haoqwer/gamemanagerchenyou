@@ -31,8 +31,12 @@ public class OnlinePlayerCountServiceImpl implements OnlinePlayerCountService {
         OnlineplayerCountExample example = new OnlineplayerCountExample();
         example.setOrderByClause("record_time desc");
         OnlineplayerCountExample.Criteria criteria = example.createCriteria();
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if (!StringUtils.isEmpty(parse)) {
-            criteria.andRecordTimeEqualTo(parse);
+            criteria.andRecordTimeEqualTo(DateUtil.parse(parse));
         }
         if (serverId != null) {
             criteria.andServerIdEqualTo(serverId);

@@ -25,21 +25,25 @@ public class AwayOutputServiceImpl implements AwayOutputService {
 
     @Override
     public PageResult listAwayOutput(Integer serverId, Integer channelId, int pageNum, int pageSize) throws BizException {
-        PageHelper.startPage(pageNum,pageSize);
-        AwayOutputExample example=new AwayOutputExample();
+        PageHelper.startPage(pageNum, pageSize);
+        AwayOutputExample example = new AwayOutputExample();
         example.setOrderByClause("count_player asc");
         AwayOutputExample.Criteria criteria = example.createCriteria();
-        if(null !=serverId){
+        if (serverId == null & channelId == null) {
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
+        if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }
-        if(null !=channelId){
+        if (null != channelId) {
             criteria.andChannelIdEqualTo(channelId);
         }
-        List<AwayOutput> list = awayOutputMapper.selectByExample(example);
-        if(StringUtils.isEmpty(list)){
-            throw new BizException(BizException.CODE_RESULT_NULL,"不好意思,当前没有数据!");
+        List <AwayOutput> list = awayOutputMapper.selectByExample(example);
+        if (StringUtils.isEmpty(list)) {
+            throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
         }
-        Page<AwayOutput> page = (Page <AwayOutput>) list;
+        Page <AwayOutput> page = (Page <AwayOutput>) list;
         return new PageResult(page.getTotal(), page.getResult());
     }
 }

@@ -31,6 +31,10 @@ public class AwayGradeServiceImpl implements AwayGradeService {
         AwayGradeExample example = new AwayGradeExample();
         AwayGradeExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("count_player desc");
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
         }

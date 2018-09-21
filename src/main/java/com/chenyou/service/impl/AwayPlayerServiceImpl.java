@@ -1,6 +1,7 @@
 package com.chenyou.service.impl;
 
 import com.chenyou.base.BizException;
+
 import com.chenyou.mapper.AwayPlayerMapper;
 import com.chenyou.pojo.AwayPlayer;
 import com.chenyou.pojo.AwayPlayerExample;
@@ -31,6 +32,10 @@ public class AwayPlayerServiceImpl implements AwayPlayerService {
         AwayPlayerExample example=new AwayPlayerExample();
         example.setOrderByClause("record_time desc");
         AwayPlayerExample.Criteria criteria = example.createCriteria();
+        if(serverId ==null &channelId==null){
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
         if(null !=serverId){
             criteria.andServerIdEqualTo(serverId);
         }
