@@ -168,8 +168,8 @@ public class RechargeTestAndOnlin {
     }
 
     @Test
-    public  void  test_listTaskMessage() throws BizException {
-        PageResult pageResult = taskMessageService.listTaskMessage(null, null, 1, 10);
+    public  void  test_listTaskMessage() throws BizException, ParseException {
+        PageResult pageResult = taskMessageService.listTaskMessage(null,null,null, null, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);

@@ -125,17 +125,17 @@ public class GameBehaviorController extends BaseController {
     }
 
     @RequestMapping(value = "listTaskMessage", method = RequestMethod.GET)
-    public Map <String, Object> listTaskMessage(Integer serverId, Integer channelId, int page, int rows) throws BizException {
+    public Map <String, Object> listTaskMessage(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, taskMessageService.listTaskMessage(serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, taskMessageService.listTaskMessage(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     @RequestMapping(value = "listOutConsume",method = RequestMethod.GET)
-    public  Map<String,Object> listOutConsume(String parse,Integer serverId,Integer channelId,int page,int rows) throws ParseException, BizException, ParseException {
+    public  Map<String,Object> listOutConsume(String start,String end,Integer serverId,Integer channelId,int page,int rows) throws ParseException, BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, outConsumeService.listOutConsume(parse,serverId,channelId,page,rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, outConsumeService.listOutConsume(start,end,serverId,channelId,page,rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }

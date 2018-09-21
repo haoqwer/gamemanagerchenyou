@@ -17,26 +17,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseController {
-    private static  final Logger logger=LoggerFactory.getLogger(BaseController.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
+
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public Map<String,Object> ExceptionHandler(Exception ex) {
+    public Map<String, Object> ExceptionHandler(Exception ex) {
         logger.error("ExceptionHandler", ex);
-        Map<String,Object> resultMap = new HashMap<String,Object>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
 
-        if(ex instanceof BizException){
+        if (ex instanceof BizException) {
             BizException bizException = (BizException) ex;
             String errorMsg = "";
-            if(logger.isDebugEnabled())
-            errorMsg = bizException.getMessage();
+            if (logger.isDebugEnabled())
+                errorMsg = bizException.getMessage();
             resultMap.put(ApplicationConstants.TAG_SC, bizException.getCode());
             resultMap.put(ApplicationConstants.TAG_SC_MSG, errorMsg);
             resultMap.put(ApplicationConstants.TAG_SC_ERRORMSG, errorMsg);
-        }
-        else
-        {
+        } else {
             StringBuffer buf = new StringBuffer();
-            if(logger.isDebugEnabled()) {
+            if (logger.isDebugEnabled()) {
                 buf.append("<");
                 buf.append(ex.toString());
                 buf.append(">");
@@ -45,8 +44,7 @@ public class BaseController {
                 ex.printStackTrace(pw);
                 pw.close();
                 buf.append(sw.toString());
-            }
-            else{
+            } else {
                 buf.append(ex.toString());
             }
 
@@ -57,14 +55,12 @@ public class BaseController {
     }
 
 
-
-    @ExceptionHandler({ UnauthorizedException.class, AuthorizationException.class })
-    public Map<String,Object> authorizationException(HttpServletRequest request, HttpServletResponse response) {
-            Map<String,Object> map = new HashMap<>();
-            map.put("message", "不好意思，您的权限不足!");
-            return map;
+    @ExceptionHandler({UnauthorizedException.class, AuthorizationException.class})
+    public Map<String, Object> authorizationException(HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> resultMaP = new HashMap<>();
+        resultMaP.put(ApplicationConstants.TAG_SC_ERRORMSG, "不好意思，您的权限不足!");
+        return resultMaP;
     }
-
 
 
 }

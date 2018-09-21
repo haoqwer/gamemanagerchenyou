@@ -42,7 +42,7 @@ public class ActivityTest {
 
     @Test
     public void oun() throws ParseException, BizException {
-        PageResult pageResult = outConsumeService.listOutConsume(null ,null, null, 1,10);
+        PageResult pageResult = outConsumeService.listOutConsume(null ,null, null, 1,1,10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,14 +24,33 @@ public class OutConsumeServiceImpl implements OutConsumeService {
     @Autowired
     private OutConsumeMapper outConsumeMapper;
     @Override
-    public PageResult listOutConsume(String parse, Integer serverId, Integer channelId, int pageNum, int pageSize) throws ParseException, BizException {
+    public PageResult listOutConsume(String start,String end, Integer serverId, Integer channelId, int pageNum, int pageSize) throws ParseException, BizException {
         PageHelper.startPage(pageNum,pageSize);
+        Date startTime = null;
+        Date endTime = null;
+        Date temp = null;
         OutConsumeExample example=new OutConsumeExample();
         OutConsumeExample.Criteria criteria = example.createCriteria();
-        if(!StringUtils.isEmpty(parse)){
-            criteria.andRecordTimeEqualTo(DateUtil.parse(parse));
+        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            startTime = DateUtil.parse(start);
+            endTime = DateUtil.parse(end);
+            if (startTime.after(endTime)) {
+                //如果前面时间大于后面时间
+                temp = endTime;
+                endTime = startTime;
+                startTime = temp;
+                criteria.andRecordTimeBetween(startTime, endTime);
+            } else {
+                criteria.andRecordTimeBetween(startTime, endTime);
+            }
         }
-
+        //如果其中一个为空
+        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+            criteria.andRecordTimeEqualTo(DateUtil.parse(start));
+        }
+        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            criteria.andRecordTimeEqualTo(DateUtil.parse(end));
+        }
         if(serverId ==null &channelId==null){
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();
