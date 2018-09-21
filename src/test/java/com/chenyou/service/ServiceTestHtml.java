@@ -58,7 +58,7 @@ public class ServiceTestHtml {
 
     @Test
     public  void test_listInCome() throws ParseException, BizException {
-        PageResult pageResult = inComeClassService.listInCome("2018-09-13", null, null,1,10);
+        PageResult pageResult = inComeClassService.listInCome("2018-09-13", null, null,1,1,10);
         List rows = pageResult.getRows();
         for(Object userCount:rows){
             System.out.println(userCount);
@@ -67,7 +67,7 @@ public class ServiceTestHtml {
 
     @Test
     public  void test_listChannelCount() throws ParseException, BizException {
-        PageResult page = channelCountService.listChannelCount(null, null, null, 1, 10);
+        PageResult page = channelCountService.listChannelCount(null, null, null, 1,1, 10);
         List rows = page.getRows();
         System.out.println(page.getTotal());
         for(Object userCount:rows){
@@ -76,16 +76,16 @@ public class ServiceTestHtml {
     }
 
     @Test
-    public void test_ltvCount() throws BizException {
-        List <LtvCount> list = ltvCountService.listLtvCount(null, null);
+    public void test_ltvCount() throws BizException, ParseException {
+        List <LtvCount> list = ltvCountService.listLtvCount(null,null,null, null);
         for (LtvCount ltvCount : list) {
             System.out.println("ltvCount" + ltvCount);
         }
     }
     
     @Test
-    public void test_addnewPlayer() throws BizException {
-        PageResult page = addNewPlayerService.listAddNewPlayer(null, null, 1, 10);
+    public void test_addnewPlayer() throws BizException, ParseException {
+        PageResult page = addNewPlayerService.listAddNewPlayer(null,null,null, null, 1, 10);
         System.out.println(page.getTotal());
         for (Object obj : page.getRows()) {
             System.out.println(obj);

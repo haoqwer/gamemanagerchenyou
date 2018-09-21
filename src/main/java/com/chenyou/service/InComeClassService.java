@@ -8,5 +8,5 @@ import java.text.ParseException;
 import java.util.List;
 
 public interface InComeClassService {
-    PageResult listInCome(String parse, Integer serverId, Integer channelId, int pageSize, int rows) throws ParseException, BizException;
+    PageResult listInCome(String start,String end, Integer serverId, Integer channelId, int pageSize, int rows) throws ParseException, BizException;
 }

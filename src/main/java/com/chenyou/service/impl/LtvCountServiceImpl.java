@@ -5,11 +5,14 @@ import com.chenyou.mapper.LtvCountMapper;
 import com.chenyou.pojo.LtvCount;
 import com.chenyou.pojo.LtvCountExample;
 import com.chenyou.service.LtvCountService;
+import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,9 +24,32 @@ public class LtvCountServiceImpl implements LtvCountService {
 
 
     @Override
-    public List <LtvCount> listLtvCount(Integer serverId, Integer channelId) throws BizException {
+    public List <LtvCount> listLtvCount(String start, String end, Integer serverId, Integer channelId) throws BizException, ParseException {
+        Date startTime = null;
+        Date endTime = null;
+        Date temp = null;
         LtvCountExample example = new LtvCountExample();
         LtvCountExample.Criteria criteria = example.createCriteria();
+        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            startTime = DateUtil.parse(start);
+            endTime = DateUtil.parse(end);
+            if (startTime.after(endTime)) {
+                //如果前面时间大于后面时间
+                temp = endTime;
+                endTime = startTime;
+                startTime = temp;
+                criteria.andRecordeTimeBetween(startTime, endTime);
+            } else {
+                criteria.andRecordeTimeBetween(startTime, endTime);
+            }
+        }
+        //如果其中一个为空
+        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+            criteria.andRecordeTimeEqualTo(DateUtil.parse(start));
+        }
+        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            criteria.andRecordeTimeEqualTo(DateUtil.parse(end));
+        }
         if (serverId == null & channelId == null) {
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,13 +26,34 @@ public class InComeClassServiceImpl implements InComeClassService {
     private IncomeClassMapper incomeClassMapper;
 
     @Override
-    public PageResult listInCome(String parse, Integer serverId, Integer channelId,int pageSize,int rows) throws ParseException, BizException {
+    public PageResult listInCome(String start,String end, Integer serverId, Integer channelId,int pageSize,int rows) throws ParseException, BizException {
+        Date startTime = null;
+        Date endTime = null;
+        Date temp = null;
         PageHelper.startPage(pageSize,rows);
         IncomeClassExample example=new IncomeClassExample();
         example.setOrderByClause("recorde_time desc");
         IncomeClassExample.Criteria criteria = example.createCriteria();
-        if(!StringUtils.isEmpty(parse)){
-            criteria.andRecordeTimeEqualTo(DateUtil.parse(parse));
+        //时间段选择判断
+        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            startTime = DateUtil.parse(start);
+            endTime = DateUtil.parse(end);
+            if (startTime.after(endTime)) {
+                //如果前面时间大于后面时间
+                temp = endTime;
+                endTime = startTime;
+                startTime = temp;
+                criteria.andRecordeTimeBetween(startTime, endTime);
+            } else {
+                criteria.andRecordeTimeBetween(startTime, endTime);
+            }
+        }
+        //如果其中一个为空
+        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+            criteria.andRecordeTimeEqualTo(DateUtil.parse(start));
+        }
+        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+            criteria.andRecordeTimeEqualTo(DateUtil.parse(end));
         }
         if(null ==serverId && null ==channelId){
             criteria.andServerIdIsNull();
