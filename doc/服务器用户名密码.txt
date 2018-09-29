@@ -1,0 +1,25 @@
+ip地址				用户名		密码
+172.26.96.96	_ _ _ _ 	root   _ _ _ _  Adpp#101
+47.92.93.115	_ _ _ _		root   _ _ _ _	Lxm@#101
+
+
+
+
+线上数据库:
+
+47.104.227.113 账号 gmcy  密码 chenyou#123
+
+
+封测数据库:
+47.104.240.79 gm@Wui  kjime@EI
+
+
+
+<Context path="/" docBase="/usr/local/src/tomcat/apache-tomcat-7.0.57/webapps/cygame" debug="0" reloadable="true"/>
+
+[root@iz8vbduwi8gxjwcf7h8vesz apache-tomcat-7.0.57]# ps -ef |grep tomcat
+
+
+<Context path="/" docBase="/usr/local/src/tomcat/apache-tomcat-7.0.57/webapps/cygame" debug="0" reloadable="true"/>
+<Context path="/" docBase="/usr/local/src/tomcat/apache-tomcat-7.0.57/webapps/cygame" debug="0" reloadable="true"/>
+
