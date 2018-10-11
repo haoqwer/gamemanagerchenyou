@@ -10,6 +10,6 @@ import java.text.ParseException;
  */
 public interface ChannelSummaryService {
 
-    PageResult listChannelSummary(String start,String end,int pageNum,int pageSize) throws BizException, ParseException;
+    PageResult listChannelSummary(String start,String end,int pageNum,int pageSize,String channelId) throws BizException, ParseException;
 
 }

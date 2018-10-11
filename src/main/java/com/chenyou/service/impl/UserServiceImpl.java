@@ -263,6 +263,9 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isEmpty(user.getPhonenumber())) {
             throw new BizException(BizException.CODE_PARM_LACK, "缺少用户手机号码!");
         }
+//        if(StringUtils.isEmpty(user.getChannelId())){
+//            throw new BizException(BizException.CODE_PARM_LACK,"请选择一个渠道名称!");
+//        }
         if (0 == user.getRoleIds().size()) {
             throw new BizException(BizException.CODE_PARM_LACK, "请选择一个角色!");
         }
@@ -273,6 +276,7 @@ public class UserServiceImpl implements UserService {
         if (checkPhoneUnique(user) == "1") {
             throw new BizException(BizException.CODE_PARM_ERROR, "手机号" + user.getPhonenumber() + "已经存在!");
         }
+
         int rows = 0;
         try {
             user.setStatus("0");
@@ -337,7 +341,7 @@ public class UserServiceImpl implements UserService {
         userRoleMapper.deleteUserRoleByUserId(user.getUserId());
         updateCheckPhonUnique(user);
         insertUserRole(user);
-        count = userMapper.updateByPrimaryKey(user);
+        count = userMapper.updateByPrimaryKeySelective(user);
         return count;
     }
 

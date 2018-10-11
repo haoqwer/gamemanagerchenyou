@@ -294,6 +294,14 @@
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
+        <!--用户管理用户-->
+        <!--<table tableName="sys_user" domainObjectName="User"-->
+            <!--enableCountByExample="true" enableUpdateByExample="true"-->
+            <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+            <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="user_id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
 
 
 

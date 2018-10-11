@@ -30,6 +30,8 @@ public class ChannelSummaryServiceImpl implements ChannelSummaryService {
     private ChannelSummaryMapper channelSummaryMapper;
 
 
+
+
     /**
      * 分页展示渠道数据
      *
@@ -38,13 +40,17 @@ public class ChannelSummaryServiceImpl implements ChannelSummaryService {
      * @return
      */
     @Override
-    public PageResult listChannelSummary(String start, String end, int pageNum, int pageSize) throws BizException, ParseException {
+    public PageResult listChannelSummary(String start, String end, int pageNum, int pageSize,String channelId) throws BizException, ParseException {
         String startTime = null;
         String endTime = null;
         String temp = null;
         PageHelper.startPage(pageNum, pageSize);
         ChannelSummaryExample example = new ChannelSummaryExample();
         ChannelSummaryExample.Criteria criteria = example.createCriteria();
+        if(StringUtils.isEmpty(channelId)){
+            throw new BizException(BizException.CODE_PARM_LACK,"不好意思!您的数据跑到火星了!");
+        }
+        criteria.andChannelIdEqualTo(channelId);
         if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
             startTime = start;
             endTime = end;

@@ -88,7 +88,7 @@ public class RechargeTestAndOnlin {
 
     @Test
     public void test_channelSummaryService() throws BizException, ParseException {
-        PageResult pageResult = channelSummaryService.listChannelSummary(null,null,1, 10);
+        PageResult pageResult = channelSummaryService.listChannelSummary(null,null,1, 10,"listChanelSummary");
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
