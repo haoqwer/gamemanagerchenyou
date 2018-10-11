@@ -36,7 +36,7 @@ public class GamePlayerTest {
 
     @Test
     public void test_listActivePlayer() throws BizException, ParseException {
-        PageResult pageResult = activePlayerService.listActviePlayer(null,null,null, null, 1, 10);
+        PageResult pageResult = activePlayerService.listActviePlayer("2018-10-08","2018-10-05",1, "test_01", 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -45,7 +45,7 @@ public class GamePlayerTest {
 
     @Test
     public void test_listRetainPlayer() throws BizException, ParseException {
-        PageResult pageResult = retainPlayerService.listRetainPlayer(null,null,null, null, 1, 10);
+        PageResult pageResult = retainPlayerService.listRetainPlayer(null,null,null, "1", 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -54,7 +54,7 @@ public class GamePlayerTest {
 
     @Test
     public void test_listAwayPlayer() throws BizException, ParseException {
-        PageResult pageResult = awayPlayerService.listAwayPlayer(null,null,null, null, 1, 10);
+        PageResult pageResult = awayPlayerService.listAwayPlayer("2018-09-13","2018-09-20",1, "1", 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -63,7 +63,7 @@ public class GamePlayerTest {
 
     @Test
     public void test_listLoginDay() throws BizException, ParseException {
-        PageResult pageResult = loginDayService.listLoginDay(null,null,null, null, 1, 10);
+        PageResult pageResult = loginDayService.listLoginDay("2018-10-09",null,null, null, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);

@@ -10,4 +10,7 @@ public interface ServerService {
      * @return
      */
     List<Server> listServer();
+
+
+    String getServerName(Integer serverId);
 }

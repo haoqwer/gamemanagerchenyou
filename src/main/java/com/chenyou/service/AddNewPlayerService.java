@@ -7,5 +7,5 @@ import java.text.ParseException;
 
 public interface AddNewPlayerService {
 
-    PageResult listAddNewPlayer(String start,String end,Integer serverId,Integer channelId,int pageSize,int rows) throws BizException, ParseException;
+    PageResult listAddNewPlayer(String start,String end,Integer serverId,String channelId,int pageSize,int rows) throws BizException, ParseException;
 }

@@ -17,7 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/activity")
-public class ActivityController  extends  BaseController{
+public class ActivityController extends BaseController {
 
     @Autowired
     private ActivityNumService activityNumService;
@@ -35,40 +35,39 @@ public class ActivityController  extends  BaseController{
 
 
     @RequestMapping(value = "/listActivityNum", method = RequestMethod.GET)
-    public Map<String, Object> listActivityNum(String start,String end, Integer serverId, int page, int rows) throws ParseException, BizException {
-        Map <String, Object> resultMap = new HashMap<>();
-        resultMap.put(ApplicationConstants.TAG_DATA, activityNumService.listActivityNum(start,end,serverId,page,rows));
+    public Map <String, Object> listActivityNum(String start, String end, Integer serverId, int page, int rows) throws ParseException, BizException {
+        Map <String, Object> resultMap = new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA, activityNumService.listActivityNum(start, end, serverId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     @RequestMapping(value = "/listActivityOutput", method = RequestMethod.GET)
-    public Map<String, Object> listActivityOutput(String start,String end, Integer serverId, int page, int rows) throws ParseException, BizException {
-        Map <String, Object> resultMap = new HashMap<>();
-        resultMap.put(ApplicationConstants.TAG_DATA,activityOutputService.listActivityOutput(start,end,serverId,page,rows));
+    public Map <String, Object> listActivityOutput(String start, String end, Integer serverId, int page, int rows) throws ParseException, BizException {
+        Map <String, Object> resultMap = new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA, activityOutputService.listActivityOutput(start, end, serverId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
-
 
 
     @RequestMapping(value = "/listActivityRank", method = RequestMethod.GET)
-    public Map<String, Object> listActivityRank(String start,String end, Integer serverId, int page, int rows) throws ParseException, BizException {
-        Map <String, Object> resultMap = new HashMap<>();
+    public Map <String, Object> listActivityRank(String start, String end, Integer serverId, int page, int rows) throws ParseException, BizException {
+        Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, activityRankService.listActivityRank(start, end, serverId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
+
+
+
+
     }
 
     @RequestMapping(value = "/listPersonRank", method = RequestMethod.GET)
-    public Map<String, Object> listPersonRank(String start,String end, Integer serverId, int page, int rows) throws ParseException, BizException {
-        Map <String, Object> resultMap = new HashMap<>();
-        resultMap.put(ApplicationConstants.TAG_DATA,personRankService.listActivityRank(start,end,serverId,page,rows));
+    public Map <String, Object> listPersonRank(String start, String end, Integer serverId, int page, int rows) throws ParseException, BizException {
+        Map <String, Object> resultMap = new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA, personRankService.listActivityRank(start, end, serverId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
-
-
-
-
 }

@@ -10,6 +10,8 @@ import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +24,17 @@ import java.util.List;
 @Transactional
 public class PointAnalyseServiceImpl implements PointAnalyseService {
 
+    private static final Logger logger=LoggerFactory.getLogger(PointAnalyseServiceImpl.class);
+
     @Autowired
     private PointAnalyseMapper pointAnalyseMapper;
 
     @Override
-    public PageResult listPointAnalyse(String start,String end,Integer serverId, Integer channelId, int pageNum, int pageSize) throws BizException, ParseException {
+    public PageResult listPointAnalyse(String start,String end,Integer serverId, String channelId, int pageNum, int pageSize) throws BizException, ParseException {
+        logger.info("start:"+start);
+        logger.info("end:"+end);
+        logger.info("serverId:"+serverId);
+        logger.info("channelId:"+channelId);
         Date startTime = null;
         Date endTime = null;
         Date temp = null;

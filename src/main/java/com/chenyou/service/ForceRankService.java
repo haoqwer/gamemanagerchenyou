@@ -10,6 +10,6 @@ import java.text.ParseException;
  * 势力榜
  */
 public interface ForceRankService {
-   PageResult listGorceRank(String start,String end,Integer serverId,Integer channelId,int pageNum,int pageSize) throws BizException, ParseException;
+   PageResult listGorceRank(String start,String end,Integer serverId,String channelId,int pageNum,int pageSize) throws BizException, ParseException;
 }
 

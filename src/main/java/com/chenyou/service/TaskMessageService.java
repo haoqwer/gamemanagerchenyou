@@ -9,5 +9,5 @@ import java.text.ParseException;
  * 任务消息
  */
 public interface TaskMessageService {
-    PageResult listTaskMessage(String start,String end,Integer serverId,Integer channelId,int pageNum,int pageSize) throws BizException, ParseException;
+    PageResult listTaskMessage(String start,String end,Integer serverId,String channelId,int pageNum,int pageSize) throws BizException, ParseException;
 }

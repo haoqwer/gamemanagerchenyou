@@ -7,5 +7,5 @@ import java.text.ParseException;
 
 public interface ActivePlayerService {
 
-    PageResult listActviePlayer(String start,String end,Integer serverId,Integer channelId,int pageSize,int rows) throws BizException, ParseException;
+    PageResult listActviePlayer(String start,String end,Integer serverId,String channelId,int pageSize,int rows) throws BizException, ParseException;
 }

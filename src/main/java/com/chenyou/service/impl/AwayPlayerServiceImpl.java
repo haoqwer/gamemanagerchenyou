@@ -30,18 +30,22 @@ public class AwayPlayerServiceImpl implements AwayPlayerService {
     private AwayPlayerMapper awayPlayerMapper;
 
     @Override
-    public PageResult listAwayPlayer(String start,String end,Integer serverId, Integer channelId, int pageSize, int rows) throws BizException, ParseException {
-        Date startTime = null;
-        Date endTime = null;
-        Date temp = null;
+    public PageResult listAwayPlayer(String start,String end,Integer serverId, String channelId, int pageSize, int rows) throws BizException, ParseException {
+        logger.info("start:"+start);
+        logger.info("end:"+end);
+        logger.info("serverId:"+serverId);
+        logger.info("channelId:"+channelId);
+        String startTime = null;
+        String endTime = null;
+        String temp = null;
         PageHelper.startPage(pageSize,rows);
         AwayPlayerExample example=new AwayPlayerExample();
         example.setOrderByClause("record_time desc");
         AwayPlayerExample.Criteria criteria = example.createCriteria();
         if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            startTime = DateUtil.parse(start);
-            endTime = DateUtil.parse(end);
-            if (startTime.after(endTime)) {
+            startTime = start;
+            endTime = end;
+            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
                 //如果前面时间大于后面时间
                 temp = endTime;
                 endTime = startTime;
@@ -53,10 +57,12 @@ public class AwayPlayerServiceImpl implements AwayPlayerService {
         }
         //如果其中一个为空
         if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
-            criteria.andRecordTimeEqualTo(DateUtil.parse(start));
+            startTime=start;
+            criteria.andRecordTimeEqualTo(startTime);
         }
         if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            criteria.andRecordTimeEqualTo(DateUtil.parse(end));
+            endTime=end;
+            criteria.andRecordTimeEqualTo(endTime);
         }
         if(serverId ==null &channelId==null){
             criteria.andServerIdIsNull();

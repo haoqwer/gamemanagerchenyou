@@ -7,7 +7,9 @@ import java.text.ParseException;
 import java.util.List;
 
 public interface LtvCountService {
-    List<LtvCount> listLtvCount(String start,String end,Integer serverId, Integer channelId) throws BizException, ParseException;
+    List<LtvCount> listLtvCount(String start,String end,Integer serverId, String channelId) throws BizException, ParseException;
 
     List<LtvCount> listLtvCount() throws BizException;
+
+    //导出
 }

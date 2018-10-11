@@ -7,5 +7,5 @@ import java.text.ParseException;
 
 public interface AwayOutputService {
 
-    PageResult listAwayOutput(String start,String end,Integer serverId,Integer channelId,int pageNum,int pageSize) throws BizException, ParseException;
+    PageResult listAwayOutput(String start,String end,Integer serverId,String channelId,int pageNum,int pageSize) throws BizException, ParseException;
 }

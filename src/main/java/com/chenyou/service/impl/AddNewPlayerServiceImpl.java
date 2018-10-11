@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,51 +32,53 @@ public class AddNewPlayerServiceImpl implements AddNewPlayerService {
     private AddNewplayerMapper addNewplayerMapper;
 
     @Override
-    public PageResult listAddNewPlayer(String start,String end,Integer serverId, Integer channelId, int pageSize, int rows) throws BizException, ParseException {
-        Date startTime = null;
-        Date endTime = null;
-        Date temp = null;
+    public PageResult listAddNewPlayer(String start,String end,Integer serverId, String channelId, int pageSize, int rows) throws BizException, ParseException {
+        String startTime = null;
+        String endTime = null;
+        String temp = null;
         PageHelper.startPage(pageSize, rows);
-        AddNewplayerExample example = new AddNewplayerExample();
-        example.setOrderByClause("register_time desc");
-        AddNewplayerExample.Criteria criteria = example.createCriteria();
-        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            startTime = DateUtil.parse(start);
-            endTime = DateUtil.parse(end);
-            if (startTime.after(endTime)) {
-                //如果前面时间大于后面时间
-                temp = endTime;
-                endTime = startTime;
-                startTime = temp;
-                criteria.andRegisterTimeBetween(startTime, endTime);
-            } else {
-                criteria.andRegisterTimeBetween(startTime, endTime);
+        List<AddNewplayer> addNewplayers=new ArrayList <>();
+        //1.判断server_id和channel_id是否为都为null
+        if( null != serverId || !StringUtils.isEmpty(channelId)){
+            if(!StringUtils.isEmpty(start)){
+                startTime=start;
             }
+            if(!StringUtils.isEmpty(end)){
+                endTime=end;
+            }
+            if(!StringUtils.isEmpty(startTime) && !StringUtils.isEmpty(endTime)){
+                if(DateUtil.parse(startTime).after(DateUtil.parse(endTime))){
+                    //前面时间大于后面时间
+                    temp=endTime;
+                    endTime=startTime;
+                    startTime=temp;
+                }
+            }
+            //2.判断时间
+
+            addNewplayers = addNewplayerMapper.listAddNewPlayerByTimeAndId(startTime, endTime, serverId, channelId);
+        }else{
+            //2.判断时间
+            if(!StringUtils.isEmpty(start)){
+                startTime=start;
+            }
+            if(!StringUtils.isEmpty(end)){
+                endTime=end;
+            }
+            if(!StringUtils.isEmpty(startTime) && !StringUtils.isEmpty(endTime)){
+                if(DateUtil.parse(startTime).after(DateUtil.parse(endTime))){
+                    //前面时间大于后面时间
+                    temp=endTime;
+                    endTime=startTime;
+                    startTime=temp;
+                }
+            }
+            addNewplayers= addNewplayerMapper.listAddNewPlayerByTime(startTime,endTime,serverId,channelId);
         }
-        //如果其中一个为空
-        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
-            criteria.andRegisterTimeEqualTo(DateUtil.parse(start));
-        }
-        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            criteria.andRegisterTimeEqualTo(DateUtil.parse(end));
-        }
-        if (serverId == null && channelId == null) {
-            criteria.andServerIdIsNull();
-            criteria.andChannelIdIsNull();
-        }
-        if (null != serverId) {
-            logger.info("serverId:" + serverId);
-            criteria.andServerIdEqualTo(serverId);
-        }
-        if (null != channelId) {
-            logger.info("channelId:" + channelId);
-            criteria.andChannelIdEqualTo(channelId);
-        }
-        List <AddNewplayer> list = addNewplayerMapper.selectByExample(example);
-        if (list.size() == 0 || list.isEmpty()) {
+        if (addNewplayers.size() == 0 || addNewplayers.isEmpty()) {
             throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
         }
-        Page <AddNewplayer> page = (Page <AddNewplayer>) list;
+        Page <AddNewplayer> page = (Page <AddNewplayer>) addNewplayers;
         return new PageResult(page.getTotal(), page.getResult());
     }
 }

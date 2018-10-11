@@ -10,25 +10,9 @@ import java.util.Date;
 public class DateUt {
 
     public static void main(String[] args) throws ParseException {
-        Date start = null;
-        Date end = null;
-        Date temp = null;
-        if (!StringUtils.isEmpty("2018-09-12")) {
-            start = DateUtil.parse("2018-09-12");
-        }
-        if (!StringUtils.isEmpty("2018-09-11")) {
-            end = DateUtil.parse("2018-09-11");
-        }
-        System.out.println("没有转换之前的日期start"+formate(start));
-        System.out.println("没有转换之前的日期end"+formate(end));
-        if (start.after(end)) {
-            temp = end;
-            end = start;
-            start = temp;
-            System.out.println("转换之后的start"+formate(start));
-            System.out.println("转换之后的end"+formate(end));
-        }
-
+       //将年月日时分秒的时间转换为年月日时间格式
+        String now = formate(new Date());
+        System.out.println(now);
     }
 
     public  static  String formate(Date date){

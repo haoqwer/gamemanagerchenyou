@@ -7,6 +7,8 @@ import com.chenyou.pojo.LtvCountExample;
 import com.chenyou.service.LtvCountService;
 import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,18 +24,24 @@ public class LtvCountServiceImpl implements LtvCountService {
     @Autowired
     private LtvCountMapper ltvCountMapper;
 
+    private static final Logger logger=LoggerFactory.getLogger(LtvCountServiceImpl.class);
+
 
     @Override
-    public List <LtvCount> listLtvCount(String start, String end, Integer serverId, Integer channelId) throws BizException, ParseException {
-        Date startTime = null;
-        Date endTime = null;
-        Date temp = null;
+    public List <LtvCount> listLtvCount(String start, String end, Integer serverId, String channelId) throws BizException, ParseException {
+        logger.info("start:"+start);
+        logger.info("end:"+end);
+        logger.info("serverId:"+serverId);
+        logger.info("channelId:"+channelId);
+        String startTime = null;
+        String endTime = null;
+        String temp = null;
         LtvCountExample example = new LtvCountExample();
         LtvCountExample.Criteria criteria = example.createCriteria();
         if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            startTime = DateUtil.parse(start);
-            endTime = DateUtil.parse(end);
-            if (startTime.after(endTime)) {
+            startTime = start;
+            endTime = end;
+            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
                 //如果前面时间大于后面时间
                 temp = endTime;
                 endTime = startTime;
@@ -45,10 +53,12 @@ public class LtvCountServiceImpl implements LtvCountService {
         }
         //如果其中一个为空
         if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
-            criteria.andRecordeTimeEqualTo(DateUtil.parse(start));
+            startTime=start;
+            criteria.andRecordeTimeEqualTo(start);
         }
         if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            criteria.andRecordeTimeEqualTo(DateUtil.parse(end));
+            endTime=end;
+            criteria.andRecordeTimeEqualTo(end);
         }
         if (serverId == null & channelId == null) {
             criteria.andServerIdIsNull();

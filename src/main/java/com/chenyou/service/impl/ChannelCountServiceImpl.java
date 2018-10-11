@@ -30,18 +30,22 @@ public class ChannelCountServiceImpl implements ChannelCountService {
     private ChannelCountMapper channelCountMapper;
 
     @Override
-    public PageResult listChannelCount(String start,String end, Integer serverId, Integer channelId, int pageSize, int rows) throws ParseException, BizException {
-        Date startTime = null;
-        Date endTime = null;
-        Date temp = null;
+    public PageResult listChannelCount(String start,String end, Integer serverId, String channelId, int pageSize, int rows) throws ParseException, BizException {
+        logger.info("start"+start);
+        logger.info("end:"+end);
+        logger.info("serverId:"+serverId);
+        logger.info("channelId:"+channelId);
+        String startTime = null;
+        String endTime = null;
+        String temp = null;
         PageHelper.startPage(pageSize, rows);
         ChannelCountExample example = new ChannelCountExample();
         example.setOrderByClause("count_time desc");
         ChannelCountExample.Criteria criteria = example.createCriteria();
         if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            startTime = DateUtil.parse(start);
-            endTime = DateUtil.parse(end);
-            if (startTime.after(endTime)) {
+            startTime = start;
+            endTime = end;
+            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
                 //如果前面时间大于后面时间
                 temp = endTime;
                 endTime = startTime;
@@ -53,10 +57,12 @@ public class ChannelCountServiceImpl implements ChannelCountService {
         }
         //如果其中一个为空
         if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
-            criteria.andCountTimeEqualTo(DateUtil.parse(start));
+            startTime=start;
+            criteria.andCountTimeEqualTo(startTime);
         }
         if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            criteria.andCountTimeEqualTo(DateUtil.parse(end));
+            endTime=end;
+            criteria.andCountTimeEqualTo(endTime);
         }
         if (null == serverId && null == channelId) {
             criteria.andServerIdIsNull();

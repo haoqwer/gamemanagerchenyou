@@ -41,7 +41,7 @@ public class ServiceTestHtml {
     public void test_getAboutGame() throws BizException {
 //        AboutGame aboutGame = aboutGameService.getAboutGame(1,1);
         //查出所有区服和渠道的数据
-        AboutGame aboutGame = aboutGameService.getAboutGame(null,null);
+        AboutGame aboutGame = aboutGameService.getAboutGame(1,null);
         System.out.println(aboutGame);
     }
 
@@ -58,7 +58,7 @@ public class ServiceTestHtml {
 
     @Test
     public  void test_listInCome() throws ParseException, BizException {
-        PageResult pageResult = inComeClassService.listInCome("2018-09-13", null, null,1,1,10);
+        PageResult pageResult = inComeClassService.listInCome("2018-09-13", null, null,null,1,10);
         List rows = pageResult.getRows();
         for(Object userCount:rows){
             System.out.println(userCount);
@@ -67,7 +67,7 @@ public class ServiceTestHtml {
 
     @Test
     public  void test_listChannelCount() throws ParseException, BizException {
-        PageResult page = channelCountService.listChannelCount(null, null, null, 1,1, 10);
+        PageResult page = channelCountService.listChannelCount(null, null, null, null,1, 10);
         List rows = page.getRows();
         System.out.println(page.getTotal());
         for(Object userCount:rows){

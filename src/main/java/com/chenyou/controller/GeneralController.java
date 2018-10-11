@@ -48,7 +48,7 @@ public class GeneralController extends  BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "/aboutGame", method = RequestMethod.GET)
-    public Map <String, Object> getAboutGame(Integer serverId, Integer channelId) throws BizException {
+    public Map <String, Object> getAboutGame(Integer serverId, String channelId) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, aboutGameService.getAboutGame(serverId, channelId));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.TAG_SC);
@@ -65,7 +65,7 @@ public class GeneralController extends  BaseController {
      * @throws ParseException
      */
     @RequestMapping(value = "/listUserCount", method = RequestMethod.GET)
-    public Map <String, Object> listUserCount(String start,String end, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
+    public Map <String, Object> listUserCount(String start,String end, Integer serverId, String channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, userCountService.listUserCount(start,end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
@@ -85,7 +85,7 @@ public class GeneralController extends  BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "/listInCome", method = RequestMethod.GET)
-    public Map <String, Object> listInCome(String start,String end, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
+    public Map <String, Object> listInCome(String start,String end, Integer serverId, String channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
             resultMap.put(ApplicationConstants.TAG_DATA, inComeClassService.listInCome(start,end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
@@ -104,7 +104,7 @@ public class GeneralController extends  BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "/listChannel", method = RequestMethod.GET)
-    public Map <String, Object> listChannel(String start,String end, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
+    public Map <String, Object> listChannel(String start,String end, Integer serverId, String channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, channelCountService.listChannelCount(start,end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
@@ -119,7 +119,7 @@ public class GeneralController extends  BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "/listLtvCount", method = RequestMethod.GET)
-    public Map <String, Object> listLtvCount(String start,String end,Integer serverId, Integer channelId) throws BizException, ParseException {
+    public Map <String, Object> listLtvCount(String start,String end,Integer serverId, String channelId) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, ltvCountService.listLtvCount(start,end,serverId, channelId));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
@@ -143,7 +143,7 @@ public class GeneralController extends  BaseController {
         List <LtvCount> listLtv =ltvCountService.listLtvCount();
         for (LtvCount ltv : listLtv) {
             Map <String, Object> map = new HashMap <>();
-            map.put("recordeTime",DateUtil.format(ltv.getRecordeTime()));
+            map.put("recordeTime",ltv.getRecordeTime());
             map.put("onedayLtv", ltv.getOnedayLtv());
             map.put("twodayLtv", ltv.getTwodayLtv());
             map.put("threedayLtv", ltv.getThreedayLtv());
@@ -158,20 +158,20 @@ public class GeneralController extends  BaseController {
         String[] keys = {"recordeTime", "onedayLtv", "twodayLtv", "threedayLtv", "fourdayLtv", "fivedayLtv", "sixdayLtv", "sevendayLtv", "fifteendayLtv", "thirtydayLtv"};
         String[] columnNames = {"时间", "1日LTV", "2日LTV", "3日LTV", "4日LTV", "5日LTV", "6日LTV", "7日LTV", "15日LTV", "30日LTV"};
         Workbook wb = ExcelUtil.createWorkBook(list, keys, columnNames);
-        // 4.设置下载参数：一个流两个头
+        // 设置下载参数：一个流两个头
         String filename = DateUtil.format(new Date())+ "-->ltv概况.xls";
         //获取浏览器请求头中的User-Agent参数
         String agent = request.getHeader("User-Agent");
         //调用文件工具类，转换文件名
         String mimeType = request.getSession().getServletContext().getMimeType(filename);
         filename = FileUtils.encodeDownloadFilename(filename, agent);
-        // 4.1一个流：指的是response的输出流
+        // 一个流：指的是response的输出流
         ServletOutputStream os = response.getOutputStream();
-        // 4.2两个头之一：content-type，告诉浏览器返回数据的格式
+        // 两个头之一：content-type，告诉浏览器返回数据的格式
         response.setContentType(mimeType);
-        // 4.3两个头之二：content-disposition，告诉浏览器打开返回数据的方法，attachment;filename=文件名
+        // 两个头之二：content-disposition，告诉浏览器打开返回数据的方法，attachment;filename=文件名
         response.setHeader("content-disposition", "attachment;filename=" + filename);
-        // 5.response的输出流将excel返回到前台
+        // response的输出流将excel返回到前台
         try {
             wb.write(os);
         } catch (IOException e) {

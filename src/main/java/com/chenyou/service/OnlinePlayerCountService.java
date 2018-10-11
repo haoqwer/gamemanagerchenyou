@@ -7,6 +7,6 @@ import java.text.ParseException;
 
 public interface OnlinePlayerCountService {
 
-    PageResult listOnlinePlayerCount (String start,String end,Integer serverId,Integer channelId,int pageNum,int pageSize) throws ParseException, BizException;
+    PageResult listOnlinePlayerCount (String start,String end,Integer serverId,String channelId,int pageNum,int pageSize) throws ParseException, BizException;
 
 }

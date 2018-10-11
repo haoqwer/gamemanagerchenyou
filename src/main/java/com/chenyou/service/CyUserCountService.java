@@ -9,5 +9,5 @@ import java.util.Date;
 import java.util.List;
 
 public interface CyUserCountService {
- PageResult listUserCount(String start,String end, Integer serverId, Integer channelId, int pageSize, int rows) throws ParseException, BizException;
+ PageResult listUserCount(String start,String end, Integer serverId, String channelId, int pageSize, int rows) throws ParseException, BizException;
 }

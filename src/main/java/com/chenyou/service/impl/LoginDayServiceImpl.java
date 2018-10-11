@@ -10,6 +10,8 @@ import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,22 +24,30 @@ import java.util.List;
 @Transactional
 public class LoginDayServiceImpl implements LoginDayService {
 
+
+    private static final Logger logger=LoggerFactory.getLogger(LoginDayServiceImpl.class);
+
     @Autowired
     private LoginDayMapper loginDayMapper;
 
+
     @Override
-    public PageResult listLoginDay(String start, String end, Integer serverId, Integer channelId, int pageNum, int pageSize) throws BizException, ParseException {
-        Date startTime = null;
-        Date endTime = null;
-        Date temp = null;
+    public PageResult listLoginDay(String start, String end, Integer serverId, String channelId, int pageNum, int pageSize) throws BizException, ParseException {
+        logger.info("start:"+start);
+        logger.info("end:"+end);
+        logger.info("serverId:"+serverId);
+        logger.info("channelId:"+channelId);
+        String startTime = null;
+        String endTime = null;
+        String temp = null;
         PageHelper.startPage(pageNum, pageSize);
         LoginDayExample example = new LoginDayExample();
         example.setOrderByClause("count_num");
         LoginDayExample.Criteria criteria = example.createCriteria();
         if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            startTime = DateUtil.parse(start);
-            endTime = DateUtil.parse(end);
-            if (startTime.after(endTime)) {
+            startTime = start;
+            endTime =end;
+            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
                 //如果前面时间大于后面时间
                 temp = endTime;
                 endTime = startTime;
@@ -49,10 +59,12 @@ public class LoginDayServiceImpl implements LoginDayService {
         }
         //如果其中一个为空
         if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
-            criteria.andShowTimeEqualTo(DateUtil.parse(start));
+            startTime=start;
+            criteria.andShowTimeEqualTo(startTime);
         }
         if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            criteria.andShowTimeEqualTo(DateUtil.parse(end));
+            endTime=end;
+            criteria.andShowTimeEqualTo(endTime);
         }
         //进行条件选择
         if (serverId == null & channelId == null) {

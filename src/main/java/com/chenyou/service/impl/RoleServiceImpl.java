@@ -49,6 +49,7 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public Role getRoleByRoleId(Integer roleId) throws BizException{
+        logger.info("roleId:"+roleId);
         Role role = new Role();
         try {
             logger.info("roleId:"+roleId);

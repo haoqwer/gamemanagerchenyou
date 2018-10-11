@@ -23,7 +23,7 @@ public class OnlinePlayerController  extends  BaseController{
     private OnlinePlayerCountService onlinePlayerCountService;
 
         @RequestMapping(value = "/listOnlinePlayerCount",method = RequestMethod.GET)
-    public Map<String,Object> listOnlinePlayerCount(String start,String end, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
+    public Map<String,Object> listOnlinePlayerCount(String start,String end, Integer serverId, String channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, onlinePlayerCountService.listOnlinePlayerCount(start,end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);

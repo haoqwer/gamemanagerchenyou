@@ -35,7 +35,7 @@ public class RechargeController  extends  BaseController{
      * @throws ParseException
      */
     @RequestMapping(value = "/listEveryDayCharge", method = RequestMethod.GET)
-    public Map <String, Object> listEveryDayCharge(String start,String end, Integer serverId, Integer channelId, int page, int rows) throws ParseException, BizException {
+    public Map <String, Object> listEveryDayCharge(String start,String end, Integer serverId, String channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, everyDayChargeService.listEveryDayCharget(start,end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
@@ -52,7 +52,7 @@ public class RechargeController  extends  BaseController{
      * @throws BizException
      */
     @RequestMapping(value = "/listPointAnalyse", method = RequestMethod.GET)
-    public Map <String, Object> listPointAnalyse(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listPointAnalyse(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, pointAnalyseService.listPointAnalyse(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);

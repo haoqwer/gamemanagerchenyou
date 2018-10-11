@@ -25,13 +25,20 @@ public class AboutGameServiceImpl implements AboutGameService {
     private AboutGameMapper aboutGameMapper;
 
     @Override
-    public AboutGame getAboutGame(Integer serverId, Integer channelId) throws BizException {
+    public AboutGame getAboutGame(Integer serverId, String channelId) throws BizException {
         //根据区服或者渠道来查询对应的游戏概况的数据
         AboutGameExample example = new AboutGameExample();
         AboutGameExample.Criteria criteria = example.createCriteria();
         logger.info("serverId:" + serverId);
+        logger.info("channelId:"+channelId);
         if (null == serverId && null == channelId) {
             criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
+        if (null == serverId) {
+            criteria.andServerIdIsNull();
+        }
+        if (null == channelId) {
             criteria.andChannelIdIsNull();
         }
         if (null != serverId) {

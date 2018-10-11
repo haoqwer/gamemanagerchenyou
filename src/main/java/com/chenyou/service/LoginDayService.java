@@ -6,5 +6,5 @@ import com.chenyou.pojo.entity.PageResult;
 import java.text.ParseException;
 
 public interface LoginDayService {
-    PageResult listLoginDay(String start,String end,Integer serverId,Integer channelId,int pageNum,int pageSize) throws BizException, ParseException;
+    PageResult listLoginDay(String start,String end,Integer serverId,String channelId,int pageNum,int pageSize) throws BizException, ParseException;
 }

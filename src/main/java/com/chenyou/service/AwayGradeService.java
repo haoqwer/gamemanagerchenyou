@@ -7,5 +7,5 @@ import java.text.ParseException;
 
 public interface AwayGradeService {
 
-    PageResult listAwayGradeServiceImpl(String start,String end,Integer serverId, Integer channelId, int pageNum, int pageSize) throws BizException, ParseException;
+    PageResult listAwayGradeServiceImpl(String start,String end,Integer serverId, String channelId, int pageNum, int pageSize) throws BizException, ParseException;
 }

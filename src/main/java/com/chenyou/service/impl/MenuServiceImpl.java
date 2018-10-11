@@ -208,10 +208,10 @@ public class MenuServiceImpl implements MenuService {
         //buffer流
         StringBuffer sb = new StringBuffer();
         sb.append(menu.getMenuName());
-        if (permsFlag) {
-            //增加权限标识
-            sb.append( menu.getPerms());
-        }
+//        if (permsFlag) {
+//            //增加权限标识
+//            sb.append( menu.getPerms());
+//        }
         return sb.toString();
     }
 

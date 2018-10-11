@@ -9,6 +9,7 @@ import com.chenyou.pojo.entity.Result;
 import com.chenyou.service.RoleService;
 import com.chenyou.service.UserService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +52,7 @@ public class RoleController  extends BaseController{
      * @param rows
      * @return
      */
+//    @RequiresPermissions("wen")
     @RequestMapping(value = "/findPage", method = RequestMethod.GET)
     public PageResult findPage(int page, int rows)  throws BizException{
         return roleService.findPage(page, rows);

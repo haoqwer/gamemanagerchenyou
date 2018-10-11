@@ -97,7 +97,7 @@ public class RechargeTestAndOnlin {
 
     @Test
     public void test_gradePlayerService() throws BizException, ParseException {
-        PageResult pageResult = gradePlayerService.listGradePlayer(null,null,null,null,1,10);
+        PageResult pageResult = gradePlayerService.listGradePlayer("2018-10-08",null,null,"android_test_02",1,10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -106,7 +106,7 @@ public class RechargeTestAndOnlin {
 
     @Test
     public void test_testVipCount() throws BizException, ParseException {
-        PageResult pageResult = vipCountService.listVipCount(null,null,null, null, 1, 10);
+        PageResult pageResult = vipCountService.listVipCount(null,"2018-10-08",null, "test_01", 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -115,7 +115,7 @@ public class RechargeTestAndOnlin {
 
     @Test
     public void test_listGangCount() throws BizException, ParseException {
-        PageResult pageResult = gangCountService.listGangCount(null,null,null, null, 1, 10);
+        PageResult pageResult = gangCountService.listGangCount(null,null,null, "test_01", 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -124,7 +124,7 @@ public class RechargeTestAndOnlin {
 
     @Test
     public void test_GangGrade() throws BizException, ParseException {
-        PageResult pageResult = gangGradeService.listGangGrade(null,null,null, null, 1, 10);
+        PageResult pageResult = gangGradeService.listGangGrade(null,null,null, "test_01", 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -133,7 +133,7 @@ public class RechargeTestAndOnlin {
 
     @Test
     public  void test_forceRank() throws BizException, ParseException {
-        PageResult pageResult = forceRankService.listGorceRank(null,null,null, null, 1, 10);
+        PageResult pageResult = forceRankService.listGorceRank(null,null,null, "test_01", 10, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -141,8 +141,8 @@ public class RechargeTestAndOnlin {
     }
 
     @Test
-    public  void  test_listLevelRank() throws BizException {
-        PageResult pageResult = levelRankService.listLevelRank(null, null, 1, 10);
+    public  void  test_listLevelRank() throws BizException, ParseException {
+        PageResult pageResult = levelRankService.listLevelRank(null,null,null, "test_01", 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -150,8 +150,8 @@ public class RechargeTestAndOnlin {
     }
 
     @Test
-    public void test_IntimacyRank() throws BizException {
-        PageResult pageResult = intimacyRankService.listIntimacyRank(null, null, 1, 10);
+    public void test_IntimacyRank() throws BizException, ParseException {
+        PageResult pageResult = intimacyRankService.listIntimacyRank(null,null,null, "test_01", 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
@@ -159,8 +159,8 @@ public class RechargeTestAndOnlin {
     }
 
     @Test
-    public  void test_listGangRank() throws BizException {
-        PageResult pageResult = gangRankService.listGangRank(null, null, 1, 10);
+    public  void test_listGangRank() throws BizException, ParseException {
+        PageResult pageResult = gangRankService.listGangRank(null,null,null, "android_td_jyfc", 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);

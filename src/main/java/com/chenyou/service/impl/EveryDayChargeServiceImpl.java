@@ -32,15 +32,19 @@ public class EveryDayChargeServiceImpl implements EverydayChargeService {
     private EvervyDayRechargeMapper evervyDayRechargeMapper;
 
     @Override
-    public PageResult listEveryDayCharget(String startTime,String endTime, Integer serverId, Integer channelId, int pageNum, int pageSize) throws ParseException, BizException {
-        Date start =null;
-        Date end = null;
-        Date temp = null;
+    public PageResult listEveryDayCharget(String startTime,String endTime, Integer serverId, String channelId, int pageNum, int pageSize) throws ParseException, BizException {
+        logger.info("start:"+startTime);
+        logger.info("end:"+endTime);
+        logger.info("serverId:"+serverId);
+        logger.info("channelId:"+channelId);
+        String start =null;
+        String end = null;
+        String temp = null;
         if(!StringUtils.isEmpty(startTime)){
-            start=DateUtil.parse(startTime);
+            start=startTime;
         }
         if(!StringUtils.isEmpty(endTime)){
-            end=DateUtil.parse(endTime);
+            end=endTime;
         }
         PageHelper.startPage(pageNum, pageSize);
         EvervyDayRechargeExample example = new EvervyDayRechargeExample();
@@ -48,13 +52,15 @@ public class EveryDayChargeServiceImpl implements EverydayChargeService {
         EvervyDayRechargeExample.Criteria criteria = example.createCriteria();
         //时间段的逻辑思维,判断传入的日期是否为空，1.都为空2.一个为空3.两个都不为空
         if(!StringUtils.isEmpty(startTime) && StringUtils.isEmpty(endTime)){
-            criteria.andRechargeTimeEqualTo(DateUtil.parse(startTime));
+            start=startTime;
+            criteria.andRechargeTimeEqualTo(start);
         }
         if(StringUtils.isEmpty(startTime)&& !StringUtils.isEmpty(endTime)){
-            criteria.andRechargeTimeEqualTo(DateUtil.parse(endTime));
+            end=endTime;
+            criteria.andRechargeTimeEqualTo(end);
         }
         if(!StringUtils.isEmpty(startTime)&& !StringUtils.isEmpty(endTime)){
-            if (start.after(end)) {
+            if (DateUtil.parse(start).after(DateUtil.parse(end))) {
                 temp = end;
                 end = start;
                 start = temp;

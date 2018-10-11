@@ -39,16 +39,16 @@ public class ChannelSummaryServiceImpl implements ChannelSummaryService {
      */
     @Override
     public PageResult listChannelSummary(String start, String end, int pageNum, int pageSize) throws BizException, ParseException {
-        Date startTime = null;
-        Date endTime = null;
-        Date temp = null;
+        String startTime = null;
+        String endTime = null;
+        String temp = null;
         PageHelper.startPage(pageNum, pageSize);
         ChannelSummaryExample example = new ChannelSummaryExample();
         ChannelSummaryExample.Criteria criteria = example.createCriteria();
         if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            startTime = DateUtil.parse(start);
-            endTime = DateUtil.parse(end);
-            if (startTime.after(endTime)) {
+            startTime = start;
+            endTime = end;
+            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
                 //如果前面时间大于后面时间
                 temp = endTime;
                 endTime = startTime;
@@ -60,10 +60,12 @@ public class ChannelSummaryServiceImpl implements ChannelSummaryService {
         }
         //如果其中一个为空
         if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
-            criteria.andShowTimeEqualTo(DateUtil.parse(start));
+            startTime=start;
+            criteria.andShowTimeEqualTo(startTime);
         }
         if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            criteria.andShowTimeEqualTo(DateUtil.parse(end));
+            endTime=end;
+            criteria.andShowTimeEqualTo(endTime);
         }
         List <ChannelSummary> list = channelSummaryMapper.selectByExample(example);
         if (StringUtils.isEmpty(list)) {

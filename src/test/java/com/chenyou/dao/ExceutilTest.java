@@ -66,7 +66,7 @@ public class ExceutilTest {
         List <LtvCount> listLtv = ltvCountMapper.selectByExample(null);
         for (LtvCount ltv : listLtv) {
             Map <String, Object> map = new HashMap <>();
-            map.put("recordeTime",DateUtil.format(ltv.getRecordeTime()));
+            map.put("recordeTime",ltv.getRecordeTime());
             map.put("onedayLtv", ltv.getOnedayLtv());
             map.put("twodayLtv", ltv.getTwodayLtv());
             map.put("threedayLtv", ltv.getThreedayLtv());

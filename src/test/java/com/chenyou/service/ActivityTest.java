@@ -23,7 +23,7 @@ public class ActivityTest {
     private OutConsumeService outConsumeService;
 
     @Test
-    public void  test_activityNum() throws ParseException {
+    public void  test_activityNum() throws ParseException, BizException {
         PageResult pageResult = activityNumService.listActivityNum(null,null, 1, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
@@ -32,7 +32,7 @@ public class ActivityTest {
     }
 
     @Test
-    public void test_ActivityoutPut() throws ParseException {
+    public void test_ActivityoutPut() throws ParseException, BizException {
         PageResult pageResult = activityOutputService.listActivityOutput(null, null,1, 1, 10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
@@ -42,7 +42,7 @@ public class ActivityTest {
 
     @Test
     public void oun() throws ParseException, BizException {
-        PageResult pageResult = outConsumeService.listOutConsume(null ,null, null, 1,1,10);
+        PageResult pageResult = outConsumeService.listOutConsume(null ,null, null, "1",1,10);
         System.out.println(pageResult.getTotal());
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);

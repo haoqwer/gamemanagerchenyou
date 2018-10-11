@@ -49,7 +49,7 @@ public class GamePlayerController extends BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "/listAddNewPlayer", method = RequestMethod.GET)
-    public Map <String, Object> listAddNewPlayer(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listAddNewPlayer(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, addNewPlayerService.listAddNewPlayer(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
@@ -66,7 +66,7 @@ public class GamePlayerController extends BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "/listActivePlayer", method = RequestMethod.GET)
-    public Map <String, Object> listActivePlayer(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listActivePlayer(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         //获取到活跃玩家的数据
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, activePlayerService.listActviePlayer(start,end,serverId, channelId, page, rows));
@@ -84,7 +84,7 @@ public class GamePlayerController extends BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "/listRetainPlayer")
-    public Map <String, Object> listRetainPlayer(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listRetainPlayer(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, retainPlayerService.listRetainPlayer(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
@@ -102,7 +102,7 @@ public class GamePlayerController extends BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "/listAwayPlayer", method = RequestMethod.GET)
-    public Map <String, Object> listAwayPlayer(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listAwayPlayer(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, awayPlayerService.listAwayPlayer(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
@@ -119,7 +119,7 @@ public class GamePlayerController extends BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "listLoginDay", method = RequestMethod.GET)
-    public Map <String, Object> listLoginDay(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listLoginDay(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, loginDayService.listLoginDay(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
@@ -136,7 +136,7 @@ public class GamePlayerController extends BaseController {
      * @throws BizException
      */
     @RequestMapping(value = "listAwayGrade", method = RequestMethod.GET)
-    public Map <String, Object> listAwayGrade(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listAwayGrade(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, awayGradeService.listAwayGradeServiceImpl(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
@@ -145,7 +145,7 @@ public class GamePlayerController extends BaseController {
 
 
     @RequestMapping(value = "listAwayOutput", method = RequestMethod.GET)
-    public Map <String, Object> listAwayOutput(String start,String end,Integer serverId, Integer channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listAwayOutput(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, awayOutputService.listAwayOutput(start,end,serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);

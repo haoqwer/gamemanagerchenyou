@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.security.x509.EDIPartyName;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -36,19 +37,37 @@ public class CyUserCountServiceImpl implements CyUserCountService {
      * @return
      */
     @Override
-    public PageResult listUserCount(String start, String end, Integer serverId, Integer channelId, int pageSize, int rows) throws ParseException, BizException {
+    public PageResult listUserCount(String start, String end, Integer serverId, String channelId, int pageSize, int rows) throws ParseException, BizException {
+        logger.info("start:"+start);
+        logger.info("end:"+end);
+        logger.info("serverId:"+serverId);
+        logger.info("channelId:"+channelId);
         PageHelper.startPage(pageSize, rows);
-        Date startTime = null;
-        Date endTime = null;
-        Date temp = null;
+        String startTime = null;
+        String endTime = null;
+        String temp = null;
         CyUserCountExample example = new CyUserCountExample();
         example.setOrderByClause("count_time desc");
         CyUserCountExample.Criteria criteria = example.createCriteria();
+        if (null == serverId && null == channelId) {
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+            //查是否有serverId和channelId
+            if(StringUtils.isEmpty(start) && StringUtils.isEmpty(end)){
+                criteria.andCountTimeEqualTo(DateUtil.format(new Date()));
+            }
+        }
+        if (null != serverId) {
+            criteria.andServerIdEqualTo(serverId);
+        }
+        if (null != channelId) {
+            criteria.andChannelIdEqualTo(channelId);
+        }
         //如果输入的两个时间都不为空
         if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            startTime = DateUtil.parse(start);
-            endTime = DateUtil.parse(end);
-            if (startTime.after(endTime)) {
+            startTime = start;
+            endTime = end;
+            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
                 //如果前面时间大于后面时间
                 temp = endTime;
                 endTime = startTime;
@@ -60,20 +79,12 @@ public class CyUserCountServiceImpl implements CyUserCountService {
         }
         //如果其中一个为空
         if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
-            criteria.andCountTimeEqualTo(DateUtil.parse(start));
+            startTime=start;
+            criteria.andCountTimeEqualTo(startTime);
         }
         if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            criteria.andCountTimeEqualTo(DateUtil.parse(end));
-        }
-        if (null == serverId && null == channelId) {
-            criteria.andServerIdIsNull();
-            criteria.andChannelIdIsNull();
-        }
-        if (null != serverId) {
-            criteria.andServerIdEqualTo(serverId);
-        }
-        if (null != channelId) {
-            criteria.andChannelIdEqualTo(channelId);
+            endTime=end;
+            criteria.andCountTimeEqualTo(end);
         }
         List <CyUserCount> list = userCountMapper.selectByExample(example);
         if (StringUtils.isEmpty(list)) {

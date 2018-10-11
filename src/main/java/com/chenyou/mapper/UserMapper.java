@@ -108,9 +108,10 @@ public interface UserMapper {
      */
     User checkPhoneUnique(String phone);
 
+    //根据用户获取到登录名
     User getUserByLoginName(String loginName);
 
-
+    //修改登录信息
     void updateLoginInfo(User user);
 
     User getUserByUserId(Integer userId);

@@ -124,6 +124,9 @@ public class UserServiceImpl implements UserService {
         }
 //        Page <User> page = (Page <User>) userMapper.selectByExample(example);
         List <User> users = userMapper.selectByExample(example);
+        if (StringUtils.isEmpty(users)) {
+            throw new BizException(BizException.CODE_PARM_LACK, "当前数据为空!");
+        }
         for (User u : users) {
             if (!StringUtils.isNull(u)) {
                 List <Role> roles = roleMapper.selectRolesByUserId(u.getUserId());
