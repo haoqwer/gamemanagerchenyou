@@ -30,6 +30,11 @@ public class ChannelSummaryController  extends  BaseController{
     public Map<String,Object> listChanelSummary(String start,String end,int page,int rows,String channelId) throws BizException, ParseException {
         Subject subject =SecurityUtils.getSubject();
          User user = (User) subject.getPrincipal();
+         if("admin".equals(user.getLoginName())){
+             channelId=null;
+        }else {
+             channelId=user.getChannelId();
+         }
          channelId=user.getChannelId();
         Map<String,Object> resultMap=new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA,channelSummaryService.listChannelSummary(start,end,page,rows,channelId));

@@ -50,7 +50,9 @@ public class ChannelSummaryServiceImpl implements ChannelSummaryService {
         if(StringUtils.isEmpty(channelId)){
             throw new BizException(BizException.CODE_PARM_LACK,"不好意思!您的数据跑到火星了!");
         }
-        criteria.andChannelIdEqualTo(channelId);
+        if(!StringUtils.isEmpty(channelId)){
+            criteria.andChannelIdEqualTo(channelId);
+        }
         if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             startTime = start;
             endTime = end;

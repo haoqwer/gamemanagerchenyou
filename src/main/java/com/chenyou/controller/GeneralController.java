@@ -7,6 +7,7 @@ import com.chenyou.service.*;
 import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.ExcelUtil;
 import com.chenyou.utils.FileUtils;
+import com.chenyou.utils.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,12 @@ public class GeneralController extends  BaseController {
 
     @Autowired
     private LtvCountService ltvCountService;
+
+    @Autowired
+    private ChannelService channelService;
+
+    @Autowired
+    private ServerService serverService;
 
 
     /**
@@ -135,12 +142,22 @@ public class GeneralController extends  BaseController {
      * @throws ParseException
      */
     @RequestMapping(value="exportLtvCount",method = RequestMethod.GET)
-    public void exportLtvCount(HttpServletRequest request, HttpServletResponse response) throws BizException, IOException, ParseException {
+    public void exportLtvCount(HttpServletRequest request, HttpServletResponse response,String start,String end,Integer serverId, String channelId) throws BizException, IOException, ParseException {
         List<Map <String, Object>> list = new ArrayList<>();
         Map <String, Object> map1 = new HashMap <>();
         map1.put("sheetName", "ltv概况");
         list.add(map1);
-        List <LtvCount> listLtv =ltvCountService.listLtvCount();
+        List <LtvCount> listLtv =new ArrayList<>();
+        if(serverId .equals(null) ){
+            serverId=null;
+            if(! StringUtils.isEmpty(start) && !StringUtils.isEmpty(end) && null == serverId && StringUtils.isEmpty(channelId)){
+                listLtv=ltvCountService.listLtvCount();
+            }
+        }
+    if(serverId !=null || !StringUtils.isEmpty(start) || !StringUtils.isEmpty(end) || !StringUtils.isEmpty(channelId)){
+        listLtv=ltvCountService.listLtvCount(start,end,serverId,channelId);
+    }
+
         for (LtvCount ltv : listLtv) {
             Map <String, Object> map = new HashMap <>();
             map.put("recordeTime",ltv.getRecordeTime());
@@ -153,10 +170,12 @@ public class GeneralController extends  BaseController {
             map.put("sevendayLtv", ltv.getSevendayLtv());
             map.put("fifteendayLtv", ltv.getFifteendayLtv());
             map.put("thirtydayLtv", ltv.getThirtydayLtv());
+            map.put("serverName",serverService.getServerName(ltv.getServerId()));
+            map.put("channelName",channelService.getChannelName(ltv.getChannelId()));
             list.add(map);
         }
-        String[] keys = {"recordeTime", "onedayLtv", "twodayLtv", "threedayLtv", "fourdayLtv", "fivedayLtv", "sixdayLtv", "sevendayLtv", "fifteendayLtv", "thirtydayLtv"};
-        String[] columnNames = {"时间", "1日LTV", "2日LTV", "3日LTV", "4日LTV", "5日LTV", "6日LTV", "7日LTV", "15日LTV", "30日LTV"};
+        String[] keys = {"recordeTime", "onedayLtv", "twodayLtv", "threedayLtv", "fourdayLtv", "fivedayLtv", "sixdayLtv", "sevendayLtv", "fifteendayLtv", "thirtydayLtv","serverName","channelName"};
+        String[] columnNames = {"时间", "1日LTV", "2日LTV", "3日LTV", "4日LTV", "5日LTV", "6日LTV", "7日LTV", "15日LTV", "30日LTV","区服名称","渠道名称"};
         Workbook wb = ExcelUtil.createWorkBook(list, keys, columnNames);
         // 设置下载参数：一个流两个头
         String filename = DateUtil.format(new Date())+ "-->ltv概况.xls";

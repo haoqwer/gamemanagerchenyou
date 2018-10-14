@@ -10,6 +10,7 @@ import com.chenyou.pojo.User;
 import com.chenyou.pojo.UserExample;
 import com.chenyou.pojo.UserRoleKey;
 import com.chenyou.pojo.entity.PageResult;
+import com.chenyou.service.ChannelService;
 import com.chenyou.service.UserService;
 import com.chenyou.utils.ChenyouUtils;
 import com.chenyou.utils.MD5Utils;
@@ -39,6 +40,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleMapper roleMapper;
+
+    @Autowired
+    private ChannelService channelService;
 
     /**
      * 根据用户名查找用户是否存在
@@ -87,6 +91,7 @@ public class UserServiceImpl implements UserService {
         example.setOrderByClause("create_time asc");
         List <User> users = userMapper.selectByExample(null);
         for (User user : users) {
+            user.setChannelName(channelService.getChannelName(user.getChannelId()));
             if (!StringUtils.isNull(user)) {
                 List <Role> roles = roleMapper.selectRolesByUserId(user.getUserId());
                 user.setRoles(roles);
@@ -128,6 +133,7 @@ public class UserServiceImpl implements UserService {
             throw new BizException(BizException.CODE_PARM_LACK, "当前数据为空!");
         }
         for (User u : users) {
+            user.setChannelName(channelService.getChannelName(user.getChannelId()));
             if (!StringUtils.isNull(u)) {
                 List <Role> roles = roleMapper.selectRolesByUserId(u.getUserId());
                 u.setRoles(roles);
@@ -320,6 +326,7 @@ public class UserServiceImpl implements UserService {
         int count = 0;
         //修改的时候首先获取到用户名和手机号
         User uu = getUserByUserId(user.getUserId());
+        uu.setChannelName(channelService.getChannelName(uu.getChannelId()));
         //新增用户的时候，首先新增用户
         //  user.setCreateBy(ShiroUtils.getLoginName());
         if (StringUtils.isNull(user)) {

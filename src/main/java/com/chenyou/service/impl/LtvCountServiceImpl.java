@@ -71,9 +71,9 @@ public class LtvCountServiceImpl implements LtvCountService {
             criteria.andChannelIdEqualTo(channelId);
         }
         List <LtvCount> list = ltvCountMapper.selectByExample(example);
-        if (StringUtils.isEmpty(list)) {
-            throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
-        }
+//        if (StringUtils.isEmpty(list)) {
+//            throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
+//        }
         return list;
     }
 
