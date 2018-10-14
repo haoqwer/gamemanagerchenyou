@@ -50,6 +50,7 @@ public class LtvCountServiceImpl implements LtvCountService {
             } else {
                 criteria.andRecordeTimeBetween(startTime, endTime);
             }
+
         }
         //如果其中一个为空
         if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
