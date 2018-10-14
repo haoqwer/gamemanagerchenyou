@@ -148,6 +148,8 @@ public class User {
      */
     private String channelId;
 
+    private String channelName;
+
     private List<Integer> roleIds;
 
     private List<Role> roles;
@@ -599,5 +601,40 @@ public class User {
      */
     public void setChannelId(String channelId) {
         this.channelId = channelId;
+    }
+
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", loginName='" + loginName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", sex='" + sex + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", status='" + status + '\'' +
+                ", delFlag='" + delFlag + '\'' +
+                ", loginIp='" + loginIp + '\'' +
+                ", loginDate=" + loginDate +
+                ", createBy='" + createBy + '\'' +
+                ", createTime=" + createTime +
+                ", updateBy='" + updateBy + '\'' +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                ", channelId='" + channelId + '\'' +
+                ", channelName='" + channelName + '\'' +
+                ", roleIds=" + roleIds +
+                ", roles=" + roles +
+                '}';
     }
 }

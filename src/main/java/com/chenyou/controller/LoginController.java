@@ -89,10 +89,10 @@ public class LoginController extends  BaseController{
         List <Map <String, Object>> trees = new ArrayList<>();
         for (Menu menu : menuList) {
             Map <String, Object> deptMap = new HashMap <>();
-            deptMap.put("id", menu.getMenuId());
-            deptMap.put("pId", menu.getParentId());
-            deptMap.put("name", transMenuName(menu, roleMenuList, permsFlag));
-            deptMap.put("type",menu.getMenuType());
+            deptMap.put("menuId", menu.getMenuId());
+            deptMap.put("parentId", menu.getParentId());
+            deptMap.put("menuName", transMenuName(menu, roleMenuList, permsFlag));
+            deptMap.put("menuType",menu.getMenuType());
             if (isCheck) {
                 deptMap.put("chcked", roleMenuList.contains(menu.getMenuId() + menu.getPerms()));
             } else {
