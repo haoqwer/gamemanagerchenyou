@@ -42,7 +42,7 @@ public class AwayPlayerServiceImpl implements AwayPlayerService {
         AwayPlayerExample example=new AwayPlayerExample();
         example.setOrderByClause("record_time desc");
         AwayPlayerExample.Criteria criteria = example.createCriteria();
-        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             startTime = start;
             endTime = end;
             if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
@@ -56,15 +56,15 @@ public class AwayPlayerServiceImpl implements AwayPlayerService {
             }
         }
         //如果其中一个为空
-        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
             startTime=start;
             criteria.andRecordTimeEqualTo(startTime);
         }
-        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             endTime=end;
             criteria.andRecordTimeEqualTo(endTime);
         }
-        if(serverId ==null &channelId==null){
+        if(serverId ==null && channelId==null){
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();
         }

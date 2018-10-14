@@ -42,7 +42,7 @@ public class ChannelCountServiceImpl implements ChannelCountService {
         ChannelCountExample example = new ChannelCountExample();
         example.setOrderByClause("count_time desc");
         ChannelCountExample.Criteria criteria = example.createCriteria();
-        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             startTime = start;
             endTime = end;
             if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
@@ -56,11 +56,11 @@ public class ChannelCountServiceImpl implements ChannelCountService {
             }
         }
         //如果其中一个为空
-        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
             startTime=start;
             criteria.andCountTimeEqualTo(startTime);
         }
-        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             endTime=end;
             criteria.andCountTimeEqualTo(endTime);
         }

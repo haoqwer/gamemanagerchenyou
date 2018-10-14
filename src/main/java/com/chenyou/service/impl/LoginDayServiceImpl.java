@@ -58,16 +58,16 @@ public class LoginDayServiceImpl implements LoginDayService {
             }
         }
         //如果其中一个为空
-        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
             startTime=start;
             criteria.andShowTimeEqualTo(startTime);
         }
-        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             endTime=end;
             criteria.andShowTimeEqualTo(endTime);
         }
         //进行条件选择
-        if (serverId == null & channelId == null) {
+        if (serverId == null && channelId == null) {
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();
         }

@@ -51,7 +51,7 @@ public class ChannelSummaryServiceImpl implements ChannelSummaryService {
             throw new BizException(BizException.CODE_PARM_LACK,"不好意思!您的数据跑到火星了!");
         }
         criteria.andChannelIdEqualTo(channelId);
-        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             startTime = start;
             endTime = end;
             if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
@@ -65,11 +65,11 @@ public class ChannelSummaryServiceImpl implements ChannelSummaryService {
             }
         }
         //如果其中一个为空
-        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
             startTime=start;
             criteria.andShowTimeEqualTo(startTime);
         }
-        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             endTime=end;
             criteria.andShowTimeEqualTo(endTime);
         }

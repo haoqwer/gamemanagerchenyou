@@ -42,7 +42,7 @@ public class PointAnalyseServiceImpl implements PointAnalyseService {
         PointAnalyseExample example=new PointAnalyseExample();
         example.setOrderByClause("charging_time desc");
         PointAnalyseExample.Criteria criteria = example.createCriteria();
-        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             startTime = DateUtil.parse(start);
             endTime = DateUtil.parse(end);
             if (startTime.after(endTime)) {
@@ -56,13 +56,13 @@ public class PointAnalyseServiceImpl implements PointAnalyseService {
             }
         }
         //如果其中一个为空
-        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
             criteria.andShowTimeEqualTo(DateUtil.parse(start));
         }
-        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             criteria.andShowTimeEqualTo(DateUtil.parse(end));
         }
-        if(serverId ==null &channelId==null){
+        if(serverId ==null && channelId==null){
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();
         }

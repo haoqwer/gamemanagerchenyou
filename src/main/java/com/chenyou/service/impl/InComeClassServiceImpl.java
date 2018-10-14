@@ -43,7 +43,7 @@ public class InComeClassServiceImpl implements InComeClassService {
         example.setOrderByClause("recorde_time desc");
         IncomeClassExample.Criteria criteria = example.createCriteria();
         //时间段选择判断
-        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             startTime = start;
             endTime = end;
             if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
@@ -57,11 +57,11 @@ public class InComeClassServiceImpl implements InComeClassService {
             }
         }
         //如果其中一个为空
-        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
             startTime=start;
             criteria.andRecordeTimeEqualTo(start);
         }
-        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             endTime=end;
             criteria.andRecordeTimeEqualTo(endTime);
         }

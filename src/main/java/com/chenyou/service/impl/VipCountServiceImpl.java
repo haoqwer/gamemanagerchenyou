@@ -46,7 +46,7 @@ public class VipCountServiceImpl implements VipCountService {
         VipCountExample example = new VipCountExample();
         example.setOrderByClause("vip_online_count asc");
         VipCountExample.Criteria criteria = example.createCriteria();
-        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             startTime = start;
             endTime = end;
             if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
@@ -60,15 +60,15 @@ public class VipCountServiceImpl implements VipCountService {
             }
         }
         //如果其中一个为空
-        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
             startTime=start;
             criteria.andShowTimeEqualTo(start);
         }
-        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             endTime=end;
             criteria.andShowTimeEqualTo(endTime);
         }
-        if (serverId == null & channelId == null) {
+        if (serverId == null && channelId == null) {
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();
         }

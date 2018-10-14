@@ -49,7 +49,7 @@ public class GangCountServiceImpl implements GangCountService {
         GangCountExample example = new GangCountExample();
         example.setOrderByClause("gang_num asc");
         GangCountExample.Criteria criteria = example.createCriteria();
-        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             startTime =start;
             endTime = end;
             if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
@@ -63,15 +63,15 @@ public class GangCountServiceImpl implements GangCountService {
             }
         }
         //如果其中一个为空
-        if (!StringUtils.isEmpty(start) & StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
             startTime=start;
             criteria.andShowTimeEqualTo(startTime);
         }
-        if (StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
             endTime=end;
             criteria.andShowTimeEqualTo(endTime);
         }
-        if(serverId ==null &channelId==null){
+        if(serverId ==null && channelId==null){
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();
         }

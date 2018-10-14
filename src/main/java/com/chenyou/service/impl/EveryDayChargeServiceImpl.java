@@ -69,7 +69,7 @@ public class EveryDayChargeServiceImpl implements EverydayChargeService {
                 criteria.andRechargeTimeBetween(start, end);
             }
         }
-        if(serverId ==null &channelId==null){
+        if(serverId ==null && channelId==null){
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();
         }
