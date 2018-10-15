@@ -163,12 +163,12 @@
 
 
         <!--充值统计>计费点分析-->
-        <!--<table tableName="t_point_analyse" domainObjectName="PointAnalyse"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="charging_id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="t_point_analyse" domainObjectName="PointAnalyse"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="charging_id" sqlStatement="MySql" identity="true"/>
+        </table>
 
 
         <!--渠道数据汇总-->

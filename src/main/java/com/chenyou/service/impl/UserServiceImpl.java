@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
             throw new BizException(BizException.CODE_PARM_LACK, "当前数据为空!");
         }
         for (User u : users) {
-            user.setChannelName(channelService.getChannelName(user.getChannelId()));
+            u.setChannelName(channelService.getChannelName(u.getChannelId()));
             if (!StringUtils.isNull(u)) {
                 List <Role> roles = roleMapper.selectRolesByUserId(u.getUserId());
                 u.setRoles(roles);

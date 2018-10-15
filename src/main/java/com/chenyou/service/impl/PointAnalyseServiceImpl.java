@@ -35,17 +35,17 @@ public class PointAnalyseServiceImpl implements PointAnalyseService {
         logger.info("end:"+end);
         logger.info("serverId:"+serverId);
         logger.info("channelId:"+channelId);
-        Date startTime = null;
-        Date endTime = null;
-        Date temp = null;
+        String startTime = null;
+        String endTime = null;
+        String temp = null;
         PageHelper.startPage(pageNum,pageSize);
         PointAnalyseExample example=new PointAnalyseExample();
         example.setOrderByClause("charging_time desc");
         PointAnalyseExample.Criteria criteria = example.createCriteria();
         if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
-            startTime = DateUtil.parse(start);
-            endTime = DateUtil.parse(end);
-            if (startTime.after(endTime)) {
+            startTime = start;
+            endTime = end;
+            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
                 //如果前面时间大于后面时间
                 temp = endTime;
                 endTime = startTime;
@@ -57,10 +57,12 @@ public class PointAnalyseServiceImpl implements PointAnalyseService {
         }
         //如果其中一个为空
         if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
-            criteria.andShowTimeEqualTo(DateUtil.parse(start));
+            startTime=start;
+            criteria.andShowTimeEqualTo(start);
         }
         if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
-            criteria.andShowTimeEqualTo(DateUtil.parse(end));
+            endTime=end;
+            criteria.andShowTimeEqualTo(endTime);
         }
         if(serverId ==null && channelId==null){
             criteria.andServerIdIsNull();

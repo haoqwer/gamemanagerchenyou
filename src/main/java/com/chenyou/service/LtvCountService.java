@@ -11,5 +11,7 @@ public interface LtvCountService {
 
     List<LtvCount> listLtvCount() throws BizException;
 
+    List<LtvCount> exprotListLtvCount(String start,String end,Integer serverId,String channelId) throws ParseException, BizException;
+
     //导出
 }

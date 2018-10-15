@@ -9,9 +9,12 @@ import com.chenyou.utils.ExcelUtil;
 import com.chenyou.utils.FileUtils;
 import com.chenyou.utils.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletOutputStream;
@@ -142,20 +145,19 @@ public class GeneralController extends  BaseController {
      * @throws ParseException
      */
     @RequestMapping(value="exportLtvCount",method = RequestMethod.GET)
-    public void exportLtvCount(HttpServletRequest request, HttpServletResponse response,String start,String end,Integer serverId, String channelId) throws BizException, IOException, ParseException {
+    public void exportLtvCount(HttpServletRequest request, HttpServletResponse response,String start,String end,String serverId, String channelId) throws BizException, IOException, ParseException {
         List<Map <String, Object>> list = new ArrayList<>();
         Map <String, Object> map1 = new HashMap <>();
         map1.put("sheetName", "ltv概况");
         list.add(map1);
         List <LtvCount> listLtv =new ArrayList<>();
-        if(serverId .equals(null) ){
-            serverId=null;
-            if(! StringUtils.isEmpty(start) && !StringUtils.isEmpty(end) && null == serverId && StringUtils.isEmpty(channelId)){
-                listLtv=ltvCountService.listLtvCount();
-            }
-        }
-    if(serverId !=null || !StringUtils.isEmpty(start) || !StringUtils.isEmpty(end) || !StringUtils.isEmpty(channelId)){
-        listLtv=ltvCountService.listLtvCount(start,end,serverId,channelId);
+      if(serverId.equals("null") && channelId.equals("null")){
+          listLtv=ltvCountService.listLtvCount(start,end,null,null);
+      }else  {
+          listLtv=ltvCountService.listLtvCount(start,end, serverId.equals("null")?null:Integer.parseInt(serverId),channelId);
+      }
+    if(StringUtils.isEmpty(listLtv)){
+            throw  new BizException(BizException.CODE_PARM_LACK,"不好意思当前没有数据!!!");
     }
 
         for (LtvCount ltv : listLtv) {
@@ -170,8 +172,8 @@ public class GeneralController extends  BaseController {
             map.put("sevendayLtv", ltv.getSevendayLtv());
             map.put("fifteendayLtv", ltv.getFifteendayLtv());
             map.put("thirtydayLtv", ltv.getThirtydayLtv());
-            map.put("serverName",serverService.getServerName(ltv.getServerId()));
-            map.put("channelName",channelService.getChannelName(ltv.getChannelId()));
+            map.put("serverName",serverService.getServerName(ltv.getServerId())==null ?"所有区服":serverService.getServerName(ltv.getServerId()));
+            map.put("channelName",channelService.getChannelName(ltv.getChannelId())==null ?"所有渠道":channelService.getChannelName(ltv.getChannelId()));
             list.add(map);
         }
         String[] keys = {"recordeTime", "onedayLtv", "twodayLtv", "threedayLtv", "fourdayLtv", "fivedayLtv", "sixdayLtv", "sevendayLtv", "fifteendayLtv", "thirtydayLtv","serverName","channelName"};

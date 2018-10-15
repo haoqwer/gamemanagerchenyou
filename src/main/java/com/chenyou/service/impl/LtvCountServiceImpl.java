@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -65,10 +66,10 @@ public class LtvCountServiceImpl implements LtvCountService {
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();
         }
-        if (null != serverId) {
+        if (null != serverId && ! channelId.equals("null") ) {
             criteria.andServerIdEqualTo(serverId);
         }
-        if (null != channelId) {
+        if (null != channelId &&  ! channelId.equals("null")) {
             criteria.andChannelIdEqualTo(channelId);
         }
         List <LtvCount> list = ltvCountMapper.selectByExample(example);
@@ -83,6 +84,57 @@ public class LtvCountServiceImpl implements LtvCountService {
         List <LtvCount> list = ltvCountMapper.selectByExample(null);
         if (StringUtils.isEmpty(list)) {
             throw new BizException(BizException.CODE_RESULT_NULL, "不好意思，当前没有数据!");
+        }
+        return list;
+    }
+
+    @Override
+    public List <LtvCount> exprotListLtvCount(String start, String end, Integer serverId, String channelId) throws ParseException, BizException {
+        logger.info("start:" + start);
+        logger.info("end:" + end);
+        logger.info("serverId:" + serverId);
+        logger.info("channelId:" + channelId);
+        String startTime = null;
+        String endTime = null;
+        String temp = null;
+        LtvCountExample example = new LtvCountExample();
+        LtvCountExample.Criteria criteria = example.createCriteria();
+        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+            startTime = start;
+            endTime = end;
+            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
+                //如果前面时间大于后面时间
+                temp = endTime;
+                endTime = startTime;
+                startTime = temp;
+                criteria.andRecordeTimeBetween(startTime, endTime);
+            } else {
+                criteria.andRecordeTimeBetween(startTime, endTime);
+            }
+
+        }
+        //如果其中一个为空
+        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
+            startTime = start;
+            criteria.andRecordeTimeEqualTo(start);
+        }
+        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+            endTime = end;
+            criteria.andRecordeTimeEqualTo(end);
+        }
+        if (serverId == null && channelId == null) {
+            criteria.andServerIdIsNull();
+            criteria.andChannelIdIsNull();
+        }
+        if (null != serverId) {
+            criteria.andServerIdEqualTo(serverId);
+        }
+        if (null != channelId) {
+            criteria.andChannelIdEqualTo(channelId);
+        }
+        List <LtvCount> list = ltvCountMapper.selectByExample(example);
+        if (StringUtils.isEmpty(list)) {
+            throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
         }
         return list;
     }
