@@ -1,7 +1,6 @@
 package com.chenyou.base;
 
 import com.chenyou.utils.StringUtils;
-import jdk.nashorn.internal.runtime.FindProperty;
 
 public class BizException extends Exception {
 

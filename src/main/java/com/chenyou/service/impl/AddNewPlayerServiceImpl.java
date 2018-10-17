@@ -3,7 +3,6 @@ package com.chenyou.service.impl;
 import com.chenyou.base.BizException;
 import com.chenyou.mapper.AddNewplayerMapper;
 import com.chenyou.pojo.AddNewplayer;
-import com.chenyou.pojo.AddNewplayerExample;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.AddNewPlayerService;
 import com.chenyou.utils.DateUtil;
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -81,4 +79,5 @@ public class AddNewPlayerServiceImpl implements AddNewPlayerService {
         Page <AddNewplayer> page = (Page <AddNewplayer>) addNewplayers;
         return new PageResult(page.getTotal(), page.getResult());
     }
+
 }

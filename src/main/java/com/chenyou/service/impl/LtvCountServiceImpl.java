@@ -66,7 +66,7 @@ public class LtvCountServiceImpl implements LtvCountService {
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();
         }
-        if (null != serverId && ! channelId.equals("null") ) {
+        if (null != serverId && ! serverId.equals("null") ) {
             criteria.andServerIdEqualTo(serverId);
         }
         if (null != channelId &&  ! channelId.equals("null")) {

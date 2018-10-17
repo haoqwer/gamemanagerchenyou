@@ -154,7 +154,7 @@ public class GeneralController extends  BaseController {
       if(serverId.equals("null") && channelId.equals("null")){
           listLtv=ltvCountService.listLtvCount(start,end,null,null);
       }else  {
-          listLtv=ltvCountService.listLtvCount(start,end, serverId.equals("null")?null:Integer.parseInt(serverId),channelId);
+          listLtv=ltvCountService.listLtvCount(start,end, serverId.equals("null")?null:Integer.parseInt(serverId),channelId.equals("null")?null:channelId);
       }
     if(StringUtils.isEmpty(listLtv)){
             throw  new BizException(BizException.CODE_PARM_LACK,"不好意思当前没有数据!!!");

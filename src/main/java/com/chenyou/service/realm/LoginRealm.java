@@ -8,6 +8,7 @@ import com.chenyou.pojo.User;
 import com.chenyou.service.MenuService;
 import com.chenyou.service.RoleService;
 import com.chenyou.service.UserService;
+import com.chenyou.utils.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -80,6 +81,9 @@ public class LoginRealm extends AuthorizingRealm {
         try {
             //去数据库中查找该用户名是否存在用户
             user = userService.userLogin(loginName);
+            if( ! StringUtils.isNotNull(user)){
+                throw new BizException(BizException.CODE_PARM_LACK,"不好意思，你已经没有权限!");
+            }
             user.setLoginDate(new Date());
             user.setLoginIp(SecurityUtils.getSubject().getSession().getHost());
             userMapper.updateLoginInfo(user);
