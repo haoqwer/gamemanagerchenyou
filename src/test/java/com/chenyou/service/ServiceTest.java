@@ -1,22 +1,26 @@
 package com.chenyou.service;
 
+import com.alibaba.fastjson.JSON;
 import com.chenyou.base.BizException;
 import com.chenyou.pojo.Menu;
 import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.PageResult;
+import com.chenyou.service.facade.LoginServer;
+import com.chenyou.service.facade.gamemanager.ReplacementOrderServer;
 import com.chenyou.service.realm.LoginRealm;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +43,15 @@ public class ServiceTest {
 
     @Resource
     private LoginRealm loginRealm;
+
+    @Autowired
+    private LoginServer loginServer;
+
+    @Autowired
+    private ReplacementOrderServer orderServer;
+
+
+
 
     @Test
     public void findUserByloginName() throws  BizException {
@@ -352,34 +365,6 @@ public class ServiceTest {
         }
     }
 
-
-    @Test
-    public void test_border() throws IOException {
-        Workbook wb = new HSSFWorkbook();
-        Sheet sheet = wb.createSheet("new sheet");
-        //创建一列，在其中加入多个单元格，列索引号从 0 开始，单元格的索引号也是从 0
-        //开始.
-        Row row = sheet.createRow(1);
-        //创建一个单元格，并在其中加入内容.
-        Cell cell = row.createCell(1);
-        cell.setCellValue(4);
-        //设置单元格边框为四周环绕.
-        CellStyle style = wb.createCellStyle();
-        style.setBorderBottom(CellStyle.BORDER_THIN);
-        style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-        style.setBorderLeft(CellStyle.BORDER_THIN);
-        style.setLeftBorderColor(IndexedColors.GREEN.getIndex());
-        style.setBorderRight(CellStyle.BORDER_THIN);
-        style.setRightBorderColor(IndexedColors.BLUE.getIndex());
-        style.setBorderTop(CellStyle.BORDER_MEDIUM_DASHED);
-        style.setTopBorderColor(IndexedColors.BLACK.getIndex());
-        cell.setCellStyle(style);
-        //将输出流写入一个文件
-        FileOutputStream fileOut = new FileOutputStream("workbook.xls");
-        wb.write(fileOut);
-        fileOut.close();
-    }
-
     @Test
     public void test_TimeEqual() throws ParseException {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -390,5 +375,24 @@ public class ServiceTest {
             System.out.println("----");
         }
     }
+
+    @Test
+    public  void test_loginServer() throws BizException {
+        boolean success = loginServer.getSuccess("admin", "123");
+        System.out.println("success:"+success);
+      }
+
+      @Test
+    public  void  test_replacement() throws BizException, URISyntaxException {
+          String success = orderServer.getSuccess("sendPay", "sp", "1239574", "2", "6");
+          System.out.println(success);
+      }
+
+
+
+
+
+
+
 
 }

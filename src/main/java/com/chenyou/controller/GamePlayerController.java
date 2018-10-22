@@ -4,6 +4,7 @@ package com.chenyou.controller;
 import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
 import com.chenyou.service.*;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,6 +49,7 @@ public class GamePlayerController extends BaseController {
      * @return
      * @throws BizException
      */
+    @RequiresPermissions("add:newplayer:view")
     @RequestMapping(value = "/listAddNewPlayer", method = RequestMethod.GET)
     public Map <String, Object> listAddNewPlayer(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -65,6 +67,7 @@ public class GamePlayerController extends BaseController {
      * @return
      * @throws BizException
      */
+    @RequiresPermissions("active:player:view")
     @RequestMapping(value = "/listActivePlayer", method = RequestMethod.GET)
     public Map <String, Object> listActivePlayer(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         //获取到活跃玩家的数据
@@ -83,6 +86,7 @@ public class GamePlayerController extends BaseController {
      * @return
      * @throws BizException
      */
+    @RequiresPermissions("level:player:view")
     @RequestMapping(value = "/listRetainPlayer")
     public Map <String, Object> listRetainPlayer(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -101,6 +105,7 @@ public class GamePlayerController extends BaseController {
      * @return
      * @throws BizException
      */
+    @RequiresPermissions("loss:player:view")
     @RequestMapping(value = "/listAwayPlayer", method = RequestMethod.GET)
     public Map <String, Object> listAwayPlayer(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -118,6 +123,7 @@ public class GamePlayerController extends BaseController {
      * @return
      * @throws BizException
      */
+    @RequiresPermissions("system:login:day")
     @RequestMapping(value = "listLoginDay", method = RequestMethod.GET)
     public Map <String, Object> listLoginDay(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -135,6 +141,7 @@ public class GamePlayerController extends BaseController {
      * @return
      * @throws BizException
      */
+    @RequiresPermissions("system:loss:grade")
     @RequestMapping(value = "listAwayGrade", method = RequestMethod.GET)
     public Map <String, Object> listAwayGrade(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -144,6 +151,19 @@ public class GamePlayerController extends BaseController {
     }
 
 
+    /**
+     * 流失关卡
+     * @param start
+     * @param end
+     * @param serverId
+     * @param channelId
+     * @param page
+     * @param rows
+     * @return
+     * @throws BizException
+     * @throws ParseException
+     */
+    @RequiresPermissions("system:loss:away")
     @RequestMapping(value = "listAwayOutput", method = RequestMethod.GET)
     public Map <String, Object> listAwayOutput(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();

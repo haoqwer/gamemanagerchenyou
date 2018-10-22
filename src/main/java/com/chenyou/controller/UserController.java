@@ -5,7 +5,6 @@ import com.chenyou.base.BizException;
 import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.PageResult;
-import com.chenyou.pojo.entity.Result;
 import com.chenyou.service.RoleService;
 import com.chenyou.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -29,6 +28,7 @@ public class UserController extends BaseController {
 
     @Autowired
     private RoleService roleServic;
+
 
 
 
@@ -207,6 +207,7 @@ public class UserController extends BaseController {
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
+
 
 
 

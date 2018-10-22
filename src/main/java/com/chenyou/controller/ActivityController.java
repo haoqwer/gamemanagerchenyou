@@ -6,6 +6,7 @@ import com.chenyou.service.ActivityNumService;
 import com.chenyou.service.ActivityOutputService;
 import com.chenyou.service.ActivityRankService;
 import com.chenyou.service.PersonRankService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +35,18 @@ public class ActivityController extends BaseController {
     private PersonRankService personRankService;
 
 
+    /**
+     * 活动参与人数
+     * @param start
+     * @param end
+     * @param serverId
+     * @param page
+     * @param rows
+     * @return
+     * @throws ParseException
+     * @throws BizException
+     */
+    @RequiresPermissions("number:activity:view")
     @RequestMapping(value = "/listActivityNum", method = RequestMethod.GET)
     public Map <String, Object> listActivityNum(String start, String end, Integer serverId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -42,6 +55,18 @@ public class ActivityController extends BaseController {
         return resultMap;
     }
 
+    /**
+     * 活动产出与消耗
+     * @param start
+     * @param end
+     * @param serverId
+     * @param page
+     * @param rows
+     * @return
+     * @throws ParseException
+     * @throws BizException
+     */
+    @RequiresPermissions("oup:activity:view")
     @RequestMapping(value = "/listActivityOutput", method = RequestMethod.GET)
     public Map <String, Object> listActivityOutput(String start, String end, Integer serverId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -51,6 +76,18 @@ public class ActivityController extends BaseController {
     }
 
 
+    /**
+     *活动排行-->帮派
+     * @param start
+     * @param end
+     * @param serverId
+     * @param page
+     * @param rows
+     * @return
+     * @throws ParseException
+     * @throws BizException
+     */
+    @RequiresPermissions("out:of:gangs")
     @RequestMapping(value = "/listActivityRank", method = RequestMethod.GET)
     public Map <String, Object> listActivityRank(String start, String end, Integer serverId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -63,6 +100,18 @@ public class ActivityController extends BaseController {
 
     }
 
+    /**
+     *活动排行--个人
+     * @param start
+     * @param end
+     * @param serverId
+     * @param page
+     * @param rows
+     * @return
+     * @throws ParseException
+     * @throws BizException
+     */
+    @RequiresPermissions("system:one:person")
     @RequestMapping(value = "/listPersonRank", method = RequestMethod.GET)
     public Map <String, Object> listPersonRank(String start, String end, Integer serverId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();

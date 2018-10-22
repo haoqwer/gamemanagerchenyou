@@ -47,9 +47,9 @@ public class ChannelSummaryServiceImpl implements ChannelSummaryService {
         PageHelper.startPage(pageNum, pageSize);
         ChannelSummaryExample example = new ChannelSummaryExample();
         ChannelSummaryExample.Criteria criteria = example.createCriteria();
-        if(StringUtils.isEmpty(channelId)){
-            throw new BizException(BizException.CODE_PARM_LACK,"不好意思!您的数据跑到火星了!");
-        }
+//        if(StringUtils.isEmpty(channelId)){
+//            throw new BizException(BizException.CODE_PARM_LACK,"不好意思!您的数据跑到火星了!");
+//        }
         if(!StringUtils.isEmpty(channelId)){
             criteria.andChannelIdEqualTo(channelId);
         }

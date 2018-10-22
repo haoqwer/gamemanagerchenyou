@@ -4,6 +4,7 @@ import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
 import com.chenyou.service.EverydayChargeService;
 import com.chenyou.service.PointAnalyseService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +35,7 @@ public class RechargeController  extends  BaseController{
      * @return
      * @throws ParseException
      */
+    @RequiresPermissions("recharge:day:view")
     @RequestMapping(value = "/listEveryDayCharge", method = RequestMethod.GET)
     public Map <String, Object> listEveryDayCharge(String start,String end, Integer serverId, String channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -51,6 +53,7 @@ public class RechargeController  extends  BaseController{
      * @return
      * @throws BizException
      */
+    @RequiresPermissions("point:pricing:view")
     @RequestMapping(value = "/listPointAnalyse", method = RequestMethod.GET)
     public Map <String, Object> listPointAnalyse(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();

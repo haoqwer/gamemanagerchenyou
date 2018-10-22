@@ -3,6 +3,7 @@ package com.chenyou;
 import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
 
+import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,9 +11,10 @@ import java.util.Date;
 public class DateUt {
 
     public static void main(String[] args) throws ParseException {
-       //将年月日时分秒的时间转换为年月日时间格式
-        String now = formate(new Date());
-        System.out.println(now);
+        String hao=null;
+        if(hao==null){
+            System.out.println("is null");
+        }
     }
 
     public  static  String formate(Date date){
