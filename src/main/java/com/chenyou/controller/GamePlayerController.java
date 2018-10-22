@@ -123,7 +123,7 @@ public class GamePlayerController extends BaseController {
      * @return
      * @throws BizException
      */
-    @RequiresPermissions("system:login:day")
+    @RequiresPermissions("loss:player:view")
     @RequestMapping(value = "listLoginDay", method = RequestMethod.GET)
     public Map <String, Object> listLoginDay(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -141,7 +141,7 @@ public class GamePlayerController extends BaseController {
      * @return
      * @throws BizException
      */
-    @RequiresPermissions("system:loss:grade")
+    @RequiresPermissions("loss:player:view")
     @RequestMapping(value = "listAwayGrade", method = RequestMethod.GET)
     public Map <String, Object> listAwayGrade(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -163,7 +163,7 @@ public class GamePlayerController extends BaseController {
      * @throws BizException
      * @throws ParseException
      */
-    @RequiresPermissions("system:loss:away")
+    @RequiresPermissions("loss:player:view")
     @RequestMapping(value = "listAwayOutput", method = RequestMethod.GET)
     public Map <String, Object> listAwayOutput(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();

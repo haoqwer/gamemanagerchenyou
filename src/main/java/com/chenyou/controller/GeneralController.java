@@ -76,7 +76,7 @@ public class GeneralController extends BaseController {
      * @return
      * @throws ParseException
      */
-    @RequiresPermissions("system:user:class")
+    @RequiresPermissions("dayily:paper:view")
     @RequestMapping(value = "/listUserCount", method = RequestMethod.GET)
     public Map <String, Object> listUserCount(String start, String end, Integer serverId, String channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -97,7 +97,7 @@ public class GeneralController extends BaseController {
      * @throws ParseException
      * @throws BizException
      */
-    @RequiresPermissions("system:incom:class")
+    @RequiresPermissions("dayily:paper:view")
     @RequestMapping(value = "/listInCome", method = RequestMethod.GET)
     public Map <String, Object> listInCome(String start, String end, Integer serverId, String channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -118,7 +118,7 @@ public class GeneralController extends BaseController {
      * @throws ParseException
      * @throws BizException
      */
-    @RequiresPermissions("system:channel:summary")
+    @RequiresPermissions("dayily:paper:view")
     @RequestMapping(value = "/listChannel", method = RequestMethod.GET)
     public Map <String, Object> listChannel(String start, String end, Integer serverId, String channelId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();

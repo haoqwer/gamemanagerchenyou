@@ -87,7 +87,7 @@ public class ActivityController extends BaseController {
      * @throws ParseException
      * @throws BizException
      */
-    @RequiresPermissions("out:of:gangs")
+    @RequiresPermissions("activity:rank:view")
     @RequestMapping(value = "/listActivityRank", method = RequestMethod.GET)
     public Map <String, Object> listActivityRank(String start, String end, Integer serverId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -111,7 +111,7 @@ public class ActivityController extends BaseController {
      * @throws ParseException
      * @throws BizException
      */
-    @RequiresPermissions("system:one:person")
+    @RequiresPermissions("activity:rank:view")
     @RequestMapping(value = "/listPersonRank", method = RequestMethod.GET)
     public Map <String, Object> listPersonRank(String start, String end, Integer serverId, int page, int rows) throws ParseException, BizException {
         Map <String, Object> resultMap = new HashMap <>();

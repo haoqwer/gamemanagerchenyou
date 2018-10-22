@@ -166,7 +166,7 @@ public class GameBehaviorController extends BaseController {
      * @throws BizException
      * @throws ParseException
      */
-    @RequiresPermissions("level:of:forces")
+    @RequiresPermissions("rank:message:view")
     @RequestMapping(value = "/listLevelRank", method = RequestMethod.GET)
     public Map <String, Object> listLevelRank(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -187,7 +187,7 @@ public class GameBehaviorController extends BaseController {
      * @throws BizException
      * @throws ParseException
      */
-    @RequiresPermissions("close:the:list")
+    @RequiresPermissions("rank:message:view")
     @RequestMapping(value = "listIntimacyRank", method = RequestMethod.GET)
     public Map <String, Object> listIntimacyRank(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -208,7 +208,7 @@ public class GameBehaviorController extends BaseController {
      * @throws BizException
      * @throws ParseException
      */
-    @RequiresPermissions("list:of:gang")
+    @RequiresPermissions("rank:message:view")
     @RequestMapping(value = "listGangRank", method = RequestMethod.GET)
     public Map <String, Object> listGangRank(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
