@@ -161,13 +161,5 @@ public class DateUtil {
 
     }
 
-//    public static void main(String[] args) throws Exception {
-//        if (DateUtil.parse("2016-04-24").before(DateUtil.parse("2016-04-24 10:44:13"))) {
-//            System.out.printf("before");
-//        }
-//        else
-//        System.out.printf("false");
-//        System.out.printf(String.valueOf(dayspan(parse("2016-04-19"), parse("2016-04-19"))));
-//    }
 
 }

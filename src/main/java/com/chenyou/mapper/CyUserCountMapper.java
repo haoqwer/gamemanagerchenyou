@@ -93,4 +93,12 @@ public interface CyUserCountMapper {
      * @mbggenerated Wed Oct 10 15:20:32 CST 2018
      */
     int updateByPrimaryKey(CyUserCount record);
+
+    //queryUserCountCount
+
+    List<CyUserCount> queryUserCountCount(@Param("start") String start,@Param("end") String end);
+
+    List<CyUserCount> queryUserCountByTime(@Param("time") String time);
+
+    List<CyUserCount> queryUserCountAll();
 }

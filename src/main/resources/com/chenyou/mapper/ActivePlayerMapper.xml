@@ -284,4 +284,54 @@
       channel_id = #{channelId,jdbcType=VARCHAR}
     where active_id = #{activeId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryActivePlayerAll" resultMap="BaseResultMap">
+          SELECT
+          show_time,
+          active_id,
+          SUM(active_player_count) active_player_count,
+          server_id,
+          channel_id
+      FROM
+          t_active_player
+      GROUP BY
+          show_time
+      ORDER BY
+          show_time DESC
+  </select>
+  <select id="queryActivePlayerByTimeTo" resultMap="BaseResultMap">
+    SELECT
+        show_time,
+        active_id,
+        SUM(active_player_count) active_player_count,
+        server_id,
+        channel_id
+    FROM
+        t_active_player
+    GROUP BY
+        show_time
+      having
+      show_time between
+          #{start,jdbcType=VARCHAR}
+          and #{end,jdbcType=VARCHAR}
+    ORDER BY
+        show_time DESC
+  </select>
+
+  <select id="queryActivePlayerByTime" resultMap="BaseResultMap">
+     SELECT
+        show_time,
+        active_id,
+        SUM(active_player_count) active_player_count,
+        server_id,
+        channel_id
+    FROM
+        t_active_player
+    GROUP BY
+        show_time
+      having
+      show_time =     #{time,jdbcType=VARCHAR}
+    ORDER BY
+        show_time DESC
+  </select>
 </mapper>

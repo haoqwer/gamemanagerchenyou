@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @Service
@@ -35,50 +36,89 @@ public class AwayPlayerServiceImpl implements AwayPlayerService {
         logger.info("end:"+end);
         logger.info("serverId:"+serverId);
         logger.info("channelId:"+channelId);
-        String startTime = null;
-        String endTime = null;
-        String temp = null;
+        String temp=null;
+        List<AwayPlayer> list=new ArrayList <>();
+        if(!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)){
+            if(DateUtil.parse(start).after(DateUtil.parse(end))){
+                temp = end;
+                end = start;
+                start = temp;
+            }
+        }
         PageHelper.startPage(pageSize,rows);
         AwayPlayerExample example=new AwayPlayerExample();
         example.setOrderByClause("record_time desc");
         AwayPlayerExample.Criteria criteria = example.createCriteria();
-        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
-            startTime = start;
-            endTime = end;
-            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
-                //如果前面时间大于后面时间
-                temp = endTime;
-                endTime = startTime;
-                startTime = temp;
-                criteria.andRecordTimeBetween(startTime, endTime);
-            } else {
-                criteria.andRecordTimeBetween(startTime, endTime);
-            }
-        }
-        //如果其中一个为空
-        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
-            startTime=start;
-            criteria.andRecordTimeEqualTo(startTime);
-        }
-        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
-            endTime=end;
-            criteria.andRecordTimeEqualTo(endTime);
-        }
-        if(serverId ==null && channelId==null){
+        if(null == serverId && null == channelId){
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();
         }
-        if(null !=serverId){
+        if(null != serverId){
             criteria.andServerIdEqualTo(serverId);
         }
-        if(null !=channelId){
+        if(null != channelId){
             criteria.andChannelIdEqualTo(channelId);
         }
-        List <AwayPlayer> list = awayPlayerMapper.selectByExample(example);
+        if(!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)){
+            criteria.andRecordTimeBetween(start,end);
+        }
+        if(!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)){
+            criteria.andRecordTimeEqualTo(start);
+        }
+        if(StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)){
+            criteria.andRecordTimeEqualTo(end);
+        }
+        list=awayPlayerMapper.selectByExample(example);
         if(StringUtils.isEmpty(list)){
             throw new BizException(BizException.CODE_RESULT_NULL,"不好意思,当前没有数据!");
         }
         Page<AwayPlayer> page=(Page<AwayPlayer>)list;
         return new PageResult(page.getTotal(),page.getResult());
+
+//        String startTime = null;
+//        String endTime = null;
+//        String temp = null;
+//        PageHelper.startPage(pageSize,rows);
+//        AwayPlayerExample example=new AwayPlayerExample();
+//        example.setOrderByClause("record_time desc");
+//        AwayPlayerExample.Criteria criteria = example.createCriteria();
+//        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+//            startTime = start;
+//            endTime = end;
+//            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
+//                //如果前面时间大于后面时间
+//                temp = endTime;
+//                endTime = startTime;
+//                startTime = temp;
+//                criteria.andRecordTimeBetween(startTime, endTime);
+//            } else {
+//                criteria.andRecordTimeBetween(startTime, endTime);
+//            }
+//        }
+//        //如果其中一个为空
+//        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
+//            startTime=start;
+//            criteria.andRecordTimeEqualTo(startTime);
+//        }
+//        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+//            endTime=end;
+//            criteria.andRecordTimeEqualTo(endTime);
+//        }
+//        if(serverId ==null && channelId==null){
+//            criteria.andServerIdIsNull();
+//            criteria.andChannelIdIsNull();
+//        }
+//        if(null !=serverId){
+//            criteria.andServerIdEqualTo(serverId);
+//        }
+//        if(null !=channelId){
+//            criteria.andChannelIdEqualTo(channelId);
+//        }
+//        List <AwayPlayer> list = awayPlayerMapper.selectByExample(example);
+//        if(StringUtils.isEmpty(list)){
+//            throw new BizException(BizException.CODE_RESULT_NULL,"不好意思,当前没有数据!");
+//        }
+//        Page<AwayPlayer> page=(Page<AwayPlayer>)list;
+//        return new PageResult(page.getTotal(),page.getResult());
     }
 }

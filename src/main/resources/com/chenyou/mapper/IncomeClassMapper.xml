@@ -364,4 +364,69 @@
       recorde_time = #{recordeTime,jdbcType=VARCHAR}
     where in_id = #{inId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryIncomClassAll" resultMap="BaseResultMap">
+            SELECT
+            in_id,
+          server_id,
+          channel_id,
+          recorde_time,
+          AVG(pay_ap) pay_ap,
+          AVG(add_ap) add_ap,
+          SUM(day_income) day_income,
+		  AVG(day_payrate) day_payrate,
+          AVG(add_rate_user) add_rate_user,
+          SUM(count_rate_user) count_rate_user
+
+      FROM
+          t_income_class
+      GROUP BY
+          recorde_time
+          order by recorde_time desc
+  </select>
+  <select id="queryIncomClassByTimeTwo" resultMap="BaseResultMap">
+      SELECT
+            in_id,
+          server_id,
+          channel_id,
+          recorde_time,
+          AVG(pay_ap) pay_ap,
+          AVG(add_ap) add_ap,
+          SUM(day_income) day_income,
+		  AVG(day_payrate) day_payrate,
+          AVG(add_rate_user) add_rate_user,
+          SUM(count_rate_user) count_rate_user
+      FROM
+          t_income_class
+      GROUP BY
+          recorde_time
+      HAVING
+          recorde_time BETWEEN
+        #{start,jdbcType=VARCHAR}
+      AND   #{end,jdbcType=VARCHAR}
+      ORDER BY
+          recorde_time DESC
+  </select>
+
+  <select id="queryIncomClassByTime" resultMap="BaseResultMap">
+      SELECT
+            in_id,
+          server_id,
+          channel_id,
+          recorde_time,
+          AVG(pay_ap) pay_ap,
+          AVG(add_ap) add_ap,
+          SUM(day_income) day_income,
+		  AVG(day_payrate) day_payrate,
+          AVG(add_rate_user) add_rate_user,
+          SUM(count_rate_user) count_rate_user
+      FROM
+          t_income_class
+      GROUP BY
+          recorde_time
+      HAVING
+          recorde_time =  #{time,jdbcType=VARCHAR}
+      ORDER BY
+          recorde_time DESC
+  </select>
 </mapper>

@@ -304,10 +304,10 @@
     <select id="listAddNewPlayerByTimeAndId" resultMap="BaseResultMap">
       select * from t_add_newplayer
         <where>
-            <if test="start !=null">
+            <if test="start !=null and  start!= ''">
               DATE_FORMAT(register_time,'%Y-%m-%d') BETWEEN  #{start,jdbcType=VARCHAR}
             </if>
-            <if test="end !=null">
+            <if test="end !=null and  end != ''">
                 and #{end,jdbcType=VARCHAR}
             </if>
           <if test="serverId !=null">
@@ -322,10 +322,10 @@
   <select id="listAddNewPlayerByTime" resultMap="BaseResultMap">
       select * from t_add_newplayer
       <where>
-        <if test="start !=null">
+        <if test="start !=null and  start!=''">
           DATE_FORMAT(register_time,'%Y-%m-%d') BETWEEN  #{start,jdbcType=VARCHAR}
         </if>
-        <if test="end !=null">
+        <if test="end !=null and  end != ''">
           and #{end,jdbcType=VARCHAR}
         </if>
         <if test="serverId ==null">
@@ -336,5 +336,7 @@
         </if>
       </where>
   </select>
+
+
 
 </mapper>

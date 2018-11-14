@@ -442,4 +442,86 @@
       count_time = #{countTime,jdbcType=VARCHAR}
     where user_count_id = #{userCountId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryUserCountCount" resultMap="BaseResultMap">
+      SELECT
+      count_time,
+      AVG(avg_online_users) avg_online_users,
+      AVG(avg_gametime) avg_gametime,
+      AVG(avg_login_num) avg_login_num,
+      SUM(active_user) active_user,
+      SUM(active_user) activate_user,
+      SUM(register_user) register_user,
+      AVG(peak_online) peak_online,
+      AVG(day_leave) day_leave,
+      AVG(threeday_leave) threeday_leave,
+      AVG(sevenday_leave) sevenday_leave,
+      AVG(month_leave) month_leave
+      FROM
+      t_cyuser_count
+      WHERE
+      server_id IS NOT NULL
+      OR channel_id IS NOT NULL
+      GROUP BY
+      count_time
+      HAVING
+      count_time BETWEEN
+      <if test="start !=null">
+        #{start,jdbcType=VARCHAR}
+      </if>
+      AND
+      <if test="end !=null">
+        #{end,jdbcType=VARCHAR}
+      </if>
+      ORDER BY
+      count_time DESC
+  </select>
+
+  <select id="queryUserCountByTime" resultMap="BaseResultMap">
+    SELECT
+    count_time,
+    AVG(avg_online_users) avg_online_users,
+    AVG(avg_gametime) avg_gametime,
+    AVG(avg_login_num) avg_login_num,
+    SUM(active_user) active_user,
+    SUM(active_user) activate_user,
+    SUM(register_user) register_user,
+    AVG(peak_online) peak_online,
+    AVG(day_leave) day_leave,
+    AVG(threeday_leave) threeday_leave,
+    AVG(sevenday_leave) sevenday_leave,
+    AVG(month_leave) month_leave
+    FROM
+    t_cyuser_count
+    WHERE
+    server_id IS NOT NULL
+    OR channel_id IS NOT NULL
+    GROUP BY
+    count_time
+    HAVING
+    count_time = #{time,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryUserCountAll" resultMap="BaseResultMap">
+       SELECT
+      count_time,
+      AVG(avg_online_users) avg_online_users,
+      AVG(avg_gametime) avg_gametime,
+      AVG(avg_login_num) avg_login_num,
+      SUM(active_user) active_user,
+      SUM(active_user) activate_user,
+      SUM(register_user) register_user,
+      AVG(peak_online) peak_online,
+      AVG(day_leave) day_leave,
+      AVG(threeday_leave) threeday_leave,
+      AVG(sevenday_leave) sevenday_leave,
+      AVG(month_leave) month_leave
+      FROM
+      t_cyuser_count
+      WHERE
+      server_id IS NOT NULL
+      OR channel_id IS NOT NULL
+      GROUP BY
+      count_time
+  </select>
 </mapper>

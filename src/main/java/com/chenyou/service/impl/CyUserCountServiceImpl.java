@@ -15,10 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.security.x509.EDIPartyName;
 
 import java.text.ParseException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,26 +35,31 @@ public class CyUserCountServiceImpl implements CyUserCountService {
      * @param channelId
      * @return
      */
+
     @Override
     public PageResult listUserCount(String start, String end, Integer serverId, String channelId, int pageSize, int rows) throws ParseException, BizException {
-        logger.info("start:"+start);
-        logger.info("end:"+end);
-        logger.info("serverId:"+serverId);
-        logger.info("channelId:"+channelId);
+        logger.info("start:" + start);
+        logger.info("end:" + end);
+        logger.info("serverId:" + serverId);
+        logger.info("channelId:" + channelId);
         PageHelper.startPage(pageSize, rows);
-        String startTime = null;
-        String endTime = null;
         String temp = null;
+        List <CyUserCount> list = new ArrayList <>();
+        //抽取出来共同的
+        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+            if (DateUtil.parse(start).after(DateUtil.parse(end))) {
+                temp = end;
+                end = start;
+                start = temp;
+            }
+        }
         CyUserCountExample example = new CyUserCountExample();
         example.setOrderByClause("count_time desc");
         CyUserCountExample.Criteria criteria = example.createCriteria();
+
         if (null == serverId && null == channelId) {
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();
-            //查是否有serverId和channelId
-            if(StringUtils.isEmpty(start) && StringUtils.isEmpty(end)){
-                criteria.andCountTimeEqualTo(DateUtil.format(new Date()));
-            }
         }
         if (null != serverId) {
             criteria.andServerIdEqualTo(serverId);
@@ -63,34 +67,64 @@ public class CyUserCountServiceImpl implements CyUserCountService {
         if (null != channelId) {
             criteria.andChannelIdEqualTo(channelId);
         }
-        //如果输入的两个时间都不为空
+        //判断时间
         if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
-            startTime = start;
-            endTime = end;
-            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
-                //如果前面时间大于后面时间
-                temp = endTime;
-                endTime = startTime;
-                startTime = temp;
-                criteria.andCountTimeBetween(startTime, endTime);
-            } else {
-                criteria.andCountTimeBetween(startTime, endTime);
-            }
+            criteria.andCountTimeBetween(start, end);
         }
-        //如果其中一个为空
         if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
-            startTime=start;
-            criteria.andCountTimeEqualTo(startTime);
+            criteria.andCountTimeEqualTo(start);
         }
         if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
-            endTime=end;
             criteria.andCountTimeEqualTo(end);
         }
-        List <CyUserCount> list = userCountMapper.selectByExample(example);
+        list = userCountMapper.selectByExample(example);
         if (StringUtils.isEmpty(list)) {
             throw new BizException(BizException.CODE_NO_LONIN, "不好意思,当前没有数据!");
         }
         Page <CyUserCount> page = (Page <CyUserCount>) list;
         return new PageResult(page.getTotal(), page.getResult());
+//        if (null == serverId && null == channelId) {
+//            //如果都为空则查的为统计的
+//            if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+//                //如果时间
+//                list = userCountMapper.queryUserCountCount(start, end);
+//            }
+//            if (StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
+//                list = userCountMapper.queryUserCountAll();
+//            }
+//            if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
+//                list = userCountMapper.queryUserCountByTime(start);
+//            }
+//            if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+//                list = userCountMapper.queryUserCountByTime(end);
+//            }
+//
+//        } else {
+//            CyUserCountExample example = new CyUserCountExample();
+//            example.setOrderByClause("count_time desc");
+//            CyUserCountExample.Criteria criteria = example.createCriteria();
+//            if (null != serverId) {
+//                criteria.andServerIdEqualTo(serverId);
+//            }
+//            if (null != channelId) {
+//                criteria.andChannelIdEqualTo(channelId);
+//            }
+//            if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+//                //如果时间
+//                criteria.andCountTimeBetween(start, end);
+//            }
+//            if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
+//                criteria.andCountTimeEqualTo(start);
+//            }
+//            if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+//                criteria.andCountTimeEqualTo(end);
+//            }
+//            list = userCountMapper.selectByExample(example);
+//        }
+//        if (StringUtils.isEmpty(list)) {
+//            throw new BizException(BizException.CODE_NO_LONIN, "不好意思,当前没有数据!");
+//        }
+//        Page <CyUserCount> page = (Page <CyUserCount>) list;
+//        return new PageResult(page.getTotal(), page.getResult());
     }
 }

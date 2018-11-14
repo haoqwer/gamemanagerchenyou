@@ -316,4 +316,51 @@
       channel_id = #{channelId,jdbcType=VARCHAR}
     where retain_id = #{retainId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryRetainPlayerAll" resultMap="BaseResultMap">
+           SELECT
+          retain_id,
+          show_time,
+          AVG(oneday_retain) oneday_retain,
+          AVG(threeday_retain) threeday_retain,
+          AVG(weekly_retain) weekly_retain
+      FROM
+          t_retain_player
+      GROUP BY
+          show_time
+  </select>
+
+  <select id="queryRetainPlayerByTimeTo" resultMap="BaseResultMap">
+         SELECT
+        retain_id,
+        show_time,
+        AVG(oneday_retain) oneday_retain,
+        AVG(threeday_retain) threeday_retain,
+        AVG(weekly_retain) weekly_retain
+    FROM
+        t_retain_player
+    GROUP BY
+        show_time
+        having show_time
+        between
+         #{start,jdbcType=VARCHAR}
+         AND   #{end,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="queryRetainPlayerByTime" resultMap="BaseResultMap">
+         SELECT
+        retain_id,
+        show_time,
+        AVG(oneday_retain) oneday_retain,
+        AVG(threeday_retain) threeday_retain,
+        AVG(weekly_retain) weekly_retain
+    FROM
+        t_retain_player
+    GROUP BY
+        show_time
+        having show_time
+        = #{time,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

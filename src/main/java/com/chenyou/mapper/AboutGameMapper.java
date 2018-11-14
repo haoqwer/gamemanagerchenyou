@@ -93,4 +93,6 @@ public interface AboutGameMapper {
      * @mbggenerated Mon Oct 08 16:59:26 CST 2018
      */
     int updateByPrimaryKey(AboutGame record);
+
+    AboutGame queryServerAndChannelCount();
 }

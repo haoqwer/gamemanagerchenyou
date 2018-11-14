@@ -384,4 +384,22 @@ public class AboutGame {
     public void setChannelId(String channelId) {
         this.channelId = channelId;
     }
+
+    @Override
+    public String toString() {
+        return "AboutGame{" +
+                "aboutId=" + aboutId +
+                ", serverId=" + serverId +
+                ", serverName='" + serverName + '\'' +
+                ", stime='" + stime + '\'' +
+                ", day=" + day +
+                ", createNum=" + createNum +
+                ", onlineNum=" + onlineNum +
+                ", activeNum=" + activeNum +
+                ", money=" + money +
+                ", payNum=" + payNum +
+                ", arpu=" + arpu +
+                ", channelId='" + channelId + '\'' +
+                '}';
+    }
 }

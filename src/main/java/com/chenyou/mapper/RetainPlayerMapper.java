@@ -93,4 +93,10 @@ public interface RetainPlayerMapper {
      * @mbggenerated Wed Oct 10 09:43:33 CST 2018
      */
     int updateByPrimaryKey(RetainPlayer record);
+
+    List <RetainPlayer> queryRetainPlayerAll();
+
+    List <RetainPlayer> queryRetainPlayerByTimeTo(@Param("start")String start, @Param("end")String end);
+
+    List <RetainPlayer> queryRetainPlayerByTime(@Param("time")String time);
 }

@@ -93,4 +93,10 @@ public interface IncomeClassMapper {
      * @mbggenerated Wed Oct 10 15:29:02 CST 2018
      */
     int updateByPrimaryKey(IncomeClass record);
+
+    List<IncomeClass> queryIncomClassAll();
+
+    List<IncomeClass> queryIncomClassByTimeTwo(@Param("start") String start,@Param("end") String end);
+
+    List<IncomeClass> queryIncomClassByTime(@Param("time") String time);
 }

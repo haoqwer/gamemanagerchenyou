@@ -3,6 +3,8 @@ package com.chenyou.mapper;
 import com.chenyou.pojo.ActivePlayer;
 import com.chenyou.pojo.ActivePlayerExample;
 import java.util.List;
+
+import com.chenyou.utils.StringUtils;
 import org.apache.ibatis.annotations.Param;
 
 public interface ActivePlayerMapper {
@@ -93,4 +95,11 @@ public interface ActivePlayerMapper {
      * @mbggenerated Wed Oct 10 09:31:34 CST 2018
      */
     int updateByPrimaryKey(ActivePlayer record);
+
+
+    List<ActivePlayer> queryActivePlayerAll();
+
+    List<ActivePlayer> queryActivePlayerByTimeTo(@Param("start")String start,@Param("end") String end);
+
+    List<ActivePlayer> queryActivePlayerByTime(@Param("time")String time);
 }

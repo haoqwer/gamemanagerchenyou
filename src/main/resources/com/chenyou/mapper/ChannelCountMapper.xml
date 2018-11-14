@@ -426,4 +426,74 @@
       count_time = #{countTime,jdbcType=VARCHAR}
     where c_id = #{cId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryChannelCountAll" resultMap="BaseResultMap">
+        SELECT
+        count_time,
+        SUM(add_user) add_user,
+        SUM(active_user) active_user,
+        SUM(recharge_user) recharge_user,
+        AVG(payrate) payrate,
+        AVG(apvalue) apvalue,
+        AVG(time_leave) time_leave,
+        AVG(threeday_leave) threeday_leave,
+        AVG(week_leave) week_leave,
+        AVG(pay_arup) pay_arup
+    FROM
+        t_channel_count
+    GROUP BY
+        count_time
+    ORDER BY
+        count_time DESC
+  </select>
+
+  <select id="queryChannelCountByTimeTo" resultMap="BaseResultMap">
+      SELECT
+        count_time,
+        SUM(add_user) add_user,
+        SUM(active_user) active_user,
+        SUM(recharge_user) recharge_user,
+        AVG(payrate) payrate,
+        AVG(apvalue) apvalue,
+        AVG(time_leave) time_leave,
+        AVG(threeday_leave) threeday_leave,
+        AVG(week_leave) week_leave,
+        AVG(pay_arup) pay_arup
+    FROM
+        t_channel_count
+    GROUP BY
+        count_time
+        having count_time
+        between
+         <if test="start !=null">
+           #{start,jdbcType=VARCHAR}
+         </if>
+          <if test="end !=null">
+            and #{end,jdbcType=VARCHAR}
+          </if>
+    ORDER BY
+        count_time DESC
+  </select>
+
+  <select id="queryChannelCountByTime" resultMap="BaseResultMap">
+          SELECT
+          count_time,
+          SUM(add_user) add_user,
+          SUM(active_user) active_user,
+          SUM(recharge_user) recharge_user,
+          AVG(payrate) payrate,
+          AVG(apvalue) apvalue,
+          AVG(time_leave) time_leave,
+          AVG(threeday_leave) threeday_leave,
+          AVG(week_leave) week_leave,
+          AVG(pay_arup) pay_arup
+          FROM
+          t_channel_count
+          GROUP BY
+          count_time
+          having count_time  =  #{time,jdbcType=VARCHAR}
+          ORDER BY
+          count_time DESC
+  </select>
+
 </mapper>

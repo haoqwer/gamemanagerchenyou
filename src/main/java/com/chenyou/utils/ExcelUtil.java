@@ -14,9 +14,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-/**
- * Created by zhujl on 2017/2/21.
- */
 public class ExcelUtil {
     /**
      * 创建excel文档，

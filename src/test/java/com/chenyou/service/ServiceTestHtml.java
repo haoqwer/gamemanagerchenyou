@@ -91,6 +91,10 @@ public class ServiceTestHtml {
             System.out.println(obj);
         }
     }
+
+    @Test
+    public  void test_addNewplayer(){
+    }
 }
 
 
