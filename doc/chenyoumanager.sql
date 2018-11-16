@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50549
 File Encoding         : 65001
 
-Date: 2018-10-08 16:50:39
+Date: 2018-11-16 17:15:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,14 +40,14 @@ CREATE TABLE `sys_menu` (
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu` VALUES ('1', '概况', '0', '1', '#', 'M', '', 'fa fa-gear', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '概况');
-INSERT INTO `sys_menu` VALUES ('2', '游戏玩家', '0', '2', '#', 'M', 'gameplayer', 'fa fa-video-camera', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '游戏玩家');
+INSERT INTO `sys_menu` VALUES ('2', '游戏玩家', '0', '2', '#', 'M', '', 'fa fa-video-camera', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '游戏玩家');
 INSERT INTO `sys_menu` VALUES ('3', '在线分析', '0', '3', '#', 'M', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '在线分析');
 INSERT INTO `sys_menu` VALUES ('4', '充值统计', '0', '4', '#', 'M', '', 'fa fa-gear', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '充值统计');
 INSERT INTO `sys_menu` VALUES ('5', '渠道数据', '0', '5', '#', 'M', '', 'fa fa-video-camera', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '渠道数据');
 INSERT INTO `sys_menu` VALUES ('6', '游戏行为统计', '0', '6', '#', 'M', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '游戏行为统计');
 INSERT INTO `sys_menu` VALUES ('7', '活动分析', '0', '7', '#', 'M', '', 'fa fa-gear', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '充值统计');
 INSERT INTO `sys_menu` VALUES ('8', '游戏管理', '0', '8', '#', 'M', '', 'fa fa-video-camera', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '游戏管理');
-INSERT INTO `sys_menu` VALUES ('9', '后台管理', '0', '9', '#', 'M', 'hao', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '后台管理');
+INSERT INTO `sys_menu` VALUES ('9', '后台管理', '0', '9', '#', 'M', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '后台管理');
 INSERT INTO `sys_menu` VALUES ('10', '推送设置', '0', '10', '#', 'M', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '推送设置');
 INSERT INTO `sys_menu` VALUES ('11', '游戏概况', '1', '11', '#', 'C', 'game:about:view', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '游戏概况');
 INSERT INTO `sys_menu` VALUES ('12', '日报', '1', '12', '#', 'C', 'dayily:paper:view', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '日报');
@@ -66,7 +66,7 @@ INSERT INTO `sys_menu` VALUES ('24', 'vip人数', '6', '23', '#', 'C', 'vip:coun
 INSERT INTO `sys_menu` VALUES ('25', '帮派数量', '6', '24', '#', 'C', 'gang:count:view', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '帮派数量');
 INSERT INTO `sys_menu` VALUES ('26', '帮派等级', '6', '25', '#', 'C', 'gang:grade:view', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '帮派等级');
 INSERT INTO `sys_menu` VALUES ('27', '排行信息', '6', '26', '#', 'C', 'rank:message:view', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '排行信息');
-INSERT INTO `sys_menu` VALUES ('28', '任务消息', '6', '27', '#', 'C', 'task:message:view', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '任务消息');
+INSERT INTO `sys_menu` VALUES ('28', '任务信息', '6', '27', '#', 'C', 'task:message:view', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '任务消息');
 INSERT INTO `sys_menu` VALUES ('29', '产出与消耗', '6', '28', '#', 'C', 'output:consume:view', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '产出与消耗');
 INSERT INTO `sys_menu` VALUES ('30', '活动参与人数', '7', '29', '#', 'C', 'number:activity:view', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '活动参与人数');
 INSERT INTO `sys_menu` VALUES ('31', '活动产出与消耗', '7', '30', '#', 'C', 'oup:activity:view', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '活动产出与消耗');
@@ -82,26 +82,26 @@ INSERT INTO `sys_menu` VALUES ('40', '用户管理', '9', '37', '#', 'C', 'syste
 INSERT INTO `sys_menu` VALUES ('41', '角色管理', '9', '38', '#', 'C', 'system:role:view', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色管理');
 INSERT INTO `sys_menu` VALUES ('42', '菜单管理', '9', '39', '#', 'C', 'system:menu:view', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单管理');
 INSERT INTO `sys_menu` VALUES ('43', '消息发布', '10', '39', '#', 'C', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '消息发布');
-INSERT INTO `sys_menu` VALUES ('45', '用户类', '12', '41', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户类');
-INSERT INTO `sys_menu` VALUES ('46', '收入类', '12', '42', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '收入类');
-INSERT INTO `sys_menu` VALUES ('47', '渠道统计', '12', '43', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '渠道统计');
-INSERT INTO `sys_menu` VALUES ('48', '登录天数', '17', '44', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '登录天数');
-INSERT INTO `sys_menu` VALUES ('49', '流失等级', '17', '45', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '流失等级');
-INSERT INTO `sys_menu` VALUES ('50', '流失关卡', '17', '46', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '流失关卡');
-INSERT INTO `sys_menu` VALUES ('51', '势力榜', '26', '47', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '势力榜');
-INSERT INTO `sys_menu` VALUES ('52', '关卡榜', '26', '48', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '关卡榜');
-INSERT INTO `sys_menu` VALUES ('53', '亲密榜', '26', '49', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '亲密榜');
-INSERT INTO `sys_menu` VALUES ('54', '帮派榜', '26', '50', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '帮派榜');
-INSERT INTO `sys_menu` VALUES ('55', '帮派排行', '31', '51', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '帮派排行');
-INSERT INTO `sys_menu` VALUES ('56', '个人排行', '31', '52', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '个人排行');
-INSERT INTO `sys_menu` VALUES ('57', '用户新增', '37', '53', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户新增');
-INSERT INTO `sys_menu` VALUES ('58', '用户修改', '37', '54', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户修改');
-INSERT INTO `sys_menu` VALUES ('59', '用户查询', '37', '55', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户查询');
-INSERT INTO `sys_menu` VALUES ('60', '用户删除', '37', '56', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户删除');
-INSERT INTO `sys_menu` VALUES ('61', '角色新增', '38', '57', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色新增');
-INSERT INTO `sys_menu` VALUES ('62', '角色修改', '38', '58', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色修改');
-INSERT INTO `sys_menu` VALUES ('63', '角色查询', '38', '59', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色查询');
-INSERT INTO `sys_menu` VALUES ('64', '角色删除', '38', '60', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色删除');
+INSERT INTO `sys_menu` VALUES ('45', '用户类', '12', '41', '#', 'F', 'system:user:class', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户类');
+INSERT INTO `sys_menu` VALUES ('46', '收入类', '12', '42', '#', 'F', 'system:incom:class', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '收入类');
+INSERT INTO `sys_menu` VALUES ('47', '渠道统计', '12', '43', '#', 'F', 'system:channel:summary', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '渠道统计');
+INSERT INTO `sys_menu` VALUES ('48', '登录天数', '17', '44', '#', 'F', 'system:login:day', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '登录天数');
+INSERT INTO `sys_menu` VALUES ('49', '流失等级', '17', '45', '#', 'F', 'system:loss:grade', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '流失等级');
+INSERT INTO `sys_menu` VALUES ('50', '流失关卡', '17', '46', '#', 'F', 'system:loss:away', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '流失关卡');
+INSERT INTO `sys_menu` VALUES ('51', '势力榜', '26', '47', '#', 'F', 'list:of:forces', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '势力榜');
+INSERT INTO `sys_menu` VALUES ('52', '关卡榜', '26', '48', '#', 'F', 'level:of:forces', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '关卡榜');
+INSERT INTO `sys_menu` VALUES ('53', '亲密榜', '26', '49', '#', 'F', 'close:the:list', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '亲密榜');
+INSERT INTO `sys_menu` VALUES ('54', '帮派榜', '26', '50', '#', 'F', 'list:of:gang', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '帮派榜');
+INSERT INTO `sys_menu` VALUES ('55', '帮派排行', '31', '51', '#', 'F', 'out:of:gangs', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '帮派排行');
+INSERT INTO `sys_menu` VALUES ('56', '个人排行', '31', '52', '#', 'F', 'system:one:person', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '个人排行');
+INSERT INTO `sys_menu` VALUES ('57', '用户新增', '37', '53', '#', 'F', 'system:user:add', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户新增');
+INSERT INTO `sys_menu` VALUES ('58', '用户修改', '37', '54', '#', 'F', 'system:user:edit', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户修改');
+INSERT INTO `sys_menu` VALUES ('59', '用户查询', '37', '55', '#', 'F', 'system:user:query', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户查询');
+INSERT INTO `sys_menu` VALUES ('60', '用户删除', '37', '56', '#', 'F', 'system:user:dele', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户删除');
+INSERT INTO `sys_menu` VALUES ('61', '角色新增', '38', '57', '#', 'F', 'system:role:add', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色新增');
+INSERT INTO `sys_menu` VALUES ('62', '角色修改', '38', '58', '#', 'F', 'system:role:edit', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色修改');
+INSERT INTO `sys_menu` VALUES ('63', '角色查询', '38', '59', '#', 'F', 'system:role:query', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色查询');
+INSERT INTO `sys_menu` VALUES ('64', '角色删除', '38', '60', '#', 'F', 'system:role:dele', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色删除');
 INSERT INTO `sys_menu` VALUES ('65', '菜单新增', '39', '61', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单新增');
 INSERT INTO `sys_menu` VALUES ('66', '菜单修改', '39', '62', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单修改');
 INSERT INTO `sys_menu` VALUES ('67', '菜单查询', '39', '63', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单查询');
@@ -123,15 +123,16 @@ CREATE TABLE `sys_role` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='角色信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='角色信息表';
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', '管理员', 'admin', '1', '0', 'admin', '2018-03-16 11:33:00', null, '2018-09-25 09:48:05', '管理员');
-INSERT INTO `sys_role` VALUES ('2', '普通角色', 'common', '2', '0', 'admin', '2018-03-16 11:33:00', null, '2018-09-12 20:53:04', '普通角色');
+INSERT INTO `sys_role` VALUES ('1', '管理员', 'admin', '1', '0', 'admin', '2018-03-16 11:33:00', null, '2018-10-22 18:40:09', '管理员');
+INSERT INTO `sys_role` VALUES ('2', '普通角色', 'common', '2', '0', 'admin', '2018-03-16 11:33:00', null, '2018-10-11 17:19:10', '普通角色');
 INSERT INTO `sys_role` VALUES ('14', '老板', 'boss', '1', null, null, '2018-09-03 18:22:55', null, '2018-09-17 10:51:40', '老板');
-INSERT INTO `sys_role` VALUES ('16', '管理员1', '123', '1', '0', 'admin', '2018-09-12 14:37:21', null, '2018-09-12 20:48:58', '1');
+INSERT INTO `sys_role` VALUES ('16', '管理员1', '123', '1', '0', 'admin', '2018-09-12 14:37:21', null, '2018-10-11 17:17:04', '1');
+INSERT INTO `sys_role` VALUES ('17', '测试', 'test', '6', '0', 'admin', '2018-10-11 17:59:04', null, '2018-10-22 18:40:50', '1');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -213,14 +214,8 @@ INSERT INTO `sys_role_menu` VALUES ('1', '65');
 INSERT INTO `sys_role_menu` VALUES ('1', '66');
 INSERT INTO `sys_role_menu` VALUES ('1', '67');
 INSERT INTO `sys_role_menu` VALUES ('1', '68');
-INSERT INTO `sys_role_menu` VALUES ('2', '1');
-INSERT INTO `sys_role_menu` VALUES ('2', '3');
-INSERT INTO `sys_role_menu` VALUES ('2', '11');
-INSERT INTO `sys_role_menu` VALUES ('2', '12');
-INSERT INTO `sys_role_menu` VALUES ('2', '18');
-INSERT INTO `sys_role_menu` VALUES ('2', '41');
-INSERT INTO `sys_role_menu` VALUES ('2', '42');
-INSERT INTO `sys_role_menu` VALUES ('2', '43');
+INSERT INTO `sys_role_menu` VALUES ('2', '5');
+INSERT INTO `sys_role_menu` VALUES ('2', '22');
 INSERT INTO `sys_role_menu` VALUES ('6', '1');
 INSERT INTO `sys_role_menu` VALUES ('11', '1');
 INSERT INTO `sys_role_menu` VALUES ('12', '1');
@@ -292,12 +287,13 @@ INSERT INTO `sys_role_menu` VALUES ('14', '65');
 INSERT INTO `sys_role_menu` VALUES ('14', '66');
 INSERT INTO `sys_role_menu` VALUES ('14', '67');
 INSERT INTO `sys_role_menu` VALUES ('14', '68');
-INSERT INTO `sys_role_menu` VALUES ('16', '1');
-INSERT INTO `sys_role_menu` VALUES ('16', '11');
-INSERT INTO `sys_role_menu` VALUES ('16', '12');
-INSERT INTO `sys_role_menu` VALUES ('16', '41');
-INSERT INTO `sys_role_menu` VALUES ('16', '42');
-INSERT INTO `sys_role_menu` VALUES ('16', '43');
+INSERT INTO `sys_role_menu` VALUES ('16', '5');
+INSERT INTO `sys_role_menu` VALUES ('16', '22');
+INSERT INTO `sys_role_menu` VALUES ('17', '4');
+INSERT INTO `sys_role_menu` VALUES ('17', '5');
+INSERT INTO `sys_role_menu` VALUES ('17', '20');
+INSERT INTO `sys_role_menu` VALUES ('17', '21');
+INSERT INTO `sys_role_menu` VALUES ('17', '22');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -321,14 +317,19 @@ CREATE TABLE `sys_user` (
   `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT '' COMMENT '备注',
+  `channel_id` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, '21232f297a57a5a743894a0e4a801fc3', null, null, null, '60.186.217.157', '2018-10-08 16:06:10', 'admin', '2018-03-16 11:33:00', null, '2018-10-03 23:29:21', '管理员');
-INSERT INTO `sys_user` VALUES ('3', 'chenyoukj', '辰优科技', null, '18888888888', null, '0be630b6db229b105a865ff5f4173568', null, null, null, null, null, 'admin', '2018-09-16 09:31:28', null, '2018-09-26 17:33:32', '超级管理员');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, '21232f297a57a5a743894a0e4a801fc3', null, null, null, '0:0:0:0:0:0:0:1', '2018-11-16 16:27:46', 'admin', null, null, '2018-10-31 18:19:32', '管理员', 'android_test_02');
+INSERT INTO `sys_user` VALUES ('6', '123', '123', null, '13098381432', null, '202cb962ac59075b964b07152d234b70', null, '0', null, '0:0:0:0:0:0:0:1', '2018-10-11 17:16:02', 'admin', '2018-10-11 17:10:41', 'admin', '2018-10-12 10:05:08', '123', 'android_test_02');
+INSERT INTO `sys_user` VALUES ('7', 'z', '指牛', null, '13098381435', null, '202cb962ac59075b964b07152d234b70', null, '0', null, '127.0.0.1', '2018-10-11 17:42:57', 'admin', '2018-10-11 17:17:54', '123', null, '渠道', 'android_td_jyfc');
+INSERT INTO `sys_user` VALUES ('8', 'test01', '渠道1', null, '13098381433', null, '0e698a8ffc1a0af622c7b4db3cb750cc', null, '0', null, '0:0:0:0:0:0:0:1', '2018-10-22 15:07:58', 'admin', '2018-10-11 17:38:37', 'admin', null, '渠道1', 'android_td_jyfc');
+INSERT INTO `sys_user` VALUES ('10', 'test02', 'test02', null, '13098381444', null, '098f6bcd4621d373cade4e832627b4f6', null, '0', null, '0:0:0:0:0:0:0:1', '2018-10-22 15:06:52', 'admin', '2018-10-12 10:09:38', 'admin', '2018-10-12 11:46:53', 'test', 'android_test_02');
+INSERT INTO `sys_user` VALUES ('11', 'hao', 'hao', null, '18888888888', null, '32791e666fef96b588db16200d5fda94', null, '0', null, '0:0:0:0:0:0:0:1', '2018-10-22 16:17:51', 'admin', '2018-10-22 15:14:11', 'admin', null, 'hao', 'android_test_02');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -345,7 +346,11 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES ('1', '1');
 INSERT INTO `sys_user_role` VALUES ('2', '2');
-INSERT INTO `sys_user_role` VALUES ('3', '14');
+INSERT INTO `sys_user_role` VALUES ('6', '1');
+INSERT INTO `sys_user_role` VALUES ('7', '2');
+INSERT INTO `sys_user_role` VALUES ('8', '2');
+INSERT INTO `sys_user_role` VALUES ('10', '17');
+INSERT INTO `sys_user_role` VALUES ('11', '2');
 INSERT INTO `sys_user_role` VALUES ('32', '1');
 INSERT INTO `sys_user_role` VALUES ('32', '2');
 INSERT INTO `sys_user_role` VALUES ('34', '1');
@@ -383,10 +388,9 @@ CREATE TABLE `t_about_game` (
 -- ----------------------------
 -- Records of t_about_game
 -- ----------------------------
-INSERT INTO `t_about_game` VALUES ('1', '1', 'node_360_1', '2018-09-11 11:09:21', '29', '171', '0', '0', '0', '0', '0', '1');
-INSERT INTO `t_about_game` VALUES ('2', '2', 'node_360_2', '2018-09-11 11:09:21', '29', '0', '0', '0', '0', '0', '0', '2');
-INSERT INTO `t_about_game` VALUES ('3', null, '所有区服和渠道', '2018-09-11 11:09:21', '1', '10000', '88888888', '66666', '999999', '999999', '999', null);
-INSERT INTO `t_about_game` VALUES ('4', '1', '只选择区服', '2018-09-11 11:09:21', '29', '171', '0', '0', '0', '0', '0', null);
+INSERT INTO `t_about_game` VALUES ('1', '1', 'node_360_1', '2018-09-11 11:09:21', '29', '171', '100', '60', '666666', '1999999', '0', 'android_td_jyfc');
+INSERT INTO `t_about_game` VALUES ('2', '2', 'node_360_2', '2018-09-11 11:09:21', '29', '0', '200', '80', '888888', '88888888', '0', 'android_test_02');
+INSERT INTO `t_about_game` VALUES ('3', null, '所有', '2018-09-11', '1', '123456', '1234', '900', '54789', '65423', '0', null);
 
 -- ----------------------------
 -- Table structure for t_active_player
@@ -410,6 +414,25 @@ INSERT INTO `t_active_player` VALUES ('4144', '2018-10-07', '2', '1', 'test_01')
 INSERT INTO `t_active_player` VALUES ('6281', '2018-10-08', '2', '1', 'test_01');
 
 -- ----------------------------
+-- Table structure for t_activitie_open
+-- ----------------------------
+DROP TABLE IF EXISTS `t_activitie_open`;
+CREATE TABLE `t_activitie_open` (
+  `active_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '活动id',
+  `server_id` int(11) NOT NULL COMMENT '区服id',
+  `start` varchar(12) NOT NULL COMMENT '活动开启时间',
+  `end` varchar(12) NOT NULL COMMENT '活动结束时间',
+  `status` int(10) NOT NULL COMMENT '状态，开启是1，删除是0,活动开启失败是2',
+  `active_num` varchar(64) NOT NULL COMMENT '活动编号',
+  `record_time` varchar(32) NOT NULL COMMENT '活动开启操作时间',
+  PRIMARY KEY (`active_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_activitie_open
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for t_activity_num
 -- ----------------------------
 DROP TABLE IF EXISTS `t_activity_num`;
@@ -420,7 +443,7 @@ CREATE TABLE `t_activity_num` (
   `consume_ingot` int(11) DEFAULT NULL COMMENT '活动消耗元宝',
   `server_id` int(11) DEFAULT NULL,
   `server_name` varchar(16) NOT NULL,
-  `record_time` date NOT NULL COMMENT '记录时间',
+  `record_time` varchar(32) NOT NULL COMMENT '记录时间',
   PRIMARY KEY (`activity_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='活动分析-->活动参与人数';
 
@@ -442,7 +465,7 @@ CREATE TABLE `t_activity_output` (
   `consume` varchar(64) NOT NULL,
   `server_id` int(11) NOT NULL,
   `server_name` varchar(64) NOT NULL,
-  `recorde_time` date NOT NULL COMMENT '记录时间'
+  `recorde_time` varchar(32) NOT NULL COMMENT '记录时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='活动分析-->活动产出与消耗';
 
 -- ----------------------------
@@ -460,7 +483,7 @@ CREATE TABLE `t_activity_rank` (
   `gang_name` varchar(16) NOT NULL COMMENT '帮派名称',
   `server_id` int(11) NOT NULL,
   `server_name` varchar(16) NOT NULL COMMENT '帮派区服',
-  `record_time` date NOT NULL,
+  `record_time` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='活动分析-->活动排行榜-->帮派排行';
 
@@ -486,8 +509,9 @@ CREATE TABLE `t_add_newplayer` (
 -- ----------------------------
 -- Records of t_add_newplayer
 -- ----------------------------
-INSERT INTO `t_add_newplayer` VALUES ('1', '2018-09-13', '10000', '99999', '1', '1');
-INSERT INTO `t_add_newplayer` VALUES ('2', '2018-09-20', '99999', '10000', null, null);
+INSERT INTO `t_add_newplayer` VALUES ('1', '2018-09-13', '0', '99999', null, '');
+INSERT INTO `t_add_newplayer` VALUES ('2', '2018-09-20', '0', '10000', null, null);
+INSERT INTO `t_add_newplayer` VALUES ('3', '2018-10-08', '0', '大哥大', null, null);
 INSERT INTO `t_add_newplayer` VALUES ('3534182', '2018-10-08 10:33:02', '0', '隗立果', '1', 'test_01');
 INSERT INTO `t_add_newplayer` VALUES ('5194036', '2018-10-07 18:25:53', '0', '衡安然', '1', 'test_01');
 INSERT INTO `t_add_newplayer` VALUES ('5693271', '2018-10-07 18:31:59', '0', '詹万言', '1', 'test_01');
@@ -504,15 +528,15 @@ CREATE TABLE `t_away_grade` (
   `count_player` int(11) NOT NULL COMMENT '用户数量',
   `server_id` int(11) DEFAULT NULL,
   `channel_id` varchar(32) DEFAULT NULL,
-  `show_time` date DEFAULT NULL,
+  `show_time` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`grade_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='流失等级';
 
 -- ----------------------------
 -- Records of t_away_grade
 -- ----------------------------
-INSERT INTO `t_away_grade` VALUES ('1', '王者级别', '9999', '1', '1', null);
-INSERT INTO `t_away_grade` VALUES ('2', '2', '2', null, null, null);
+INSERT INTO `t_away_grade` VALUES ('1', '王者级别', '9999', '1', '1', '2018-10-08');
+INSERT INTO `t_away_grade` VALUES ('2', '2', '2', null, null, '2018-08-08');
 
 -- ----------------------------
 -- Table structure for t_away_output
@@ -524,15 +548,15 @@ CREATE TABLE `t_away_output` (
   `count_player` int(11) NOT NULL COMMENT '用户数量',
   `server_id` int(11) DEFAULT NULL,
   `channel_id` varchar(32) DEFAULT NULL,
-  `show_time` date DEFAULT NULL COMMENT '记录当前日期',
+  `show_time` varchar(32) DEFAULT NULL COMMENT '记录当前日期',
   PRIMARY KEY (`away_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='流失关卡';
 
 -- ----------------------------
 -- Records of t_away_output
 -- ----------------------------
-INSERT INTO `t_away_output` VALUES ('1', '第一千零八关', '88888', '1', '1', null);
-INSERT INTO `t_away_output` VALUES ('2', '12345', '99999', null, null, null);
+INSERT INTO `t_away_output` VALUES ('1', '第一千零八关', '88888', '1', '1', '2018-10-08');
+INSERT INTO `t_away_output` VALUES ('2', '12345', '99999', null, null, '2018-10-08');
 
 -- ----------------------------
 -- Table structure for t_away_player
@@ -540,7 +564,7 @@ INSERT INTO `t_away_output` VALUES ('2', '12345', '99999', null, null, null);
 DROP TABLE IF EXISTS `t_away_player`;
 CREATE TABLE `t_away_player` (
   `away_id` int(11) NOT NULL,
-  `record_time` date NOT NULL COMMENT '记录时间',
+  `record_time` varchar(32) NOT NULL COMMENT '记录时间',
   `add_player` int(11) NOT NULL COMMENT '自增用户',
   `away_player` int(11) NOT NULL COMMENT '流失用户',
   `server_id` int(11) DEFAULT NULL,
@@ -561,15 +585,16 @@ DROP TABLE IF EXISTS `t_channel`;
 CREATE TABLE `t_channel` (
   `channel_id` varchar(32) NOT NULL,
   `channel_name` varchar(64) NOT NULL,
-  `server_id` int(11) NOT NULL,
+  `server_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`channel_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_channel
 -- ----------------------------
-INSERT INTO `t_channel` VALUES ('1', '360', '1');
-INSERT INTO `t_channel` VALUES ('2', '小米', '2');
+INSERT INTO `t_channel` VALUES ('android_td_jyfc', 'android_td_jyfc_name', '2');
+INSERT INTO `t_channel` VALUES ('android_test_02', 'android_test_02_name', '2');
+INSERT INTO `t_channel` VALUES ('test_01', 'test_01_name', '1');
 
 -- ----------------------------
 -- Table structure for t_channel_count
@@ -589,7 +614,7 @@ CREATE TABLE `t_channel_count` (
   `pay_arup` double NOT NULL,
   `channel_id` varchar(32) DEFAULT NULL COMMENT '渠道id',
   `server_id` int(11) DEFAULT NULL COMMENT '分区区服id',
-  `count_time` date NOT NULL COMMENT '创建时间',
+  `count_time` varchar(32) NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='渠道统计(用户)';
 
@@ -597,7 +622,7 @@ CREATE TABLE `t_channel_count` (
 -- Records of t_channel_count
 -- ----------------------------
 INSERT INTO `t_channel_count` VALUES ('1', '360', '9999', '9999', '11111', '22', '333.00', '33', '55', '77', '100', '1', '1', '2018-09-11');
-INSERT INTO `t_channel_count` VALUES ('2', '360', '1111', '2222', '333', '444', '555.00', '666', '777', '999', '888', null, null, '2018-09-13');
+INSERT INTO `t_channel_count` VALUES ('2', '360', '1111', '2222', '333', '444', '555.00', '666', '777', '999', '888', 'android_td_jyfc', null, '2018-10-29');
 
 -- ----------------------------
 -- Table structure for t_channel_summary
@@ -618,14 +643,15 @@ CREATE TABLE `t_channel_summary` (
   `recharge_money` int(11) DEFAULT NULL COMMENT '充值金额',
   `pay_ap` double(11,2) DEFAULT NULL COMMENT '付费ap',
   `register_ap` double(11,2) DEFAULT NULL COMMENT '注册ap',
-  `show_time` date DEFAULT NULL,
+  `show_time` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='渠道数据汇总(渠道数据)';
 
 -- ----------------------------
 -- Records of t_channel_summary
 -- ----------------------------
-INSERT INTO `t_channel_summary` VALUES ('1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1.00', '1.00', '2018-09-20');
+INSERT INTO `t_channel_summary` VALUES ('1', 'android_test_02', 'android_test_02', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1.00', '1.00', '2018-09-20');
+INSERT INTO `t_channel_summary` VALUES ('2', '2', '2', '2', '2', '2', '8', '2', '2', '8', '2', '28', '2.00', '2.00', '2018-09-21');
 
 -- ----------------------------
 -- Table structure for t_create_count
@@ -663,7 +689,7 @@ CREATE TABLE `t_cyuser_count` (
   `month_leave` varchar(16) NOT NULL COMMENT '30日留存',
   `server_id` int(11) DEFAULT NULL COMMENT '服务器id',
   `channel_id` varchar(32) DEFAULT NULL COMMENT '渠道id',
-  `count_time` date NOT NULL COMMENT '统计时间',
+  `count_time` varchar(32) NOT NULL COMMENT '统计时间',
   PRIMARY KEY (`user_count_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9004 DEFAULT CHARSET=utf8mb4 COMMENT='用户类(日报)';
 
@@ -744,9 +770,9 @@ INSERT INTO `t_cyuser_count` VALUES ('8957', '8957', '8957', '8957', '8957', '89
 INSERT INTO `t_cyuser_count` VALUES ('8958', '8958', '8958', '8958', '8958', '8958', '8958', '8958', '8958', '1234', '1111', '12345', '1', '1', '2018-09-11');
 INSERT INTO `t_cyuser_count` VALUES ('8959', '8959', '8959', '8959', '8959', '8959', '8959', '8959', '8959', '1234', '1111', '12345', '1', '1', '2018-09-11');
 INSERT INTO `t_cyuser_count` VALUES ('8960', '8960', '8960', '8960', '8960', '8960', '8960', '8960', '8960', '1234', '1111', '12345', '1', '1', '2018-09-11');
-INSERT INTO `t_cyuser_count` VALUES ('8961', '8961', '8961', '8961', '8961', '8961', '8961', '8961', '8961', '1234', '1111', '12345', '1', '1', '2018-09-11');
-INSERT INTO `t_cyuser_count` VALUES ('8962', '8962', '8962', '8962', '8962', '8962', '8962', '8962', '8962', '1234', '1111', '12345', '1', '1', '2018-09-11');
-INSERT INTO `t_cyuser_count` VALUES ('8963', '8963', '8963', '8963', '8963', '8963', '8963', '8963', '8963', '1234', '1111', '12345', '1', '1', '2018-09-11');
+INSERT INTO `t_cyuser_count` VALUES ('8961', '8961', '8961', '8961', '8961', '8961', '8961', '8961', '8961', '1234', '1111', '12345', '1', '1', '2018-09-12');
+INSERT INTO `t_cyuser_count` VALUES ('8962', '8962', '8962', '8962', '8962', '8962', '8962', '8962', '8962', '1234', '1111', '12345', '1', '1', '2018-09-13');
+INSERT INTO `t_cyuser_count` VALUES ('8963', '8963', '8963', '8963', '8963', '8963', '8963', '8963', '8963', '1234', '1111', '12345', '1', '1', '2018-09-14');
 INSERT INTO `t_cyuser_count` VALUES ('8964', '8964', '8964', '8964', '8964', '8964', '8964', '8964', '8964', '1234', '1111', '12345', '1', '1', '2018-09-11');
 INSERT INTO `t_cyuser_count` VALUES ('8965', '8965', '8965', '8965', '8965', '8965', '8965', '8965', '8965', '1234', '1111', '12345', '1', '1', '2018-09-11');
 INSERT INTO `t_cyuser_count` VALUES ('8966', '8966', '8966', '8966', '8966', '8966', '8966', '8966', '8966', '1234', '1111', '12345', '1', '1', '2018-09-11');
@@ -784,9 +810,9 @@ INSERT INTO `t_cyuser_count` VALUES ('8997', '8997', '8997', '8997', '8997', '89
 INSERT INTO `t_cyuser_count` VALUES ('8998', '8998', '8998', '8998', '8998', '8998', '8998', '8998', '8998', '1234', '1111', '12345', '1', '1', '2018-09-11');
 INSERT INTO `t_cyuser_count` VALUES ('8999', '8999', '8999', '8999', '8999', '8999', '8999', '8999', '8999', '1234', '1111', '12345', '1', '1', '2018-09-11');
 INSERT INTO `t_cyuser_count` VALUES ('9000', '9000', '9000', '9000', '9000', '9000', '9000', '9000', '9000', '1234', '1111', '12345', '1', '1', '2018-09-11');
-INSERT INTO `t_cyuser_count` VALUES ('9001', '9000', '100', '2000', '5000', '6000', '8000', '200', '1', '2', '3', '4', null, null, '2018-09-13');
+INSERT INTO `t_cyuser_count` VALUES ('9001', '9000', '100', '2000', '5000', '6000', '8000', '200', '1', '2', '3', '4', null, null, '2018-10-29');
 INSERT INTO `t_cyuser_count` VALUES ('9002', '902', '2', '2', '3', '4', '6', '5', '6', '6', '6', '6', null, null, '2018-09-21');
-INSERT INTO `t_cyuser_count` VALUES ('9003', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', null, null, '2018-09-25');
+INSERT INTO `t_cyuser_count` VALUES ('9003', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', null, null, '2018-11-06');
 
 -- ----------------------------
 -- Table structure for t_everyday_recharge
@@ -794,7 +820,7 @@ INSERT INTO `t_cyuser_count` VALUES ('9003', '1', '1', '1', '1', '1', '1', '1', 
 DROP TABLE IF EXISTS `t_everyday_recharge`;
 CREATE TABLE `t_everyday_recharge` (
   `recharge_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '每日充值id',
-  `recharge_time` date DEFAULT NULL COMMENT '时间段',
+  `recharge_time` varchar(32) DEFAULT NULL COMMENT '时间段',
   `recharge_user_count` int(11) DEFAULT NULL COMMENT '充值人数',
   `recharge_first_user` int(11) DEFAULT NULL COMMENT '首充人数',
   `recharge_count` int(11) DEFAULT NULL COMMENT '充值次数',
@@ -1062,7 +1088,7 @@ CREATE TABLE `t_income_class` (
   `count_rate_user` int(11) NOT NULL COMMENT '付费玩家',
   `server_id` int(11) DEFAULT NULL COMMENT '服务器id',
   `channel_id` varchar(32) DEFAULT NULL COMMENT '渠道id',
-  `recorde_time` date NOT NULL COMMENT '记录时间',
+  `recorde_time` varchar(32) NOT NULL COMMENT '记录时间',
   PRIMARY KEY (`in_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8mb4 COMMENT='收入类(用户)';
 
@@ -1070,8 +1096,8 @@ CREATE TABLE `t_income_class` (
 -- Records of t_income_class
 -- ----------------------------
 INSERT INTO `t_income_class` VALUES ('1', '11.11', '12.22', '8888888', '99%', '100000000', '999999999', '1', '1', '2018-09-13');
-INSERT INTO `t_income_class` VALUES ('2', '222.22', '222.33', '666666666', '88%', '6666666', '8888888', null, null, '2018-09-11');
-INSERT INTO `t_income_class` VALUES ('3', '3.00', '3.00', '3', '%99', '3', '3', '1', '1', '2018-09-11');
+INSERT INTO `t_income_class` VALUES ('2', '222.22', '222.33', '666666666', '88%', '6666666', '8888888', null, null, '2018-10-24');
+INSERT INTO `t_income_class` VALUES ('3', '3.00', '3.00', '3', '%99', '3', '3', null, '', '2018-09-11');
 INSERT INTO `t_income_class` VALUES ('4', '4.00', '4.00', '4', '%99', '4', '4', '1', '1', '2018-09-11');
 INSERT INTO `t_income_class` VALUES ('5', '5.00', '5.00', '5', '%99', '5', '5', '1', '1', '2018-09-11');
 INSERT INTO `t_income_class` VALUES ('6', '6.00', '6.00', '6', '%99', '6', '6', '1', '1', '2018-09-11');
@@ -1420,7 +1446,7 @@ CREATE TABLE `t_level_rank` (
   `channel_id` varchar(32) NOT NULL,
   `show_time` varchar(32) NOT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9846231 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9506239 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_level_rank
@@ -1571,7 +1597,7 @@ DROP TABLE IF EXISTS `t_login_day`;
 CREATE TABLE `t_login_day` (
   `login_day_id` int(11) NOT NULL AUTO_INCREMENT,
   `count_day` int(11) NOT NULL COMMENT '登录天数',
-  `show_time` date DEFAULT NULL,
+  `show_time` varchar(32) DEFAULT NULL,
   `count_num` int(11) NOT NULL COMMENT '用户数量',
   `server_id` int(11) DEFAULT NULL,
   `channel_id` varchar(32) DEFAULT NULL,
@@ -1581,8 +1607,8 @@ CREATE TABLE `t_login_day` (
 -- ----------------------------
 -- Records of t_login_day
 -- ----------------------------
-INSERT INTO `t_login_day` VALUES ('1', '1', null, '100000', '1', '1');
-INSERT INTO `t_login_day` VALUES ('2', '2', null, '8888', null, null);
+INSERT INTO `t_login_day` VALUES ('1', '1', '2018-10-09', '100000', '1', '1');
+INSERT INTO `t_login_day` VALUES ('2', '2', '2018-10-09', '8888', null, null);
 
 -- ----------------------------
 -- Table structure for t_ltv_count
@@ -1590,7 +1616,7 @@ INSERT INTO `t_login_day` VALUES ('2', '2', null, '8888', null, null);
 DROP TABLE IF EXISTS `t_ltv_count`;
 CREATE TABLE `t_ltv_count` (
   `ltv_id` int(11) NOT NULL AUTO_INCREMENT,
-  `recorde_time` date NOT NULL COMMENT '记录时间',
+  `recorde_time` varchar(32) NOT NULL COMMENT '记录时间',
   `oneday_ltv` int(11) NOT NULL COMMENT '一日ltv',
   `twoday_ltv` int(11) NOT NULL COMMENT '2日ltv',
   `threeday_ltv` int(11) NOT NULL COMMENT '3日ltv',
@@ -1608,7 +1634,7 @@ CREATE TABLE `t_ltv_count` (
 -- ----------------------------
 -- Records of t_ltv_count
 -- ----------------------------
-INSERT INTO `t_ltv_count` VALUES ('1', '2018-09-11', '123', '1234', '456', '789', '9999', '66666', '88888', '9999', '66666', '1', '1');
+INSERT INTO `t_ltv_count` VALUES ('1', '2018-09-11', '123', '1234', '456', '789', '9999', '66666', '88888', '9999', '66666', '1', 'android_td_jyfc');
 INSERT INTO `t_ltv_count` VALUES ('2', '2018-09-13', '345', '234', '666', '888', '999', '1111', '1111', '2222', '6666', null, null);
 
 -- ----------------------------
@@ -1617,7 +1643,7 @@ INSERT INTO `t_ltv_count` VALUES ('2', '2018-09-13', '345', '234', '666', '888',
 DROP TABLE IF EXISTS `t_onlineplayer_count`;
 CREATE TABLE `t_onlineplayer_count` (
   `online_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '在线id',
-  `record_time` date NOT NULL COMMENT '记录年月日',
+  `record_time` varchar(32) NOT NULL COMMENT '记录年月日',
   `show_time_hour` varchar(16) NOT NULL COMMENT '展示时间',
   `online_player_count` int(11) NOT NULL COMMENT '在线用户数量',
   `allplayer_coun` int(11) NOT NULL COMMENT '在线用户总人数',
@@ -1629,8 +1655,8 @@ CREATE TABLE `t_onlineplayer_count` (
 -- ----------------------------
 -- Records of t_onlineplayer_count
 -- ----------------------------
-INSERT INTO `t_onlineplayer_count` VALUES ('1', '2018-09-11', '1:00', '99999', '88888', '1', '1');
-INSERT INTO `t_onlineplayer_count` VALUES ('2', '2018-09-11', '2', '1111', '2222', null, null);
+INSERT INTO `t_onlineplayer_count` VALUES ('1', '2018-09-11', '1:00-2:00', '99999', '88888', '1', '1');
+INSERT INTO `t_onlineplayer_count` VALUES ('2', '2018-09-11', '2:00-3:00', '1111', '2222', null, null);
 
 -- ----------------------------
 -- Table structure for t_out_consume
@@ -1643,7 +1669,7 @@ CREATE TABLE `t_out_consume` (
   `consume` int(11) NOT NULL COMMENT '消耗',
   `server_id` int(11) DEFAULT NULL,
   `channel_id` varchar(32) DEFAULT NULL,
-  `record_time` date DEFAULT NULL COMMENT '记录时间',
+  `record_time` varchar(32) DEFAULT NULL COMMENT '记录时间',
   PRIMARY KEY (`out_consume_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='游戏行为统计-->产出与消耗';
 
@@ -1651,7 +1677,7 @@ CREATE TABLE `t_out_consume` (
 -- Records of t_out_consume
 -- ----------------------------
 INSERT INTO `t_out_consume` VALUES ('1', '铭文', '50', '400', '1', '1', '2018-09-04');
-INSERT INTO `t_out_consume` VALUES ('2', '元宝', '90', '100', null, null, null);
+INSERT INTO `t_out_consume` VALUES ('2', '元宝', '90', '100', null, null, '2018-09-04');
 
 -- ----------------------------
 -- Table structure for t_person_rank
@@ -1662,7 +1688,7 @@ CREATE TABLE `t_person_rank` (
   `player_name` varchar(16) NOT NULL COMMENT '玩家名称',
   `server_name` varchar(16) NOT NULL COMMENT '区服',
   `server_id` int(11) NOT NULL,
-  `record_time` date NOT NULL,
+  `record_time` varchar(32) NOT NULL,
   PRIMARY KEY (`person_rank_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='活动分析-->活动排行榜-->个人排行';
 
@@ -1682,15 +1708,15 @@ CREATE TABLE `t_point_analyse` (
   `recharge_first_buyuser` int(11) DEFAULT NULL COMMENT '首充购买人数',
   `server_id` int(11) DEFAULT NULL,
   `channel_id` varchar(32) DEFAULT NULL,
-  `show_time` date DEFAULT NULL COMMENT '展示时间',
+  `show_time` varchar(32) DEFAULT NULL COMMENT '展示时间',
   PRIMARY KEY (`charging_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='计费点分析(充值统计)';
 
 -- ----------------------------
 -- Records of t_point_analyse
 -- ----------------------------
-INSERT INTO `t_point_analyse` VALUES ('1', '计费点0', '100000', '99999', '1', '1', null);
-INSERT INTO `t_point_analyse` VALUES ('2', '计费点1', '99999', '123456', null, null, null);
+INSERT INTO `t_point_analyse` VALUES ('1', '计费点0', '100000', '99999', '1', '1', '2018-10-10');
+INSERT INTO `t_point_analyse` VALUES ('2', '计费点1', '99999', '123456', null, null, '2018-10-30');
 
 -- ----------------------------
 -- Table structure for t_recharge_log
@@ -1717,7 +1743,7 @@ CREATE TABLE `t_recharge_log` (
 DROP TABLE IF EXISTS `t_retain_player`;
 CREATE TABLE `t_retain_player` (
   `retain_id` int(11) NOT NULL AUTO_INCREMENT,
-  `show_time` date NOT NULL COMMENT '展示时间',
+  `show_time` varchar(32) NOT NULL COMMENT '展示时间',
   `oneday_retain` varchar(16) NOT NULL COMMENT '留存',
   `threeday_retain` varchar(16) NOT NULL,
   `weekly_retain` varchar(16) NOT NULL COMMENT '七留',
@@ -1759,15 +1785,15 @@ CREATE TABLE `t_task_message` (
   `now_progress_num` int(11) DEFAULT NULL COMMENT '当前进度人数',
   `server_id` int(11) DEFAULT NULL,
   `channel_id` varchar(32) DEFAULT NULL,
-  `show_time` date DEFAULT NULL,
+  `show_time` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`task_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='游戏行为统计-->任务消息';
 
 -- ----------------------------
 -- Records of t_task_message
 -- ----------------------------
-INSERT INTO `t_task_message` VALUES ('1', '1', '888888', '1', '1', null);
-INSERT INTO `t_task_message` VALUES ('2', '2', '999999', null, null, null);
+INSERT INTO `t_task_message` VALUES ('1', '1', '888888', '1', '1', '2018-10-08');
+INSERT INTO `t_task_message` VALUES ('2', '2', '999999', null, null, '2018-10-08');
 
 -- ----------------------------
 -- Table structure for t_vip_count
@@ -1812,7 +1838,7 @@ BEGIN
 INSERT INTO `t_cyuser_count` VALUES ( i, i, i, i, i, i, i, i, '1234', '1111', '12345', i, i, '2018-09-11 00:00:00');
 		SET i=i+1;
 	END WHILE;
-
+	
 END
 ;;
 DELIMITER ;
@@ -1823,16 +1849,16 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `hao`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `hao`()
-BEGIN
+BEGIN 
 
 DECLARE i INT DEFAULT 999;
 
 WHILE i<1100
-DO
+DO 
 INSERT INTO `t_add_newplayer` VALUES (null, '2018-09-13 00:00:00', '10000', '99999', 'i', 'i');
-SET i=i+1;
-END WHILE ;
-commit;
+SET i=i+1; 
+END WHILE ; 
+commit; 
 
 END
 ;;
@@ -1846,9 +1872,9 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pro_income`(IN count INT)
 BEGIN
 DECLARE i INT DEFAULT 4;
-WHILE
+WHILE 
 			i<=count
-	DO
+	DO  
 	insert into t_income_class VALUES(i,i,i,i,'%99',i,i,1,1,'2018-09-11');
 		set i=i+1;
 END WHILE;
@@ -1862,16 +1888,16 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `test_insert`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `test_insert`()
-BEGIN
+BEGIN 
 
 DECLARE i INT DEFAULT 999;
 
 WHILE i<1100
-DO
+DO 
 INSERT INTO `t_add_newplayer` VALUES ('1', '2018-09-13 00:00:00', '10000', '99999', 'i', 'i');
-SET i=i+1;
-END WHILE ;
-commit;
+SET i=i+1; 
+END WHILE ; 
+commit; 
 
 END
 ;;
@@ -1890,7 +1916,7 @@ BEGIN
 INSERT INTO `t_about_game` VALUES ('node_360_1', '2018-09-11 11:09:21', i, i, i, i, 10000, 9999, 6666, 1);
 		SET i=i+1;
 	END WHILE;
-
+	
 END
 ;;
 DELIMITER ;
@@ -1907,7 +1933,7 @@ BEGIN
 INSERT INTO t_cyuser_count  VALUES (i, i, i, i, i, i, i, i, i, '1234', '1111', '12345', 1, 1, '2018-09-11 00:00:00');
 		SET i=i+1;
 	END WHILE;
-
+	
 END
 ;;
 DELIMITER ;

@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class DateUtil {
@@ -153,13 +155,22 @@ public class DateUtil {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int year = cal.get(Calendar.YEAR);
-
         Calendar curCal = Calendar.getInstance();
         curCal.setTime(new Date());
         int curYear = curCal.get(Calendar.YEAR);
         return (year < curYear);
-
     }
+
+    public static Map<String,Object> gettime(String parse) throws ParseException {
+        Map <String, Object> resultMap = new HashMap<>();
+        String ymd = parse.substring(0, 10);
+        String hms = parse.substring(11);
+        resultMap.put("ymd", ymd);
+        resultMap.put("hms", hms);
+        return resultMap;
+    }
+
+
 
 
 }

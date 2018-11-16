@@ -11,3 +11,11 @@ jfd=2（计费id）amount=6（价格）
 
 活动添加：http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_1&aid=1001&value=1&stime=2018-10-13%2023:59:59&etime=2018-10-15%2023:59:59&state=1
 
+
+
+活动页面:
+http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_3&aid=5003&fields=stime,2018-11-16%2000:00:01,etime,2018-11-23%2023:59:59,value,1,state=1
+
+
+
+

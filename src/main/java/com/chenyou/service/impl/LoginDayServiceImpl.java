@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,41 +34,24 @@ public class LoginDayServiceImpl implements LoginDayService {
 
     @Override
     public PageResult listLoginDay(String start, String end, Integer serverId, String channelId, int pageNum, int pageSize) throws BizException, ParseException {
-        logger.info("start:"+start);
-        logger.info("end:"+end);
-        logger.info("serverId:"+serverId);
-        logger.info("channelId:"+channelId);
-        String startTime = null;
-        String endTime = null;
-        String temp = null;
+        logger.info("start:" + start);
+        logger.info("end:" + end);
+        logger.info("serverId:" + serverId);
+        logger.info("channelId:" + channelId);
         PageHelper.startPage(pageNum, pageSize);
-        LoginDayExample example = new LoginDayExample();
-        example.setOrderByClause("count_num");
-        LoginDayExample.Criteria criteria = example.createCriteria();
-        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
-            startTime = start;
-            endTime =end;
-            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
-                //如果前面时间大于后面时间
-                temp = endTime;
-                endTime = startTime;
-                startTime = temp;
-                criteria.andShowTimeBetween(startTime, endTime);
-            } else {
-                criteria.andShowTimeBetween(startTime, endTime);
+        String temp = null;
+        List <LoginDay> list = new ArrayList <LoginDay>();
+        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+            if (DateUtil.parse(start).after(DateUtil.parse(end))) {
+                temp = end;
+                end = start;
+                start = temp;
             }
         }
-        //如果其中一个为空
-        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
-            startTime=start;
-            criteria.andShowTimeEqualTo(startTime);
-        }
-        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
-            endTime=end;
-            criteria.andShowTimeEqualTo(endTime);
-        }
-        //进行条件选择
-        if (serverId == null && channelId == null) {
+        LoginDayExample example = new LoginDayExample();
+        example.setOrderByClause("show_time desc");
+        LoginDayExample.Criteria criteria = example.createCriteria();
+        if (null == serverId && null == channelId) {
             criteria.andServerIdIsNull();
             criteria.andChannelIdIsNull();
         }
@@ -77,11 +61,69 @@ public class LoginDayServiceImpl implements LoginDayService {
         if (null != channelId) {
             criteria.andChannelIdEqualTo(channelId);
         }
-        List <LoginDay> list = loginDayMapper.selectByExample(example);
+        if (!StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+            criteria.andShowTimeBetween(start, end);
+        }
+        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
+            criteria.andShowTimeEqualTo(start);
+        }
+        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+            criteria.andShowTimeEqualTo(end);
+        }
+        list = loginDayMapper.selectByExample(example);
         if (StringUtils.isEmpty(list)) {
             throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
         }
         Page <LoginDay> page = (Page <LoginDay>) list;
         return new PageResult(page.getTotal(), page.getResult());
     }
+
+
+//        String startTime = null;
+//        String endTime = null;
+//        String temp = null;
+//        PageHelper.startPage(pageNum, pageSize);
+//        LoginDayExample example = new LoginDayExample();
+//        example.setOrderByClause("count_num");
+//        LoginDayExample.Criteria criteria = example.createCriteria();
+//        if (!StringUtils.isEmpty(start) & !StringUtils.isEmpty(end)) {
+//            startTime = start;
+//            endTime =end;
+//            if (DateUtil.parse(startTime).after(DateUtil.parse(endTime))) {
+//                //如果前面时间大于后面时间
+//                temp = endTime;
+//                endTime = startTime;
+//                startTime = temp;
+//                criteria.andShowTimeBetween(startTime, endTime);
+//            } else {
+//                criteria.andShowTimeBetween(startTime, endTime);
+//            }
+//        }
+//        //如果其中一个为空
+//        if (!StringUtils.isEmpty(start) && StringUtils.isEmpty(end)) {
+//            startTime=start;
+//            criteria.andShowTimeEqualTo(startTime);
+//        }
+//        if (StringUtils.isEmpty(start) && !StringUtils.isEmpty(end)) {
+//            endTime=end;
+//            criteria.andShowTimeEqualTo(endTime);
+//        }
+//        //进行条件选择
+//        if (serverId == null && channelId == null) {
+//            criteria.andServerIdIsNull();
+//            criteria.andChannelIdIsNull();
+//        }
+//        if (null != serverId) {
+//            criteria.andServerIdEqualTo(serverId);
+//        }
+//        if (null != channelId) {
+//            criteria.andChannelIdEqualTo(channelId);
+//        }
+//        List <LoginDay> list = loginDayMapper.selectByExample(example);
+//        if (StringUtils.isEmpty(list)) {
+//            throw new BizException(BizException.CODE_RESULT_NULL, "不好意思,当前没有数据!");
+//        }
+//        Page <LoginDay> page = (Page <LoginDay>) list;
+//        return new PageResult(page.getTotal(), page.getResult());
+//    }
 }

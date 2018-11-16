@@ -551,4 +551,5 @@
         select  * from sys_user where login_name=#{loginName}
     </select>
 
+
 </mapper>

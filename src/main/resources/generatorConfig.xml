@@ -303,6 +303,16 @@
         <!--</table>-->
 
 
+        <table tableName="t_activitie_open" domainObjectName="ActivitieOpen"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="active_id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+
+
+
 
 
 
