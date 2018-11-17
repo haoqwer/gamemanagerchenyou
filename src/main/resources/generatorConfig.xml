@@ -163,12 +163,12 @@
 
 
         <!--充值统计>计费点分析-->
-        <table tableName="t_point_analyse" domainObjectName="PointAnalyse"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
-            <generatedKey column="charging_id" sqlStatement="MySql" identity="true"/>
-        </table>
+        <!--<table tableName="t_point_analyse" domainObjectName="PointAnalyse"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="charging_id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
 
 
         <!--渠道数据汇总-->
@@ -303,11 +303,19 @@
         <!--</table>-->
 
 
-        <table tableName="t_activitie_open" domainObjectName="ActivitieOpen"
+        <!--<table tableName="t_activitie_open" domainObjectName="ActivitieOpen"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="active_id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+
+        <table tableName="t_seal_number" domainObjectName="SealNumber"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
-            <generatedKey column="active_id" sqlStatement="MySql" identity="true"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
 
 

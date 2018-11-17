@@ -170,6 +170,26 @@ public class DateUtil {
         return resultMap;
     }
 
+    /**
+     * 判断前面时间是否大于后面时间
+     * @param start
+     * @param end
+     * @return
+     * @throws ParseException
+     */
+    public  static boolean equalTime(String start,String end) throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        boolean is = sdf.parse(start).after(sdf.parse(end));
+        return  is;
+    }
+
+    public  static String  format1(Date date){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return sdf.format(date);
+    }
+
+
+
 
 
 
