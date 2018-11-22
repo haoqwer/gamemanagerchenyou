@@ -78,6 +78,14 @@ public class ActivitieOpentController  extends BaseController{
         return activitieOpenService.findSearch(activitieOpen, page, rows);
     }
 
+    /**
+     * 封号
+     * @param uIds
+     * @return
+     * @throws UnsupportedEncodingException
+     * @throws BizException
+     * @throws URISyntaxException
+     */
     @RequestMapping(value ="closeNumber", method = RequestMethod.GET)
     public Map <String, Object> closeNumber(String uIds) throws UnsupportedEncodingException, BizException, URISyntaxException {
         Map <String, Object> resultMap = new HashMap <>();
@@ -85,6 +93,14 @@ public class ActivitieOpentController  extends BaseController{
         return resultMap;
     }
 
+    /**
+     * 解封
+     * @param uIds
+     * @return
+     * @throws BizException
+     * @throws UnsupportedEncodingException
+     * @throws URISyntaxException
+     */
     @RequestMapping(value ="openNumber",method = RequestMethod.GET)
     public  Map<String,Object> openNumber(String uIds) throws BizException, UnsupportedEncodingException, URISyntaxException {
         Map<String,Object>  resultMap=new HashMap <>();

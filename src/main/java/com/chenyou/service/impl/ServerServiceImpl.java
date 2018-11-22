@@ -44,4 +44,18 @@ public class ServerServiceImpl implements ServerService {
             return null;
         }
     }
+
+    @Override
+    public List <Server> findAll() {
+        return serverMapper.selectByExample(null);
+    }
+
+    /**
+     * 插入server
+     * @param server
+     */
+    @Override
+    public void addServer(Server server) {
+    serverMapper.insert(server);
+    }
 }

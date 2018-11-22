@@ -311,12 +311,28 @@
         <!--</table>-->
 
 
-        <table tableName="t_seal_number" domainObjectName="SealNumber"
+        <!--<table tableName="t_template_name" domainObjectName="TemplateName"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+
+        <!--<table tableName="t_template_manager" domainObjectName="TemplateManager"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <table tableName="t_template_open" domainObjectName="TemplateOpen"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
+
 
 
 

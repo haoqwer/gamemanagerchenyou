@@ -1,5 +1,7 @@
 package com.chenyou.base.constant;
 
+import jdk.nashorn.internal.runtime.FindProperty;
+
 /**
  * 用户常量信息
  * 
@@ -64,6 +66,9 @@ public class UserConstants
     /** 参数键名是否唯一的返回结果码 */
     public final static String CONFIG_KEY_UNIQUE = "0";
     public final static String CONFIG_KEY_NOT_UNIQUE = "1";
+
+
+    public final static String ACTIVE_ID_UNIQUE="0";
 
     /**
      * 密码长度限制

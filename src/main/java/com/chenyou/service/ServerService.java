@@ -13,4 +13,10 @@ public interface ServerService {
 
 
     String getServerName(Integer serverId);
+
+    void addServer(Server server);
+
+
+    //获取到所有的区服
+    List<Server> findAll();
 }

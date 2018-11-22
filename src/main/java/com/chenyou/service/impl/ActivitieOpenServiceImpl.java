@@ -100,24 +100,24 @@ public class ActivitieOpenServiceImpl  implements ActivitieOpenService {
             System.out.println("postfix" + postfix);
 //            http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_3&aid=5003&fields=stime,2018-11-16%2000:00:01,etime,2018-11-23%2023:59:59,value,1,state=1
             URI uri = new URIBuilder("http://47.104.240.79:8080/").setParameter("mod", "control").
-                    setParameter("act", "addAct").setParameter("server", serverName).setParameter("aid", "5003").
+                    setParameter("act", "addAct").setParameter("server", serverName).setParameter("aid", activitieOpen.getActiveNum()).
                     setParameter("fields", postfix).build();
             //获取到url
             String url = URLDecoder.decode(uri.toString(), "UTF-8");
-            HttpGet httpGet = new HttpGet(url);
+//            HttpGet httpGet = new HttpGet(url);
             System.out.println("路径为:" + url);
-            logger.info("url:"+url);
-            CloseableHttpResponse response;
-            try {
-                response = httpClient.execute(httpGet);
-                if (response.getStatusLine().getStatusCode() == 200) {
-                    String content = EntityUtils.toString(response.getEntity(), "UTF-8");
-                    System.out.println("响应的内容为:" + content);
-                    logger.info("content:"+content);
-                }
-            } catch (IOException e) {
-               throw  new BizException(BizException.CODE_PARM_LACK,"不好意思活动开启失败!");
-            }
+//            logger.info("url:"+url);
+//            CloseableHttpResponse response;
+//            try {
+//                response = httpClient.execute(httpGet);
+//                if (response.getStatusLine().getStatusCode() == 200) {
+//                    String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+//                    System.out.println("响应的内容为:" + content);
+//                    logger.info("content:"+content);
+//                }
+//            } catch (IOException e) {
+//               throw  new BizException(BizException.CODE_PARM_LACK,"不好意思活动开启失败!");
+//            }
             System.out.println();
             //进行批量插入
             activitieOpen.setRecordTime(DateUtil.format1(new Date()));

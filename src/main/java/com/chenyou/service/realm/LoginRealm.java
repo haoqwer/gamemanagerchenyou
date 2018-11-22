@@ -90,7 +90,8 @@ public class LoginRealm extends AuthorizingRealm {
             return new SimpleAuthenticationInfo(user, user.getPassword(), this.getName());
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
+
     }
 }

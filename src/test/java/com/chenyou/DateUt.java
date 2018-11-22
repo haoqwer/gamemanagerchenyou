@@ -1,11 +1,7 @@
 package com.chenyou;
 
-import com.chenyou.utils.DateUtil;
-import com.chenyou.utils.StringUtils;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

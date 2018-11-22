@@ -1,10 +1,10 @@
 package com.chenyou.utils;
 
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.text.StrBuilder;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 字符串工具类
@@ -361,4 +361,32 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
         }
         return result.toString();
     }
+
+
+    /**
+     * 判断新旧数组中不同的部分
+     */
+    public static Map<String, String[]> CompareStringArray(String[] oldArr, String[] newArr){
+        List<String> addList = new ArrayList<>();
+        List<String> deleteList = new ArrayList<>();
+
+        for (String anOldArr : oldArr) {
+            if (!ArrayUtils.contains(newArr, anOldArr)) {
+                deleteList.add(anOldArr);
+            }
+        }
+
+        for (String aNewArr : newArr) {
+            if (!ArrayUtils.contains(oldArr, aNewArr)) {
+                addList.add(aNewArr);
+            }
+        }
+        String[] addArr = addList.toArray(new String[addList.size()]);
+        String[] deleteArr = deleteList.toArray(new String[deleteList.size()]);
+        Map<String, String[]> res = new HashMap<>();
+        res.put("addArr", addArr);
+        res.put("deleteArr", deleteArr);
+        return res;
+    }
+
 }

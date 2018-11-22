@@ -2,8 +2,12 @@ package com.chenyou.controller;
 
 import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
+import com.chenyou.pojo.User;
+import com.chenyou.utils.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -60,6 +64,13 @@ public class BaseController {
         Map<String, Object> resultMaP = new HashMap<>();
         resultMaP.put(ApplicationConstants.TAG_SC_ERRORMSG, "不好意思，您的权限不足!");
         return resultMaP;
+    }
+
+    //获取到登录名称
+    public  static  String getUserName(){
+        Subject subject = SecurityUtils.getSubject();
+        User u = (User) subject.getPrincipal();
+        return  u.getUserName();
     }
 
 
