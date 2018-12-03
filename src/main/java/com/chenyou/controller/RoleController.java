@@ -5,11 +5,8 @@ import com.chenyou.base.BizException;
 import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.PageResult;
-import com.chenyou.pojo.entity.Result;
-import com.chenyou.service.RoleService;
-import com.chenyou.service.UserService;
+import com.chenyou.service.backmanagerservice.RoleService;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +28,7 @@ public class RoleController  extends BaseController{
      * 给增加用户时给用户选择
      * @return
      */
-    @RequestMapping("listRole")
+    @RequestMapping("/listRole")
     public Map<String,Object> listRole()  throws BizException{
         Map<String,Object> map =new HashMap<>();
         List<Role> roles = roleService.listRole();

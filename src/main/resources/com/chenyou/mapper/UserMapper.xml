@@ -533,6 +533,7 @@
 		select user_id, phonenumber from sys_user where phonenumber=#{phonenumber}
 	</select>
 
+  <!--根据userId获取用户-->
   <select id="getUserByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     <!--
       WARNING - @mbggenerated

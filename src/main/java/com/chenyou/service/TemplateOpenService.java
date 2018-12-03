@@ -1,6 +1,11 @@
 package com.chenyou.service;
 
+import com.chenyou.base.BizException;
 import com.chenyou.pojo.TemplateOpen;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.text.ParseException;
 
 /**
  * java类简单作用描述
@@ -15,6 +20,6 @@ import com.chenyou.pojo.TemplateOpen;
  **/
 public interface TemplateOpenService {
 
-    int saveTemplateOpen(TemplateOpen templateOpen);
+    int saveTemplateOpen(TemplateOpen templateOpen) throws BizException, ParseException, URISyntaxException, UnsupportedEncodingException;
 
 }

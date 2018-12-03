@@ -3,7 +3,7 @@ package com.chenyou.controller;
 
 import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
-import com.chenyou.service.*;
+import com.chenyou.service.newplayerservice.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -124,7 +124,7 @@ public class GamePlayerController extends BaseController {
      * @throws BizException
      */
     @RequiresPermissions("loss:player:view")
-    @RequestMapping(value = "listLoginDay", method = RequestMethod.GET)
+    @RequestMapping(value = "/listLoginDay", method = RequestMethod.GET)
     public Map <String, Object> listLoginDay(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, loginDayService.listLoginDay(start,end,serverId, channelId, page, rows));
@@ -142,7 +142,7 @@ public class GamePlayerController extends BaseController {
      * @throws BizException
      */
     @RequiresPermissions("loss:player:view")
-    @RequestMapping(value = "listAwayGrade", method = RequestMethod.GET)
+    @RequestMapping(value = "/listAwayGrade", method = RequestMethod.GET)
     public Map <String, Object> listAwayGrade(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, awayGradeService.listAwayGradeServiceImpl(start,end,serverId, channelId, page, rows));
@@ -164,7 +164,7 @@ public class GamePlayerController extends BaseController {
      * @throws ParseException
      */
     @RequiresPermissions("loss:player:view")
-    @RequestMapping(value = "listAwayOutput", method = RequestMethod.GET)
+    @RequestMapping(value = "/listAwayOutput", method = RequestMethod.GET)
     public Map <String, Object> listAwayOutput(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, awayOutputService.listAwayOutput(start,end,serverId, channelId, page, rows));

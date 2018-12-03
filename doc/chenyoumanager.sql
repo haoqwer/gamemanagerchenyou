@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50549
 File Encoding         : 65001
 
-Date: 2018-11-16 17:15:55
+Date: 2018-12-03 20:06:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -324,12 +324,12 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, '21232f297a57a5a743894a0e4a801fc3', null, null, null, '0:0:0:0:0:0:0:1', '2018-11-16 16:27:46', 'admin', null, null, '2018-10-31 18:19:32', '管理员', 'android_test_02');
-INSERT INTO `sys_user` VALUES ('6', '123', '123', null, '13098381432', null, '202cb962ac59075b964b07152d234b70', null, '0', null, '0:0:0:0:0:0:0:1', '2018-10-11 17:16:02', 'admin', '2018-10-11 17:10:41', 'admin', '2018-10-12 10:05:08', '123', 'android_test_02');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, '21232f297a57a5a743894a0e4a801fc3', null, null, null, '0:0:0:0:0:0:0:1', '2018-12-03 20:02:35', 'admin', null, null, '2018-12-03 19:54:42', '管理员', 'test_01');
+INSERT INTO `sys_user` VALUES ('6', '123', '123', null, '13098381432', null, '202cb962ac59075b964b07152d234b70', null, '0', null, '0:0:0:0:0:0:0:1', '2018-11-21 11:56:05', 'admin', '2018-10-11 17:10:41', 'admin', '2018-10-12 10:05:08', '123', 'android_test_02');
 INSERT INTO `sys_user` VALUES ('7', 'z', '指牛', null, '13098381435', null, '202cb962ac59075b964b07152d234b70', null, '0', null, '127.0.0.1', '2018-10-11 17:42:57', 'admin', '2018-10-11 17:17:54', '123', null, '渠道', 'android_td_jyfc');
 INSERT INTO `sys_user` VALUES ('8', 'test01', '渠道1', null, '13098381433', null, '0e698a8ffc1a0af622c7b4db3cb750cc', null, '0', null, '0:0:0:0:0:0:0:1', '2018-10-22 15:07:58', 'admin', '2018-10-11 17:38:37', 'admin', null, '渠道1', 'android_td_jyfc');
 INSERT INTO `sys_user` VALUES ('10', 'test02', 'test02', null, '13098381444', null, '098f6bcd4621d373cade4e832627b4f6', null, '0', null, '0:0:0:0:0:0:0:1', '2018-10-22 15:06:52', 'admin', '2018-10-12 10:09:38', 'admin', '2018-10-12 11:46:53', 'test', 'android_test_02');
-INSERT INTO `sys_user` VALUES ('11', 'hao', 'hao', null, '18888888888', null, '32791e666fef96b588db16200d5fda94', null, '0', null, '0:0:0:0:0:0:0:1', '2018-10-22 16:17:51', 'admin', '2018-10-22 15:14:11', 'admin', null, 'hao', 'android_test_02');
+INSERT INTO `sys_user` VALUES ('11', 'hao', 'hao', null, '18888888888', null, '32791e666fef96b588db16200d5fda94', null, '0', null, '0:0:0:0:0:0:0:1', '2018-12-03 16:57:51', 'admin', '2018-10-22 15:14:11', 'admin', null, 'hao', 'android_test_02');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -420,17 +420,44 @@ DROP TABLE IF EXISTS `t_activitie_open`;
 CREATE TABLE `t_activitie_open` (
   `active_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '活动id',
   `server_id` int(11) NOT NULL COMMENT '区服id',
-  `start` varchar(12) NOT NULL COMMENT '活动开启时间',
-  `end` varchar(12) NOT NULL COMMENT '活动结束时间',
+  `start` varchar(32) NOT NULL COMMENT '活动开启时间',
+  `end` varchar(32) NOT NULL COMMENT '活动结束时间',
   `status` int(10) NOT NULL COMMENT '状态，开启是1，删除是0,活动开启失败是2',
   `active_num` varchar(64) NOT NULL COMMENT '活动编号',
   `record_time` varchar(32) NOT NULL COMMENT '活动开启操作时间',
+  `count` int(12) DEFAULT NULL COMMENT '为0表示的时活动开启成功',
   PRIMARY KEY (`active_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_activitie_open
 -- ----------------------------
+INSERT INTO `t_activitie_open` VALUES ('10', '3', '2018-11-18 00:00:01', '2018-11-26 23:59:59', '1', '1002', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('11', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '2001', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('12', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '3001', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('13', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '5001', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('14', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '5002', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('15', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '5003', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('16', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '6001', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('17', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '6002', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('18', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '6003', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('19', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '6004', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('20', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '6005', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('21', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '6007', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('22', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '6008', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('23', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '6009', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('24', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '6010', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('25', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '7001', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('26', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '7002', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('27', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '7003', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('28', '3', '2018-11-18 00:00:01', '2018-11-25 23:59:59', '1', '8001', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('29', '3', '2018-11-18 00:00:01', '2018-11-22 23:59:59', '1', '9001', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('30', '3', '2018-11-18 00:00:01', '2018-11-22 23:59:59', '1', '9002', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('31', '3', '2018-11-18 00:00:01', '2018-11-22 23:59:59', '1', '9003', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('32', '3', '2018-11-18 00:00:01', '2018-11-22 23:59:59', '1', '9004', '2018-11-17', null);
+INSERT INTO `t_activitie_open` VALUES ('34', '1', '2018-11-08 00:00:01', '2018-11-22 23:59:59', '1', '123', '2018-11-19 10:41:30', null);
+INSERT INTO `t_activitie_open` VALUES ('35', '2', '2018-12-05 00:00:01', '2018-12-13 23:59:59', '1', '123', '2018-12-01 10:40:49', null);
+INSERT INTO `t_activitie_open` VALUES ('36', '2', '2018-12-05 00:00:01', '2018-12-18 23:59:59', '1', '123', '2018-12-01 10:42:22', null);
 
 -- ----------------------------
 -- Table structure for t_activity_num
@@ -1634,7 +1661,7 @@ CREATE TABLE `t_ltv_count` (
 -- ----------------------------
 -- Records of t_ltv_count
 -- ----------------------------
-INSERT INTO `t_ltv_count` VALUES ('1', '2018-09-11', '123', '1234', '456', '789', '9999', '66666', '88888', '9999', '66666', '1', 'android_td_jyfc');
+INSERT INTO `t_ltv_count` VALUES ('1', '2018-09-11 ', '123', '1234', '456', '789', '9999', '66666', '88888', '9999', '66666', '1', 'android_td_jyfc');
 INSERT INTO `t_ltv_count` VALUES ('2', '2018-09-13', '345', '234', '666', '888', '999', '1111', '1111', '2222', '6666', null, null);
 
 -- ----------------------------
@@ -1759,6 +1786,23 @@ INSERT INTO `t_retain_player` VALUES ('1', '2018-09-13', '90%', '90%', '88%', '1
 INSERT INTO `t_retain_player` VALUES ('2', '2018-09-12', '88%', '66%', '88%', null, null);
 
 -- ----------------------------
+-- Table structure for t_seal_number
+-- ----------------------------
+DROP TABLE IF EXISTS `t_seal_number`;
+CREATE TABLE `t_seal_number` (
+  `id` int(12) NOT NULL AUTO_INCREMENT,
+  `uid` varchar(32) NOT NULL,
+  `status` varchar(32) NOT NULL,
+  `runner` varchar(32) DEFAULT NULL,
+  `record_time` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_seal_number
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for t_server
 -- ----------------------------
 DROP TABLE IF EXISTS `t_server`;
@@ -1767,13 +1811,17 @@ CREATE TABLE `t_server` (
   `server_name` varchar(64) NOT NULL,
   `channel_id` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`server_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_server
 -- ----------------------------
 INSERT INTO `t_server` VALUES ('1', 'node_360_1', '1');
 INSERT INTO `t_server` VALUES ('2', 'node_360_2', '2');
+INSERT INTO `t_server` VALUES ('3', 'node_360_5', '3');
+INSERT INTO `t_server` VALUES ('4', 'node_360_6', '4');
+INSERT INTO `t_server` VALUES ('45', 'node_360_7', null);
+INSERT INTO `t_server` VALUES ('46', 'node_360_8', null);
 
 -- ----------------------------
 -- Table structure for t_task_message
@@ -1794,6 +1842,94 @@ CREATE TABLE `t_task_message` (
 -- ----------------------------
 INSERT INTO `t_task_message` VALUES ('1', '1', '888888', '1', '1', '2018-10-08');
 INSERT INTO `t_task_message` VALUES ('2', '2', '999999', null, null, '2018-10-08');
+
+-- ----------------------------
+-- Table structure for t_template_manager
+-- ----------------------------
+DROP TABLE IF EXISTS `t_template_manager`;
+CREATE TABLE `t_template_manager` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `template_id` int(11) NOT NULL COMMENT '模板id',
+  `template_name` varchar(64) NOT NULL COMMENT '模板名称',
+  `active_id` varchar(64) NOT NULL COMMENT '活动id',
+  `open_takes_day` int(11) NOT NULL COMMENT '开服天数',
+  `delay_days` int(11) DEFAULT NULL COMMENT '延期天数',
+  `delay_status` int(11) NOT NULL COMMENT '延期状态0代表不延期1代表延期',
+  `record_time` varchar(64) DEFAULT NULL,
+  `sort` int(5) DEFAULT NULL COMMENT '排序',
+  `create_people` varchar(64) DEFAULT NULL,
+  `remark` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_template_manager
+-- ----------------------------
+INSERT INTO `t_template_manager` VALUES ('4', '1', '模板管理1', '1001', '7', '1', '1', '2018-12-01 01:43:10', '1', 'admin', null);
+INSERT INTO `t_template_manager` VALUES ('5', '1', '模板管理1', '1002', '7', '1', '1', '2018-12-01 01:43:10', '1', 'admin', null);
+INSERT INTO `t_template_manager` VALUES ('6', '2', '模板管理2', '1003', '7', '1', '1', '2018-12-01 01:43:10', '2', 'admin', null);
+INSERT INTO `t_template_manager` VALUES ('8', '1', '模板管理1', '1005', '7', '1', '1', '2018-12-01 02:57:36', '1', 'admin', null);
+INSERT INTO `t_template_manager` VALUES ('9', '1', '模板管理1', '1006', '7', '1', '1', '2018-12-01 02:57:36', '1', 'admin', null);
+INSERT INTO `t_template_manager` VALUES ('10', '1', '模板管理1', '1007', '7', '1', '1', '2018-12-01 02:57:36', '1', 'admin', null);
+INSERT INTO `t_template_manager` VALUES ('11', '1', '模板管理1', '1008', '7', '1', '1', '2018-12-01 02:57:36', '1', 'admin', null);
+INSERT INTO `t_template_manager` VALUES ('12', '1', '模板管理1', '1009', '7', '1', '1', '2018-12-03 05:51:17', '1', 'admin', null);
+INSERT INTO `t_template_manager` VALUES ('13', '1', '模板管理1', '1010', '7', '1', '1', '2018-12-03 05:51:18', '1', 'admin', null);
+INSERT INTO `t_template_manager` VALUES ('14', '1', '模板管理1', '1011', '7', '1', '1', '2018-12-03 05:51:18', '1', 'admin', null);
+INSERT INTO `t_template_manager` VALUES ('15', '1', '模板管理1', '1012', '7', '1', '1', '2018-12-03 05:51:18', '1', 'admin', null);
+INSERT INTO `t_template_manager` VALUES ('16', '4', '模板管理4', '1013', '4', '1', '1', '2018-12-03 06:05:46', '4', 'admin', null);
+
+-- ----------------------------
+-- Table structure for t_template_name
+-- ----------------------------
+DROP TABLE IF EXISTS `t_template_name`;
+CREATE TABLE `t_template_name` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '活动模板名称',
+  `template_name` varchar(64) NOT NULL COMMENT '活动开启模板名称',
+  `record_time` varchar(64) NOT NULL,
+  `create_people` varchar(54) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_template_name
+-- ----------------------------
+INSERT INTO `t_template_name` VALUES ('1', '模板管理1', 'f', 'admin');
+INSERT INTO `t_template_name` VALUES ('2', '模板管理2', '2018-11-21 11:54:16', 'admin');
+INSERT INTO `t_template_name` VALUES ('3', '模板管理3', '2018-11-21 11:54:19', 'admin');
+INSERT INTO `t_template_name` VALUES ('4', '模板管理4', '2018-11-21 11:54:21', 'admin');
+INSERT INTO `t_template_name` VALUES ('5', '模板管理5', '2018-11-21 11:56:30', '123');
+
+-- ----------------------------
+-- Table structure for t_template_open
+-- ----------------------------
+DROP TABLE IF EXISTS `t_template_open`;
+CREATE TABLE `t_template_open` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `server_id` int(11) NOT NULL COMMENT '区服id',
+  `start` varchar(64) NOT NULL COMMENT '开启时间',
+  `end` varchar(64) DEFAULT NULL COMMENT '结束时间',
+  `delay_days` int(11) DEFAULT NULL COMMENT '延期天数',
+  `active_id` varchar(64) NOT NULL,
+  `template_id` int(11) NOT NULL COMMENT '模板id',
+  `operator` varchar(64) DEFAULT NULL COMMENT '操作人',
+  `record_time` varchar(64) DEFAULT NULL,
+  `active_status` int(11) DEFAULT NULL COMMENT '活动开启状态0开启成功1开启失败',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_template_open
+-- ----------------------------
+INSERT INTO `t_template_open` VALUES ('21', '1', '2018-12-01', '2018-12-09', '1', '1001', '1', 'admin', '2018-12-03 08:02:41', null);
+INSERT INTO `t_template_open` VALUES ('22', '1', '2018-12-01', '2018-12-09', '1', '1002', '1', 'admin', '2018-12-03 08:02:41', null);
+INSERT INTO `t_template_open` VALUES ('23', '1', '2018-12-01', '2018-12-09', '1', '1005', '1', 'admin', '2018-12-03 08:02:41', null);
+INSERT INTO `t_template_open` VALUES ('24', '1', '2018-12-01', '2018-12-09', '1', '1006', '1', 'admin', '2018-12-03 08:02:41', null);
+INSERT INTO `t_template_open` VALUES ('25', '1', '2018-12-01', '2018-12-09', '1', '1007', '1', 'admin', '2018-12-03 08:02:41', null);
+INSERT INTO `t_template_open` VALUES ('26', '1', '2018-12-01', '2018-12-09', '1', '1008', '1', 'admin', '2018-12-03 08:02:41', null);
+INSERT INTO `t_template_open` VALUES ('27', '1', '2018-12-01', '2018-12-09', '1', '1009', '1', 'admin', '2018-12-03 08:02:41', null);
+INSERT INTO `t_template_open` VALUES ('28', '1', '2018-12-01', '2018-12-09', '1', '1010', '1', 'admin', '2018-12-03 08:02:41', null);
+INSERT INTO `t_template_open` VALUES ('29', '1', '2018-12-01', '2018-12-09', '1', '1011', '1', 'admin', '2018-12-03 08:02:41', null);
+INSERT INTO `t_template_open` VALUES ('30', '1', '2018-12-01', '2018-12-09', '1', '1012', '1', 'admin', '2018-12-03 08:02:41', null);
 
 -- ----------------------------
 -- Table structure for t_vip_count
@@ -1838,7 +1974,7 @@ BEGIN
 INSERT INTO `t_cyuser_count` VALUES ( i, i, i, i, i, i, i, i, '1234', '1111', '12345', i, i, '2018-09-11 00:00:00');
 		SET i=i+1;
 	END WHILE;
-	
+
 END
 ;;
 DELIMITER ;
@@ -1849,16 +1985,16 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `hao`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `hao`()
-BEGIN 
+BEGIN
 
 DECLARE i INT DEFAULT 999;
 
 WHILE i<1100
-DO 
+DO
 INSERT INTO `t_add_newplayer` VALUES (null, '2018-09-13 00:00:00', '10000', '99999', 'i', 'i');
-SET i=i+1; 
-END WHILE ; 
-commit; 
+SET i=i+1;
+END WHILE ;
+commit;
 
 END
 ;;
@@ -1872,9 +2008,9 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pro_income`(IN count INT)
 BEGIN
 DECLARE i INT DEFAULT 4;
-WHILE 
+WHILE
 			i<=count
-	DO  
+	DO
 	insert into t_income_class VALUES(i,i,i,i,'%99',i,i,1,1,'2018-09-11');
 		set i=i+1;
 END WHILE;
@@ -1888,16 +2024,16 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `test_insert`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `test_insert`()
-BEGIN 
+BEGIN
 
 DECLARE i INT DEFAULT 999;
 
 WHILE i<1100
-DO 
+DO
 INSERT INTO `t_add_newplayer` VALUES ('1', '2018-09-13 00:00:00', '10000', '99999', 'i', 'i');
-SET i=i+1; 
-END WHILE ; 
-commit; 
+SET i=i+1;
+END WHILE ;
+commit;
 
 END
 ;;
@@ -1916,7 +2052,7 @@ BEGIN
 INSERT INTO `t_about_game` VALUES ('node_360_1', '2018-09-11 11:09:21', i, i, i, i, 10000, 9999, 6666, 1);
 		SET i=i+1;
 	END WHILE;
-	
+
 END
 ;;
 DELIMITER ;
@@ -1933,7 +2069,7 @@ BEGIN
 INSERT INTO t_cyuser_count  VALUES (i, i, i, i, i, i, i, i, i, '1234', '1111', '12345', 1, 1, '2018-09-11 00:00:00');
 		SET i=i+1;
 	END WHILE;
-	
+
 END
 ;;
 DELIMITER ;

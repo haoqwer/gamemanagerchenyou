@@ -2,6 +2,9 @@ package com.chenyou.service;
 
 import com.chenyou.base.BizException;
 import com.chenyou.pojo.entity.PageResult;
+import com.chenyou.service.activityservice.ActivityNumService;
+import com.chenyou.service.activityservice.ActivityOutputService;
+import com.chenyou.service.gamecountservice.OutConsumeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

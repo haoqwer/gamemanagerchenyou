@@ -5,6 +5,7 @@ import com.chenyou.base.BizException;
 import com.chenyou.pojo.LtvCount;
 import com.chenyou.pojo.Server;
 import com.chenyou.service.*;
+import com.chenyou.service.generalservice.*;
 import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.ExcelUtil;
 import com.chenyou.utils.FileUtils;
@@ -12,17 +13,12 @@ import com.chenyou.utils.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.util.ArrayUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
@@ -162,7 +158,7 @@ public class GeneralController extends BaseController {
      * @throws IOException
      * @throws ParseException
      */
-    @RequestMapping(value = "exportLtvCount", method = RequestMethod.GET)
+    @RequestMapping(value = "/exportLtvCount", method = RequestMethod.GET)
     public void exportLtvCount(HttpServletRequest request, HttpServletResponse response, String start, String end, String serverId, String channelId) throws BizException, IOException, ParseException {
         List <Map <String, Object>> list = new ArrayList <>();
         Map <String, Object> map1 = new HashMap <>();
@@ -223,7 +219,7 @@ public class GeneralController extends BaseController {
      * 通过excel导入文档，将文档中的excel的数据插入到数据库中
      */
 
-    @RequestMapping(value = "importExcelServer", method = RequestMethod.POST)
+    @RequestMapping(value = "/importExcelServer", method = RequestMethod.POST)
     public void importExcelServer(MultipartFile filename, HttpServletRequest request) throws BizException, IOException {
         //1.判断是否上传文件
         if (StringUtils.isEmpty(filename.getOriginalFilename())) {

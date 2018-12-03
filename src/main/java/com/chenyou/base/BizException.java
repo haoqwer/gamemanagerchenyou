@@ -22,7 +22,6 @@ public class BizException extends Exception {
     }
 
     public String getCode() {
-        System.out.println("----");
         return code;
     }
 

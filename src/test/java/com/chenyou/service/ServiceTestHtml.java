@@ -2,10 +2,10 @@ package com.chenyou.service;
 
 import com.chenyou.base.BizException;
 import com.chenyou.pojo.AboutGame;
-import com.chenyou.pojo.CyUserCount;
-import com.chenyou.pojo.IncomeClass;
 import com.chenyou.pojo.LtvCount;
 import com.chenyou.pojo.entity.PageResult;
+import com.chenyou.service.generalservice.*;
+import com.chenyou.service.newplayerservice.AddNewPlayerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class ServiceTestHtml {
     private LtvCountService ltvCountService;
     
     @Autowired
-    private  AddNewPlayerService addNewPlayerService;
+    private AddNewPlayerService addNewPlayerService;
 
     @Test
     public void test_getAboutGame() throws BizException {

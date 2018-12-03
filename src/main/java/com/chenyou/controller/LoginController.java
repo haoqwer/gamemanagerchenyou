@@ -5,8 +5,8 @@ import com.chenyou.base.BizException;
 import com.chenyou.pojo.Menu;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.Result;
-import com.chenyou.service.MenuService;
-import com.chenyou.service.UserService;
+import com.chenyou.service.backmanagerservice.MenuService;
+import com.chenyou.service.backmanagerservice.UserService;
 import com.chenyou.utils.MD5Utils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,8 +49,10 @@ public class LoginController extends  BaseController{
             //进行验证
             subject.login(token);
             User user = (User) subject.getPrincipal();
+
             //将登录的user放入到session
             request.getSession().setAttribute("user", user);
+//            SecurityUtils.getSubject().getSession().setTimeout(60*1*1000);
             return new Result(true, "登录成功!!!");
         } catch (AuthenticationException e) {
             e.printStackTrace();

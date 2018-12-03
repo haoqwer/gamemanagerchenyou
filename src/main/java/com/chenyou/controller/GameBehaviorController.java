@@ -2,7 +2,7 @@ package com.chenyou.controller;
 
 import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
-import com.chenyou.service.*;
+import com.chenyou.service.gamecountservice.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,15 +63,16 @@ public class GameBehaviorController extends BaseController {
      */
     @RequiresPermissions("grade:user:view")
     @RequestMapping(value = "/listGradePalyer", method = RequestMethod.GET)
-    public Map <String, Object> listGradeplayer(String start,String end,Integer serverId, String channelId,  int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listGradeplayer(String start, String end, Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, gradePlayerService.listGradePlayer(start,end,serverId,channelId,page,rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, gradePlayerService.listGradePlayer(start, end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     /**
      * vip人数
+     *
      * @param start
      * @param end
      * @param serverId
@@ -84,15 +85,16 @@ public class GameBehaviorController extends BaseController {
      */
     @RequiresPermissions("vip:count:view")
     @RequestMapping(value = "/listVipCount", method = RequestMethod.GET)
-    public Map <String, Object> listVipCount(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listVipCount(String start, String end, Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, vipCountService.listVipCount(start,end,serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, vipCountService.listVipCount(start, end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     /**
      * 帮派数量
+     *
      * @param start
      * @param end
      * @param serverId
@@ -105,15 +107,16 @@ public class GameBehaviorController extends BaseController {
      */
     @RequiresPermissions("gang:count:view")
     @RequestMapping(value = "/listGangCount", method = RequestMethod.GET)
-    public Map <String, Object> listGangCount(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listGangCount(String start, String end, Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, gangCountService.listGangCount(start,end,serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, gangCountService.listGangCount(start, end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     /**
-     *帮派等级
+     * 帮派等级
+     *
      * @param start
      * @param end
      * @param serverId
@@ -126,15 +129,16 @@ public class GameBehaviorController extends BaseController {
      */
     @RequiresPermissions("gang:grade:view")
     @RequestMapping(value = "/listGangGrade", method = RequestMethod.GET)
-    public Map <String, Object> listGangGrade(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listGangGrade(String start, String end, Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, gangGradeService.listGangGrade(start,end,serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, gangGradeService.listGangGrade(start, end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     /**
-     *势力榜
+     * 势力榜
+     *
      * @param start
      * @param end
      * @param serverId
@@ -147,15 +151,16 @@ public class GameBehaviorController extends BaseController {
      */
     @RequiresPermissions("rank:message:view")
     @RequestMapping(value = "/listForceRank", method = RequestMethod.GET)
-    public Map <String, Object> listForceRank(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listForceRank(String start, String end, Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, forceRankService.listGorceRank(start,end,serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, forceRankService.listGorceRank(start, end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     /**
      * 关卡榜
+     *
      * @param start
      * @param end
      * @param serverId
@@ -168,15 +173,16 @@ public class GameBehaviorController extends BaseController {
      */
     @RequiresPermissions("rank:message:view")
     @RequestMapping(value = "/listLevelRank", method = RequestMethod.GET)
-    public Map <String, Object> listLevelRank(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
+    public Map <String, Object> listLevelRank(String start, String end, Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, levelRankService.listLevelRank(start,end,serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, levelRankService.listLevelRank(start, end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     /**
      * 亲密榜
+     *
      * @param start
      * @param end
      * @param serverId
@@ -188,16 +194,17 @@ public class GameBehaviorController extends BaseController {
      * @throws ParseException
      */
     @RequiresPermissions("rank:message:view")
-    @RequestMapping(value = "listIntimacyRank", method = RequestMethod.GET)
-    public Map <String, Object> listIntimacyRank(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
+    @RequestMapping(value = "/listIntimacyRank", method = RequestMethod.GET)
+    public Map <String, Object> listIntimacyRank(String start, String end, Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, intimacyRankService.listIntimacyRank(start,end,serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, intimacyRankService.listIntimacyRank(start, end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     /**
      * 帮派榜
+     *
      * @param start
      * @param end
      * @param serverId
@@ -209,16 +216,17 @@ public class GameBehaviorController extends BaseController {
      * @throws ParseException
      */
     @RequiresPermissions("rank:message:view")
-    @RequestMapping(value = "listGangRank", method = RequestMethod.GET)
-    public Map <String, Object> listGangRank(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
+    @RequestMapping(value = "/listGangRank", method = RequestMethod.GET)
+    public Map <String, Object> listGangRank(String start, String end, Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, gangRankService.listGangRank(start,end,serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, gangRankService.listGangRank(start, end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     /**
      * 任务消息
+     *
      * @param start
      * @param end
      * @param serverId
@@ -230,16 +238,17 @@ public class GameBehaviorController extends BaseController {
      * @throws ParseException
      */
     @RequiresPermissions("task:message:view")
-    @RequestMapping(value = "listTaskMessage", method = RequestMethod.GET)
-    public Map <String, Object> listTaskMessage(String start,String end,Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
+    @RequestMapping(value = "/listTaskMessage", method = RequestMethod.GET)
+    public Map <String, Object> listTaskMessage(String start, String end, Integer serverId, String channelId, int page, int rows) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, taskMessageService.listTaskMessage(start,end,serverId, channelId, page, rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, taskMessageService.listTaskMessage(start, end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 
     /**
      * 产出与消耗
+     *
      * @param start
      * @param end
      * @param serverId
@@ -252,10 +261,10 @@ public class GameBehaviorController extends BaseController {
      * @throws ParseException
      */
     @RequiresPermissions("output:consume:view")
-    @RequestMapping(value = "listOutConsume",method = RequestMethod.GET)
-    public  Map<String,Object> listOutConsume(String start,String end,Integer serverId,String channelId,int page,int rows) throws ParseException, BizException, ParseException {
+    @RequestMapping(value = "/listOutConsume", method = RequestMethod.GET)
+    public Map <String, Object> listOutConsume(String start, String end, Integer serverId, String channelId, int page, int rows) throws ParseException, BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, outConsumeService.listOutConsume(start,end,serverId,channelId,page,rows));
+        resultMap.put(ApplicationConstants.TAG_DATA, outConsumeService.listOutConsume(start, end, serverId, channelId, page, rows));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }

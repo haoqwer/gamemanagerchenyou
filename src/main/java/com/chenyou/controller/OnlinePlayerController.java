@@ -2,7 +2,7 @@ package com.chenyou.controller;
 
 import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
-import com.chenyou.service.OnlinePlayerCountService;
+import com.chenyou.service.onlineplayerservice.OnlinePlayerCountService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

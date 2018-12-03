@@ -1,7 +1,10 @@
 package com.chenyou;
 
 
+import com.chenyou.utils.DateUtil;
+
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,10 +14,6 @@ import java.util.Map;
 public class DateUt {
 
     public static void main(String[] args) throws ParseException, UnsupportedEncodingException {
-//        String url = URLEncoder.encode("http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_1&aid=5003&fields=%3Dstime%2C2018-11-16%252000%3A00%3A01%2Cetime%2C2018-11-23%252023%3A59%3A59%2Cvalue%2C1%2Cstate%3D1", "utf-8");
-//        System.out.println(url);
-        String now = format(new Date());
-        System.out.println(now);
     }
 
     public  static  String formate(Date date){

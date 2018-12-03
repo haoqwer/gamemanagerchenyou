@@ -6,7 +6,7 @@ import com.chenyou.pojo.Menu;
 import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.Result;
-import com.chenyou.service.MenuService;
+import com.chenyou.service.backmanagerservice.MenuService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ public class MenuController extends BaseController {
      * @param menu
      * @return
      */
-    @RequestMapping(value = "checkMenuNameUnique",method = RequestMethod.POST)
+    @RequestMapping(value = "/checkMenuNameUnique",method = RequestMethod.POST)
     public String checkMenuNameUnique(Menu menu)  throws BizException{
         String uniqueFlag = "0";
         if (null != menu) {

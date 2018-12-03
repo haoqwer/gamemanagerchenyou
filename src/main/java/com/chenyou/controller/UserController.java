@@ -5,8 +5,8 @@ import com.chenyou.base.BizException;
 import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
 import com.chenyou.pojo.entity.PageResult;
-import com.chenyou.service.RoleService;
-import com.chenyou.service.UserService;
+import com.chenyou.service.backmanagerservice.RoleService;
+import com.chenyou.service.backmanagerservice.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
@@ -151,7 +151,7 @@ public class UserController extends BaseController {
      * @param userId
      * @return
      */
-    @RequestMapping(value = "selectListRoleByUserId", method = RequestMethod.GET)
+    @RequestMapping(value = "/selectListRoleByUserId", method = RequestMethod.GET)
     public Map <String, Object> selectListRoleByUserId(Integer userId) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
         List <Role> roles = roleServic.listRoleByUserId(userId);

@@ -4,8 +4,6 @@ import com.chenyou.mapper.LtvCountMapper;
 import com.chenyou.mapper.UserMapper;
 import com.chenyou.pojo.LtvCount;
 import com.chenyou.pojo.User;
-import com.chenyou.service.LtvCountService;
-import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.ExcelUtil;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;

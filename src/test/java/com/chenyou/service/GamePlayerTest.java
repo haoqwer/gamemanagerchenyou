@@ -1,9 +1,8 @@
 package com.chenyou.service;
 
 import com.chenyou.base.BizException;
-import com.chenyou.mapper.RetainPlayerMapper;
-import com.chenyou.pojo.AwayPlayer;
 import com.chenyou.pojo.entity.PageResult;
+import com.chenyou.service.newplayerservice.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

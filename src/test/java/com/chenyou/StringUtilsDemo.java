@@ -6,17 +6,16 @@ import java.util.*;
 
 public class StringUtilsDemo {
     public static void main(String[] args) {
-        String[] oldArr = {"node_360_1","node_360_2","node_360_5","node_360_6"};
-        String[] newArr =  {};
-//        Map<String, String[]> res = CompareStringArray(oldArr, newArr);
-//        System.out.println("deleteArr: "+ Arrays.toString(res.get("deleteArr")));
-//        System.out.println("addArr: "+ Arrays.toString(res.get("addArr")));
-        for (String aNewArr : newArr) {
-            if (!ArrayUtils.contains(oldArr, aNewArr)) {
-                System.out.println(aNewArr);
-            }
-        }
-
+//        String[] oldArr = {"node_360_1","node_360_2","node_360_5","node_360_6"};
+//        String[] newArr =  {};
+////        Map<String, String[]> res = CompareStringArray(oldArr, newArr);
+////        System.out.println("deleteArr: "+ Arrays.toString(res.get("deleteArr")));
+////        System.out.println("addArr: "+ Arrays.toString(res.get("addArr")));
+//        for (String aNewArr : newArr) {
+//            if (!ArrayUtils.contains(oldArr, aNewArr)) {
+//                System.out.println(aNewArr);
+//            }
+//        }
     }
     /**
      * @param oldArr 旧数组

@@ -2,10 +2,10 @@ package com.chenyou.controller;
 
 import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
-import com.chenyou.service.ActivityNumService;
-import com.chenyou.service.ActivityOutputService;
-import com.chenyou.service.ActivityRankService;
-import com.chenyou.service.PersonRankService;
+import com.chenyou.service.activityservice.ActivityNumService;
+import com.chenyou.service.activityservice.ActivityOutputService;
+import com.chenyou.service.activityservice.ActivityRankService;
+import com.chenyou.service.activityservice.PersonRankService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

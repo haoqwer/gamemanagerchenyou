@@ -5,9 +5,11 @@ import com.chenyou.Constants.ApplicationConstants;
 import com.chenyou.base.BizException;
 import com.chenyou.pojo.TemplateManager;
 import com.chenyou.pojo.TemplateName;
+import com.chenyou.pojo.TemplateOpen;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.TemplateManagerService;
 import com.chenyou.service.TemplateNameService;
+import com.chenyou.service.TemplateOpenService;
 import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -23,12 +25,15 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.util.*;
 
 
 @RestController
 @RequestMapping("templates")
-public class TemplateController  extends  BaseController{
+public class TemplateController extends BaseController {
 
 
     @Autowired
@@ -38,8 +43,14 @@ public class TemplateController  extends  BaseController{
     @Autowired
     private TemplateManagerService templateManagerService;
 
+
+    @Autowired
+    private TemplateOpenService templateOpenService;
+
+
     /**
      * 使用excel导入模板名称模板id等信息
+     *
      * @param filename
      * @param request
      * @throws BizException
@@ -69,7 +80,7 @@ public class TemplateController  extends  BaseController{
             if (rowNum == 0) {
                 continue;
             }
-            templateNames[rowNum-1] = row.getCell(0).getStringCellValue();
+            templateNames[rowNum - 1] = row.getCell(0).getStringCellValue();
         }
         for (int i = 0; i <= list.size() - 1; i++) {
             oldTemplateNames[i] = list.get(i).getTemplateName();
@@ -88,13 +99,19 @@ public class TemplateController  extends  BaseController{
         }
     }
 
+    @RequestMapping(value = "/listTemplateName",method = RequestMethod.GET)
+    public List<TemplateName> listTemplateName() throws BizException {
+        return  templateNameService.findAll();
+    }
+
+
     /**
      * 新增模板管理
      * @param templateManagerList
      * @return
      * @throws BizException
      */
-    @RequestMapping(value = "addTemplateManager", method = RequestMethod.POST)
+    @RequestMapping(value = "/addTemplateManager", method = RequestMethod.POST)
     public Map <String, Object> addTemplateManager(String templateManagerList) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
         //1.将传入的json字符串转换成集合
@@ -109,11 +126,12 @@ public class TemplateController  extends  BaseController{
 
     /**
      * 增加时检查活动id是否出现重复的情况
+     *
      * @param templateManager
      * @return
      * @throws BizException
      */
-    @RequestMapping(value = "checkActiveIdUnique", method = RequestMethod.POST)
+    @RequestMapping(value = "/checkActiveIdUnique", method = RequestMethod.POST)
     public Map <String, Object> checkActiveIdUnique(TemplateManager templateManager) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, templateManagerService.checkActiveIdUnique(templateManager));
@@ -124,38 +142,89 @@ public class TemplateController  extends  BaseController{
 
     /**
      * 活动开启模板列表
+     *
      * @param page
      * @param rows
      * @return
      * @throws BizException
      */
-    @RequestMapping(value = "findPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/findPage", method = RequestMethod.GET)
     public PageResult findPage(int page, int rows) throws BizException {
         return templateManagerService.findPage(page, rows);
     }
 
     /**
      * 查找活动开启模板
+     *
      * @param id
      * @return
      */
-    @RequestMapping(value = "findTemplateManager", method = RequestMethod.GET)
+    @RequestMapping(value = "/findTemplateManager", method = RequestMethod.GET)
     public TemplateManager findTemplateManager(Integer id) {
         return templateManagerService.findTemplateManager(id);
     }
 
     /**
      * 删除活动开启模板
+     *
      * @param ids
      * @return
      * @throws BizException
      */
-    @RequestMapping(value = "deleteTemplateMnagers", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteTemplateMnagers", method = RequestMethod.GET)
     public Map <String, Object> deleteTemplateMnagers(Integer[] ids) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, templateManagerService.deleteTemplateManager(ids));
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
+    }
+
+
+    /*
+     *
+     * 修改活动开启模板
+     * @author hlx
+     * @date 2018\12\3 0003 14:57
+     * @param [templateManager]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     */
+    @RequestMapping(value = "/updateTemplateManager", method = RequestMethod.POST)
+    public Map <String, Object> updateTemplateManager(TemplateManager templateManager) throws BizException {
+        Map <String, Object> resultMap = new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA, templateManagerService.updateTemplateManager(templateManager));
+        resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
+        return resultMap;
+    }
+
+    /**
+     * 开启活动管理的模板
+     *
+     * @param [templateOpen]
+     * @return java.util.Map<java.lang.String ,java.lang.Object>
+     * @author hlx
+     * @date 2018\12\3 0003 14:59
+     */
+    @RequestMapping(value = "/templateOpen", method = RequestMethod.POST)
+    public Map <String, Object> templateOpen(TemplateOpen templateOpen) throws UnsupportedEncodingException, ParseException, BizException, URISyntaxException {
+        templateOpen.setOperator(getUserName());
+        Map <String, Object> resultMap = new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA, templateOpenService.saveTemplateOpen(templateOpen));
+        resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
+        return resultMap;
+    }
+
+    
+    /*
+    *  
+    * 模板列表查询
+    * @author hlx
+    * @date 2018\12\3 0003 19:20
+    * @param [page, rows, templateManager]
+    * @return com.chenyou.pojo.entity.PageResult
+    */
+    @RequestMapping(value = "findSearch", method = RequestMethod.POST)
+    public PageResult findSearch(int page, int rows, TemplateManager templateManager) throws BizException {
+        return templateManagerService.findSearch(page, rows, templateManager);
     }
 
 

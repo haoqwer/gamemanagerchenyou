@@ -2,12 +2,10 @@ package com.chenyou.service.realm;
 
 import com.chenyou.base.BizException;
 import com.chenyou.mapper.UserMapper;
-import com.chenyou.pojo.Menu;
-import com.chenyou.pojo.Role;
 import com.chenyou.pojo.User;
-import com.chenyou.service.MenuService;
-import com.chenyou.service.RoleService;
-import com.chenyou.service.UserService;
+import com.chenyou.service.backmanagerservice.MenuService;
+import com.chenyou.service.backmanagerservice.RoleService;
+import com.chenyou.service.backmanagerservice.UserService;
 import com.chenyou.utils.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -20,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
-import java.util.List;
 
 public class LoginRealm extends AuthorizingRealm {
 
