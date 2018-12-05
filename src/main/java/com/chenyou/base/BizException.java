@@ -1,6 +1,5 @@
 package com.chenyou.base;
 
-import com.chenyou.utils.StringUtils;
 
 public class BizException extends Exception {
 

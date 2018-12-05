@@ -60,7 +60,7 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
     public int saveTemplateManager(List <TemplateManager> templateManagerList) throws BizException {
         //1.判断传入的TemplateManager是否为空
         if (StringUtils.isEmpty(templateManagerList)) {
-            throw new BizException(BizException.CODE_PARM_LACK, "请输入模板管理选项!");
+            throw new BizException(BizException.CODE_PARM_LACK, "请输入模板管理内容!");
         }
         int i = 0;
         int sum = 0;
@@ -180,15 +180,15 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
         templateManager.setRecordTime(DateUtil.format1(new Date()));
         return templateManagerMapper.updateByPrimaryKeySelective(templateManager);
     }
-    
+
     /*
-    *  
-    * 活动开启管理进行列表查询
-    * @author hlx
-    * @date 2018\12\3 0003 18:58
-    * @param [pageNum, pageSize, templateManager]
-    * @return com.chenyou.pojo.entity.PageResult
-    */
+     *
+     * 活动开启管理进行列表查询
+     * @author hlx
+     * @date 2018\12\3 0003 18:58
+     * @param [pageNum, pageSize, templateManager]
+     * @return com.chenyou.pojo.entity.PageResult
+     */
     @Override
     public PageResult findSearch(int pageNum, int pageSize, TemplateManager templateManager) throws BizException {
         TemplateManagerExample example = new TemplateManagerExample();

@@ -68,7 +68,7 @@ public class GeneralController extends BaseController {
     public Map <String, Object> getAboutGame(Integer serverId, String channelId) throws BizException {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, aboutGameService.getAboutGame(serverId, channelId));
-        resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.TAG_SC);
+        resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
         return resultMap;
     }
 

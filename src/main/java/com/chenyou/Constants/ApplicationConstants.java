@@ -1,8 +1,5 @@
 package com.chenyou.Constants;
 
-/**
- * Created by hutiejong on 2015/11/05.
- */
 public final class ApplicationConstants {
 
     //response返回标签
