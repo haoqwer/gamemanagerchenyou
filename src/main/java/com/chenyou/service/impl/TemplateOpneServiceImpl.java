@@ -6,10 +6,14 @@ import com.chenyou.mapper.TemplateOpenMapper;
 import com.chenyou.pojo.TemplateManager;
 import com.chenyou.pojo.TemplateManagerExample;
 import com.chenyou.pojo.TemplateOpen;
+import com.chenyou.pojo.TemplateOpenExample;
+import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.ServerService;
 import com.chenyou.service.TemplateOpenService;
 import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -121,5 +125,26 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
             System.out.println(url);
         }
         return sum;
+    }
+
+    @Override
+    public PageResult findPage(int pageNum, int pageSize) throws BizException {
+        PageHelper.startPage(pageNum,pageSize);
+        List <TemplateOpen> list = templateOpenMapper.listTemplateOpen();
+        if(StringUtils.isEmpty(list)){
+            throw new BizException(BizException.CODE_PARM_LACK,"不好意思当前没有数据!");
+        }
+        Page<TemplateOpen>  page=( Page<TemplateOpen>)list;
+        return new PageResult(page.getTotal(),page.getResult());
+    }
+
+    @Override
+    public List <TemplateOpen> listTemplateOpen() throws BizException {
+        List <TemplateOpen> listTemplateOpen = new ArrayList <>();
+        listTemplateOpen = templateOpenMapper.listTemplateOpen();
+        if (StringUtils.isEmpty(listTemplateOpen)) {
+            throw new BizException(BizException.CODE_PARM_LACK, "不好意思,当前没有数据!");
+        }
+        return listTemplateOpen;
     }
 }

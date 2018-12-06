@@ -7,15 +7,19 @@ import com.chenyou.pojo.TemplateManager;
 import com.chenyou.pojo.TemplateName;
 import com.chenyou.pojo.TemplateOpen;
 import com.chenyou.pojo.entity.PageResult;
+import com.chenyou.service.ServerService;
 import com.chenyou.service.TemplateManagerService;
 import com.chenyou.service.TemplateNameService;
 import com.chenyou.service.TemplateOpenService;
 import com.chenyou.utils.DateUtil;
+import com.chenyou.utils.ExcelUtil;
+import com.chenyou.utils.FileUtils;
 import com.chenyou.utils.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
@@ -46,6 +52,11 @@ public class TemplateController extends BaseController {
 
     @Autowired
     private TemplateOpenService templateOpenService;
+
+
+    @Autowired
+    private ServerService serverService;
+
 
 
     /**
@@ -99,14 +110,15 @@ public class TemplateController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/listTemplateName",method = RequestMethod.GET)
-    public List<TemplateName> listTemplateName() throws BizException {
-        return  templateNameService.findAll();
+    @RequestMapping(value = "/listTemplateName", method = RequestMethod.GET)
+    public List <TemplateName> listTemplateName() throws BizException {
+        return templateNameService.findAll();
     }
 
 
     /**
      * 新增模板管理
+     *
      * @param templateManagerList
      * @return
      * @throws BizException
@@ -200,7 +212,7 @@ public class TemplateController extends BaseController {
      * 开启活动管理的模板
      *
      * @param [templateOpen]
-     * @return java.util.Map<java.lang.String ,java.lang.Object>
+     * @return java.util.Map<java.lang.String       ,     j   a   v   a.lang.Object>
      * @author hlx
      * @date 2018\12\3 0003 14:59
      */
@@ -213,18 +225,128 @@ public class TemplateController extends BaseController {
         return resultMap;
     }
 
-    
+
     /*
-    *  
-    * 模板列表查询
+     *
+     * 模板列表查询
+     * @author hlx
+     * @date 2018\12\3 0003 19:20
+     * @param [page, rows, templateManager]
+     * @return com.chenyou.pojo.entity.PageResult
+     */
+    @RequestMapping(value = "/findSearch", method = RequestMethod.POST)
+    public PageResult findSearch(int page, int rows, String templateManager) throws BizException {
+        TemplateManager templateManager1 = JSON.parseObject(templateManager, TemplateManager.class);
+        return templateManagerService.findSearch(page, rows, templateManager1);
+    }
+
+    /*
+    *
+    * 导出模板管理
     * @author hlx
-    * @date 2018\12\3 0003 19:20
-    * @param [page, rows, templateManager]
+    * @date 2018\12\6 0006 19:24
+    * @param [request, response, templateManager]
+    * @return void
+    */
+    @RequestMapping(value = "/exportTemplateManager", method = RequestMethod.GET)
+    public void exportTemplateManager(HttpServletRequest request, HttpServletResponse response, TemplateManager templateManager) throws BizException, IOException {
+        //封装需要传递的参数
+        List <Map <String, Object>> list = new ArrayList <>();
+        Map <String, Object> map1 = new HashMap <>();
+        map1.put("sheetName", "模板管理");
+        list.add(map1);
+        List <TemplateManager> templateManagerList = templateManagerService.listTemplateManager(templateManager);
+        for (TemplateManager templateManager1 : templateManagerList) {
+            Map <String, Object> map = new HashMap <>();
+            map.put("recordTime", templateManager1.getRecordTime());
+            map.put("templateName", templateManager1.getTemplateName());
+            map.put("activeId", templateManager1.getActiveId());
+            map.put("openTakesDay", templateManager1.getOpenTakesDay());
+            map.put("delayDays", templateManager1.getDelayDays());
+            list.add(map);
+        }
+        String[] keys = {"recordTime", "templateName", "activeId", "openTakesDay", "delayDays"};
+        String[] columnNames = {"日期", "模板名称", "活动ID", "活动开启天数", "延期天数"};
+        Workbook wb = ExcelUtil.createWorkBook(list, keys, columnNames);
+        // 设置下载参数：一个流两个头
+        String filename = DateUtil.format(new Date()) + "-->模板管理.xls";
+        //获取浏览器请求头中的User-Agent参数
+        String agent = request.getHeader("User-Agent");
+        //调用文件工具类，转换文件名
+        String mimeType = request.getSession().getServletContext().getMimeType(filename);
+        filename = FileUtils.encodeDownloadFilename(filename, agent);
+        // 一个流：指的是response的输出流
+        ServletOutputStream os = response.getOutputStream();
+        // 两个头之一：content-type，告诉浏览器返回数据的格式
+        response.setContentType(mimeType);
+        // 两个头之二：content-disposition，告诉浏览器打开返回数据的方法，attachment;filename=文件名
+        response.setHeader("content-disposition", "attachment;filename=" + filename);
+        // response的输出流将excel返回到前台
+        try {
+            wb.write(os);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+    *
+    * 展示
+    * @author hlx
+    * @date 2018\12\6 0006 19:23
+    * @param [page, rows]
     * @return com.chenyou.pojo.entity.PageResult
     */
-    @RequestMapping(value = "findSearch", method = RequestMethod.POST)
-    public PageResult findSearch(int page, int rows, TemplateManager templateManager) throws BizException {
-        return templateManagerService.findSearch(page, rows, templateManager);
+    @RequestMapping(value = "/findTemplatePage", method = RequestMethod.GET)
+    public PageResult findTemplatePage(int page, int rows) throws BizException {
+        return templateOpenService.findPage(page, rows);
+    }
+
+    /**
+    *
+    * 开启成功后导出
+    * @author hlx
+    * @date 2018\12\6 0006 19:23
+    * @param [request, response]
+    * @return void
+    */
+    @RequestMapping(value = "/exprotTemplateOpen", method = RequestMethod.GET)
+    public void exprotTemplateOpen(HttpServletRequest request, HttpServletResponse response) throws BizException, IOException {
+        List <Map <String, Object>> list = new ArrayList <>();
+        Map <String, Object> map1 = new HashMap <>();
+        map1.put("sheetName", "活动开启");
+        list.add(map1);
+        List <TemplateOpen> listTemplateOpen = new ArrayList <>();
+        listTemplateOpen = templateOpenService.listTemplateOpen();
+        for (TemplateOpen templateOpen : listTemplateOpen) {
+            Map <String, Object> map = new HashMap <>();
+            map.put("serverName",serverService.getServerName(templateOpen.getServerId()));
+            map.put("templateName", templateNameService.templateName(templateOpen.getTemplateId()));
+            map.put("start",templateOpen.getStart());
+            list.add(map);
+        }
+        String[] keys = {"serverName", "templateName", "start"};
+        String[] columnNames = {"区服名称","模板名称","开始时间"};
+        Workbook wb = ExcelUtil.createWorkBook(list, keys, columnNames);
+        // 设置下载参数：一个流两个头
+        String filename = DateUtil.format(new Date()) + "-->模板管理.xls";
+        //获取浏览器请求头中的User-Agent参数
+        String agent = request.getHeader("User-Agent");
+        //调用文件工具类，转换文件名
+        String mimeType = request.getSession().getServletContext().getMimeType(filename);
+        filename = FileUtils.encodeDownloadFilename(filename, agent);
+        // 一个流：指的是response的输出流
+        ServletOutputStream os = response.getOutputStream();
+        // 两个头之一：content-type，告诉浏览器返回数据的格式
+        response.setContentType(mimeType);
+        // 两个头之二：content-disposition，告诉浏览器打开返回数据的方法，attachment;filename=文件名
+        response.setHeader("content-disposition", "attachment;filename=" + filename);
+        // response的输出流将excel返回到前台
+        try {
+            wb.write(os);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -70,4 +70,10 @@ public interface TemplateManagerService {
 
     PageResult findSearch(int pageNum,int pageSize,TemplateManager templateManager) throws BizException;
 
+
+    List<TemplateManager> listTemplateManager(TemplateManager templateManager) throws BizException;
+
+
+
+
 }

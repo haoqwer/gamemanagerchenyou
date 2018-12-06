@@ -2,10 +2,12 @@ package com.chenyou.service;
 
 import com.chenyou.base.BizException;
 import com.chenyou.pojo.TemplateOpen;
+import com.chenyou.pojo.entity.PageResult;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.util.List;
 
 /**
  * java类简单作用描述
@@ -21,5 +23,10 @@ import java.text.ParseException;
 public interface TemplateOpenService {
 
     int saveTemplateOpen(TemplateOpen templateOpen) throws BizException, ParseException, URISyntaxException, UnsupportedEncodingException;
+
+
+    PageResult findPage(int pageNum,int pageSize) throws BizException;
+
+    List<TemplateOpen> listTemplateOpen() throws BizException;
 
 }

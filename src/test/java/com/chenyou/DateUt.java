@@ -14,6 +14,17 @@ import java.util.Map;
 public class DateUt {
 
     public static void main(String[] args) throws ParseException, UnsupportedEncodingException {
+        String s="fdsaf";
+        char[] chars = s.toCharArray();
+        int count=0;
+        for(char c:chars){
+            for(char b:chars){
+                if(String.valueOf(c).equals(String.valueOf(b))){
+                count++;
+                }
+            }
+        }
+        System.out.println(count);
     }
 
     public  static  String formate(Date date){

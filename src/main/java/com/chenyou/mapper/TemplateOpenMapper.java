@@ -93,4 +93,6 @@ public interface TemplateOpenMapper {
      * @mbggenerated Mon Dec 03 19:52:29 CST 2018
      */
     int updateByPrimaryKey(TemplateOpen record);
+
+    List<TemplateOpen> listTemplateOpen();
 }

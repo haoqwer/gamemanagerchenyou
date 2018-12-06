@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
             throw new BizException(BizException.CODE_PARM_LACK, "请输入活动id!");
         }
         int id = null == templateManager.getId() ? -1 : templateManager.getId();
-        TemplateManager template = templateManagerMapper.checkActiveIdUnique(templateManager.getActiveId());
+        TemplateManager template = templateManagerMapper.checkActiveIdUnique(templateManager.getActiveId(),templateManager.getTemplateId());
         if (StringUtils.isNotNull(template) && id != template.getId()) {
             throw new BizException(BizException.CODE_PARM_LACK, "活动id" + templateManager.getActiveId() + "已经存在!");
         }
@@ -74,6 +75,8 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
                 //3.1如果延期天数不为0的话
                 templateManager.setDelayStatus(1);
             }
+            //4.判断活动id是否重复
+            checkActiveIdUnique(templateManager);
             //3.设置模板名称
             templateManager.setTemplateName(templateNameService.templateName(templateManager.getTemplateId()));
             //4.进行排序根据模板Id
@@ -203,12 +206,12 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
             criteria.andActiveIdEqualTo(templateManager.getActiveId());
         }
         //3.进行活动天数查询
-        if (null != templateManager.getDelayDays()) {
-            criteria.andDelayDaysEqualTo(templateManager.getDelayDays());
+        if (null != templateManager.getOpenTakesDay()) {
+            criteria.andDelayDaysEqualTo(templateManager.getOpenTakesDay());
         }
-        //4.是否延期
-        if (null != templateManager.getDelayStatus()) {
-            criteria.andDelayStatusEqualTo(templateManager.getDelayStatus());
+        //4.延期天数
+        if (null != templateManager.getDelayDays()) {
+            criteria.andDelayStatusEqualTo(templateManager.getDelayDays());
         }
         List <TemplateManager> list = templateManagerMapper.selectByExample(example);
         if (StringUtils.isEmpty(list)) {
@@ -216,6 +219,43 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
         }
         Page <TemplateManager> page = (Page <TemplateManager>) list;
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+
+    /**
+    *
+    *导出需要的数据
+    * @author hlx
+    * @date 2018\12\6 0006 14:06
+    * @param
+    * @return java.util.List<com.chenyou.pojo.TemplateManager>
+    */
+    @Override
+    public List <TemplateManager> listTemplateManager(TemplateManager templateManager) throws BizException {
+        List<TemplateManager> list=new ArrayList <>();
+        if(null==templateManager.getTemplateId()&&StringUtils.isEmpty(templateManager.getActiveId())&&null==templateManager.getOpenTakesDay()&&null==templateManager.getDelayDays()){
+            list=templateManagerMapper.selectByExample(null);
+        }else {
+            TemplateManagerExample example=new TemplateManagerExample();
+            TemplateManagerExample.Criteria criteria = example.createCriteria();
+            if(null !=templateManager.getTemplateId()){
+                criteria.andTemplateIdEqualTo(templateManager.getTemplateId());
+            }
+            if(! StringUtils.isEmpty(templateManager.getActiveId())){
+                criteria.andActiveIdEqualTo(templateManager.getActiveId());
+            }
+            if(null != templateManager.getOpenTakesDay()){
+                criteria.andOpenTakesDayEqualTo(templateManager.getOpenTakesDay());
+            }
+            if(null != templateManager.getDelayDays()){
+                criteria.andDelayDaysEqualTo(templateManager.getDelayDays());
+            }
+            list=templateManagerMapper.selectByExample(example);
+        }
+        if(StringUtils.isEmpty(list)){
+            throw new BizException(BizException.CODE_PARM_LACK,"不好意思,当前没有数据!");
+        }
+        return list;
     }
 
     /*
@@ -230,7 +270,7 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
     public int deleteTemplateManager(Integer[] ids) throws BizException {
         int i = 0;
         int sum = 0;
-        if (ids == null || ids.length < 0) {
+        if (ids == null || ids.length <= 0) {
             throw new BizException(BizException.CODE_PARM_LACK, "请选择你要删除的数据");
         }
         for (Integer id : ids) {

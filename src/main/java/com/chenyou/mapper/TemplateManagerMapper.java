@@ -94,5 +94,5 @@ public interface TemplateManagerMapper {
      */
     int updateByPrimaryKey(TemplateManager record);
 
-    TemplateManager checkActiveIdUnique(String activeId);
+    TemplateManager checkActiveIdUnique(@Param("activeId") String activeId,@Param("templateId") Integer templateId);
 }

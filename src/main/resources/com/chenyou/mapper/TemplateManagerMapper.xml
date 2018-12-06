@@ -380,8 +380,8 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="checkActiveIdUnique" parameterType="String" resultMap="BaseResultMap">
-    select id,active_id from t_template_manager where active_id= #{active_id}
+  <select id="checkActiveIdUnique" parameterType="com.chenyou.pojo.TemplateManager" resultMap="BaseResultMap">
+    select id,active_id from t_template_manager where active_id= #{activeId}  and template_id=#{templateId}
   </select>
 
 </mapper>

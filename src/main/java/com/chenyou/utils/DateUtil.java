@@ -186,13 +186,13 @@ public class DateUtil {
      * @throws ParseException
      */
     public static boolean equalTime(String start, String end) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         boolean is = sdf.parse(start).after(sdf.parse(end));
         return is;
     }
 
     public static String format1(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(date);
     }
 

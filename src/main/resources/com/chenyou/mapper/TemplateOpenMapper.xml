@@ -364,4 +364,7 @@
       active_status = #{activeStatus,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="listTemplateOpen" resultMap="BaseResultMap">
+    select server_id,start,template_id,record_time from t_template_open  GROUP BY server_id
+  </select>
 </mapper>
