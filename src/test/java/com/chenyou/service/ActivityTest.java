@@ -1,6 +1,8 @@
 package com.chenyou.service;
 
 import com.chenyou.base.BizException;
+import com.chenyou.mapper.ActivityMapper;
+import com.chenyou.pojo.Activity;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.activityservice.ActivityNumService;
 import com.chenyou.service.activityservice.ActivityOutputService;
@@ -24,6 +26,9 @@ public class ActivityTest {
     private ActivityOutputService activityOutputService;
     @Autowired
     private OutConsumeService outConsumeService;
+
+    @Autowired
+    ActivityMapper activityMapper;
 
     @Test
     public void  test_activityNum() throws ParseException, BizException {
@@ -50,5 +55,18 @@ public class ActivityTest {
         for (Object obj : pageResult.getRows()) {
             System.out.println(obj);
         }
+    }
+
+    @Test
+    public  void getActivity(){
+        Activity activity=new Activity();
+        activity.setId(1);
+        activity.setAid(1001);
+        activity.setStime("2018-10-30 14:00:00");
+        activity.setEtime("2018-11-31 18:59:59");
+        activity.setValue(1);
+        activity.setState(2);
+        Activity ac = activityMapper.getActivity(activity);
+        System.out.println(ac);
     }
 }

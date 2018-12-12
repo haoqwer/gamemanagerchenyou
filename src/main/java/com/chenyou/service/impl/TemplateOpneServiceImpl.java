@@ -3,12 +3,11 @@ package com.chenyou.service.impl;
 import com.chenyou.base.BizException;
 import com.chenyou.mapper.TemplateManagerMapper;
 import com.chenyou.mapper.TemplateOpenMapper;
-import com.chenyou.pojo.TemplateManager;
-import com.chenyou.pojo.TemplateManagerExample;
-import com.chenyou.pojo.TemplateOpen;
-import com.chenyou.pojo.TemplateOpenExample;
+import com.chenyou.pojo.*;
 import com.chenyou.pojo.entity.PageResult;
+import com.chenyou.service.ActivityService;
 import com.chenyou.service.ServerService;
+import com.chenyou.service.TemplateNameService;
 import com.chenyou.service.TemplateOpenService;
 import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
@@ -56,6 +55,14 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
     private ServerService serverService;
 
 
+    @Autowired
+    private TemplateNameService templateNameService;
+
+
+    @Autowired
+    private ActivityService activityService;
+
+
     /**
      * 进行活动开启
      *
@@ -67,11 +74,17 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
     @Override
     public int saveTemplateOpen(TemplateOpen templateOpen) throws BizException, ParseException, URISyntaxException, UnsupportedEncodingException {
         List <TemplateManager> listManager = new ArrayList <>();
+        //开始时间
         String end;
+        //结束时间
         String start;
+        //开启天数
         int openDay = 0;
+        //结束天数
         int delyDay = 0;
+        //区服名称
         String serverName;
+        //插入多少条数据
         int sum = 0;
         int i = 0;
         //1.判断数据
@@ -87,42 +100,85 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
         if (StringUtils.isEmpty(templateOpen.getStart())) {
             throw new BizException(BizException.CODE_PARM_LACK, "请选择活动开始时间!");
         }
+        //2.获取到区服名称
         serverName = serverService.getServerName(templateOpen.getServerId());
-        //2.获取到模板管理的数据
+        //3.获取到活动开启模板数据
         TemplateManagerExample example = new TemplateManagerExample();
         TemplateManagerExample.Criteria criteria = example.createCriteria();
         criteria.andTemplateIdEqualTo(templateOpen.getTemplateId());
         listManager = templateManagerMapper.selectByExample(example);
-        //3.判断模板管理的数据是否为空
+        //4.判断模板管理的数据是否为空
         if (StringUtils.isEmpty(listManager)) {
             throw new BizException(BizException.CODE_PARM_LACK, "不好意思，当前模板管理没有数据!");
         }
+        //5.获取到开始时间
         start = templateOpen.getStart();
         for (TemplateManager templateManager : listManager) {
+            //6.对开启活动天数进行判断
             if (templateManager.getOpenTakesDay() == 0) {
                 throw new BizException(BizException.CODE_PARM_LACK, "开服天数不能为0!");
             }
-            openDay = templateManager.getOpenTakesDay();
-            delyDay = templateManager.getDelayDays();
-            //4.判断是否延期来确定结束的时间是
-            if (templateManager.getDelayStatus() == 0 || delyDay == 0) {
-                //4.1表示没有延期
-                end = DateUtil.addDaysByCalendar(start, openDay);
-            } else {
-                end = DateUtil.addDaysByCalendar(start, openDay + delyDay);
+            //对状态进行判断如果状态是1的则不进行开启
+            if (templateManager.getOpenStatus() != 1) {
+                //7.获取到开服天数
+                openDay = templateManager.getOpenTakesDay();
+                //8.获取到延期天数
+                delyDay = templateManager.getDelayDays();
+                //9.判断是否延期来确定结束时间
+                if (templateManager.getDelayStatus() == 0 || delyDay == 0) {
+                    //9.1表示没有延期
+                    end = DateUtil.addDaysByCalendar(start, openDay);
+                } else {
+                    //9.2表示延期获取到最后的时间
+                    end = DateUtil.addDaysByCalendar(start, openDay + delyDay);
+                }
+                // http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_3&aid=5003&fields=stime,2018-11-16%2000:00:01,etime,2018-11-23%2023:59:59,value,1,state=1
+                //获取到开启活动的时分秒
+                //10.获取到结束时间
+                String hmm = templateManager.getEndtime();
+                //1.1后缀部分
+                String postfix = "stime," + start + "%2000:00:01,etime," + end + "%20+hmm,value,1,state=1";
+                URI uri = new URIBuilder("http://47.104.240.79:8080/").setParameter("mod", "control").setParameter("act", "addAct").
+                        setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
+                //11.2获取到url
+                String url = URLDecoder.decode(uri.toString(), "UTF-8");
+                System.out.println(url);
+                //13.1插入活动id
+                templateOpen.setActiveId(templateManager.getActiveId());
+                //13.2插入结束时间
+                templateOpen.setEnd(end);
+                //13.3设置延期天数
+                templateOpen.setDelayDays(delyDay);
+                //13.4记录时间
+                templateOpen.setRecordTime(DateUtil.format1(new Date()));
+                //13.5插入条数
+                //14.根据插入的数据去数据库中找数据是否存在
+                Activity activity = new Activity();
+//            id=#{id} and  aid=#{aid} and stime=#{stime} and etime=#{etime}and value=#{value} and state=#{state}
+                activity.setId(templateOpen.getServerId());
+                activity.setAid(Integer.parseInt(templateOpen.getActiveId()));
+                activity.setStime(start + " 00:00:01");
+                activity.setEtime(end + " " + templateManager.getEndtime());
+                activity.setValue(1);
+                activity.setState(1);
+                Activity activi = activityService.getActivity(activity);
+                //表示活动开启失败
+                if (StringUtils.isNull(activi)) {
+                    templateOpen.setActiveStatus(2);
+                    i = templateOpenMapper.insertSelective(templateOpen);
+                    //将修改templateManager中的活动开启状态
+                    templateManager.setOpenStatus(2);
+                    templateManagerMapper.updateByPrimaryKeySelective(templateManager);
+                    throw new BizException(BizException.CODE_PARM_LACK, "活动开启失败!");
+                } else {
+                    //表示活动开启成功
+                    templateOpen.setActiveStatus(1);
+                    i = templateOpenMapper.insertSelective(templateOpen);
+                    templateManager.setOpenStatus(1);
+                    templateManagerMapper.updateByPrimaryKeySelective(templateManager);
+                }
+                sum += i;
             }
-            // http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_3&aid=5003&fields=stime,2018-11-16%2000:00:01,etime,2018-11-23%2023:59:59,value,1,state=1
-            String postfix = "stime," + start + "%2000:00:01,etime," + end + "%2023:59:59,value,1,state=1";
-            URI uri = new URIBuilder("http://47.104.240.79:8080/").setParameter("mod", "control").setParameter("act", "addAct").
-                    setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
-            String url = URLDecoder.decode(uri.toString(), "UTF-8");
-            templateOpen.setActiveId(templateManager.getActiveId());
-            templateOpen.setEnd(end);
-            templateOpen.setDelayDays(delyDay);
-            templateOpen.setRecordTime(DateUtil.format1(new Date()));
-            i = templateOpenMapper.insertSelective(templateOpen);
-            sum += i;
-            System.out.println(url);
         }
         return sum;
     }
@@ -133,6 +189,10 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
         List <TemplateOpen> list = templateOpenMapper.listTemplateOpen();
         if(StringUtils.isEmpty(list)){
             throw new BizException(BizException.CODE_PARM_LACK,"不好意思当前没有数据!");
+        }
+        for(TemplateOpen templateOpen:list){
+            templateOpen.setServerName(serverService.getServerName(templateOpen.getServerId()));
+            templateOpen.setTemplateName(templateNameService.templateName(templateOpen.getTemplateId()));
         }
         Page<TemplateOpen>  page=( Page<TemplateOpen>)list;
         return new PageResult(page.getTotal(),page.getResult());

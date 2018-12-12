@@ -334,5 +334,13 @@
         </table>
 
 
+        <!--<table tableName="s_activity" domainObjectName="Activity"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+
     </context>
 </generatorConfiguration>

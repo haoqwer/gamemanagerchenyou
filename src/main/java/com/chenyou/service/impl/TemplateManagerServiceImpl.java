@@ -12,6 +12,8 @@ import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,8 @@ import java.util.List;
 @Service
 @Transactional
 public class TemplateManagerServiceImpl implements TemplateManagerService {
+
+    private static Logger logger = LoggerFactory.getLogger(TemplateManagerServiceImpl.class);
 
     @Autowired
     private TemplateManagerMapper templateManagerMapper;
@@ -42,7 +46,7 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
             throw new BizException(BizException.CODE_PARM_LACK, "请输入活动id!");
         }
         int id = null == templateManager.getId() ? -1 : templateManager.getId();
-        TemplateManager template = templateManagerMapper.checkActiveIdUnique(templateManager.getActiveId(),templateManager.getTemplateId());
+        TemplateManager template = templateManagerMapper.checkActiveIdUnique(templateManager.getActiveId(), templateManager.getTemplateId());
         if (StringUtils.isNotNull(template) && id != template.getId()) {
             throw new BizException(BizException.CODE_PARM_LACK, "活动id" + templateManager.getActiveId() + "已经存在!");
         }
@@ -65,27 +69,35 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
         }
         int i = 0;
         int sum = 0;
+        //2.遍历输入的数据
         for (TemplateManager templateManager : templateManagerList) {
-            //2.对创建每个活动进行判断
+            //3.对创建每个活动进行判断
             condition(templateManager);
             if (templateManager.getDelayDays() == 0) {
-                //3.如果延期天数为0的话，那么延期状态为0表示不延期
+                //4.如果延期天数为0的话，那么延期状态为0表示不延期
                 templateManager.setDelayStatus(0);
             } else {
-                //3.1如果延期天数不为0的话
+                //4.1如果延期天数不为0的话,表示不延期
                 templateManager.setDelayStatus(1);
             }
-            //4.判断活动id是否重复
-            checkActiveIdUnique(templateManager);
-            //3.设置模板名称
-            templateManager.setTemplateName(templateNameService.templateName(templateManager.getTemplateId()));
-            //4.进行排序根据模板Id
-            templateManager.setSort(templateManager.getTemplateId());
-            //5.设置时间
-            templateManager.setRecordTime(DateUtil.format1(new Date()));
-            //6.进行增加
-            i = templateManagerMapper.insertSelective(templateManager);
-            sum = sum + i;
+            try {
+                //5.对活动的状态进行设置,0表示开始创建
+                templateManager.setOpenStatus(0);
+                //6.判断活动id是否重复
+                checkActiveIdUnique(templateManager);
+                //7.模板名称
+                templateManager.setTemplateName(templateNameService.templateName(templateManager.getTemplateId()));
+                //8.对模板id进行排序
+                templateManager.setSort(templateManager.getTemplateId());
+                //9.设置时间
+                templateManager.setRecordTime(DateUtil.format1(new Date()));
+                //10.进行保存
+                i = templateManagerMapper.insertSelective(templateManager);
+                sum = sum + i;
+            } catch (BizException e) {
+                logger.debug(e.getMessage());
+                continue;
+            }
         }
         return sum;
     }
@@ -107,6 +119,8 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
         if (StringUtils.isEmpty(list)) {
             throw new BizException(BizException.CODE_PARM_LACK, "不好意思当前没有数据!");
         }
+        //进行设置状态
+        getList(list);
         Page <TemplateManager> page = (Page <TemplateManager>) list;
         return new PageResult(page.getTotal(), page.getResult());
     }
@@ -127,7 +141,6 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
             throw new BizException(BizException.CODE_PARM_LACK, "请输入活动id!");
         }
         //3.判断是否输入开服天数
-        System.out.println("活动开启天数" + templateManager.getOpenTakesDay());
         if (templateManager.getOpenTakesDay() < 0) {
             throw new BizException(BizException.CODE_PARM_LACK, "开服天数不能输入负数!");
         }
@@ -142,6 +155,9 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
         if (templateManager.getDelayDays() < 0) {
             throw new BizException(BizException.CODE_PARM_LACK, "延期天数不能输入负数!");
         }
+//        if(StringUtils.isEmpty(templateManager.getEndtime())){
+//            throw new BizException(BizException.CODE_PARM_LACK,"请输入结束的年月日!");
+//        }
     }
 
     /**
@@ -167,20 +183,25 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
      */
     @Override
     public int updateTemplateManager(TemplateManager templateManager) throws BizException {
+        //1.判断数据是否为null
         condition(templateManager);
+        //2.对活动id进行是否唯一
         checkActiveIdUnique(templateManager);
-        //2.根据修改的延期进行判断
+        //3.根据修改延期天数来重新设置延期状态
         if (templateManager.getDelayDays() == 0) {
-            //3.如果延期天数为0的话，那么延期状态为0表示不延期
+            //3.1如果延期天数为0的话，那么延期状态为0表示不延期
             templateManager.setDelayStatus(0);
         } else {
+            //3.2如果延期天数大于1的话，那么延期状态为1表示延期
             templateManager.setDelayStatus(1);
         }
-        //3.设置模板名称
+        //4.如果模板id更换那么模板名称也得进行修改
         templateManager.setTemplateName(templateNameService.templateName(templateManager.getTemplateId()));
-        //4.修改排序
+        //5.模板id进行修改,排序也得进行重新排序
         templateManager.setSort(templateManager.getTemplateId());
+        //6.设置时间
         templateManager.setRecordTime(DateUtil.format1(new Date()));
+        //7.进行修改
         return templateManagerMapper.updateByPrimaryKeySelective(templateManager);
     }
 
@@ -205,9 +226,10 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
         if (!StringUtils.isEmpty(templateManager.getActiveId())) {
             criteria.andActiveIdEqualTo(templateManager.getActiveId());
         }
+        System.out.println(templateManager.getOpenTakesDay());
         //3.进行活动天数查询
         if (null != templateManager.getOpenTakesDay()) {
-            criteria.andDelayDaysEqualTo(templateManager.getOpenTakesDay());
+            criteria.andOpenTakesDayEqualTo(templateManager.getOpenTakesDay());
         }
         //4.延期天数
         if (null != templateManager.getDelayDays()) {
@@ -217,43 +239,44 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
         if (StringUtils.isEmpty(list)) {
             throw new BizException(BizException.CODE_PARM_LACK, "不好意思,当前没有数据!");
         }
+        getList(list);
         Page <TemplateManager> page = (Page <TemplateManager>) list;
         return new PageResult(page.getTotal(), page.getResult());
     }
 
 
     /**
-    *
-    *导出需要的数据
-    * @author hlx
-    * @date 2018\12\6 0006 14:06
-    * @param
-    * @return java.util.List<com.chenyou.pojo.TemplateManager>
-    */
+     * 导出需要的数据
+     *
+     * @param
+     * @return java.util.List<com.chenyou.pojo.TemplateManager>
+     * @author hlx
+     * @date 2018\12\6 0006 14:06
+     */
     @Override
     public List <TemplateManager> listTemplateManager(TemplateManager templateManager) throws BizException {
-        List<TemplateManager> list=new ArrayList <>();
-        if(null==templateManager.getTemplateId()&&StringUtils.isEmpty(templateManager.getActiveId())&&null==templateManager.getOpenTakesDay()&&null==templateManager.getDelayDays()){
-            list=templateManagerMapper.selectByExample(null);
-        }else {
-            TemplateManagerExample example=new TemplateManagerExample();
+        List <TemplateManager> list = new ArrayList <>();
+        if (null == templateManager.getTemplateId() && StringUtils.isEmpty(templateManager.getActiveId()) && null == templateManager.getOpenTakesDay() && null == templateManager.getDelayDays()) {
+            list = templateManagerMapper.selectByExample(null);
+        } else {
+            TemplateManagerExample example = new TemplateManagerExample();
             TemplateManagerExample.Criteria criteria = example.createCriteria();
-            if(null !=templateManager.getTemplateId()){
+            if (null != templateManager.getTemplateId()) {
                 criteria.andTemplateIdEqualTo(templateManager.getTemplateId());
             }
-            if(! StringUtils.isEmpty(templateManager.getActiveId())){
+            if (!StringUtils.isEmpty(templateManager.getActiveId())) {
                 criteria.andActiveIdEqualTo(templateManager.getActiveId());
             }
-            if(null != templateManager.getOpenTakesDay()){
+            if (null != templateManager.getOpenTakesDay()) {
                 criteria.andOpenTakesDayEqualTo(templateManager.getOpenTakesDay());
             }
-            if(null != templateManager.getDelayDays()){
+            if (null != templateManager.getDelayDays()) {
                 criteria.andDelayDaysEqualTo(templateManager.getDelayDays());
             }
-            list=templateManagerMapper.selectByExample(example);
+            list = templateManagerMapper.selectByExample(example);
         }
-        if(StringUtils.isEmpty(list)){
-            throw new BizException(BizException.CODE_PARM_LACK,"不好意思,当前没有数据!");
+        if (StringUtils.isEmpty(list)) {
+            throw new BizException(BizException.CODE_PARM_LACK, "不好意思,当前没有数据!");
         }
         return list;
     }
@@ -278,5 +301,18 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
             sum += i;
         }
         return sum;
+    }
+
+    public static void getList(List <TemplateManager> list) {
+        for (TemplateManager templateManager : list) {
+            if (templateManager.getOpenStatus() == 0) {
+                templateManager.setActivityStatus("活动创建成功!");
+            } else if (templateManager.getOpenStatus() == 1) {
+                templateManager.setActivityStatus("活动开启成功!");
+            } else if (templateManager.getOpenStatus() == 2) {
+                templateManager.setActivityStatus("活动开启失败!");
+            }
+        }
+
     }
 }

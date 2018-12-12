@@ -7,10 +7,7 @@ import com.chenyou.pojo.TemplateManager;
 import com.chenyou.pojo.TemplateName;
 import com.chenyou.pojo.TemplateOpen;
 import com.chenyou.pojo.entity.PageResult;
-import com.chenyou.service.ServerService;
-import com.chenyou.service.TemplateManagerService;
-import com.chenyou.service.TemplateNameService;
-import com.chenyou.service.TemplateOpenService;
+import com.chenyou.service.*;
 import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.ExcelUtil;
 import com.chenyou.utils.FileUtils;
@@ -38,7 +35,7 @@ import java.util.*;
 
 
 @RestController
-@RequestMapping("templates")
+@RequestMapping("/templates")
 public class TemplateController extends BaseController {
 
 
@@ -56,6 +53,9 @@ public class TemplateController extends BaseController {
 
     @Autowired
     private ServerService serverService;
+
+    @Autowired
+    private ActivityService activityService;
 
 
 
@@ -347,6 +347,19 @@ public class TemplateController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+    *
+    * 已经开启的活动
+    * @author hlx
+    * @date 2018\12\12 0012 19:41
+    * @param [page, rows]
+    * @return com.chenyou.pojo.entity.PageResult
+    */
+    @RequestMapping(value = "/findActivityList", method = RequestMethod.GET)
+    public PageResult findActivityList(int page, int rows) throws BizException {
+        return activityService.findPage(page, rows);
     }
 
 

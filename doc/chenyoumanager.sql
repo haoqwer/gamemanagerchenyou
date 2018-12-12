@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50549
 File Encoding         : 65001
 
-Date: 2018-12-03 20:06:55
+Date: 2018-12-12 19:42:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,7 +34,7 @@ CREATE TABLE `sys_menu` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 COMMENT='菜单权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COMMENT='菜单权限表';
 
 -- ----------------------------
 -- Records of sys_menu
@@ -106,6 +106,7 @@ INSERT INTO `sys_menu` VALUES ('65', '菜单新增', '39', '61', '#', 'F', '', '
 INSERT INTO `sys_menu` VALUES ('66', '菜单修改', '39', '62', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单修改');
 INSERT INTO `sys_menu` VALUES ('67', '菜单查询', '39', '63', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单查询');
 INSERT INTO `sys_menu` VALUES ('68', '菜单删除', '39', '64', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单删除');
+INSERT INTO `sys_menu` VALUES ('69', '活动模板管理', '8', '65', '#', 'C', '', 'fa fa-bars', 'admin', '2018-12-05 09:48:19', '', '2018-12-05 09:48:23', '活动模板管理');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -128,7 +129,7 @@ CREATE TABLE `sys_role` (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', '管理员', 'admin', '1', '0', 'admin', '2018-03-16 11:33:00', null, '2018-10-22 18:40:09', '管理员');
+INSERT INTO `sys_role` VALUES ('1', '管理员', 'admin', '1', '0', 'admin', '2018-03-16 11:33:00', null, '2018-12-05 09:51:55', '管理员');
 INSERT INTO `sys_role` VALUES ('2', '普通角色', 'common', '2', '0', 'admin', '2018-03-16 11:33:00', null, '2018-10-11 17:19:10', '普通角色');
 INSERT INTO `sys_role` VALUES ('14', '老板', 'boss', '1', null, null, '2018-09-03 18:22:55', null, '2018-09-17 10:51:40', '老板');
 INSERT INTO `sys_role` VALUES ('16', '管理员1', '123', '1', '0', 'admin', '2018-09-12 14:37:21', null, '2018-10-11 17:17:04', '1');
@@ -214,6 +215,7 @@ INSERT INTO `sys_role_menu` VALUES ('1', '65');
 INSERT INTO `sys_role_menu` VALUES ('1', '66');
 INSERT INTO `sys_role_menu` VALUES ('1', '67');
 INSERT INTO `sys_role_menu` VALUES ('1', '68');
+INSERT INTO `sys_role_menu` VALUES ('1', '69');
 INSERT INTO `sys_role_menu` VALUES ('2', '5');
 INSERT INTO `sys_role_menu` VALUES ('2', '22');
 INSERT INTO `sys_role_menu` VALUES ('6', '1');
@@ -324,7 +326,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, '21232f297a57a5a743894a0e4a801fc3', null, null, null, '0:0:0:0:0:0:0:1', '2018-12-03 20:02:35', 'admin', null, null, '2018-12-03 19:54:42', '管理员', 'test_01');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, '21232f297a57a5a743894a0e4a801fc3', null, null, null, '0:0:0:0:0:0:0:1', '2018-12-12 13:48:14', 'admin', null, null, '2018-12-03 19:54:42', '管理员', 'test_01');
 INSERT INTO `sys_user` VALUES ('6', '123', '123', null, '13098381432', null, '202cb962ac59075b964b07152d234b70', null, '0', null, '0:0:0:0:0:0:0:1', '2018-11-21 11:56:05', 'admin', '2018-10-11 17:10:41', 'admin', '2018-10-12 10:05:08', '123', 'android_test_02');
 INSERT INTO `sys_user` VALUES ('7', 'z', '指牛', null, '13098381435', null, '202cb962ac59075b964b07152d234b70', null, '0', null, '127.0.0.1', '2018-10-11 17:42:57', 'admin', '2018-10-11 17:17:54', '123', null, '渠道', 'android_td_jyfc');
 INSERT INTO `sys_user` VALUES ('8', 'test01', '渠道1', null, '13098381433', null, '0e698a8ffc1a0af622c7b4db3cb750cc', null, '0', null, '0:0:0:0:0:0:0:1', '2018-10-22 15:07:58', 'admin', '2018-10-11 17:38:37', 'admin', null, '渠道1', 'android_td_jyfc');
@@ -364,6 +366,99 @@ INSERT INTO `sys_user_role` VALUES ('40', '2');
 INSERT INTO `sys_user_role` VALUES ('52', '1');
 INSERT INTO `sys_user_role` VALUES ('56', '1');
 INSERT INTO `sys_user_role` VALUES ('56', '14');
+
+-- ----------------------------
+-- Table structure for s_activity
+-- ----------------------------
+DROP TABLE IF EXISTS `s_activity`;
+CREATE TABLE `s_activity` (
+  `id` int(11) NOT NULL,
+  `aid` int(11) NOT NULL,
+  `value` int(11) NOT NULL,
+  `stime` varchar(32) NOT NULL,
+  `etime` varchar(32) NOT NULL,
+  `state` int(11) NOT NULL DEFAULT '0',
+  `etimen` int(11) NOT NULL,
+  `stimen` int(11) NOT NULL,
+  PRIMARY KEY (`id`,`aid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of s_activity
+-- ----------------------------
+INSERT INTO `s_activity` VALUES ('1', '1001', '1', '2018-10-30 14:00:00', '2018-11-31 18:59:59', '2', '1543661999', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '1002', '1', '2018-10-30 14:00:00', '2018-10-31 18:59:59', '2', '1540983599', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '1003', '1', '2018-10-30 14:00:00', '2018-10-31 18:59:59', '2', '1540983599', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '2001', '1', '2018-10-30 14:00:00', '2018-11-31 18:59:59', '2', '1543661999', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '2002', '1', '2018-10-30 14:00:00', '2018-11-31 18:59:59', '2', '1543661999', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '2003', '1', '2018-11-2 10:00:00', '2018-11-8 13:59:59', '2', '1541656799', '1541124000');
+INSERT INTO `s_activity` VALUES ('1', '2004', '1', '2018-11-2 10:00:00', '2018-11-2 13:59:59', '2', '1541138399', '1541124000');
+INSERT INTO `s_activity` VALUES ('1', '2005', '1', '2018-11-2 10:00:00', '2018-11-2 13:59:59', '2', '1541138399', '1541124000');
+INSERT INTO `s_activity` VALUES ('1', '3001', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '4001', '1', '2018-10-10 00:00:00', '2029-10-10 24:00:00', '1', '1886342400', '1537804800');
+INSERT INTO `s_activity` VALUES ('1', '5001', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '5002', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '5003', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '5004', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '5005', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '5006', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '5007', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '5008', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '5009', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '5010', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '5011', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '5012', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '5013', '1', '2018-11-30 14:00:00', '2018-12-31 18:59:59', '1', '1546253999', '1543557600');
+INSERT INTO `s_activity` VALUES ('1', '6001', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6002', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6003', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6004', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6005', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6006', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6007', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6008', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6009', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6010', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6011', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6012', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6013', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6014', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6015', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6016', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6017', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6018', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6019', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6020', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6021', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '6022', '1', '2018-11-21 14:00:00', '2018-11-28 18:59:59', '2', '1543402799', '1542780000');
+INSERT INTO `s_activity` VALUES ('1', '7001', '1', '2018-10-30 14:00:00', '2018-10-31 18:59:59', '2', '1540983599', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '7002', '1', '2018-10-30 14:00:00', '2018-10-31 18:59:59', '2', '1540983599', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '7003', '1', '2018-10-30 14:00:00', '2018-10-31 18:59:59', '2', '1540983599', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '7101', '1', '2018-09-10 00:00:00', '2018-09-17 00:00:00', '2', '1537113600', '1536508800');
+INSERT INTO `s_activity` VALUES ('1', '7102', '1', '2018-09-10 00:00:00', '2018-09-17 00:00:00', '2', '1537113600', '1536508800');
+INSERT INTO `s_activity` VALUES ('1', '7103', '1', '2018-09-10 00:00:00', '2018-09-17 00:00:00', '2', '1537113600', '1536508800');
+INSERT INTO `s_activity` VALUES ('1', '7201', '1', '2018-10-30 14:00:00', '2018-11-31 18:59:59', '2', '1543661999', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '7202', '1', '2018-09-10 00:00:00', '2018-09-17 00:00:00', '2', '1537113600', '1536508800');
+INSERT INTO `s_activity` VALUES ('1', '7203', '1', '2018-09-10 00:00:00', '2018-09-17 00:00:00', '2', '1537113600', '1536508800');
+INSERT INTO `s_activity` VALUES ('1', '7301', '1', '2018-09-10 00:00:00', '2018-09-17 00:00:00', '2', '1537113600', '1536508800');
+INSERT INTO `s_activity` VALUES ('1', '7302', '1', '2018-09-10 00:00:00', '2018-09-17 00:00:00', '2', '1537113600', '1536508800');
+INSERT INTO `s_activity` VALUES ('1', '7303', '1', '2018-09-10 00:00:00', '2018-09-17 00:00:00', '2', '1537113600', '1536508800');
+INSERT INTO `s_activity` VALUES ('1', '7401', '1', '2018-10-30 14:00:00', '2018-11-31 18:59:59', '2', '1543661999', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '7402', '1', '2018-10-30 14:00:00', '2018-11-31 18:59:59', '2', '1543661999', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '7403', '1', '2018-10-30 14:00:00', '2018-11-31 18:59:59', '2', '1543661999', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '8001', '1', '2018-11-2 10:00:00', '2018-12-23 13:59:59', '1', '1545544799', '1541124000');
+INSERT INTO `s_activity` VALUES ('1', '8100', '1', '2018-11-2 10:00:00', '2018-11-3 13:59:59', '2', '1541224799', '1541124000');
+INSERT INTO `s_activity` VALUES ('1', '8101', '1', '2018-10-30 14:00:00', '2018-11-31 18:59:59', '2', '1543661999', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '8102', '1', '2018-09-10 00:00:00', '2018-09-17 00:00:00', '2', '1537113600', '1536508800');
+INSERT INTO `s_activity` VALUES ('1', '8103', '1', '2018-09-10 00:00:00', '2018-09-17 00:00:00', '2', '1537113600', '1536508800');
+INSERT INTO `s_activity` VALUES ('1', '9001', '1', '2018-11-8 10:00:00', '2018-11-31 18:59:59', '2', '1543661999', '1541642400');
+INSERT INTO `s_activity` VALUES ('1', '9002', '1', '2018-11-8 10:00:00', '2018-11-31 18:59:59', '2', '1543661999', '1541642400');
+INSERT INTO `s_activity` VALUES ('1', '9003', '1', '2018-11-8 10:00:00', '2018-11-31 18:59:59', '2', '1543661999', '1541642400');
+INSERT INTO `s_activity` VALUES ('1', '9004', '1', '2018-11-8 10:00:00', '2018-11-31 18:59:59', '2', '1543661999', '1541642400');
+INSERT INTO `s_activity` VALUES ('1', '9101', '2', '2018-10-30 14:00:00', '2018-11-31 18:59:59', '1', '1543661999', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '9102', '2', '2018-10-30 14:00:00', '2018-11-31 18:59:59', '1', '1543661999', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '9103', '2', '2018-10-30 14:00:00', '2018-11-31 18:59:59', '1', '1543661999', '1540879200');
+INSERT INTO `s_activity` VALUES ('1', '9104', '2', '2018-10-30 14:00:00', '2018-11-31 18:59:59', '1', '1543661999', '1540879200');
 
 -- ----------------------------
 -- Table structure for t_about_game
@@ -1818,10 +1913,10 @@ CREATE TABLE `t_server` (
 -- ----------------------------
 INSERT INTO `t_server` VALUES ('1', 'node_360_1', '1');
 INSERT INTO `t_server` VALUES ('2', 'node_360_2', '2');
-INSERT INTO `t_server` VALUES ('3', 'node_360_5', '3');
-INSERT INTO `t_server` VALUES ('4', 'node_360_6', '4');
-INSERT INTO `t_server` VALUES ('45', 'node_360_7', null);
-INSERT INTO `t_server` VALUES ('46', 'node_360_8', null);
+INSERT INTO `t_server` VALUES ('3', 'node_360_3', '3');
+INSERT INTO `t_server` VALUES ('4', 'node_360_4', '4');
+INSERT INTO `t_server` VALUES ('5', 'node_360_5', null);
+INSERT INTO `t_server` VALUES ('6', 'node_360_6', null);
 
 -- ----------------------------
 -- Table structure for t_task_message
@@ -1848,35 +1943,34 @@ INSERT INTO `t_task_message` VALUES ('2', '2', '999999', null, null, '2018-10-08
 -- ----------------------------
 DROP TABLE IF EXISTS `t_template_manager`;
 CREATE TABLE `t_template_manager` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '0表示创建1表示开启成功2表示开启失败',
   `template_id` int(11) NOT NULL COMMENT '模板id',
   `template_name` varchar(64) NOT NULL COMMENT '模板名称',
   `active_id` varchar(64) NOT NULL COMMENT '活动id',
   `open_takes_day` int(11) NOT NULL COMMENT '开服天数',
-  `delay_days` int(11) DEFAULT NULL COMMENT '延期天数',
+  `delay_days` int(11) NOT NULL COMMENT '延期天数',
   `delay_status` int(11) NOT NULL COMMENT '延期状态0代表不延期1代表延期',
   `record_time` varchar(64) DEFAULT NULL,
   `sort` int(5) DEFAULT NULL COMMENT '排序',
   `create_people` varchar(64) DEFAULT NULL,
   `remark` varchar(128) DEFAULT NULL,
+  `endtime` varchar(64) NOT NULL DEFAULT '23:59:59',
+  `open_status` int(11) NOT NULL COMMENT '表示活动开启状态,创建为1,失败为2,开启成功为0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_template_manager
 -- ----------------------------
-INSERT INTO `t_template_manager` VALUES ('4', '1', '模板管理1', '1001', '7', '1', '1', '2018-12-01 01:43:10', '1', 'admin', null);
-INSERT INTO `t_template_manager` VALUES ('5', '1', '模板管理1', '1002', '7', '1', '1', '2018-12-01 01:43:10', '1', 'admin', null);
-INSERT INTO `t_template_manager` VALUES ('6', '2', '模板管理2', '1003', '7', '1', '1', '2018-12-01 01:43:10', '2', 'admin', null);
-INSERT INTO `t_template_manager` VALUES ('8', '1', '模板管理1', '1005', '7', '1', '1', '2018-12-01 02:57:36', '1', 'admin', null);
-INSERT INTO `t_template_manager` VALUES ('9', '1', '模板管理1', '1006', '7', '1', '1', '2018-12-01 02:57:36', '1', 'admin', null);
-INSERT INTO `t_template_manager` VALUES ('10', '1', '模板管理1', '1007', '7', '1', '1', '2018-12-01 02:57:36', '1', 'admin', null);
-INSERT INTO `t_template_manager` VALUES ('11', '1', '模板管理1', '1008', '7', '1', '1', '2018-12-01 02:57:36', '1', 'admin', null);
-INSERT INTO `t_template_manager` VALUES ('12', '1', '模板管理1', '1009', '7', '1', '1', '2018-12-03 05:51:17', '1', 'admin', null);
-INSERT INTO `t_template_manager` VALUES ('13', '1', '模板管理1', '1010', '7', '1', '1', '2018-12-03 05:51:18', '1', 'admin', null);
-INSERT INTO `t_template_manager` VALUES ('14', '1', '模板管理1', '1011', '7', '1', '1', '2018-12-03 05:51:18', '1', 'admin', null);
-INSERT INTO `t_template_manager` VALUES ('15', '1', '模板管理1', '1012', '7', '1', '1', '2018-12-03 05:51:18', '1', 'admin', null);
-INSERT INTO `t_template_manager` VALUES ('16', '4', '模板管理4', '1013', '4', '1', '1', '2018-12-03 06:05:46', '4', 'admin', null);
+INSERT INTO `t_template_manager` VALUES ('55', '1', '模板管理1', '1001', '10', '1', '1', '2018-12-07 11:01:14', '1', 'admin', '1', '23:59:59', '0');
+INSERT INTO `t_template_manager` VALUES ('56', '1', '模板管理1', '1002', '10', '1', '1', '2018-12-07 11:01:14', '1', 'admin', '1', '23:59:59', '0');
+INSERT INTO `t_template_manager` VALUES ('57', '1', '模板管理1', '1003', '11', '1', '1', '2018-12-07 11:01:14', '1', 'admin', '1', '23:59:59', '0');
+INSERT INTO `t_template_manager` VALUES ('58', '1', '模板管理1', '1004', '12', '1', '1', '2018-12-07 11:01:14', '1', 'admin', '1', '23:59:59', '0');
+INSERT INTO `t_template_manager` VALUES ('59', '2', '模板管理2', '1001', '10', '1', '1', '2018-12-07 15:22:15', '2', 'admin', '', '23:59:59', '0');
+INSERT INTO `t_template_manager` VALUES ('60', '2', '模板管理2', '1002', '10', '1', '1', '2018-12-07 15:22:15', '2', 'admin', '', '23:59:59', '0');
+INSERT INTO `t_template_manager` VALUES ('61', '3', '模板管理3', '1001', '1', '2', '1', '2018-12-10 10:07:17', '3', 'admin', '3', '23:59:59', '0');
+INSERT INTO `t_template_manager` VALUES ('62', '3', '模板管理3', '1002', '12', '2', '1', '2018-12-11 17:20:08', '3', 'admin', '3', '23:59:59', '0');
+INSERT INTO `t_template_manager` VALUES ('63', '5', '模板管理5', '1001', '1', '0', '0', '2018-12-11 17:19:55', '5', 'admin', '', '23:59:59', '0');
 
 -- ----------------------------
 -- Table structure for t_template_name
@@ -1904,7 +1998,7 @@ INSERT INTO `t_template_name` VALUES ('5', '模板管理5', '2018-11-21 11:56:30
 -- ----------------------------
 DROP TABLE IF EXISTS `t_template_open`;
 CREATE TABLE `t_template_open` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '0表示创建1表示开启成功2表示开启失败',
   `server_id` int(11) NOT NULL COMMENT '区服id',
   `start` varchar(64) NOT NULL COMMENT '开启时间',
   `end` varchar(64) DEFAULT NULL COMMENT '结束时间',
@@ -1913,23 +2007,29 @@ CREATE TABLE `t_template_open` (
   `template_id` int(11) NOT NULL COMMENT '模板id',
   `operator` varchar(64) DEFAULT NULL COMMENT '操作人',
   `record_time` varchar(64) DEFAULT NULL,
-  `active_status` int(11) DEFAULT NULL COMMENT '活动开启状态0开启成功1开启失败',
+  `active_status` int(11) DEFAULT NULL COMMENT '活动开启状态0开启成功1为创建2为失败',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_template_open
 -- ----------------------------
-INSERT INTO `t_template_open` VALUES ('21', '1', '2018-12-01', '2018-12-09', '1', '1001', '1', 'admin', '2018-12-03 08:02:41', null);
-INSERT INTO `t_template_open` VALUES ('22', '1', '2018-12-01', '2018-12-09', '1', '1002', '1', 'admin', '2018-12-03 08:02:41', null);
-INSERT INTO `t_template_open` VALUES ('23', '1', '2018-12-01', '2018-12-09', '1', '1005', '1', 'admin', '2018-12-03 08:02:41', null);
-INSERT INTO `t_template_open` VALUES ('24', '1', '2018-12-01', '2018-12-09', '1', '1006', '1', 'admin', '2018-12-03 08:02:41', null);
-INSERT INTO `t_template_open` VALUES ('25', '1', '2018-12-01', '2018-12-09', '1', '1007', '1', 'admin', '2018-12-03 08:02:41', null);
-INSERT INTO `t_template_open` VALUES ('26', '1', '2018-12-01', '2018-12-09', '1', '1008', '1', 'admin', '2018-12-03 08:02:41', null);
-INSERT INTO `t_template_open` VALUES ('27', '1', '2018-12-01', '2018-12-09', '1', '1009', '1', 'admin', '2018-12-03 08:02:41', null);
-INSERT INTO `t_template_open` VALUES ('28', '1', '2018-12-01', '2018-12-09', '1', '1010', '1', 'admin', '2018-12-03 08:02:41', null);
-INSERT INTO `t_template_open` VALUES ('29', '1', '2018-12-01', '2018-12-09', '1', '1011', '1', 'admin', '2018-12-03 08:02:41', null);
-INSERT INTO `t_template_open` VALUES ('30', '1', '2018-12-01', '2018-12-09', '1', '1012', '1', 'admin', '2018-12-03 08:02:41', null);
+INSERT INTO `t_template_open` VALUES ('31', '1', '2018-12-01', '2018-12-12', '1', '1001', '1', 'admin', '2018-12-06 15:08:14', null);
+INSERT INTO `t_template_open` VALUES ('32', '2', '2018-12-01', '2018-12-11', '0', '1002', '2', 'admin', '2018-12-06 15:08:14', null);
+INSERT INTO `t_template_open` VALUES ('33', '3', '2018-12-01', '2018-12-12', '1', '1003', '3', 'admin', '2018-12-06 15:08:14', null);
+INSERT INTO `t_template_open` VALUES ('34', '4', '2018-12-01', '2018-12-11', '0', '1004', '4', 'admin', '2018-12-06 15:08:14', null);
+INSERT INTO `t_template_open` VALUES ('35', '5', '2018-12-01', '2018-12-11', '0', '1005', '5', 'admin', '2018-12-06 15:08:14', null);
+INSERT INTO `t_template_open` VALUES ('36', '6', '2018-12-01', '2018-12-12', '1', '1006', '5', 'admin', '2018-12-06 15:08:14', null);
+INSERT INTO `t_template_open` VALUES ('37', '1', '2018-12-01', '2018-12-11', '0', '1007', '1', 'admin', '2018-12-06 15:08:14', null);
+INSERT INTO `t_template_open` VALUES ('38', '1', '2018-12-01', '2018-12-12', '1', '1008', '1', 'admin', '2018-12-06 15:08:14', null);
+INSERT INTO `t_template_open` VALUES ('39', '1', '2018-12-01', '2018-12-11', '0', '1009', '1', 'admin', '2018-12-06 15:08:14', null);
+INSERT INTO `t_template_open` VALUES ('40', '1', '2018-12-01', '2018-12-12', '1', '1010', '1', 'admin', '2018-12-06 15:08:14', null);
+INSERT INTO `t_template_open` VALUES ('41', '1', '2018-12-05', '2018-12-16', '1', '1001', '1', 'admin', '2018-12-07 15:23:08', null);
+INSERT INTO `t_template_open` VALUES ('42', '1', '2018-12-05', '2018-12-16', '1', '1002', '1', 'admin', '2018-12-07 15:23:08', null);
+INSERT INTO `t_template_open` VALUES ('43', '1', '2018-12-05', '2018-12-17', '1', '1003', '1', 'admin', '2018-12-07 15:23:08', null);
+INSERT INTO `t_template_open` VALUES ('44', '1', '2018-12-05', '2018-12-18', '1', '1004', '1', 'admin', '2018-12-07 15:23:08', null);
+INSERT INTO `t_template_open` VALUES ('45', '1', '2018-12-11', '2018-12-22', '1', '1001', '1', 'admin', '2018-12-12 13:48:26', '2');
+INSERT INTO `t_template_open` VALUES ('46', '1', '2018-12-11', '2018-12-22', '1', '1001', '1', 'admin', '2018-12-12 13:48:33', '2');
 
 -- ----------------------------
 -- Table structure for t_vip_count
