@@ -44,6 +44,14 @@ public class ActivityServiceImpl implements ActivityService {
         return activityMapper.getActivity(activity);
     }
 
+    /**
+    *
+    * 展示活动开启页面
+    * @author hlx
+    * @date 2018\12\17 0017 14:51
+    * @param [pageNum, pageSize]
+    * @return com.chenyou.pojo.entity.PageResult
+    */
     @Override
     public PageResult findPage(int pageNum, int pageSize) throws BizException {
         PageHelper.startPage(pageNum,pageSize);

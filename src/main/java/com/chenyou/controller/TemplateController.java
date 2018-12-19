@@ -109,7 +109,15 @@ public class TemplateController extends BaseController {
             throw new BizException(BizException.CODE_PARM_LACK, "导入的文件内容不能为空");
         }
     }
-
+    
+    /**
+    *  
+    * 获取所有的模板信息
+    * @author hlx
+    * @date 2018\12\17  14:40
+    * @param []
+    * @return java.util.List<com.chenyou.pojo.TemplateName>
+    */
     @RequestMapping(value = "/listTemplateName", method = RequestMethod.GET)
     public List <TemplateName> listTemplateName() throws BizException {
         return templateNameService.findAll();
@@ -118,13 +126,12 @@ public class TemplateController extends BaseController {
 
     /**
      * 新增模板管理
-     *
      * @param templateManagerList
      * @return
      * @throws BizException
      */
     @RequestMapping(value = "/addTemplateManager", method = RequestMethod.POST)
-    public Map <String, Object> addTemplateManager(String templateManagerList) throws BizException {
+    public Map <String, Object> addTemplateManager(String templateManagerList) throws BizException, ParseException {
         Map <String, Object> resultMap = new HashMap <>();
         //1.将传入的json字符串转换成集合
         List <TemplateManager> list = JSON.parseArray(templateManagerList, TemplateManager.class);
@@ -351,7 +358,7 @@ public class TemplateController extends BaseController {
 
     /**
     *
-    * 已经开启的活动
+    * 游戏的表中已经开启的活动
     * @author hlx
     * @date 2018\12\12 0012 19:41
     * @param [page, rows]

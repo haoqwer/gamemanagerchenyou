@@ -4,6 +4,7 @@ import com.chenyou.base.BizException;
 import com.chenyou.pojo.TemplateManager;
 import com.chenyou.pojo.entity.PageResult;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface TemplateManagerService {
@@ -26,7 +27,7 @@ public interface TemplateManagerService {
     * @param [templateManagerList]
     * @return int
     */
-    int saveTemplateManager(List<TemplateManager> templateManagerList) throws BizException;
+    int saveTemplateManager(List<TemplateManager> templateManagerList) throws BizException, ParseException;
 
     /*
     *

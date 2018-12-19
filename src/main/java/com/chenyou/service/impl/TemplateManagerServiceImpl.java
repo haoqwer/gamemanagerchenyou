@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -62,7 +63,7 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
      * @return int
      */
     @Override
-    public int saveTemplateManager(List <TemplateManager> templateManagerList) throws BizException {
+    public int saveTemplateManager(List <TemplateManager> templateManagerList) throws BizException, ParseException {
         //1.判断传入的TemplateManager是否为空
         if (StringUtils.isEmpty(templateManagerList)) {
             throw new BizException(BizException.CODE_PARM_LACK, "请输入模板管理内容!");
@@ -73,6 +74,10 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
         for (TemplateManager templateManager : templateManagerList) {
             //3.对创建每个活动进行判断
             condition(templateManager);
+            if(StringUtils.isEmpty(templateManager.getEndtime())){
+                throw new BizException(BizException.CODE_PARM_LACK,"请输入结束时分秒!");
+            }
+            templateManager.setEndtime(DateUtil.getHms(templateManager.getEndtime()));
             if (templateManager.getDelayDays() == 0) {
                 //4.如果延期天数为0的话，那么延期状态为0表示不延期
                 templateManager.setDelayStatus(0);
@@ -81,6 +86,7 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
                 templateManager.setDelayStatus(1);
             }
             try {
+                System.out.println(templateManager.getEndtime());
                 //5.对活动的状态进行设置,0表示开始创建
                 templateManager.setOpenStatus(0);
                 //6.判断活动id是否重复
@@ -233,7 +239,7 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
         }
         //4.延期天数
         if (null != templateManager.getDelayDays()) {
-            criteria.andDelayStatusEqualTo(templateManager.getDelayDays());
+            criteria.andDelayDaysEqualTo(templateManager.getDelayDays());
         }
         List <TemplateManager> list = templateManagerMapper.selectByExample(example);
         if (StringUtils.isEmpty(list)) {

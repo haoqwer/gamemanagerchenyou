@@ -217,5 +217,21 @@ public class DateUtil {
         return sdf.format(calendar.getTime());
     }
 
+    public static String getHms(String date) throws ParseException {
+        date = date.replace("Z", " UTC");
+        System.out.println(date);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS Z");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        Date d = format.parse(date);
+        return sdf.format(d);
+    }
+
+    public static String format2(Date date,String format){
+        if(null == format)
+            format = "yyyy-MM-dd hh:mm:ss";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        return dateFormat.format(date);
+    }
+
 
 }

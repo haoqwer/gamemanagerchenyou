@@ -5,7 +5,7 @@
 </head>
 <body>
 <div><font color="bule">批量导入</font></div>
-<form action="templates/importTemplates.do" method="post" enctype="multipart/form-data" onsubmit="return check();">
+<form action="send/importProps.do" method="post" enctype="multipart/form-data" onsubmit="return check();">
     <div style="margin: 30px;"><input id="excel_file" type="file" name="filename" accept="xlsx" size="80"/>
         <input id="excel_button" type="submit" value="导入Excel"/></div>
     <%--<font id="importMsg" color="red"><%=importMsg%></font><input type="hidden"/>--%>

@@ -14,7 +14,11 @@ import com.chenyou.pojo.entity.PageResult;
  * @Version: 1.0
  **/
 public interface ActivityService {
+
+
     Activity getActivity(Activity activity);
+
+
     PageResult findPage(int pageNum,int pageSize) throws BizException;
 
 }

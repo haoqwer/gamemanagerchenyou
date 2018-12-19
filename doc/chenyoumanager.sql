@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50549
 File Encoding         : 65001
 
-Date: 2018-12-12 19:42:32
+Date: 2018-12-19 20:32:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -326,7 +326,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, '21232f297a57a5a743894a0e4a801fc3', null, null, null, '0:0:0:0:0:0:0:1', '2018-12-12 13:48:14', 'admin', null, null, '2018-12-03 19:54:42', '管理员', 'test_01');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, '21232f297a57a5a743894a0e4a801fc3', null, null, null, '0:0:0:0:0:0:0:1', '2018-12-19 20:23:20', 'admin', null, null, '2018-12-03 19:54:42', '管理员', 'test_01');
 INSERT INTO `sys_user` VALUES ('6', '123', '123', null, '13098381432', null, '202cb962ac59075b964b07152d234b70', null, '0', null, '0:0:0:0:0:0:0:1', '2018-11-21 11:56:05', 'admin', '2018-10-11 17:10:41', 'admin', '2018-10-12 10:05:08', '123', 'android_test_02');
 INSERT INTO `sys_user` VALUES ('7', 'z', '指牛', null, '13098381435', null, '202cb962ac59075b964b07152d234b70', null, '0', null, '127.0.0.1', '2018-10-11 17:42:57', 'admin', '2018-10-11 17:17:54', '123', null, '渠道', 'android_td_jyfc');
 INSERT INTO `sys_user` VALUES ('8', 'test01', '渠道1', null, '13098381433', null, '0e698a8ffc1a0af622c7b4db3cb750cc', null, '0', null, '0:0:0:0:0:0:0:1', '2018-10-22 15:07:58', 'admin', '2018-10-11 17:38:37', 'admin', null, '渠道1', 'android_td_jyfc');
@@ -478,7 +478,7 @@ CREATE TABLE `t_about_game` (
   `arpu` int(11) NOT NULL DEFAULT '0' COMMENT 'arpu值',
   `channel_id` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`about_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='游戏概况';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='游戏概况';
 
 -- ----------------------------
 -- Records of t_about_game
@@ -1781,6 +1781,30 @@ INSERT INTO `t_onlineplayer_count` VALUES ('1', '2018-09-11', '1:00-2:00', '9999
 INSERT INTO `t_onlineplayer_count` VALUES ('2', '2018-09-11', '2:00-3:00', '1111', '2222', null, null);
 
 -- ----------------------------
+-- Table structure for t_order
+-- ----------------------------
+DROP TABLE IF EXISTS `t_order`;
+CREATE TABLE `t_order` (
+  `id` int(11) NOT NULL,
+  `order_index` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `order_name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_order
+-- ----------------------------
+INSERT INTO `t_order` VALUES ('1', '1', '288', '年卡');
+INSERT INTO `t_order` VALUES ('2', '2', '28', '月卡');
+INSERT INTO `t_order` VALUES ('3', '3', '6', '6元宝');
+INSERT INTO `t_order` VALUES ('4', '4', '30', '30元宝');
+INSERT INTO `t_order` VALUES ('5', '5', '68', '68元宝');
+INSERT INTO `t_order` VALUES ('6', '6', '198', '198元宝');
+INSERT INTO `t_order` VALUES ('7', '7', '328', '328元宝');
+INSERT INTO `t_order` VALUES ('8', '8', '648', '648元宝');
+
+-- ----------------------------
 -- Table structure for t_out_consume
 -- ----------------------------
 DROP TABLE IF EXISTS `t_out_consume`;
@@ -1841,6 +1865,331 @@ INSERT INTO `t_point_analyse` VALUES ('1', '计费点0', '100000', '99999', '1',
 INSERT INTO `t_point_analyse` VALUES ('2', '计费点1', '99999', '123456', null, null, '2018-10-30');
 
 -- ----------------------------
+-- Table structure for t_prop
+-- ----------------------------
+DROP TABLE IF EXISTS `t_prop`;
+CREATE TABLE `t_prop` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `prop_id` int(11) NOT NULL,
+  `prop_name` varchar(64) NOT NULL,
+  `sort` int(11) NOT NULL,
+  `create_time` varchar(64) DEFAULT NULL,
+  `update_time` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=308 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_prop
+-- ----------------------------
+INSERT INTO `t_prop` VALUES ('1', '1001', '金币', '1', null, null);
+INSERT INTO `t_prop` VALUES ('2', '1002', '士兵', '2', null, null);
+INSERT INTO `t_prop` VALUES ('3', '1003', '粮草', '3', null, null);
+INSERT INTO `t_prop` VALUES ('4', '1004', '元宝', '4', null, null);
+INSERT INTO `t_prop` VALUES ('5', '1005', '政绩', '5', null, null);
+INSERT INTO `t_prop` VALUES ('6', '10038', '卷轴礼包', '6', null, null);
+INSERT INTO `t_prop` VALUES ('7', '10082', '檀木指环', '7', null, null);
+INSERT INTO `t_prop` VALUES ('8', '10083', '檀木腰牌', '8', null, null);
+INSERT INTO `t_prop` VALUES ('9', '10084', '檀木剑', '9', null, null);
+INSERT INTO `t_prop` VALUES ('10', '10047', '兵符', '10', null, null);
+INSERT INTO `t_prop` VALUES ('11', '10048', '高级兵符', '11', null, null);
+INSERT INTO `t_prop` VALUES ('12', '10049', '黑市兵符', '12', null, null);
+INSERT INTO `t_prop` VALUES ('13', '10050', '银票', '13', null, null);
+INSERT INTO `t_prop` VALUES ('14', '10051', '高级银票', '14', null, null);
+INSERT INTO `t_prop` VALUES ('15', '10052', '黑市银票', '15', null, null);
+INSERT INTO `t_prop` VALUES ('16', '10119', '粮票', '16', null, null);
+INSERT INTO `t_prop` VALUES ('17', '10120', '高级粮票', '17', null, null);
+INSERT INTO `t_prop` VALUES ('18', '10121', '征收粮票', '18', null, null);
+INSERT INTO `t_prop` VALUES ('19', '10022', '体力丹', '19', null, null);
+INSERT INTO `t_prop` VALUES ('20', '10023', '精力丹', '20', null, null);
+INSERT INTO `t_prop` VALUES ('21', '10024', '活力丹', '21', null, null);
+INSERT INTO `t_prop` VALUES ('22', '10025', '玛瑙心', '22', null, null);
+INSERT INTO `t_prop` VALUES ('23', '10026', '翡翠心', '23', null, null);
+INSERT INTO `t_prop` VALUES ('24', '10027', '香囊', '24', null, null);
+INSERT INTO `t_prop` VALUES ('25', '10028', '玉佩', '25', null, null);
+INSERT INTO `t_prop` VALUES ('26', '10039', '书籍经验书', '25', null, null);
+INSERT INTO `t_prop` VALUES ('27', '10029', '魅力礼盒', '26', null, null);
+INSERT INTO `t_prop` VALUES ('28', '10040', '书籍经验包', '26', null, null);
+INSERT INTO `t_prop` VALUES ('29', '10030', '亲密礼盒', '27', null, null);
+INSERT INTO `t_prop` VALUES ('30', '10041', '书籍经验盒', '27', null, null);
+INSERT INTO `t_prop` VALUES ('31', '10031', '红颜魅力包', '28', null, null);
+INSERT INTO `t_prop` VALUES ('32', '10042', '技能经验书', '28', null, null);
+INSERT INTO `t_prop` VALUES ('33', '10032', '红颜亲密包', '29', null, null);
+INSERT INTO `t_prop` VALUES ('34', '10043', '技能经验包', '29', null, null);
+INSERT INTO `t_prop` VALUES ('35', '10033', '强化卷轴武', '30', null, null);
+INSERT INTO `t_prop` VALUES ('36', '10044', '技能经验盒', '30', null, null);
+INSERT INTO `t_prop` VALUES ('37', '10034', '强化卷轴智', '31', null, null);
+INSERT INTO `t_prop` VALUES ('38', '10045', '政绩礼包', '31', null, null);
+INSERT INTO `t_prop` VALUES ('39', '10035', '强化卷轴政', '32', null, null);
+INSERT INTO `t_prop` VALUES ('40', '10046', '政绩礼盒', '32', null, null);
+INSERT INTO `t_prop` VALUES ('41', '10036', '强化卷轴魅', '33', null, null);
+INSERT INTO `t_prop` VALUES ('42', '10001', '属性药水', '34', null, null);
+INSERT INTO `t_prop` VALUES ('43', '10002', '属性散', '35', null, null);
+INSERT INTO `t_prop` VALUES ('44', '10003', '属性丸', '36', null, null);
+INSERT INTO `t_prop` VALUES ('45', '10004', '属性丹', '37', null, null);
+INSERT INTO `t_prop` VALUES ('46', '10005', '属性灵液', '38', null, null);
+INSERT INTO `t_prop` VALUES ('47', '10006', '武力药水', '39', null, null);
+INSERT INTO `t_prop` VALUES ('48', '10007', '武力散', '40', null, null);
+INSERT INTO `t_prop` VALUES ('49', '10008', '武力丸', '41', null, null);
+INSERT INTO `t_prop` VALUES ('50', '10009', '武力丹', '42', null, null);
+INSERT INTO `t_prop` VALUES ('51', '10010', '智力药水', '43', null, null);
+INSERT INTO `t_prop` VALUES ('52', '10011', '智力散', '44', null, null);
+INSERT INTO `t_prop` VALUES ('53', '10012', '智力丸', '45', null, null);
+INSERT INTO `t_prop` VALUES ('54', '10013', '智力丹', '46', null, null);
+INSERT INTO `t_prop` VALUES ('55', '10014', '政治药水', '47', null, null);
+INSERT INTO `t_prop` VALUES ('56', '10015', '政治散', '48', null, null);
+INSERT INTO `t_prop` VALUES ('57', '10016', '政治丸', '49', null, null);
+INSERT INTO `t_prop` VALUES ('58', '10017', '政治丹', '50', null, null);
+INSERT INTO `t_prop` VALUES ('59', '10018', '魅力药水', '51', null, null);
+INSERT INTO `t_prop` VALUES ('60', '10019', '魅力散', '52', null, null);
+INSERT INTO `t_prop` VALUES ('61', '10020', '魅力丸', '53', null, null);
+INSERT INTO `t_prop` VALUES ('62', '10021', '魅力丹', '54', null, null);
+INSERT INTO `t_prop` VALUES ('63', '10053', '征收兵符', '55', null, null);
+INSERT INTO `t_prop` VALUES ('64', '10054', '高级征收兵符', '56', null, null);
+INSERT INTO `t_prop` VALUES ('65', '10055', '经商银票', '57', null, null);
+INSERT INTO `t_prop` VALUES ('66', '10056', '高级经商银票', '58', null, null);
+INSERT INTO `t_prop` VALUES ('67', '10057', '征收令', '59', null, null);
+INSERT INTO `t_prop` VALUES ('68', '10058', '政务令', '60', null, null);
+INSERT INTO `t_prop` VALUES ('69', '10059', '招募令碎片', '61', null, null);
+INSERT INTO `t_prop` VALUES ('70', '10060', '招募令', '62', null, null);
+INSERT INTO `t_prop` VALUES ('71', '10061', '五虎令', '63', null, null);
+INSERT INTO `t_prop` VALUES ('72', '10062', '良将令', '64', null, null);
+INSERT INTO `t_prop` VALUES ('73', '10063', '虎臣令', '65', null, null);
+INSERT INTO `t_prop` VALUES ('74', '10064', '定情珠', '66', null, null);
+INSERT INTO `t_prop` VALUES ('75', '10065', '同心锁', '67', null, null);
+INSERT INTO `t_prop` VALUES ('76', '10066', '鸳鸯玉', '68', null, null);
+INSERT INTO `t_prop` VALUES ('77', '10067', '碧玺指环', '69', null, null);
+INSERT INTO `t_prop` VALUES ('78', '10068', '鎏金腰牌', '70', null, null);
+INSERT INTO `t_prop` VALUES ('79', '10069', '龙渊剑', '71', null, null);
+INSERT INTO `t_prop` VALUES ('80', '10070', '翡翠指环', '72', null, null);
+INSERT INTO `t_prop` VALUES ('81', '10071', '翡翠腰牌', '73', null, null);
+INSERT INTO `t_prop` VALUES ('82', '10072', '天晶剑', '74', null, null);
+INSERT INTO `t_prop` VALUES ('83', '10073', '白玉指环', '75', null, null);
+INSERT INTO `t_prop` VALUES ('84', '10074', '白玉腰牌', '76', null, null);
+INSERT INTO `t_prop` VALUES ('85', '10075', '龙泉剑', '77', null, null);
+INSERT INTO `t_prop` VALUES ('86', '10076', '玄铁指环', '78', null, null);
+INSERT INTO `t_prop` VALUES ('87', '10077', '玄铁腰牌', '79', null, null);
+INSERT INTO `t_prop` VALUES ('88', '10078', '玄铁剑', '80', null, null);
+INSERT INTO `t_prop` VALUES ('89', '10079', '青铜指环', '81', null, null);
+INSERT INTO `t_prop` VALUES ('90', '10080', '青铜腰牌', '82', null, null);
+INSERT INTO `t_prop` VALUES ('91', '10081', '青铜剑', '83', null, null);
+INSERT INTO `t_prop` VALUES ('92', '10085', '同盟令碎片', '84', null, null);
+INSERT INTO `t_prop` VALUES ('93', '10086', '同盟令', '85', null, null);
+INSERT INTO `t_prop` VALUES ('94', '10087', '高级同盟令', '86', null, null);
+INSERT INTO `t_prop` VALUES ('95', '10088', '出使令', '87', null, null);
+INSERT INTO `t_prop` VALUES ('96', '10089', '出战令', '88', null, null);
+INSERT INTO `t_prop` VALUES ('97', '10090', '挑战书', '89', null, null);
+INSERT INTO `t_prop` VALUES ('98', '10091', '追捕令碎片', '90', null, null);
+INSERT INTO `t_prop` VALUES ('99', '10092', '追捕令', '91', null, null);
+INSERT INTO `t_prop` VALUES ('100', '10093', '演武令牌', '92', null, null);
+INSERT INTO `t_prop` VALUES ('101', '10095', '改名卡', '93', null, null);
+INSERT INTO `t_prop` VALUES ('102', '10096', '跨服喇叭', '94', null, null);
+INSERT INTO `t_prop` VALUES ('103', '10097', '珍宝盒', '95', null, null);
+INSERT INTO `t_prop` VALUES ('104', '10098', '家会食材', '96', null, null);
+INSERT INTO `t_prop` VALUES ('105', '10099', '家宴佐料', '97', null, null);
+INSERT INTO `t_prop` VALUES ('106', '10100', '官宴食材', '98', null, null);
+INSERT INTO `t_prop` VALUES ('107', '10101', '官宴作料', '99', null, null);
+INSERT INTO `t_prop` VALUES ('108', '10102', '宴会礼盒', '100', null, null);
+INSERT INTO `t_prop` VALUES ('109', '10103', '老鼠', '101', null, null);
+INSERT INTO `t_prop` VALUES ('110', '10104', '元宝袋', '102', null, null);
+INSERT INTO `t_prop` VALUES ('111', '10105', '一星资质书', '103', null, null);
+INSERT INTO `t_prop` VALUES ('112', '10106', '二星资质书', '104', null, null);
+INSERT INTO `t_prop` VALUES ('113', '10107', '三星资质书', '105', null, null);
+INSERT INTO `t_prop` VALUES ('114', '10108', '四星资质书', '106', null, null);
+INSERT INTO `t_prop` VALUES ('115', '10109', '五星资质书', '107', null, null);
+INSERT INTO `t_prop` VALUES ('116', '10110', '六星资质书', '108', null, null);
+INSERT INTO `t_prop` VALUES ('117', '10111', '伏兵锦囊', '109', null, null);
+INSERT INTO `t_prop` VALUES ('118', '10112', '助威锦囊', '110', null, null);
+INSERT INTO `t_prop` VALUES ('119', '10113', '鼓舞锦囊', '111', null, null);
+INSERT INTO `t_prop` VALUES ('120', '10114', '嘲讽锦囊', '112', null, null);
+INSERT INTO `t_prop` VALUES ('121', '10115', '先锋锦囊', '113', null, null);
+INSERT INTO `t_prop` VALUES ('122', '10116', '断后锦囊', '114', null, null);
+INSERT INTO `t_prop` VALUES ('123', '10117', '死士锦囊', '115', null, null);
+INSERT INTO `t_prop` VALUES ('124', '10118', '连胜锦囊', '116', null, null);
+INSERT INTO `t_prop` VALUES ('125', '11001', '张角碎片', '117', null, null);
+INSERT INTO `t_prop` VALUES ('126', '12001', '昭烈皇', '118', null, null);
+INSERT INTO `t_prop` VALUES ('127', '12002', '武烈皇', '119', null, null);
+INSERT INTO `t_prop` VALUES ('128', '12003', '魏武皇', '120', null, null);
+INSERT INTO `t_prop` VALUES ('129', '12004', '汉中王', '121', null, null);
+INSERT INTO `t_prop` VALUES ('130', '12005', '安乐王', '122', null, null);
+INSERT INTO `t_prop` VALUES ('131', '12006', '安平王', '123', null, null);
+INSERT INTO `t_prop` VALUES ('132', '12007', '城阳王', '124', null, null);
+INSERT INTO `t_prop` VALUES ('133', '12008', '中山王', '125', null, null);
+INSERT INTO `t_prop` VALUES ('134', '12009', '淮阳王', '126', null, null);
+INSERT INTO `t_prop` VALUES ('135', '12010', '东平王', '127', null, null);
+INSERT INTO `t_prop` VALUES ('136', '12011', '广陵王', '128', null, null);
+INSERT INTO `t_prop` VALUES ('137', '12012', '豫章王', '129', null, null);
+INSERT INTO `t_prop` VALUES ('138', '12013', '陈留王', '130', null, null);
+INSERT INTO `t_prop` VALUES ('139', '12014', '任城王', '131', null, null);
+INSERT INTO `t_prop` VALUES ('140', '12015', '溧阳侯', '132', null, null);
+INSERT INTO `t_prop` VALUES ('141', '12016', '都亭侯', '133', null, null);
+INSERT INTO `t_prop` VALUES ('142', '12017', '忠武侯', '134', null, null);
+INSERT INTO `t_prop` VALUES ('143', '12018', '寿亭侯', '135', null, null);
+INSERT INTO `t_prop` VALUES ('144', '12019', '乌程侯', '136', null, null);
+INSERT INTO `t_prop` VALUES ('145', '12020', '武乡侯', '137', null, null);
+INSERT INTO `t_prop` VALUES ('146', '12021', '顺平侯', '138', null, null);
+INSERT INTO `t_prop` VALUES ('147', '10122', '高级征收粮票', '139', null, null);
+INSERT INTO `t_prop` VALUES ('148', '10123', '武力灵液', '140', null, null);
+INSERT INTO `t_prop` VALUES ('149', '10124', '智力灵液', '141', null, null);
+INSERT INTO `t_prop` VALUES ('150', '10125', '政治灵液', '142', null, null);
+INSERT INTO `t_prop` VALUES ('151', '10126', '魅力灵液', '143', null, null);
+INSERT INTO `t_prop` VALUES ('152', '20001', '彩带', '144', null, null);
+INSERT INTO `t_prop` VALUES ('153', '20002', '鞭炮', '145', null, null);
+INSERT INTO `t_prop` VALUES ('154', '20003', '白鸽', '146', null, null);
+INSERT INTO `t_prop` VALUES ('155', '20004', '灯笼', '147', null, null);
+INSERT INTO `t_prop` VALUES ('156', '21001', '红包', '148', null, null);
+INSERT INTO `t_prop` VALUES ('157', '21002', '庆祝礼包', '149', null, null);
+INSERT INTO `t_prop` VALUES ('158', '21003', '祈福礼包', '150', null, null);
+INSERT INTO `t_prop` VALUES ('159', '21004', '盛世礼包', '151', null, null);
+INSERT INTO `t_prop` VALUES ('160', '30001', '竹叶青', '152', null, null);
+INSERT INTO `t_prop` VALUES ('161', '30002', '寒潭香', '153', null, null);
+INSERT INTO `t_prop` VALUES ('162', '30003', '秋露白', '154', null, null);
+INSERT INTO `t_prop` VALUES ('163', '30004', '太禧白', '155', null, null);
+INSERT INTO `t_prop` VALUES ('164', '30005', '宣德炉', '156', null, null);
+INSERT INTO `t_prop` VALUES ('165', '30006', '大克鼎', '157', null, null);
+INSERT INTO `t_prop` VALUES ('166', '30007', '毛公鼎', '158', null, null);
+INSERT INTO `t_prop` VALUES ('167', '30008', '四羊方尊', '159', null, null);
+INSERT INTO `t_prop` VALUES ('168', '30009', '竹简', '160', null, null);
+INSERT INTO `t_prop` VALUES ('169', '30010', '木简', '161', null, null);
+INSERT INTO `t_prop` VALUES ('170', '30011', '竹牍', '162', null, null);
+INSERT INTO `t_prop` VALUES ('171', '30012', '木牍', '163', null, null);
+INSERT INTO `t_prop` VALUES ('172', '30013', '轻步兵', '164', null, null);
+INSERT INTO `t_prop` VALUES ('173', '30014', '遁甲兵', '165', null, null);
+INSERT INTO `t_prop` VALUES ('174', '30015', '轻骑兵', '166', null, null);
+INSERT INTO `t_prop` VALUES ('175', '30016', '铁骑兵', '167', null, null);
+INSERT INTO `t_prop` VALUES ('176', '30017', '红包', '168', null, null);
+INSERT INTO `t_prop` VALUES ('177', '30018', '庆祝礼包', '169', null, null);
+INSERT INTO `t_prop` VALUES ('178', '30019', '祈福礼包', '170', null, null);
+INSERT INTO `t_prop` VALUES ('179', '30020', '盛世礼包', '171', null, null);
+INSERT INTO `t_prop` VALUES ('180', '30021', '红包', '172', null, null);
+INSERT INTO `t_prop` VALUES ('181', '30022', '庆祝礼包', '173', null, null);
+INSERT INTO `t_prop` VALUES ('182', '30023', '祈福礼包', '174', null, null);
+INSERT INTO `t_prop` VALUES ('183', '30024', '盛世礼包', '175', null, null);
+INSERT INTO `t_prop` VALUES ('184', '30025', '红包', '176', null, null);
+INSERT INTO `t_prop` VALUES ('185', '30026', '庆祝礼包', '177', null, null);
+INSERT INTO `t_prop` VALUES ('186', '30027', '祈福礼包', '178', null, null);
+INSERT INTO `t_prop` VALUES ('187', '30028', '盛世礼包', '179', null, null);
+INSERT INTO `t_prop` VALUES ('188', '30029', '红包', '180', null, null);
+INSERT INTO `t_prop` VALUES ('189', '30030', '庆祝礼包', '181', null, null);
+INSERT INTO `t_prop` VALUES ('190', '30031', '祈福礼包', '182', null, null);
+INSERT INTO `t_prop` VALUES ('191', '30032', '盛世礼包', '183', null, null);
+INSERT INTO `t_prop` VALUES ('192', '1006', '武将武力', '184', null, null);
+INSERT INTO `t_prop` VALUES ('193', '1007', '武将智力', '185', null, null);
+INSERT INTO `t_prop` VALUES ('194', '1008', '武将政治', '186', null, null);
+INSERT INTO `t_prop` VALUES ('195', '1009', '武将魅力', '187', null, null);
+INSERT INTO `t_prop` VALUES ('196', '1010', '红颜魅力', '188', null, null);
+INSERT INTO `t_prop` VALUES ('197', '1011', '红颜亲密', '189', null, null);
+INSERT INTO `t_prop` VALUES ('198', '1012', '书籍经验', '190', null, null);
+INSERT INTO `t_prop` VALUES ('199', '1013', '技能经验', '191', null, null);
+INSERT INTO `t_prop` VALUES ('200', '1014', '额外获得对应经营次数+1', '192', null, null);
+INSERT INTO `t_prop` VALUES ('201', '1015', '额外获得政务次数+1', '193', null, null);
+INSERT INTO `t_prop` VALUES ('202', '1016', '红颜系统回满当前精力', '194', null, null);
+INSERT INTO `t_prop` VALUES ('203', '1017', '子嗣系统回满当前子嗣活力', '195', null, null);
+INSERT INTO `t_prop` VALUES ('204', '1018', '寻访系统回满当前体力', '196', null, null);
+INSERT INTO `t_prop` VALUES ('205', '1019', '增加活跃度', '197', null, null);
+INSERT INTO `t_prop` VALUES ('206', '1020', '增加经商积分', '198', null, null);
+INSERT INTO `t_prop` VALUES ('207', '1021', '增加围剿积分', '199', null, null);
+INSERT INTO `t_prop` VALUES ('208', '1022', 'vip经验', '200', null, null);
+INSERT INTO `t_prop` VALUES ('209', '1201', '奖励武将-司马懿', '201', null, null);
+INSERT INTO `t_prop` VALUES ('210', '1202', '奖励武将-马腾', '202', null, null);
+INSERT INTO `t_prop` VALUES ('211', '1203', '奖励武将-董承', '203', null, null);
+INSERT INTO `t_prop` VALUES ('212', '1204', '奖励武将-孙亮', '204', null, null);
+INSERT INTO `t_prop` VALUES ('213', '1205', '奖励武将-曹植', '205', null, null);
+INSERT INTO `t_prop` VALUES ('214', '1206', '奖励武将-马岱', '206', null, null);
+INSERT INTO `t_prop` VALUES ('215', '1207', '奖励武将-徐庶', '207', null, null);
+INSERT INTO `t_prop` VALUES ('216', '1208', '奖励武将-贾诩', '208', null, null);
+INSERT INTO `t_prop` VALUES ('217', '1209', '奖励武将-汉献帝', '209', null, null);
+INSERT INTO `t_prop` VALUES ('218', '1210', '奖励武将-关兴', '210', null, null);
+INSERT INTO `t_prop` VALUES ('219', '1211', '奖励武将-王朗', '211', null, null);
+INSERT INTO `t_prop` VALUES ('220', '1212', '奖励武将-庞统', '212', null, null);
+INSERT INTO `t_prop` VALUES ('221', '1213', '奖励武将-孟获', '213', null, null);
+INSERT INTO `t_prop` VALUES ('222', '1214', '奖励武将-太史慈', '214', null, null);
+INSERT INTO `t_prop` VALUES ('223', '1215', '奖励武将-鲁肃', '215', null, null);
+INSERT INTO `t_prop` VALUES ('224', '1216', '奖励武将-羊祜', '216', null, null);
+INSERT INTO `t_prop` VALUES ('225', '1217', '奖励武将-刘禅', '217', null, null);
+INSERT INTO `t_prop` VALUES ('226', '1218', '奖励武将-高顺', '218', null, null);
+INSERT INTO `t_prop` VALUES ('227', '1219', '奖励武将-郭嘉', '219', null, null);
+INSERT INTO `t_prop` VALUES ('228', '1220', '奖励武将-陈宫', '220', null, null);
+INSERT INTO `t_prop` VALUES ('229', '1221', '奖励武将-陆逊', '221', null, null);
+INSERT INTO `t_prop` VALUES ('230', '1222', '奖励武将-孙坚', '222', null, null);
+INSERT INTO `t_prop` VALUES ('231', '1223', '奖励武将-夏侯惇', '223', null, null);
+INSERT INTO `t_prop` VALUES ('232', '1224', '奖励武将-张苞', '224', null, null);
+INSERT INTO `t_prop` VALUES ('233', '1225', '奖励武将-颜良', '225', null, null);
+INSERT INTO `t_prop` VALUES ('234', '1226', '奖励武将-曹丕', '226', null, null);
+INSERT INTO `t_prop` VALUES ('235', '1227', '奖励武将-汉灵帝', '227', null, null);
+INSERT INTO `t_prop` VALUES ('236', '1228', '奖励武将-邓艾', '228', null, null);
+INSERT INTO `t_prop` VALUES ('237', '1229', '奖励武将-许褚', '229', null, null);
+INSERT INTO `t_prop` VALUES ('238', '1230', '奖励武将-吕蒙', '230', null, null);
+INSERT INTO `t_prop` VALUES ('239', '1231', '奖励武将-关索', '231', null, null);
+INSERT INTO `t_prop` VALUES ('240', '1232', '奖励武将-典韦', '232', null, null);
+INSERT INTO `t_prop` VALUES ('241', '1233', '奖励武将-张飞', '233', null, null);
+INSERT INTO `t_prop` VALUES ('242', '1234', '奖励武将-关羽', '234', null, null);
+INSERT INTO `t_prop` VALUES ('243', '1235', '奖励武将-马超', '235', null, null);
+INSERT INTO `t_prop` VALUES ('244', '1236', '奖励武将-赵云', '236', null, null);
+INSERT INTO `t_prop` VALUES ('245', '1237', '奖励武将-黄忠', '237', null, null);
+INSERT INTO `t_prop` VALUES ('246', '1238', '奖励武将-黄盖', '238', null, null);
+INSERT INTO `t_prop` VALUES ('247', '1239', '奖励武将-周泰', '239', null, null);
+INSERT INTO `t_prop` VALUES ('248', '1240', '奖励武将-甘宁', '240', null, null);
+INSERT INTO `t_prop` VALUES ('249', '1241', '奖励武将-凌统', '241', null, null);
+INSERT INTO `t_prop` VALUES ('250', '1242', '奖励武将-徐盛', '242', null, null);
+INSERT INTO `t_prop` VALUES ('251', '1243', '奖励武将-张辽', '243', null, null);
+INSERT INTO `t_prop` VALUES ('252', '1244', '奖励武将-乐进', '244', null, null);
+INSERT INTO `t_prop` VALUES ('253', '1245', '奖励武将-于禁', '245', null, null);
+INSERT INTO `t_prop` VALUES ('254', '1246', '奖励武将-张郃', '246', null, null);
+INSERT INTO `t_prop` VALUES ('255', '1247', '奖励武将-徐晃', '247', null, null);
+INSERT INTO `t_prop` VALUES ('256', '1248', '奖励武将-孙策', '248', null, null);
+INSERT INTO `t_prop` VALUES ('257', '1249', '奖励武将-姜维', '249', null, null);
+INSERT INTO `t_prop` VALUES ('258', '1250', '奖励武将-周瑜', '250', null, null);
+INSERT INTO `t_prop` VALUES ('259', '1251', '奖励武将-诸葛亮', '251', null, null);
+INSERT INTO `t_prop` VALUES ('260', '1252', '奖励武将-刘备', '252', null, null);
+INSERT INTO `t_prop` VALUES ('261', '1253', '奖励武将-孙权', '253', null, null);
+INSERT INTO `t_prop` VALUES ('262', '1254', '奖励武将-吕布', '254', null, null);
+INSERT INTO `t_prop` VALUES ('263', '1255', '奖励武将-曹操', '255', null, null);
+INSERT INTO `t_prop` VALUES ('264', '1256', '奖励武将-夏侯渊', '256', null, null);
+INSERT INTO `t_prop` VALUES ('265', '1257', '奖励武将-张角', '257', null, null);
+INSERT INTO `t_prop` VALUES ('266', '1301', '奖励红颜—张春华', '258', null, null);
+INSERT INTO `t_prop` VALUES ('267', '1302', '奖励红颜—马云禄', '259', null, null);
+INSERT INTO `t_prop` VALUES ('268', '1303', '奖励红颜—曹节', '260', null, null);
+INSERT INTO `t_prop` VALUES ('269', '1304', '奖励红颜—孙鲁班', '261', null, null);
+INSERT INTO `t_prop` VALUES ('270', '1305', '奖励红颜—甄姬', '262', null, null);
+INSERT INTO `t_prop` VALUES ('271', '1306', '奖励红颜—花鬘', '263', null, null);
+INSERT INTO `t_prop` VALUES ('272', '1307', '奖励红颜—糜夫人', '264', null, null);
+INSERT INTO `t_prop` VALUES ('273', '1308', '奖励红颜—曹华', '265', null, null);
+INSERT INTO `t_prop` VALUES ('274', '1309', '奖励红颜—伏寿', '266', null, null);
+INSERT INTO `t_prop` VALUES ('275', '1310', '奖励红颜—关银屏', '267', null, null);
+INSERT INTO `t_prop` VALUES ('276', '1311', '奖励红颜—王元姬', '268', null, null);
+INSERT INTO `t_prop` VALUES ('277', '1312', '奖励红颜—甘皇后', '269', null, null);
+INSERT INTO `t_prop` VALUES ('278', '1313', '奖励红颜—祝融夫人', '270', null, null);
+INSERT INTO `t_prop` VALUES ('279', '1314', '奖励红颜—杜氏', '271', null, null);
+INSERT INTO `t_prop` VALUES ('280', '1315', '奖励红颜—樊氏', '272', null, null);
+INSERT INTO `t_prop` VALUES ('281', '1316', '奖励红颜—辛宪英', '273', null, null);
+INSERT INTO `t_prop` VALUES ('282', '1317', '奖励红颜—张莺莺', '274', null, null);
+INSERT INTO `t_prop` VALUES ('283', '1318', '奖励红颜—吕绮玲', '275', null, null);
+INSERT INTO `t_prop` VALUES ('284', '1319', '奖励红颜—曹羡', '276', null, null);
+INSERT INTO `t_prop` VALUES ('285', '1320', '奖励红颜—严氏', '277', null, null);
+INSERT INTO `t_prop` VALUES ('286', '1321', '奖励红颜—孙鲁育', '278', null, null);
+INSERT INTO `t_prop` VALUES ('287', '1322', '奖励红颜—吴国太', '279', null, null);
+INSERT INTO `t_prop` VALUES ('288', '1323', '奖励红颜—夏侯涓', '280', null, null);
+INSERT INTO `t_prop` VALUES ('289', '1324', '奖励红颜—诸葛果', '281', null, null);
+INSERT INTO `t_prop` VALUES ('290', '1325', '奖励红颜—邹氏', '282', null, null);
+INSERT INTO `t_prop` VALUES ('291', '1326', '奖励红颜—郭女王', '283', null, null);
+INSERT INTO `t_prop` VALUES ('292', '1327', '奖励红颜—何皇后', '284', null, null);
+INSERT INTO `t_prop` VALUES ('293', '1328', '奖励红颜—丁夫人', '285', null, null);
+INSERT INTO `t_prop` VALUES ('294', '1329', '奖励红颜—薛灵芸', '286', null, null);
+INSERT INTO `t_prop` VALUES ('295', '1330', '奖励红颜—蔡夫人', '287', null, null);
+INSERT INTO `t_prop` VALUES ('296', '1331', '奖励红颜—鲍三娘', '288', null, null);
+INSERT INTO `t_prop` VALUES ('297', '1332', '奖励红颜—蔡文姬', '289', null, null);
+INSERT INTO `t_prop` VALUES ('298', '1333', '奖励红颜—大乔', '290', null, null);
+INSERT INTO `t_prop` VALUES ('299', '1334', '奖励红颜—文鸳', '291', null, null);
+INSERT INTO `t_prop` VALUES ('300', '1335', '奖励红颜—小乔', '292', null, null);
+INSERT INTO `t_prop` VALUES ('301', '1336', '奖励红颜—黄月英', '293', null, null);
+INSERT INTO `t_prop` VALUES ('302', '1337', '奖励红颜—孙尚香', '294', null, null);
+INSERT INTO `t_prop` VALUES ('303', '1338', '奖励红颜—步练师', '295', null, null);
+INSERT INTO `t_prop` VALUES ('304', '1339', '奖励红颜—貂蝉', '296', null, null);
+INSERT INTO `t_prop` VALUES ('305', '1340', '奖励红颜—卞皇后', '297', null, null);
+INSERT INTO `t_prop` VALUES ('306', '1341', '奖励红颜—王昭仪', '298', null, null);
+INSERT INTO `t_prop` VALUES ('307', '10037', '卷轴残卷', '299', null, '2018-12-18 17:48:29');
+
+-- ----------------------------
 -- Table structure for t_recharge_log
 -- ----------------------------
 DROP TABLE IF EXISTS `t_recharge_log`;
@@ -1857,6 +2206,26 @@ CREATE TABLE `t_recharge_log` (
 
 -- ----------------------------
 -- Records of t_recharge_log
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_recharge_order
+-- ----------------------------
+DROP TABLE IF EXISTS `t_recharge_order`;
+CREATE TABLE `t_recharge_order` (
+  `id` int(11) NOT NULL,
+  `server_id` int(11) NOT NULL COMMENT '区服id',
+  `uid` varchar(16) NOT NULL COMMENT '用户id',
+  `order_id` int(11) NOT NULL COMMENT '充值物品id',
+  `order_name` varchar(64) NOT NULL,
+  `recharge_count` int(11) NOT NULL COMMENT '充值金额',
+  `create_by` varchar(255) NOT NULL,
+  `recharge_time` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_recharge_order
 -- ----------------------------
 
 -- ----------------------------
@@ -1898,6 +2267,29 @@ CREATE TABLE `t_seal_number` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for t_send_prop
+-- ----------------------------
+DROP TABLE IF EXISTS `t_send_prop`;
+CREATE TABLE `t_send_prop` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uids` varchar(256) NOT NULL COMMENT '多个uid中间使用,隔开',
+  `title` varchar(256) NOT NULL COMMENT '标题',
+  `content` varchar(256) NOT NULL COMMENT '内容',
+  `prop_id` int(11) NOT NULL COMMENT '道具id',
+  `prop_count` int(11) NOT NULL COMMENT '发送道具数量',
+  `send_time` varchar(12) DEFAULT NULL COMMENT '发送道具时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_send_prop
+-- ----------------------------
+INSERT INTO `t_send_prop` VALUES ('24', 'node_360_1', '道具发送', '道具发送', '10048', '10', null);
+INSERT INTO `t_send_prop` VALUES ('25', 'node_360_1', '道具发送', '道具发送', '1312', '5', null);
+INSERT INTO `t_send_prop` VALUES ('26', 'node_360_1', '道具发送', '道具发送', '1309', '10', null);
+INSERT INTO `t_send_prop` VALUES ('27', 'node_360_1', '道具发送', '道具发送', '1333', '30', null);
+
+-- ----------------------------
 -- Table structure for t_server
 -- ----------------------------
 DROP TABLE IF EXISTS `t_server`;
@@ -1906,7 +2298,7 @@ CREATE TABLE `t_server` (
   `server_name` varchar(64) NOT NULL,
   `channel_id` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`server_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_server
@@ -1955,22 +2347,32 @@ CREATE TABLE `t_template_manager` (
   `create_people` varchar(64) DEFAULT NULL,
   `remark` varchar(128) DEFAULT NULL,
   `endtime` varchar(64) NOT NULL DEFAULT '23:59:59',
-  `open_status` int(11) NOT NULL COMMENT '表示活动开启状态,创建为1,失败为2,开启成功为0',
+  `open_status` int(11) NOT NULL COMMENT '0表示创建1表示开启成功2表示开启失败',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_template_manager
 -- ----------------------------
-INSERT INTO `t_template_manager` VALUES ('55', '1', '模板管理1', '1001', '10', '1', '1', '2018-12-07 11:01:14', '1', 'admin', '1', '23:59:59', '0');
-INSERT INTO `t_template_manager` VALUES ('56', '1', '模板管理1', '1002', '10', '1', '1', '2018-12-07 11:01:14', '1', 'admin', '1', '23:59:59', '0');
-INSERT INTO `t_template_manager` VALUES ('57', '1', '模板管理1', '1003', '11', '1', '1', '2018-12-07 11:01:14', '1', 'admin', '1', '23:59:59', '0');
-INSERT INTO `t_template_manager` VALUES ('58', '1', '模板管理1', '1004', '12', '1', '1', '2018-12-07 11:01:14', '1', 'admin', '1', '23:59:59', '0');
-INSERT INTO `t_template_manager` VALUES ('59', '2', '模板管理2', '1001', '10', '1', '1', '2018-12-07 15:22:15', '2', 'admin', '', '23:59:59', '0');
-INSERT INTO `t_template_manager` VALUES ('60', '2', '模板管理2', '1002', '10', '1', '1', '2018-12-07 15:22:15', '2', 'admin', '', '23:59:59', '0');
-INSERT INTO `t_template_manager` VALUES ('61', '3', '模板管理3', '1001', '1', '2', '1', '2018-12-10 10:07:17', '3', 'admin', '3', '23:59:59', '0');
-INSERT INTO `t_template_manager` VALUES ('62', '3', '模板管理3', '1002', '12', '2', '1', '2018-12-11 17:20:08', '3', 'admin', '3', '23:59:59', '0');
-INSERT INTO `t_template_manager` VALUES ('63', '5', '模板管理5', '1001', '1', '0', '0', '2018-12-11 17:19:55', '5', 'admin', '', '23:59:59', '0');
+INSERT INTO `t_template_manager` VALUES ('145', '1', '模板管理1', '5001', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('146', '1', '模板管理1', '5002', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('147', '1', '模板管理1', '5003', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('148', '1', '模板管理1', '5004', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('149', '1', '模板管理1', '5005', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('150', '1', '模板管理1', '5006', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('151', '1', '模板管理1', '5007', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('152', '1', '模板管理1', '5008', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('153', '1', '模板管理1', '5009', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('154', '1', '模板管理1', '5010', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('155', '1', '模板管理1', '5011', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('156', '1', '模板管理1', '5012', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('157', '1', '模板管理1', '5013', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('158', '1', '模板管理1', '8001', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('159', '1', '模板管理1', '9001', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('160', '1', '模板管理1', '9002', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('161', '1', '模板管理1', '9003', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('162', '1', '模板管理1', '9004', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
+INSERT INTO `t_template_manager` VALUES ('163', '2', '模板管理2', '8101', '2', '0', '0', '2018-12-19 19:59:28', '2', 'admin', '', '23:59:59', '2');
 
 -- ----------------------------
 -- Table structure for t_template_name
@@ -1987,7 +2389,7 @@ CREATE TABLE `t_template_name` (
 -- ----------------------------
 -- Records of t_template_name
 -- ----------------------------
-INSERT INTO `t_template_name` VALUES ('1', '模板管理1', 'f', 'admin');
+INSERT INTO `t_template_name` VALUES ('1', '模板管理1', '2018-11-21 11:54:16', 'admin');
 INSERT INTO `t_template_name` VALUES ('2', '模板管理2', '2018-11-21 11:54:16', 'admin');
 INSERT INTO `t_template_name` VALUES ('3', '模板管理3', '2018-11-21 11:54:19', 'admin');
 INSERT INTO `t_template_name` VALUES ('4', '模板管理4', '2018-11-21 11:54:21', 'admin');
@@ -2009,27 +2411,92 @@ CREATE TABLE `t_template_open` (
   `record_time` varchar(64) DEFAULT NULL,
   `active_status` int(11) DEFAULT NULL COMMENT '活动开启状态0开启成功1为创建2为失败',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_template_open
 -- ----------------------------
-INSERT INTO `t_template_open` VALUES ('31', '1', '2018-12-01', '2018-12-12', '1', '1001', '1', 'admin', '2018-12-06 15:08:14', null);
-INSERT INTO `t_template_open` VALUES ('32', '2', '2018-12-01', '2018-12-11', '0', '1002', '2', 'admin', '2018-12-06 15:08:14', null);
-INSERT INTO `t_template_open` VALUES ('33', '3', '2018-12-01', '2018-12-12', '1', '1003', '3', 'admin', '2018-12-06 15:08:14', null);
-INSERT INTO `t_template_open` VALUES ('34', '4', '2018-12-01', '2018-12-11', '0', '1004', '4', 'admin', '2018-12-06 15:08:14', null);
-INSERT INTO `t_template_open` VALUES ('35', '5', '2018-12-01', '2018-12-11', '0', '1005', '5', 'admin', '2018-12-06 15:08:14', null);
-INSERT INTO `t_template_open` VALUES ('36', '6', '2018-12-01', '2018-12-12', '1', '1006', '5', 'admin', '2018-12-06 15:08:14', null);
-INSERT INTO `t_template_open` VALUES ('37', '1', '2018-12-01', '2018-12-11', '0', '1007', '1', 'admin', '2018-12-06 15:08:14', null);
-INSERT INTO `t_template_open` VALUES ('38', '1', '2018-12-01', '2018-12-12', '1', '1008', '1', 'admin', '2018-12-06 15:08:14', null);
-INSERT INTO `t_template_open` VALUES ('39', '1', '2018-12-01', '2018-12-11', '0', '1009', '1', 'admin', '2018-12-06 15:08:14', null);
-INSERT INTO `t_template_open` VALUES ('40', '1', '2018-12-01', '2018-12-12', '1', '1010', '1', 'admin', '2018-12-06 15:08:14', null);
-INSERT INTO `t_template_open` VALUES ('41', '1', '2018-12-05', '2018-12-16', '1', '1001', '1', 'admin', '2018-12-07 15:23:08', null);
-INSERT INTO `t_template_open` VALUES ('42', '1', '2018-12-05', '2018-12-16', '1', '1002', '1', 'admin', '2018-12-07 15:23:08', null);
-INSERT INTO `t_template_open` VALUES ('43', '1', '2018-12-05', '2018-12-17', '1', '1003', '1', 'admin', '2018-12-07 15:23:08', null);
-INSERT INTO `t_template_open` VALUES ('44', '1', '2018-12-05', '2018-12-18', '1', '1004', '1', 'admin', '2018-12-07 15:23:08', null);
-INSERT INTO `t_template_open` VALUES ('45', '1', '2018-12-11', '2018-12-22', '1', '1001', '1', 'admin', '2018-12-12 13:48:26', '2');
-INSERT INTO `t_template_open` VALUES ('46', '1', '2018-12-11', '2018-12-22', '1', '1001', '1', 'admin', '2018-12-12 13:48:33', '2');
+INSERT INTO `t_template_open` VALUES ('59', '1', '2018-12-19', '2018-12-20', '0', '5001', '1', 'admin', '2018-12-19 17:57:40', '2');
+INSERT INTO `t_template_open` VALUES ('60', '1', '2018-12-19', '2018-12-20', '0', '5002', '1', 'admin', '2018-12-19 17:57:40', '2');
+INSERT INTO `t_template_open` VALUES ('61', '1', '2018-12-19', '2018-12-20', '0', '5003', '1', 'admin', '2018-12-19 17:57:40', '2');
+INSERT INTO `t_template_open` VALUES ('62', '1', '2018-12-19', '2018-12-20', '0', '5004', '1', 'admin', '2018-12-19 17:57:40', '2');
+INSERT INTO `t_template_open` VALUES ('63', '1', '2018-12-19', '2018-12-20', '0', '5005', '1', 'admin', '2018-12-19 17:57:40', '2');
+INSERT INTO `t_template_open` VALUES ('64', '1', '2018-12-19', '2018-12-20', '0', '5006', '1', 'admin', '2018-12-19 17:57:40', '2');
+INSERT INTO `t_template_open` VALUES ('65', '1', '2018-12-19', '2018-12-20', '0', '5007', '1', 'admin', '2018-12-19 17:57:41', '2');
+INSERT INTO `t_template_open` VALUES ('66', '1', '2018-12-19', '2018-12-20', '0', '5008', '1', 'admin', '2018-12-19 17:57:41', '2');
+INSERT INTO `t_template_open` VALUES ('67', '1', '2018-12-19', '2018-12-20', '0', '5009', '1', 'admin', '2018-12-19 17:57:41', '2');
+INSERT INTO `t_template_open` VALUES ('68', '1', '2018-12-19', '2018-12-20', '0', '5010', '1', 'admin', '2018-12-19 17:57:41', '2');
+INSERT INTO `t_template_open` VALUES ('69', '1', '2018-12-19', '2018-12-19', '0', '5001', '1', 'admin', '2018-12-19 18:04:36', '2');
+INSERT INTO `t_template_open` VALUES ('70', '1', '2018-12-19', '2018-12-19', '0', '5002', '1', 'admin', '2018-12-19 18:04:37', '2');
+INSERT INTO `t_template_open` VALUES ('71', '1', '2018-12-19', '2018-12-19', '0', '5003', '1', 'admin', '2018-12-19 18:04:37', '2');
+INSERT INTO `t_template_open` VALUES ('72', '1', '2018-12-19', '2018-12-19', '0', '5004', '1', 'admin', '2018-12-19 18:04:37', '2');
+INSERT INTO `t_template_open` VALUES ('73', '1', '2018-12-19', '2018-12-19', '0', '5005', '1', 'admin', '2018-12-19 18:04:37', '2');
+INSERT INTO `t_template_open` VALUES ('74', '1', '2018-12-19', '2018-12-19', '0', '5006', '1', 'admin', '2018-12-19 18:04:37', '2');
+INSERT INTO `t_template_open` VALUES ('75', '1', '2018-12-19', '2018-12-19', '0', '5007', '1', 'admin', '2018-12-19 18:04:37', '2');
+INSERT INTO `t_template_open` VALUES ('76', '1', '2018-12-19', '2018-12-19', '0', '5008', '1', 'admin', '2018-12-19 18:04:37', '2');
+INSERT INTO `t_template_open` VALUES ('77', '1', '2018-12-19', '2018-12-19', '0', '5009', '1', 'admin', '2018-12-19 18:04:37', '2');
+INSERT INTO `t_template_open` VALUES ('78', '1', '2018-12-19', '2018-12-19', '0', '5010', '1', 'admin', '2018-12-19 18:04:37', '2');
+INSERT INTO `t_template_open` VALUES ('79', '1', '2018-12-19', '2018-12-20', '0', '1001', '1', 'admin', '2018-12-19 18:52:34', '2');
+INSERT INTO `t_template_open` VALUES ('80', '1', '2018-12-19', '2018-12-20', '0', '2001', '1', 'admin', '2018-12-19 18:52:34', '2');
+INSERT INTO `t_template_open` VALUES ('81', '1', '2018-12-19', '2018-12-20', '0', '3001', '1', 'admin', '2018-12-19 18:52:34', '2');
+INSERT INTO `t_template_open` VALUES ('82', '1', '2018-12-19', '2018-12-20', '0', '5001', '1', 'admin', '2018-12-19 18:52:34', '2');
+INSERT INTO `t_template_open` VALUES ('83', '1', '2018-12-19', '2018-12-20', '0', '5002', '1', 'admin', '2018-12-19 18:52:34', '2');
+INSERT INTO `t_template_open` VALUES ('84', '1', '2018-12-19', '2018-12-20', '0', '5003', '1', 'admin', '2018-12-19 18:52:34', '2');
+INSERT INTO `t_template_open` VALUES ('85', '1', '2018-12-19', '2018-12-20', '0', '5004', '1', 'admin', '2018-12-19 18:52:34', '2');
+INSERT INTO `t_template_open` VALUES ('86', '1', '2018-12-19', '2018-12-20', '0', '5005', '1', 'admin', '2018-12-19 18:52:34', '2');
+INSERT INTO `t_template_open` VALUES ('87', '1', '2018-12-19', '2018-12-20', '0', '5006', '1', 'admin', '2018-12-19 18:52:35', '2');
+INSERT INTO `t_template_open` VALUES ('88', '1', '2018-12-19', '2018-12-20', '0', '5007', '1', 'admin', '2018-12-19 18:52:35', '2');
+INSERT INTO `t_template_open` VALUES ('89', '1', '2018-12-19', '2018-12-20', '0', '5008', '1', 'admin', '2018-12-19 18:52:35', '2');
+INSERT INTO `t_template_open` VALUES ('90', '1', '2018-12-19', '2018-12-20', '0', '5009', '1', 'admin', '2018-12-19 18:52:35', '2');
+INSERT INTO `t_template_open` VALUES ('91', '1', '2018-12-19', '2018-12-20', '0', '5010', '1', 'admin', '2018-12-19 18:52:35', '2');
+INSERT INTO `t_template_open` VALUES ('92', '1', '2018-12-19', '2018-12-20', '0', '5011', '1', 'admin', '2018-12-19 18:52:35', '2');
+INSERT INTO `t_template_open` VALUES ('93', '1', '2018-12-19', '2018-12-20', '0', '5012', '1', 'admin', '2018-12-19 18:52:35', '2');
+INSERT INTO `t_template_open` VALUES ('94', '1', '2018-12-19', '2018-12-20', '0', '5013', '1', 'admin', '2018-12-19 18:52:35', '2');
+INSERT INTO `t_template_open` VALUES ('95', '1', '2018-12-19', '2018-12-20', '0', '8001', '1', 'admin', '2018-12-19 18:52:35', '2');
+INSERT INTO `t_template_open` VALUES ('96', '1', '2018-12-19', '2018-12-20', '0', '9001', '1', 'admin', '2018-12-19 18:52:35', '2');
+INSERT INTO `t_template_open` VALUES ('97', '1', '2018-12-19', '2018-12-20', '0', '9002', '1', 'admin', '2018-12-19 18:52:35', '2');
+INSERT INTO `t_template_open` VALUES ('98', '1', '2018-12-19', '2018-12-20', '0', '9003', '1', 'admin', '2018-12-19 18:52:36', '2');
+INSERT INTO `t_template_open` VALUES ('99', '1', '2018-12-19', '2018-12-20', '0', '9004', '1', 'admin', '2018-12-19 18:52:36', '2');
+INSERT INTO `t_template_open` VALUES ('100', '1', '2018-12-19', '2018-12-19', '0', '1001', '1', 'admin', '2018-12-19 19:11:20', '2');
+INSERT INTO `t_template_open` VALUES ('101', '1', '2018-12-19', '2018-12-19', '0', '2001', '1', 'admin', '2018-12-19 19:11:20', '2');
+INSERT INTO `t_template_open` VALUES ('102', '1', '2018-12-19', '2018-12-19', '0', '3001', '1', 'admin', '2018-12-19 19:11:20', '2');
+INSERT INTO `t_template_open` VALUES ('103', '1', '2018-12-19', '2018-12-19', '0', '5001', '1', 'admin', '2018-12-19 19:11:20', '2');
+INSERT INTO `t_template_open` VALUES ('104', '1', '2018-12-19', '2018-12-19', '0', '5002', '1', 'admin', '2018-12-19 19:11:20', '2');
+INSERT INTO `t_template_open` VALUES ('105', '1', '2018-12-19', '2018-12-19', '0', '5003', '1', 'admin', '2018-12-19 19:11:20', '2');
+INSERT INTO `t_template_open` VALUES ('106', '1', '2018-12-19', '2018-12-19', '0', '5004', '1', 'admin', '2018-12-19 19:11:20', '2');
+INSERT INTO `t_template_open` VALUES ('107', '1', '2018-12-19', '2018-12-19', '0', '5005', '1', 'admin', '2018-12-19 19:11:20', '2');
+INSERT INTO `t_template_open` VALUES ('108', '1', '2018-12-19', '2018-12-19', '0', '5006', '1', 'admin', '2018-12-19 19:11:20', '2');
+INSERT INTO `t_template_open` VALUES ('109', '1', '2018-12-19', '2018-12-19', '0', '5007', '1', 'admin', '2018-12-19 19:11:20', '2');
+INSERT INTO `t_template_open` VALUES ('110', '1', '2018-12-19', '2018-12-19', '0', '5008', '1', 'admin', '2018-12-19 19:11:20', '2');
+INSERT INTO `t_template_open` VALUES ('111', '1', '2018-12-19', '2018-12-19', '0', '5009', '1', 'admin', '2018-12-19 19:11:21', '2');
+INSERT INTO `t_template_open` VALUES ('112', '1', '2018-12-19', '2018-12-19', '0', '5010', '1', 'admin', '2018-12-19 19:11:21', '2');
+INSERT INTO `t_template_open` VALUES ('113', '1', '2018-12-19', '2018-12-19', '0', '5011', '1', 'admin', '2018-12-19 19:11:21', '2');
+INSERT INTO `t_template_open` VALUES ('114', '1', '2018-12-19', '2018-12-19', '0', '5012', '1', 'admin', '2018-12-19 19:11:21', '2');
+INSERT INTO `t_template_open` VALUES ('115', '1', '2018-12-19', '2018-12-19', '0', '5013', '1', 'admin', '2018-12-19 19:11:21', '2');
+INSERT INTO `t_template_open` VALUES ('116', '1', '2018-12-19', '2018-12-19', '0', '8001', '1', 'admin', '2018-12-19 19:11:21', '2');
+INSERT INTO `t_template_open` VALUES ('117', '1', '2018-12-19', '2018-12-19', '0', '9001', '1', 'admin', '2018-12-19 19:11:21', '2');
+INSERT INTO `t_template_open` VALUES ('118', '1', '2018-12-19', '2018-12-19', '0', '9002', '1', 'admin', '2018-12-19 19:11:21', '2');
+INSERT INTO `t_template_open` VALUES ('119', '1', '2018-12-19', '2018-12-19', '0', '9003', '1', 'admin', '2018-12-19 19:11:21', '2');
+INSERT INTO `t_template_open` VALUES ('120', '1', '2018-12-19', '2018-12-19', '0', '9004', '1', 'admin', '2018-12-19 19:11:21', '2');
+INSERT INTO `t_template_open` VALUES ('121', '1', '2018-12-19', '2018-12-19', '0', '5001', '1', 'admin', '2018-12-19 19:18:56', '2');
+INSERT INTO `t_template_open` VALUES ('122', '1', '2018-12-19', '2018-12-19', '0', '5002', '1', 'admin', '2018-12-19 19:18:56', '2');
+INSERT INTO `t_template_open` VALUES ('123', '1', '2018-12-19', '2018-12-19', '0', '5003', '1', 'admin', '2018-12-19 19:18:57', '2');
+INSERT INTO `t_template_open` VALUES ('124', '1', '2018-12-19', '2018-12-19', '0', '5004', '1', 'admin', '2018-12-19 19:18:57', '2');
+INSERT INTO `t_template_open` VALUES ('125', '1', '2018-12-19', '2018-12-19', '0', '5005', '1', 'admin', '2018-12-19 19:18:57', '2');
+INSERT INTO `t_template_open` VALUES ('126', '1', '2018-12-19', '2018-12-19', '0', '5006', '1', 'admin', '2018-12-19 19:18:57', '2');
+INSERT INTO `t_template_open` VALUES ('127', '1', '2018-12-19', '2018-12-19', '0', '5007', '1', 'admin', '2018-12-19 19:18:57', '2');
+INSERT INTO `t_template_open` VALUES ('128', '1', '2018-12-19', '2018-12-19', '0', '5008', '1', 'admin', '2018-12-19 19:18:57', '2');
+INSERT INTO `t_template_open` VALUES ('129', '1', '2018-12-19', '2018-12-19', '0', '5009', '1', 'admin', '2018-12-19 19:18:57', '2');
+INSERT INTO `t_template_open` VALUES ('130', '1', '2018-12-19', '2018-12-19', '0', '5010', '1', 'admin', '2018-12-19 19:18:57', '2');
+INSERT INTO `t_template_open` VALUES ('131', '1', '2018-12-19', '2018-12-19', '0', '5011', '1', 'admin', '2018-12-19 19:18:57', '2');
+INSERT INTO `t_template_open` VALUES ('132', '1', '2018-12-19', '2018-12-19', '0', '5012', '1', 'admin', '2018-12-19 19:18:57', '2');
+INSERT INTO `t_template_open` VALUES ('133', '1', '2018-12-19', '2018-12-19', '0', '5013', '1', 'admin', '2018-12-19 19:18:57', '2');
+INSERT INTO `t_template_open` VALUES ('134', '1', '2018-12-19', '2018-12-19', '0', '8001', '1', 'admin', '2018-12-19 19:18:58', '2');
+INSERT INTO `t_template_open` VALUES ('135', '1', '2018-12-19', '2018-12-19', '0', '9001', '1', 'admin', '2018-12-19 19:18:58', '2');
+INSERT INTO `t_template_open` VALUES ('136', '1', '2018-12-19', '2018-12-19', '0', '9002', '1', 'admin', '2018-12-19 19:18:58', '2');
+INSERT INTO `t_template_open` VALUES ('137', '1', '2018-12-19', '2018-12-19', '0', '9003', '1', 'admin', '2018-12-19 19:18:58', '2');
+INSERT INTO `t_template_open` VALUES ('138', '1', '2018-12-19', '2018-12-19', '0', '9004', '1', 'admin', '2018-12-19 19:18:58', '2');
+INSERT INTO `t_template_open` VALUES ('139', '1', '2018-12-19', '2018-12-20', '0', '8101', '2', 'admin', '2018-12-19 19:59:35', '2');
 
 -- ----------------------------
 -- Table structure for t_vip_count

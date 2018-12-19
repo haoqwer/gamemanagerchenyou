@@ -5,6 +5,10 @@ import org.apache.ibatis.annotations.Case;
 import org.apache.xmlbeans.impl.regex.REUtil;
 import org.omg.CORBA.PUBLIC_MEMBER;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @ProjectName: chenyoumanager
  * @Package: com.chenyou
@@ -24,34 +28,20 @@ public class LeetCodeTest {
     * @return void
     */
     public static void main(String[] args) {
-        //121表示是回文数,-121表示不是回文数，正着跟倒着结果一样
-//        I             1
-//        V             5
-//        X             10
-//        L             50
-//        C             100
-//        D             500
-//        M             1000
-        int i = 0;
-        char ch = 0;
-        String s = "D";
-        char[] chars = s.toCharArray();
-        int sum = 0;
-        for (int x = 0; x <= chars.length - 1; x++) {
-            int temp;
-            i = count(chars[x]);
-            if(chars.length!=1){
-                if (x == 0) {
-                    if (count(chars[0]) < count(chars[1])) {
-                        temp = -count(chars[0]);
-                        i = temp;
-                    }
-                }
+     //出现逗号
+        String uids="";
+        String temp="";
+        String old="1201,1101,1003";
+        String[] oldUserIds=old.split(",");
+        for(int i=0;i<=oldUserIds.length-1;i++){
+            if(i==oldUserIds.length-1){
+                System.out.println(oldUserIds[i]);
+                uids=uids+oldUserIds[i];
+            }else {
+                uids=uids+oldUserIds[i]+",";
             }
-            sum += i;
         }
-        System.out.println(sum);
-
+        System.out.println(uids);
     }
 
     public static int count(char ch) {
@@ -74,6 +64,20 @@ public class LeetCodeTest {
             i = 0;
         }
         return i;
+    }
+
+    public  static  void bufferSort(int[] arr){
+        //双层for循环,外层控制循环的次数，内层控制每次循环比较的次数
+        for(int i=0;i<arr.length-1;i++){
+            for(int j=0;j<arr.length-1-i;j++){
+                if(arr[j]>arr[j+1]){
+                   int temp=arr[j+1];
+                   arr[j+1]=arr[j];
+                   arr[j]=temp;
+                }
+            }
+        }
+        System.out.println(Arrays.toString(arr));
     }
 
 }

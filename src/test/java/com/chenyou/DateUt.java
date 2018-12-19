@@ -14,17 +14,14 @@ import java.util.Map;
 public class DateUt {
 
     public static void main(String[] args) throws ParseException, UnsupportedEncodingException {
-        String s="fdsaf";
-        char[] chars = s.toCharArray();
-        int count=0;
-        for(char c:chars){
-            for(char b:chars){
-                if(String.valueOf(c).equals(String.valueOf(b))){
-                count++;
-                }
-            }
-        }
-        System.out.println(count);
+        String date = "2018-12-12T15:59:59.000Z";
+        date = date.replace("Z", " UTC");
+        System.out.println(date);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS Z");
+        SimpleDateFormat sdf=new SimpleDateFormat("HH:mm:ss");
+        Date d = format.parse(date);
+        System.out.println(d);
+        System.out.println(sdf.format(d));
     }
 
     public  static  String formate(Date date){
