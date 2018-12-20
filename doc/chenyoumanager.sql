@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50549
 File Encoding         : 65001
 
-Date: 2018-12-19 20:32:02
+Date: 2018-12-19 21:07:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,7 +34,7 @@ CREATE TABLE `sys_menu` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COMMENT='菜单权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8 COMMENT='菜单权限表';
 
 -- ----------------------------
 -- Records of sys_menu
@@ -107,6 +107,7 @@ INSERT INTO `sys_menu` VALUES ('66', '菜单修改', '39', '62', '#', 'F', '', '
 INSERT INTO `sys_menu` VALUES ('67', '菜单查询', '39', '63', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单查询');
 INSERT INTO `sys_menu` VALUES ('68', '菜单删除', '39', '64', '#', 'F', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单删除');
 INSERT INTO `sys_menu` VALUES ('69', '活动模板管理', '8', '65', '#', 'C', '', 'fa fa-bars', 'admin', '2018-12-05 09:48:19', '', '2018-12-05 09:48:23', '活动模板管理');
+INSERT INTO `sys_menu` VALUES ('70', '道具列表', '8', '66', '#', 'C', '', 'fa fa-bars', 'admin', '2018-12-19 21:06:45', '', '2018-12-19 21:06:47', '道具列表');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -326,7 +327,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, '21232f297a57a5a743894a0e4a801fc3', null, null, null, '0:0:0:0:0:0:0:1', '2018-12-19 20:23:20', 'admin', null, null, '2018-12-03 19:54:42', '管理员', 'test_01');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'admin', null, '15888888889', null, '21232f297a57a5a743894a0e4a801fc3', null, null, null, '0:0:0:0:0:0:0:1', '2018-12-19 20:41:08', 'admin', null, null, '2018-12-03 19:54:42', '管理员', 'test_01');
 INSERT INTO `sys_user` VALUES ('6', '123', '123', null, '13098381432', null, '202cb962ac59075b964b07152d234b70', null, '0', null, '0:0:0:0:0:0:0:1', '2018-11-21 11:56:05', 'admin', '2018-10-11 17:10:41', 'admin', '2018-10-12 10:05:08', '123', 'android_test_02');
 INSERT INTO `sys_user` VALUES ('7', 'z', '指牛', null, '13098381435', null, '202cb962ac59075b964b07152d234b70', null, '0', null, '127.0.0.1', '2018-10-11 17:42:57', 'admin', '2018-10-11 17:17:54', '123', null, '渠道', 'android_td_jyfc');
 INSERT INTO `sys_user` VALUES ('8', 'test01', '渠道1', null, '13098381433', null, '0e698a8ffc1a0af622c7b4db3cb750cc', null, '0', null, '0:0:0:0:0:0:0:1', '2018-10-22 15:07:58', 'admin', '2018-10-11 17:38:37', 'admin', null, '渠道1', 'android_td_jyfc');
@@ -2349,30 +2350,19 @@ CREATE TABLE `t_template_manager` (
   `endtime` varchar(64) NOT NULL DEFAULT '23:59:59',
   `open_status` int(11) NOT NULL COMMENT '0表示创建1表示开启成功2表示开启失败',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=180 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_template_manager
 -- ----------------------------
-INSERT INTO `t_template_manager` VALUES ('145', '1', '模板管理1', '5001', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('146', '1', '模板管理1', '5002', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('147', '1', '模板管理1', '5003', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('148', '1', '模板管理1', '5004', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('149', '1', '模板管理1', '5005', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('150', '1', '模板管理1', '5006', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('151', '1', '模板管理1', '5007', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('152', '1', '模板管理1', '5008', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('153', '1', '模板管理1', '5009', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('154', '1', '模板管理1', '5010', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('155', '1', '模板管理1', '5011', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('156', '1', '模板管理1', '5012', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('157', '1', '模板管理1', '5013', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('158', '1', '模板管理1', '8001', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('159', '1', '模板管理1', '9001', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('160', '1', '模板管理1', '9002', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('161', '1', '模板管理1', '9003', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('162', '1', '模板管理1', '9004', '1', '0', '0', '2018-12-19 19:18:47', '1', 'admin', '', '19:45:00', '2');
-INSERT INTO `t_template_manager` VALUES ('163', '2', '模板管理2', '8101', '2', '0', '0', '2018-12-19 19:59:28', '2', 'admin', '', '23:59:59', '2');
+INSERT INTO `t_template_manager` VALUES ('172', '1', '模板管理1', '5001', '1', '0', '0', '2018-12-19 20:53:12', '1', 'admin', '', '21:20:00', '2');
+INSERT INTO `t_template_manager` VALUES ('173', '1', '模板管理1', '5002', '1', '0', '0', '2018-12-19 20:53:12', '1', 'admin', '', '21:20:00', '2');
+INSERT INTO `t_template_manager` VALUES ('174', '1', '模板管理1', '5003', '1', '0', '0', '2018-12-19 20:53:13', '1', 'admin', '', '21:20:00', '2');
+INSERT INTO `t_template_manager` VALUES ('175', '1', '模板管理1', '8001', '1', '0', '0', '2018-12-19 20:53:13', '1', 'admin', '', '21:20:00', '2');
+INSERT INTO `t_template_manager` VALUES ('176', '1', '模板管理1', '9001', '1', '0', '0', '2018-12-19 20:53:13', '1', 'admin', '', '21:20:00', '2');
+INSERT INTO `t_template_manager` VALUES ('177', '1', '模板管理1', '9002', '1', '0', '0', '2018-12-19 20:53:13', '1', 'admin', '', '21:20:00', '2');
+INSERT INTO `t_template_manager` VALUES ('178', '1', '模板管理1', '9003', '1', '0', '0', '2018-12-19 20:53:13', '1', 'admin', '', '21:20:00', '2');
+INSERT INTO `t_template_manager` VALUES ('179', '1', '模板管理1', '9004', '1', '0', '0', '2018-12-19 20:53:13', '1', 'admin', '', '21:20:00', '2');
 
 -- ----------------------------
 -- Table structure for t_template_name
@@ -2411,7 +2401,7 @@ CREATE TABLE `t_template_open` (
   `record_time` varchar(64) DEFAULT NULL,
   `active_status` int(11) DEFAULT NULL COMMENT '活动开启状态0开启成功1为创建2为失败',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_template_open
@@ -2497,6 +2487,22 @@ INSERT INTO `t_template_open` VALUES ('136', '1', '2018-12-19', '2018-12-19', '0
 INSERT INTO `t_template_open` VALUES ('137', '1', '2018-12-19', '2018-12-19', '0', '9003', '1', 'admin', '2018-12-19 19:18:58', '2');
 INSERT INTO `t_template_open` VALUES ('138', '1', '2018-12-19', '2018-12-19', '0', '9004', '1', 'admin', '2018-12-19 19:18:58', '2');
 INSERT INTO `t_template_open` VALUES ('139', '1', '2018-12-19', '2018-12-20', '0', '8101', '2', 'admin', '2018-12-19 19:59:35', '2');
+INSERT INTO `t_template_open` VALUES ('140', '1', '2018-12-19', '2018-12-19', '0', '5001', '1', 'admin', '2018-12-19 20:46:54', '2');
+INSERT INTO `t_template_open` VALUES ('141', '1', '2018-12-19', '2018-12-19', '0', '5002', '1', 'admin', '2018-12-19 20:46:54', '2');
+INSERT INTO `t_template_open` VALUES ('142', '1', '2018-12-19', '2018-12-19', '0', '5003', '1', 'admin', '2018-12-19 20:46:54', '2');
+INSERT INTO `t_template_open` VALUES ('143', '1', '2018-12-19', '2018-12-19', '0', '8001', '1', 'admin', '2018-12-19 20:46:54', '2');
+INSERT INTO `t_template_open` VALUES ('144', '1', '2018-12-19', '2018-12-19', '0', '9001', '1', 'admin', '2018-12-19 20:46:55', '2');
+INSERT INTO `t_template_open` VALUES ('145', '1', '2018-12-19', '2018-12-19', '0', '9002', '1', 'admin', '2018-12-19 20:46:55', '2');
+INSERT INTO `t_template_open` VALUES ('146', '1', '2018-12-19', '2018-12-19', '0', '9003', '1', 'admin', '2018-12-19 20:46:55', '2');
+INSERT INTO `t_template_open` VALUES ('147', '1', '2018-12-19', '2018-12-19', '0', '9004', '1', 'admin', '2018-12-19 20:46:55', '2');
+INSERT INTO `t_template_open` VALUES ('148', '1', '2018-12-19', '2018-12-19', '0', '5001', '1', 'admin', '2018-12-19 20:53:26', '2');
+INSERT INTO `t_template_open` VALUES ('149', '1', '2018-12-19', '2018-12-19', '0', '5002', '1', 'admin', '2018-12-19 20:53:26', '2');
+INSERT INTO `t_template_open` VALUES ('150', '1', '2018-12-19', '2018-12-19', '0', '5003', '1', 'admin', '2018-12-19 20:53:26', '2');
+INSERT INTO `t_template_open` VALUES ('151', '1', '2018-12-19', '2018-12-19', '0', '8001', '1', 'admin', '2018-12-19 20:53:26', '2');
+INSERT INTO `t_template_open` VALUES ('152', '1', '2018-12-19', '2018-12-19', '0', '9001', '1', 'admin', '2018-12-19 20:53:27', '2');
+INSERT INTO `t_template_open` VALUES ('153', '1', '2018-12-19', '2018-12-19', '0', '9002', '1', 'admin', '2018-12-19 20:53:27', '2');
+INSERT INTO `t_template_open` VALUES ('154', '1', '2018-12-19', '2018-12-19', '0', '9003', '1', 'admin', '2018-12-19 20:53:27', '2');
+INSERT INTO `t_template_open` VALUES ('155', '1', '2018-12-19', '2018-12-19', '0', '9004', '1', 'admin', '2018-12-19 20:53:27', '2');
 
 -- ----------------------------
 -- Table structure for t_vip_count

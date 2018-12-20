@@ -12,7 +12,15 @@ import java.util.List;
  * @Version: 1.0
  **/
 public interface OrderService {
-
+    
+    /*
+    *  
+    * 获取所有的物品消息
+    * @author hlx
+    * @date 2018\12\20  14:43
+    * @param []
+    * @return java.util.List<com.chenyou.pojo.Order>
+    */
     List<Order> listOrder() throws BizException;
 
     Order getOrderById(Integer id);

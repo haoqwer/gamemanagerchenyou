@@ -8,7 +8,7 @@ import java.net.URISyntaxException;
 
 public interface SealNumberService {
 
-    int addSealNumber(String uIds ) throws URISyntaxException, UnsupportedEncodingException, BizException;
+    int addSealNumber(String uIds ,Integer serverId) throws URISyntaxException, UnsupportedEncodingException, BizException;
 
-    int updateSealNumber(String uIds) throws BizException, URISyntaxException, UnsupportedEncodingException;
+    int updateSealNumber(String uIds,Integer serverId) throws BizException, URISyntaxException, UnsupportedEncodingException;
 }

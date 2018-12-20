@@ -10,13 +10,19 @@ import com.chenyou.service.gammemanagerservice.SendPropService;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -50,22 +56,39 @@ public class SendPropServiceImpl implements SendPropService {
             throw new BizException(BizException.CODE_PARM_LACK, "请输入发送道具数据");
         }
         int sum = 0;
+        //定义userIds
         String userIds = null;
+        //定义标题
         String title = null;
+        //定义内容
         String content = null;
+        //定义区服Id
+        Integer serverId = null;
+        //定义路径
+        String url = null;
 //        List<String> attach=new ArrayList <>();
 //        List<String> uids=new ArrayList <>();
+        //定义propId、数量
         String attach = "";
+        //定义uids
         String uids = "";
+        //定义serverName
+        String serverName = null;
         //获取第一个SendPro因为大部分数据都是一致的
         SendProp firstSendPro = listSendProp.get(0);
         conditions(firstSendPro);
+        //获取到serverId
+        serverId = firstSendPro.getServerId();
         //拼到uids,判断是否是全服送还是个人发送
-        if(null !=firstSendPro.getServerId()){
-                uids=serverService.getServerName(firstSendPro.getServerId());
+        //获取到userIDs
+        userIds = firstSendPro.getUids();
+        //获取到区服名称
+        serverName = serverService.getServerName(serverId);
+        //获取到现在的
+        String[] oldUserIds = userIds.split(",");
+        if(serverId!=null && firstSendPro.getWhether()==1){
+            uids=serverName;
         }else {
-            userIds = firstSendPro.getUids();
-            String[] oldUserIds = userIds.split(",");
             for (int i = 0; i <= oldUserIds.length - 1; i++) {
                 if (i == oldUserIds.length - 1) {
                     System.out.println(oldUserIds[i]);
@@ -82,6 +105,7 @@ public class SendPropServiceImpl implements SendPropService {
         title = firstSendPro.getTitle();
         //获取到cotent
         content = firstSendPro.getContent();
+        CloseableHttpClient httpClient = HttpClients.createDefault();
         for (int j = 0; j <= listSendProp.size() - 1; j++) {
             conditions(listSendProp.get(j));
             //获取到道具id
@@ -103,14 +127,39 @@ public class SendPropServiceImpl implements SendPropService {
         }
         logger.debug(attach);
         System.out.println(attach);
-        //http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&title=道具发送&msg=道具发送&fromuid=0&attach=10048,10,1312,5,130910&type=1&uids=1001,1002,1003
-        URI uri = new URIBuilder("http://gamejy.chyoukj.com:8080/").setParameter("mod", "mail").
-                setParameter("act", "sendMail").setParameter("title", title).setParameter("msg", content).
-                setParameter("fromuid", "0").setParameter("attach", attach).setParameter("type", "1").setParameter("uids", uids).build();
+        //如果==1说明是全服开启
+
+        if (firstSendPro.getWhether() == 1) {
+//            http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&title=服务器异常补偿&msg=测试道具发送&fromuid=0&attach=1004,1000000&type=1&uids=6408736&arrstate=0&server=1
+            URI uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "mail").
+                    setParameter("act", "sendMail").setParameter("title", title).setParameter("msg", content).
+                    setParameter("fromuid", "-1").setParameter("attach", attach).setParameter("type", "1").setParameter("uids", uids)
+                    .setParameter("all", "1").setParameter("server", serverId.toString()).build();
+            url = URLDecoder.decode(uri.toString(), "UTF-8");
+        } else {
+//            http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&fromuid=-1&attach=1004,500,10022,2,10023,2,10024,2&type=1&uids=node_360_1&all=1&server=1
+            URI uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "mail").
+                    setParameter("act", "sendMail").setParameter("title", title).setParameter("msg", content).
+                    setParameter("fromuid", "0").setParameter("attach", attach).setParameter("type", "1").setParameter("uids", uids)
+                    .setParameter("arrstate","0")
+                    .setParameter("server", serverId.toString()).build();
+            url = URLDecoder.decode(uri.toString(), "UTF-8");
+        }
         //获取到url
-        String url = URLDecoder.decode(uri.toString(), "UTF-8");
 //            HttpGet httpGet = new HttpGet(url);
         System.out.println("路径为:" + url);
+//        HttpGet httpGet = new HttpGet(url);
+//        CloseableHttpResponse response;
+//        try {
+//            response = httpClient.execute(httpGet);
+//            if (response.getStatusLine().getStatusCode() == 200) {
+//                String con = EntityUtils.toString(response.getEntity(), "UTF-8");
+//                System.out.println("响应的内容为:" + con);
+//                logger.info("con:"+con);
+//            }
+//        } catch (IOException e) {
+//            throw  new BizException(BizException.CODE_PARM_LACK,"不好意思活动开启失败!");
+//        }
         return sum;
     }
 
@@ -137,8 +186,11 @@ public class SendPropServiceImpl implements SendPropService {
     }
 
     public static void conditions(SendProp sendProp) throws BizException {
-        if( ! StringUtils.isEmpty(sendProp.getUids()) && null !=sendProp.getServerId()){
-            throw new BizException(BizException.CODE_PARM_LACK,"道具发送区服和玩家ID只能选择一个!");
+        if(null ==sendProp.getServerId()){
+            throw new BizException(BizException.CODE_PARM_LACK,"请选择区服!");
+        }
+        if(Integer.valueOf(1)==sendProp.getWhether() && !StringUtils.isEmpty(sendProp.getUids())){
+            throw new BizException(BizException.CODE_PARM_LACK,"区服发送和批量用户发送只能选一个");
         }
         if (StringUtils.isEmpty(sendProp.getContent())) {
             throw new BizException(BizException.CODE_PARM_LACK, "请输入内容!");

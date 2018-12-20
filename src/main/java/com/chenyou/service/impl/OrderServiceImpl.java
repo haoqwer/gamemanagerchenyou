@@ -25,6 +25,14 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMapper orderMapper;
 
+    /*
+     *
+     * 获取所有的物品消息
+     * @author hlx
+     * @date 2018\12\20  14:43
+     * @param []
+     * @return java.util.List<com.chenyou.pojo.Order>
+     */
     @Override
     public List<Order> listOrder() throws BizException {
         List <Order> list = orderMapper.selectByExample(null);

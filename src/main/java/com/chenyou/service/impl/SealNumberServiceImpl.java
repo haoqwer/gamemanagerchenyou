@@ -28,7 +28,7 @@ public class SealNumberServiceImpl  implements SealNumberService {
     private SealNumberMapper sealNumberMapper;
 
     @Override
-    public int addSealNumber(String uIds) throws URISyntaxException, UnsupportedEncodingException, BizException {
+    public int addSealNumber(String uIds,Integer serverId) throws URISyntaxException, UnsupportedEncodingException, BizException {
         if(StringUtils.isEmpty(uIds)){
             throw new BizException(BizException.CODE_PARM_LACK,"请输入用户uid");
         }
@@ -41,8 +41,9 @@ public class SealNumberServiceImpl  implements SealNumberService {
             sealNumber.setUid(uid);
             sealNumber.getRecordTime(DateUtil.format1(new Date()));
             sealNumber.setStatus("1");
-//            http://47.104.227.113:8080/?mod=user&act=set&uid=4290563&key=state&value=1
-            URI uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "user").setParameter("act", "set").setParameter("uid", uid).setParameter("key", "state").setParameter("value", "1").build();
+//            http://47.104.227.113:8080/?mod=user&act=set&uid=4523068&key=state&value=1&server=1
+            URI uri = new URIBuilder(" http://47.104.227.113:8080/").setParameter("mod", "user").setParameter("act", "set")
+                    .setParameter("uid", uid).setParameter("key", "state").setParameter("value", "1").setParameter("server",serverId+"").build();
             String url = URLDecoder.decode(uri.toString(), "UTF-8");
             System.out.println("url地址为:" + url);
             sealNumberMapper.insert(sealNumber);
@@ -52,7 +53,7 @@ public class SealNumberServiceImpl  implements SealNumberService {
     }
 
     @Override
-    public int updateSealNumber(String uIds) throws BizException, URISyntaxException, UnsupportedEncodingException {
+    public int updateSealNumber(String uIds,Integer serverId) throws BizException, URISyntaxException, UnsupportedEncodingException {
         if(StringUtils.isEmpty(uIds)){
             throw new BizException(BizException.CODE_PARM_LACK,"请输入用户uid");
         }
@@ -65,8 +66,8 @@ public class SealNumberServiceImpl  implements SealNumberService {
             List <SealNumber> list = sealNumberMapper.selectByExample(example);
             list.get(0).setStatus("0");
 //            http://47.104.227.113:8080/?mod=user&act=set&uid=4290563&key=state&value=1
-            URI uri=new URIBuilder("http://47.104.227.113:8080/").setParameter("mod","user").setParameter("act","set").setParameter("uid",uuid).
-                    setParameter("key","state").setParameter("value","1").build();
+            URI uri = new URIBuilder(" http://47.104.227.113:8080/").setParameter("mod", "user").setParameter("act", "set")
+                    .setParameter("uid", uuid).setParameter("key", "state").setParameter("value", "0").setParameter("server",serverId+"").build();
             String url = URLDecoder.decode(uri.toString(), "UTF-8");
             System.out.println("url地址为:" + url);
             sealNumberMapper.updateByPrimaryKeySelective(list.get(0));

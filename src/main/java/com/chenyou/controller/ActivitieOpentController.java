@@ -82,8 +82,8 @@ public class ActivitieOpentController extends BaseController {
     }
 
     /**
-     * 封号
      *
+     * 封号
      * @param uIds
      * @return
      * @throws UnsupportedEncodingException
@@ -91,9 +91,9 @@ public class ActivitieOpentController extends BaseController {
      * @throws URISyntaxException
      */
     @RequestMapping(value = "/closeNumber", method = RequestMethod.GET)
-    public Map <String, Object> closeNumber(String uIds) throws UnsupportedEncodingException, BizException, URISyntaxException {
+    public Map <String, Object> closeNumber(String uIds,Integer serverId) throws UnsupportedEncodingException, BizException, URISyntaxException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, sealNumberService.addSealNumber(uIds));
+        resultMap.put(ApplicationConstants.TAG_DATA, sealNumberService.addSealNumber(uIds,serverId));
         return resultMap;
     }
 
@@ -107,9 +107,9 @@ public class ActivitieOpentController extends BaseController {
      * @throws URISyntaxException
      */
     @RequestMapping(value = "/openNumber", method = RequestMethod.GET)
-    public Map <String, Object> openNumber(String uIds) throws BizException, UnsupportedEncodingException, URISyntaxException {
+    public Map <String, Object> openNumber(String uIds,Integer serverId) throws BizException, UnsupportedEncodingException, URISyntaxException {
         Map <String, Object> resultMap = new HashMap <>();
-        resultMap.put(ApplicationConstants.TAG_DATA, sealNumberService.updateSealNumber(uIds));
+        resultMap.put(ApplicationConstants.TAG_DATA, sealNumberService.updateSealNumber(uIds,serverId));
         return resultMap;
     }
 

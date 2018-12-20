@@ -92,10 +92,16 @@ public class PropServiceImpl  implements PropService {
     */
     @Override
     public int updateProp(Prop prop) throws BizException {
+        if (null == prop.getPropId()) {
+            throw new BizException(BizException.CODE_PARM_LACK, "请输入道具ID");
+        }
+        if (null == prop.getPropId()) {
+            throw new BizException(BizException.CODE_PARM_LACK, "请输入道具名称!");
+        }
         checkPropIdUnique(prop);
         checkPropNameUnique(prop);
         prop.setUpdateTime(DateUtil.format1(new Date()));
-        int i=propMapper.updateByPrimaryKeySelective(prop);
+        int i = propMapper.updateByPrimaryKeySelective(prop);
         return i;
     }
 
