@@ -77,7 +77,8 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
             if(StringUtils.isEmpty(templateManager.getEndtime())){
                 throw new BizException(BizException.CODE_PARM_LACK,"请输入结束时分秒!");
             }
-            templateManager.setEndtime(DateUtil.getHms(templateManager.getEndtime()));
+            //2018-12-12T15:59:59.000Z
+            templateManager.setEndtime(templateManager.getEndtime());
             if (templateManager.getDelayDays() == 0) {
                 //4.如果延期天数为0的话，那么延期状态为0表示不延期
                 templateManager.setDelayStatus(0);

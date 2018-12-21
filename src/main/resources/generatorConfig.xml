@@ -364,21 +364,21 @@
 
 
 
-        <!--<table tableName="t_recharge_order" domainObjectName="RechargeOrder"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
-
-
-
-        <table tableName="t_seal_number" domainObjectName="SealNumber"
-        enableCountByExample="true" enableUpdateByExample="true"
-        enableDeleteByExample="true" enableSelectByExample="true"
-        selectByExampleQueryId="true">
-        <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        <table tableName="t_recharge_order" domainObjectName="RechargeOrder"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
+
+
+
+        <!--<table tableName="t_seal_number" domainObjectName="SealNumber"-->
+        <!--enableCountByExample="true" enableUpdateByExample="true"-->
+        <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+        <!--selectByExampleQueryId="true">-->
+        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
 
 
 

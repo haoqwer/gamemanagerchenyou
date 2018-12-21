@@ -6,6 +6,7 @@ import com.chenyou.pojo.entity.PageResult;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 
 /**
  * @Description:
@@ -18,5 +19,8 @@ public interface RechargeOrderService {
     int saveRechargeOrder(RechargeOrder rechargeOrder) throws BizException, URISyntaxException, UnsupportedEncodingException;
 
     PageResult findPage(int pageNum,int pageSize);
+
+
+    PageResult findSearch(String start, String end,Integer serverId,int pageNum,int pageSize) throws BizException, ParseException;
 
 }

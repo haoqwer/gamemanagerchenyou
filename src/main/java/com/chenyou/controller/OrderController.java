@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,5 +74,11 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "/findPage", method = RequestMethod.GET)
     public PageResult findPage(int page, int rows) {
         return rechargeOrderService.findPage(page, rows);
+    }
+
+
+    @RequestMapping(value = "findSearch",method = RequestMethod.GET)
+    public PageResult findSearch(String start, String end,Integer serverId, int page, int rows) throws  BizException, ParseException {
+        return rechargeOrderService.findSearch(start,end,serverId,page,rows);
     }
 }
