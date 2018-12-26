@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,5 +36,24 @@ public class TemplateServiceImpl implements TemplateNameService {
     public String templateName(int id) {
         TemplateName templateName = templateNameMapper.selectByPrimaryKey(id);
         return templateName.getTemplateName();
+    }
+
+    @Override
+    public int ifExist(Integer templateId) throws BizException {
+        List<Integer> templateIds=new ArrayList <>();
+        List <TemplateName> listTemplate = templateNameMapper.selectByExample(null);
+        if(StringUtils.isEmpty(listTemplate)){
+           throw new BizException(BizException.CODE_PARM_LACK,"没有选择的模板!");
+        }
+        for(TemplateName templateName:listTemplate){
+            templateIds.add(templateName.getId());
+        }
+        int i=0;
+        for(int j=0;j<=templateIds.size()-1;j++){
+            if(templateIds.get(j).intValue()==templateId.intValue()){
+                i++;
+            }
+        }
+        return i;
     }
 }

@@ -79,16 +79,16 @@ public class RechargeOrderServiceImpl implements RechargeOrderService {
         System.out.println(url);
         HttpGet httpGet = new HttpGet(url);
         CloseableHttpResponse response;
-//        try {
-//            response = httpClient.execute(httpGet);
-//            if (response.getStatusLine().getStatusCode() == 200) {
-//                String content = EntityUtils.toString(response.getEntity(), "UTF-8");
-//                System.out.println("响应的内容为:" + content);
-//                logger.info("content:" + content);
-//            }
-//        } catch (IOException e) {
-//            throw new BizException(BizException.CODE_PARM_LACK, "充值补单开启失败!");
-//        }
+        try {
+            response = httpClient.execute(httpGet);
+            if (response.getStatusLine().getStatusCode() == 200) {
+                String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+                System.out.println("响应的内容为:" + content);
+                logger.info("content:" + content);
+            }
+        } catch (IOException e) {
+            throw new BizException(BizException.CODE_PARM_LACK, "充值补单开启失败!");
+        }
         return rechargeOrderMapper.insertSelective(rechargeOrder);
     }
 

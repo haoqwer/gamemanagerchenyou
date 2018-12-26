@@ -133,7 +133,7 @@ public class SendPropServiceImpl implements SendPropService {
 //            http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&title=服务器异常补偿&msg=测试道具发送&fromuid=0&attach=1004,1000000&type=1&uids=6408736&arrstate=0&server=1
             URI uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "mail").
                     setParameter("act", "sendMail").setParameter("title", title).setParameter("msg", content).
-                    setParameter("fromuid", "-1").setParameter("attach", attach).setParameter("type", "1").setParameter("uids", uids).setParameter("all", "1").setParameter("server", serverId.toString()).build();
+                    setParameter("fromuid", "0").setParameter("attach", attach).setParameter("type", "1").setParameter("uids", uids).setParameter("all", "1").setParameter("server", serverId.toString()).build();
             url = URLDecoder.decode(uri.toString(), "UTF-8");
         } else {
 //            http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&fromuid=-1&attach=1004,500,10022,2,10023,2,10024,2&type=1&uids=node_360_1&all=1&server=1
@@ -145,17 +145,17 @@ public class SendPropServiceImpl implements SendPropService {
         //获取到url
         HttpGet httpGet = new HttpGet(url);
         System.out.println("路径为:" + url);
-//        CloseableHttpResponse response;
-//        try {
-//            response = httpClient.execute(httpGet);
-//            if (response.getStatusLine().getStatusCode() == 200) {
-//                String con = EntityUtils.toString(response.getEntity(), "UTF-8");
-//                System.out.println("响应的内容为:" + con);
-//                logger.info("con:" + con);
-//            }
-//        } catch (IOException e) {
-//            throw new BizException(BizException.CODE_PARM_LACK, "不好意思活动开启失败!");
-//        }
+        CloseableHttpResponse response;
+        try {
+            response = httpClient.execute(httpGet);
+            if (response.getStatusLine().getStatusCode() == 200) {
+                String con = EntityUtils.toString(response.getEntity(), "UTF-8");
+                System.out.println("响应的内容为:" + con);
+                logger.info("con:" + con);
+            }
+        } catch (IOException e) {
+            throw new BizException(BizException.CODE_PARM_LACK, "不好意思活动开启失败!");
+        }
         return sum;
     }
 

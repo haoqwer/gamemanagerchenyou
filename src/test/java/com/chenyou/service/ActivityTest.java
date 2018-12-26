@@ -28,7 +28,10 @@ public class ActivityTest {
     private OutConsumeService outConsumeService;
 
     @Autowired
-    ActivityMapper activityMapper;
+    private   ActivityMapper activityMapper;
+
+    @Autowired
+    private TemplateNameService templateNameService;
 
     @Test
     public void  test_activityNum() throws ParseException, BizException {
@@ -68,5 +71,11 @@ public class ActivityTest {
         activity.setState(2);
         Activity ac = activityMapper.getActivity(activity);
         System.out.println(ac);
+    }
+
+    @Test
+    public  void test_TemplateUnique() throws BizException {
+        int i = templateNameService.ifExist(1);
+        System.out.println(i);
     }
 }

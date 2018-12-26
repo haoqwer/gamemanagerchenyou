@@ -156,17 +156,17 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
                 String url = URLDecoder.decode(uri.toString(), "UTF-8");
                 System.out.println(url);
                 HttpGet httpGet = new HttpGet(url);
-//                CloseableHttpResponse response;
-//                try {
-//                    response = httpClient.execute(httpGet);
-//                    if (response.getStatusLine().getStatusCode() == 200) {
-//                        String content = EntityUtils.toString(response.getEntity(), "UTF-8");
-//                        System.out.println("响应的内容为:" + content);
-//                        logger.info("content:" + content);
-//                    }
-//                } catch (IOException e) {
-//                    throw new BizException(BizException.CODE_PARM_LACK, "不好意思活动开启失败!");
-//                }
+                CloseableHttpResponse response;
+                try {
+                    response = httpClient.execute(httpGet);
+                    if (response.getStatusLine().getStatusCode() == 200) {
+                        String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+                        System.out.println("响应的内容为:" + content);
+                        logger.info("content:" + content);
+                    }
+                } catch (IOException e) {
+                    throw new BizException(BizException.CODE_PARM_LACK, "不好意思活动开启失败!");
+                }
                 //13.1插入活动id
                 templateOpen.setActiveId(templateManager.getActiveId());
                 //13.2插入结束时间

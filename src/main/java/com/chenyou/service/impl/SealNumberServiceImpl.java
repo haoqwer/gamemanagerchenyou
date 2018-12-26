@@ -58,18 +58,18 @@ public class SealNumberServiceImpl implements SealNumberService {
             URI uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "user").setParameter("act", "set").setParameter("uid", uid).setParameter("key", "state").setParameter("value", "1").setParameter("server", serverId + "").build();
             String url = URLDecoder.decode(uri.toString(), "UTF-8");
             HttpGet httpGet = new HttpGet(url);
-//            CloseableHttpResponse response;
-//            System.out.println("url地址为:" + url);
-//            try {
-//                response = httpClient.execute(httpGet);
-//                if (response.getStatusLine().getStatusCode() == 200) {
-//                    String content = EntityUtils.toString(response.getEntity(), "UTF-8");
-//                    System.out.println("响应的内容为:" + content);
-//                    logger.info("content:" + content);
-//                }
-//            } catch (IOException e) {
-//                throw new BizException(BizException.CODE_PARM_LACK, "封号失败!");
-//            }
+            CloseableHttpResponse response;
+            System.out.println("url地址为:" + url);
+            try {
+                response = httpClient.execute(httpGet);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+                    System.out.println("响应的内容为:" + content);
+                    logger.info("content:" + content);
+                }
+            } catch (IOException e) {
+                throw new BizException(BizException.CODE_PARM_LACK, "封号失败!");
+            }
             sealNumberMapper.insert(sealNumber);
             i++;
         }
@@ -95,17 +95,17 @@ public class SealNumberServiceImpl implements SealNumberService {
             String url = URLDecoder.decode(uri.toString(), "UTF-8");
             System.out.println("url地址为:" + url);
             HttpGet httpGet = new HttpGet(url);
-//            CloseableHttpResponse response;
-//            try {
-//                response = httpClient.execute(httpGet);
-//                if (response.getStatusLine().getStatusCode() == 200) {
-//                    String content = EntityUtils.toString(response.getEntity(), "UTF-8");
-//                    System.out.println("响应的内容为:" + content);
-//                    logger.info("content:" + content);
-//                }
-//            } catch (IOException e) {
-//                throw new BizException(BizException.CODE_PARM_LACK, "封号失败!");
-//            }
+            CloseableHttpResponse response;
+            try {
+                response = httpClient.execute(httpGet);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+                    System.out.println("响应的内容为:" + content);
+                    logger.info("content:" + content);
+                }
+            } catch (IOException e) {
+                throw new BizException(BizException.CODE_PARM_LACK, "封号失败!");
+            }
             sealNumberMapper.updateByPrimaryKeySelective(list.get(0));
             i++;
         }
