@@ -50,4 +50,37 @@ public class HttpClientDemo {
 
     }
 
+    @Test
+    public  void test05() throws IOException {
+        //发送两个连接
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpGet httpGet=new HttpGet("https://www.baidu.com/");
+        HttpGet httpGet1=new HttpGet("https://blog.csdn.net/cckevincyh/article/details/80231811");
+        CloseableHttpResponse response;
+        CloseableHttpResponse response1;
+        try {
+            response = httpClient.execute(httpGet);
+            if(response.getStatusLine().getStatusCode() ==200 ){
+                String content = EntityUtils.toString(response.getEntity(), "utf-8");
+                System.out.println("响应内容是:"+content);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("-------------------------------");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        try {
+            response=httpClient.execute(httpGet1);
+            if(response.getStatusLine().getStatusCode() ==200 ){
+                String content = EntityUtils.toString(response.getEntity(), "utf-8");
+                System.out.println("响应内容是:"+content);
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
 }

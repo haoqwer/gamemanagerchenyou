@@ -76,5 +76,9 @@ public interface TemplateManagerService {
 
 
 
+    List<TemplateManager> listTemplateManagerByTemplateId(Integer templateId) throws BizException;
+
+
+
 
 }

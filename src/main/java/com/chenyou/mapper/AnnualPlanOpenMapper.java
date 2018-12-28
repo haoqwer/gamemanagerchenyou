@@ -93,4 +93,7 @@ public interface AnnualPlanOpenMapper {
      * @mbggenerated Wed Dec 26 22:25:39 CST 2018
      */
     int updateByPrimaryKey(AnnualPlanOpen record);
+
+
+    List<AnnualPlanOpen>listAnnualPlanOpen();
 }

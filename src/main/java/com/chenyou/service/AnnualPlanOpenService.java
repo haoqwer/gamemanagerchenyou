@@ -4,6 +4,11 @@ import com.chenyou.base.BizException;
 import com.chenyou.pojo.AnnualPlanOpen;
 import com.chenyou.pojo.entity.PageResult;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.util.List;
+
 /**
  * @Description:
  * @Author: hlx
@@ -11,6 +16,6 @@ import com.chenyou.pojo.entity.PageResult;
  * @Version: 1.0
  **/
 public interface AnnualPlanOpenService {
-    int saveAnnualPlanOpen(AnnualPlanOpen annualPlanOpen) throws BizException;
+    int saveAnnualPlanOpen(AnnualPlanOpen annualPlanOpen) throws BizException, ParseException, URISyntaxException, UnsupportedEncodingException;
     PageResult findPage(int pageNum,int pageSize);
 }

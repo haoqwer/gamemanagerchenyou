@@ -43,7 +43,7 @@ public class TemplateServiceImpl implements TemplateNameService {
         List<Integer> templateIds=new ArrayList <>();
         List <TemplateName> listTemplate = templateNameMapper.selectByExample(null);
         if(StringUtils.isEmpty(listTemplate)){
-           throw new BizException(BizException.CODE_PARM_LACK,"没有选择的模板!");
+           throw new BizException(BizException.CODE_PARM_LACK,"当前没有选择的模板!");
         }
         for(TemplateName templateName:listTemplate){
             templateIds.add(templateName.getId());

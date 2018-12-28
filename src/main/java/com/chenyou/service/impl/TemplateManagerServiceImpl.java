@@ -322,4 +322,24 @@ public class TemplateManagerServiceImpl implements TemplateManagerService {
         }
 
     }
+
+    /**
+    *
+    * 根据templateId获取到所有的TemplateManager
+    * @author hlx
+    * @date 2018\12\27 0027 18:03
+    * @param [templateId]
+    * @return java.util.List<com.chenyou.pojo.TemplateManager>
+    */
+    @Override
+    public List <TemplateManager> listTemplateManagerByTemplateId(Integer templateId) throws BizException {
+        TemplateManagerExample example = new TemplateManagerExample();
+        TemplateManagerExample.Criteria criteria = example.createCriteria();
+        criteria.andTemplateIdEqualTo(templateId);
+        List<TemplateManager> list= templateManagerMapper.selectByExample(example);
+        if(StringUtils.isEmpty(list)){
+            throw new BizException(BizException.CODE_PARM_LACK,"不好意思没有活动!");
+        }
+        return  list;
+    }
 }

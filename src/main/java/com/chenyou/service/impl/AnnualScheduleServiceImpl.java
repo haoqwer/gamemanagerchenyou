@@ -12,6 +12,8 @@ import com.chenyou.utils.DateUtil;
 import com.chenyou.utils.StringUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,9 @@ import java.util.List;
 public class AnnualScheduleServiceImpl  implements AnnualScheduleService {
 
 
+    private static  final Logger logger=LoggerFactory.getLogger(AnnualScheduleServiceImpl.class);
+
+
     @Autowired
     private TemplateNameService templateNameService;
 
@@ -39,6 +44,9 @@ public class AnnualScheduleServiceImpl  implements AnnualScheduleService {
 
     @Autowired
     private AnnualNameService annualNameService;
+
+
+
 
     /*
     *
@@ -64,7 +72,8 @@ public class AnnualScheduleServiceImpl  implements AnnualScheduleService {
             //需要判断模板是否存在
             int i = templateNameService.ifExist(annualSchedule.getTemplateId());
             if(i==0){
-                throw new BizException(BizException.CODE_PARM_LACK,"请输入存在的模板Id");
+                logger.debug("不好意思模板"+annualSchedule.getTemplateId()+"不存在!");
+                continue;
             }
 
             annualSchedule.setSort(annualSchedule.getAnnualId());
@@ -84,6 +93,9 @@ public class AnnualScheduleServiceImpl  implements AnnualScheduleService {
         List <AnnualSchedule> list = annualScheduleMapper.selectByExample(example);
         if(StringUtils.isEmpty(list)){
             throw new BizException(BizException.CODE_PARM_LACK,"没有年度计划名称!");
+        }
+        for(AnnualSchedule annualSchedule:list){
+            annualSchedule.setTemplateName(templateNameService.templateName(annualSchedule.getTemplateId()));
         }
         Page<AnnualSchedule> page=(Page<AnnualSchedule>)list;
         return new PageResult(page.getTotal(),page.getResult());
@@ -110,6 +122,72 @@ public class AnnualScheduleServiceImpl  implements AnnualScheduleService {
         AnnualScheduleExample.Criteria criteria = example.createCriteria();
         criteria.andAnnualIdEqualTo(annualId);
         List <AnnualSchedule> list = annualScheduleMapper.selectByExample(example);
+        return list;
+    }
+
+
+    @Override
+    public int delete(Integer[] ids) throws BizException {
+        if(null ==ids){
+            throw new BizException(BizException.CODE_PARM_LACK,"请选择删除的数据!");
+        }
+        int sum=0;
+        int i=0;
+        for(Integer id:ids){
+            i=annualScheduleMapper.deleteByPrimaryKey(id);
+            sum+=i;
+        }
+        return sum;
+    }
+
+
+    /*
+    *
+    * 根据条件查询
+    * @author hlx
+    * @date 2018\12\27 0027 14:03
+    * @param [pageNu, pageSize, annualSchedule]
+    * @return com.chenyou.pojo.entity.PageResult
+    */
+    @Override
+    public PageResult listAnnualScheduleQuery(int pageNu, int pageSize, AnnualSchedule annualSchedule) throws BizException {
+        PageHelper.startPage(pageNu,pageSize);
+        AnnualScheduleExample example=new AnnualScheduleExample();
+        AnnualScheduleExample.Criteria criteria = example.createCriteria();
+        if(null != annualSchedule.getAnnualId()){
+            criteria.andAnnualIdEqualTo(annualSchedule.getAnnualId());
+        }
+        if(null != annualSchedule.getTemplateOpendays()){
+            criteria.andTemplateOpendaysEqualTo(annualSchedule.getTemplateOpendays());
+        }
+        if(null != annualSchedule.getTemplateId()){
+            criteria.andTemplateIdEqualTo(annualSchedule.getTemplateId());
+        }
+        List <AnnualSchedule> list = annualScheduleMapper.selectByExample(example);
+        if(StringUtils.isEmpty(list)){
+            throw new BizException(BizException.CODE_PARM_LACK,"不好意思当前没有数据!");
+        }
+        Page<AnnualSchedule> page=(Page<AnnualSchedule>)list;
+        return new PageResult(page.getTotal(),page.getResult());
+    }
+
+    @Override
+    public List <AnnualSchedule> listAnnualSchedulePoi(AnnualSchedule annualSchedule) throws BizException {
+        AnnualScheduleExample example=new AnnualScheduleExample();
+        AnnualScheduleExample.Criteria criteria = example.createCriteria();
+        if(null != annualSchedule.getAnnualId()){
+            criteria.andAnnualIdEqualTo(annualSchedule.getAnnualId());
+        }
+        if(null != annualSchedule.getTemplateOpendays()){
+            criteria.andTemplateOpendaysEqualTo(annualSchedule.getTemplateOpendays());
+        }
+        if(null != annualSchedule.getTemplateId()){
+            criteria.andTemplateIdEqualTo(annualSchedule.getTemplateId());
+        }
+        List <AnnualSchedule> list = annualScheduleMapper.selectByExample(example);
+        if(StringUtils.isEmpty(list)){
+            throw new BizException(BizException.CODE_PARM_LACK,"不好意思当前没有数据!");
+        }
         return list;
     }
 }

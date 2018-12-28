@@ -348,12 +348,6 @@
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <!--<table tableName="t_send_prop" domainObjectName="SendProp"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
 
         <!--<table tableName="t_order" domainObjectName="Order"-->
                <!--enableCountByExample="true" enableUpdateByExample="true"-->
@@ -396,7 +390,15 @@
         <!--</table>-->
 
 
-        <table tableName="t_annualplan_open" domainObjectName="AnnualPlanOpen"
+        <!--<table tableName="t_annualplan_open" domainObjectName="AnnualPlanOpen"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+
+        <table tableName="t_send_prop" domainObjectName="SendProp"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">

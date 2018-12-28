@@ -365,6 +365,6 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="listTemplateOpen" resultMap="BaseResultMap">
-    select server_id,start,template_id,record_time from t_template_open  GROUP BY template_id
+    select server_id,start,template_id,record_time from t_template_open  GROUP BY template_id,server_id
   </select>
 </mapper>

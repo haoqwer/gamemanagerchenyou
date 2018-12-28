@@ -110,7 +110,7 @@ public class SendPropServiceImpl implements SendPropService {
             conditions(listSendProp.get(j));
             //获取到道具id
             Integer propId = listSendProp.get(j).getPropId();
-            Integer propCount = listSendProp.get(j).getPropCount();
+            Long propCount = listSendProp.get(j).getPropCount();
             if (listSendProp.size() == 1) {
                 attach = propId.toString() + "," + propCount;
             } else {

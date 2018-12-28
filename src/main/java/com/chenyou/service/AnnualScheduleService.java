@@ -18,5 +18,16 @@ public interface AnnualScheduleService {
     PageResult findPage(int pageNum,int pageSize) throws BizException;
     int updateAnnualSchedule(AnnualSchedule annualSchedule) throws BizException;
 
+
+    int delete(Integer[] ids) throws BizException;
+
     List<AnnualSchedule> listAnnualScheduleByAnnualId(Integer annualId);
+
+
+  PageResult listAnnualScheduleQuery(int pageNu,int pageSize,AnnualSchedule annualSchedule) throws BizException;
+
+
+  List<AnnualSchedule> listAnnualSchedulePoi(AnnualSchedule annualSchedule) throws BizException;
+
+
 }

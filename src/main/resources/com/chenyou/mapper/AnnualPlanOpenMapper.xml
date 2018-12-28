@@ -331,4 +331,8 @@
       open_time = #{openTime,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="listAnnualPlanOpen" resultMap="BaseResultMap">
+    select id,start,end,server_id,annual_id,template_id,status,open_time FROM t_annualplan_open GROUP BY server_id,template_id
+  </select>
 </mapper>
