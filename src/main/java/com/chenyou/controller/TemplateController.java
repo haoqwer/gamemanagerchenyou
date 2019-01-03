@@ -224,7 +224,7 @@ public class TemplateController extends BaseController {
      * @date 2018\12\3 0003 14:59
      */
     @RequestMapping(value = "/templateOpen", method = RequestMethod.POST)
-    public Map <String, Object> templateOpen(TemplateOpen templateOpen) throws UnsupportedEncodingException, ParseException, BizException, URISyntaxException {
+    public Map <String, Object> templateOpen(TemplateOpen templateOpen) throws IOException, ParseException, BizException, URISyntaxException {
         templateOpen.setOperator(getUserName());
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, templateOpenService.saveTemplateOpen(templateOpen));

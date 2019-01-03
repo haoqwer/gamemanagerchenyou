@@ -67,8 +67,6 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
     private TemplateNameService templateNameService;
 
 
-    @Autowired
-    private ActivityService activityService;
 
     private static final Logger logger = LoggerFactory.getLogger(TemplateOpneServiceImpl.class);
 
@@ -130,82 +128,55 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
                 throw new BizException(BizException.CODE_PARM_LACK, "开服天数不能为0!");
             }
             //对状态进行判断如果状态是1的则不进行开启
-            if (templateManager.getOpenStatus() != 1) {
-                //7.获取到开服天数
-                openDay = templateManager.getOpenTakesDay();
-                //8.获取到延期天数
-                delyDay = templateManager.getDelayDays();
-                //9.判断是否延期来确定结束时间
-                if (templateManager.getDelayStatus() == 0 || delyDay == 0) {
-                    //9.1表示没有延期
-                    end = DateUtil.addDaysByCalendar(start, openDay - 1);
-                } else {
-                    //9.2表示延期获取到最后的时间
-                    end = DateUtil.addDaysByCalendar(start, openDay - 1 + delyDay);
-                }
-                // http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_3&aid=5003&fields=stime,2018-11-16%2000:00:01,etime,2018-11-23%2023:59:59,value,1,state=1
-                //获取到开启活动的时分秒
-                //10.获取到结束时间
-                String hmm = templateManager.getEndtime();
-                //1.1后缀部分
-                String postfix = "stime," + start + "%2000:00:01,etime," + end + "%20" + hmm + ",value,1,state,1";
-//                http://47.104.227.113:8080/?mod=control&act=addAct&server=node_360_1&aid=1001&value=1&stime=2018-10-13%2023:59:59&etime=2018-10-15%2023:59:59&state=1
-                URI uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "control").setParameter("act", "addAct").
-                        setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
-                //11.2获取到url
-                String url = URLDecoder.decode(uri.toString(), "UTF-8");
-                System.out.println(url);
-                HttpGet httpGet = new HttpGet(url);
-                CloseableHttpResponse response;
-                try {
-                    response = httpClient.execute(httpGet);
-                    if (response.getStatusLine().getStatusCode() == 200) {
-                        String content = EntityUtils.toString(response.getEntity(), "UTF-8");
-                        System.out.println("响应的内容为:" + content);
-                        logger.info("content:" + content);
-                    }
-                } catch (IOException e) {
-                    throw new BizException(BizException.CODE_PARM_LACK, "不好意思活动开启失败!");
-                }
-                //13.1插入活动id
-                templateOpen.setActiveId(templateManager.getActiveId());
-                //13.2插入结束时间
-                templateOpen.setEnd(end);
-                //13.3设置延期天数
-                templateOpen.setDelayDays(delyDay);
-                //13.4记录时间
-                templateOpen.setRecordTime(DateUtil.format1(new Date()));
-                //13.5插入条数
-                //14.根据插入的数据去数据库中找数据是否存在
-                Activity activity = new Activity();
-//            id=#{id} and  aid=#{aid} and stime=#{stime} and etime=#{etime}and value=#{value} and state=#{state}
-                activity.setId(templateOpen.getServerId());
-                activity.setAid(Integer.parseInt(templateOpen.getActiveId()));
-                activity.setStime(start + " 00:00:01");
-                activity.setEtime(end + " " + templateManager.getEndtime());
-                activity.setValue(1);
-                activity.setState(1);
-                Activity activi = activityService.getActivity(activity);
-                //表示活动开启失败
-                if (StringUtils.isNull(activi)) {
-                    try {
-                        templateOpen.setActiveStatus(2);
-                        i = templateOpenMapper.insertSelective(templateOpen);
-                        //将修改templateManager中的活动开启状态
-                        templateManager.setOpenStatus(2);
-                        templateManagerMapper.updateByPrimaryKeySelective(templateManager);
-                    } catch (Exception e) {
-                        logger.debug("活动创建失败!");
-                    }
-                } else {
-                    //表示活动开启成功
-                    templateOpen.setActiveStatus(1);
-                    i = templateOpenMapper.insertSelective(templateOpen);
-                    templateManager.setOpenStatus(1);
-                    templateManagerMapper.updateByPrimaryKeySelective(templateManager);
-                }
-                sum += i;
+            //7.获取到开服天数
+            openDay = templateManager.getOpenTakesDay();
+            //8.获取到延期天数
+            delyDay = templateManager.getDelayDays();
+            //9.判断是否延期来确定结束时间
+            if (templateManager.getDelayStatus() == 0 || delyDay == 0) {
+                //9.1表示没有延期
+                end = DateUtil.addDaysByCalendar(start, openDay - 1);
+            } else {
+                //9.2表示延期获取到最后的时间
+                end = DateUtil.addDaysByCalendar(start, openDay - 1 + delyDay);
             }
+            // http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_3&aid=5003&fields=stime,2018-11-16%2000:00:01,etime,2018-11-23%2023:59:59,value,1,state=1
+            //获取到开启活动的时分秒
+            //10.获取到结束时间
+            String hmm = templateManager.getEndtime();
+            //1.1后缀部分
+            String postfix = "stime," + start + "%2000:00:01,etime," + end + "%20" + hmm + ",value,1,state,1";
+//                http://47.104.227.113:8080/?mod=control&act=addAct&server=node_360_1&aid=1001&value=1&stime=2018-10-13%2023:59:59&etime=2018-10-15%2023:59:59&state=1
+
+            URI uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "control").setParameter("act", "modifyAct").
+                    setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
+            //11.2获取到url
+            String url = URLDecoder.decode(uri.toString(), "UTF-8");
+            System.out.println(url);
+            HttpGet httpGet = new HttpGet(url);
+            CloseableHttpResponse response;
+            try {
+                response = httpClient.execute(httpGet);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+                    System.out.println("响应的内容为:" + content);
+                    logger.info("content:" + content);
+                }
+            } catch (IOException e) {
+                throw new BizException(BizException.CODE_PARM_LACK, "不好意思活动开启失败!");
+            }
+            //13.1插入活动id
+            templateOpen.setActiveId(templateManager.getActiveId());
+            //13.2插入结束时间
+            templateOpen.setEnd(end);
+            //13.3设置延期天数
+            templateOpen.setDelayDays(delyDay);
+            //13.4记录时间
+            templateOpen.setRecordTime(DateUtil.format1(new Date()));
+            i = templateOpenMapper.insertSelective(templateOpen);
+//            templateManager.setOpenStatus(2);
+//            templateManagerMapper.updateByPrimaryKeySelective(templateManager);
+            sum += i;
         }
         return sum;
     }
@@ -220,9 +191,9 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
     public PageResult findPage(int pageNum, int pageSize) throws BizException {
         PageHelper.startPage(pageNum, pageSize);
         List <TemplateOpen> list = templateOpenMapper.listTemplateOpen();
-        if (StringUtils.isEmpty(list)) {
-            throw new BizException(BizException.CODE_PARM_LACK, "不好意思当前没有数据!");
-        }
+//        if (StringUtils.isEmpty(list)) {
+//            throw new BizException(BizException.CODE_PARM_LACK, "不好意思当前没有数据!");
+//        }
         for (TemplateOpen templateOpen : list) {
             templateOpen.setServerName(serverService.getServerName(templateOpen.getServerId()));
             templateOpen.setTemplateName(templateNameService.templateName(templateOpen.getTemplateId()));

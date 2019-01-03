@@ -198,7 +198,8 @@ public class AnnualPlanOpenServiceImpl implements AnnualPlanOpenService {
     @Override
     public PageResult findPage(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List <AnnualPlanOpen> list = annualPlanOpenMapper.listAnnualPlanOpen();
+//        List <AnnualPlanOpen> list = annualPlanOpenMapper.listAnnualPlanOpen();
+        List <AnnualPlanOpen>  list = annualPlanOpenMapper.selectByExample(null);
         for(AnnualPlanOpen annualPlanOpen :list){
             annualPlanOpen.setServerName(serverService.getServerName(annualPlanOpen.getServerId()));
             annualPlanOpen.setAnnualName(annualNameService.getAnnualPlanName(annualPlanOpen.getAnnualId()));

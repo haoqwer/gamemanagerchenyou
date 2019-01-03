@@ -128,7 +128,7 @@ public class AnnualScheduleServiceImpl  implements AnnualScheduleService {
 
     @Override
     public int delete(Integer[] ids) throws BizException {
-        if(null ==ids){
+        if(null ==ids || ids.length==0){
             throw new BizException(BizException.CODE_PARM_LACK,"请选择删除的数据!");
         }
         int sum=0;
@@ -164,6 +164,9 @@ public class AnnualScheduleServiceImpl  implements AnnualScheduleService {
             criteria.andTemplateIdEqualTo(annualSchedule.getTemplateId());
         }
         List <AnnualSchedule> list = annualScheduleMapper.selectByExample(example);
+        for(AnnualSchedule  annualSchedule1:list){
+            annualSchedule1.setTempTime(templateNameService.templateName(annualSchedule1.getTemplateId()));
+        }
         if(StringUtils.isEmpty(list)){
             throw new BizException(BizException.CODE_PARM_LACK,"不好意思当前没有数据!");
         }
