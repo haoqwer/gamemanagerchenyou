@@ -11,26 +11,85 @@
     <!-- 加载配置文件 -->
     <context:property-placeholder location="classpath:mybatis/db.properties"/>
     <!-- 数据库连接池 -->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
-          destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-        <property name="maxActive" value="10"/>
-        <property name="maxIdle" value="5"/>
+    <bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <!--驱动名称-->
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username"  value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"></property>
+        <property name="initialSize" value="${druid.initialSize}"></property>
+        <property name="maxActive"  value="${druid.maxActive}"/>
+        <property name="minIdle"  value="${druid.minIdle}"/>
+    </bean>
+
+
+    <!-- 连接另一个数据库 -->
+    <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver_test}" />
+        <property name="url" value="${jdbc.url_test}" />
+        <property name="username"  value="${jdbc.username_test}"/>
+        <property name="password" value="${jdbc.password_test}"></property>
+        <property name="initialSize" value="${druid.initialSize}"></property>
+        <property name="maxActive"  value="${druid.maxActive}"/>
+        <property name="minIdle"  value="${druid.minIdle}"/>
+        <!--获取超时等待时间-->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="20000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <property name="validationQuery" value="SELECT 'x' " />
+        <property name="testWhileIdle" value="false" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="poolPreparedStatements" value="false" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="50" />
+        <property name="filters" value="stat"></property>
     </bean>
 
     <!-- 配置会话工厂 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!-- 数据库连接池 -->
-        <property name="dataSource" ref="dataSource"/>
+        <property name="dataSource" ref="dataSource" />
         <!--加载mybatis的全局配置文件 -->
         <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"/>
     </bean>
     <!-- 配置Mapper扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.chenyou.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
+
+
+    <!-- 下面的是切换数据库的自定义类 -->
+    <!--<bean id="multipleDataSource" class="com.chenyou.MultipleDataSource">-->
+    <!--<property name="defaultTargetDataSource" ref="dataSource_first"></property>-->
+    <!--<property name="targetDataSources">-->
+    <!--<map>-->
+    <!--<entry key="dataSource_first" value-ref="dataSource_first"></entry>-->
+    <!--<entry key="dateSource_second" value-ref="dateSource_second"></entry>-->
+    <!--</map>-->
+    <!--</property>-->
+    <!--</bean>-->
+    <bean id="dataSource" class="com.chenyou.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="dataSource1" value-ref="dataSource1"/>
+                <entry key="dataSource2" value-ref="dataSource2"/>
+            </map>
+        </property>
+        <!--默认数据源-->
+        <property name="defaultTargetDataSource" ref="dataSource1"/>
+    </bean>
+
+    <bean id="dataSourceAspect" class="com.chenyou.DataSourceAspect" />
+    <aop:config>
+        <aop:aspect ref="dataSourceAspect">
+            <!-- 拦截所有dao方法 -->
+            <aop:pointcut id="dataSourcePointcut" expression="execution(* com.chenyou.mapper..*.*(..))" />
+            <aop:before pointcut-ref="dataSourcePointcut" method="intercept" />
+        </aop:aspect>
+    </aop:config>
+
 
 </beans>

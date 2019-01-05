@@ -2,11 +2,15 @@ package com.chenyou.service;
 
 import com.chenyou.base.BizException;
 import com.chenyou.mapper.ActivityMapper;
+import com.chenyou.mapper.TemplateManagerMapper;
 import com.chenyou.pojo.Activity;
+import com.chenyou.pojo.TemplateManager;
+import com.chenyou.pojo.TemplateManagerExample;
 import com.chenyou.pojo.entity.PageResult;
 import com.chenyou.service.activityservice.ActivityNumService;
 import com.chenyou.service.activityservice.ActivityOutputService;
 import com.chenyou.service.gamecountservice.OutConsumeService;
+import org.apache.poi.ss.formula.functions.T;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.text.ParseException;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/applicationContext-dao.xml", "classpath:spring/applicationContext-serivce.xml", "classpath:spring/applicationContext-shiro.xml"})
@@ -32,6 +37,9 @@ public class ActivityTest {
 
     @Autowired
     private TemplateNameService templateNameService;
+
+    @Autowired
+    private TemplateManagerMapper templateManagerMapper;
 
     @Test
     public void  test_activityNum() throws ParseException, BizException {
@@ -78,4 +86,14 @@ public class ActivityTest {
         int i = templateNameService.ifExist(1);
         System.out.println(i);
     }
+
+    @Test
+    public  void test_listTemplateManager() throws BizException {
+        TemplateManagerExample example = new TemplateManagerExample();
+        TemplateManagerExample.Criteria criteria = example.createCriteria();
+        criteria.andTemplateIdEqualTo(1);
+        List<TemplateManager>listManager = templateManagerMapper.selectByExample(example);
+        System.out.println(listManager.size());
+    }
+
 }

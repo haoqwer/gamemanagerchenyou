@@ -154,8 +154,10 @@ public class AnnualPlanOpenServiceImpl implements AnnualPlanOpenService {
                 //活动调整
                 URI uri1 = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "control").setParameter("act", "modifyAct").
                         setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
-                HttpGet httpGet1 = new HttpGet(uri1);
-                System.out.println(url);
+                String urii = URLDecoder.decode(uri1.toString(), "UTF-8");
+                System.out.println(urii);
+                HttpGet httpGet1 = new HttpGet(urii);
+
                 //响应调整的结果
                 CloseableHttpResponse response2;
 //                try {

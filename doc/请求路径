@@ -21,7 +21,9 @@ value:1封号0恢复
 
 活动调整：http://47.104.227.113:8080/?mod=control&act=modifyAct&server=node_360_1&aid=1001&fields=stime,2018-10-14%2018:00:00,etime,2018-10-14%2018:59:59,state,1,value,1
 活动添加：http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_1&aid=1001&value=1&stime=2018-10-13%2023:59:59&etime=2018-10-15%2023:59:59&state=1
+
         http://47.104.227.113:8080/?mod=control&act=addAct&server=node_360_1&aid=1001&value=1&stime=2018-10-13%2023:59:59&etime=2018-10-15%2023:59:59&state=1
+
 
 
 活动开启:

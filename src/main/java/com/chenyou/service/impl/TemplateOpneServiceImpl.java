@@ -1,5 +1,6 @@
 package com.chenyou.service.impl;
 
+import com.chenyou.DataSource;
 import com.chenyou.base.BizException;
 import com.chenyou.mapper.TemplateManagerMapper;
 import com.chenyou.mapper.TemplateOpenMapper;
@@ -48,7 +49,7 @@ import java.util.List;
  **/
 
 @Service
-@Transactional
+@Transactional(timeout = 500)
 public class TemplateOpneServiceImpl implements TemplateOpenService {
 
 
@@ -65,7 +66,6 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
 
     @Autowired
     private TemplateNameService templateNameService;
-
 
 
     private static final Logger logger = LoggerFactory.getLogger(TemplateOpneServiceImpl.class);
@@ -147,11 +147,17 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
             //1.1后缀部分
             String postfix = "stime," + start + "%2000:00:01,etime," + end + "%20" + hmm + ",value,1,state,1";
 //                http://47.104.227.113:8080/?mod=control&act=addAct&server=node_360_1&aid=1001&value=1&stime=2018-10-13%2023:59:59&etime=2018-10-15%2023:59:59&state=1
-
-            URI uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "control").setParameter("act", "modifyAct").
-                    setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
+//            System.out.println(postfix);
+            URI uri = null;
+            try {
+                uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "control").setParameter("act", "addAct").
+                        setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
             //11.2获取到url
             String url = URLDecoder.decode(uri.toString(), "UTF-8");
+            url = url.replaceAll(" +", "");
             System.out.println(url);
             HttpGet httpGet = new HttpGet(url);
             CloseableHttpResponse response;
@@ -174,8 +180,8 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
             //13.4记录时间
             templateOpen.setRecordTime(DateUtil.format1(new Date()));
             i = templateOpenMapper.insertSelective(templateOpen);
-//            templateManager.setOpenStatus(2);
-//            templateManagerMapper.updateByPrimaryKeySelective(templateManager);
+            templateManager.setOpenStatus(2);
+            templateManagerMapper.updateByPrimaryKeySelective(templateManager);
             sum += i;
         }
         return sum;
