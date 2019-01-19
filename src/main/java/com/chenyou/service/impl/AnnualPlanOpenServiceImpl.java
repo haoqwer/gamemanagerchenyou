@@ -80,60 +80,68 @@ public class AnnualPlanOpenServiceImpl implements AnnualPlanOpenService {
     */
     @Override
     public int saveAnnualPlanOpen(AnnualPlanOpen annualPlanOpen) throws BizException, ParseException, URISyntaxException, UnsupportedEncodingException {
-        //定义插入的条数
+        //1.定义插入的条数
         int sum = 0;
         int i = 0;
-        //判断是否选中区服
+        //2.判断是否选中区服
         if (null == annualPlanOpen.getServerId()) {
             throw new BizException(BizException.CODE_PARM_LACK, "请选择区服!");
         }
-        //判断是否选中计划
+        //2.1判断是否选中计划
         if (null == annualPlanOpen.getAnnualId()) {
             throw new BizException(BizException.CODE_PARM_LACK, "请选择区服活动计划!");
         }
-        //判断区服活动开始时间
+        //2.2判断区服活动开始时间
         if (StringUtils.isEmpty(annualPlanOpen.getStart())) {
             throw new BizException(BizException.CODE_PARM_LACK, "请选择区服活动计划开始时间");
         }
-        //获取到区服计划下的所有模板
+        //3.获取到区服计划下的所有模板管理
         List <AnnualSchedule> listAnnualSchedule = annualScheduleService.listAnnualScheduleByAnnualId(annualPlanOpen.getAnnualId());
-        //遍历年度计划下的模板管理
-        //获取到计划开始时间
+        //4.获取到计划开始时间
         String start=annualPlanOpen.getStart();
+        //4.1获取到区服名称
         String serverName=serverService.getServerName(annualPlanOpen.getServerId());
         logger.info("start:"+start);
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        //遍历所有的计划下的模板
+        //5.遍历活动计划下的模板管理
         for(int j=0;j<=listAnnualSchedule.size()-1;j++){
             String tempTime=null;
             Integer templateId=listAnnualSchedule.get(j).getTemplateId();
-            //获取到活动的开始时间,如果是0则是第一个开始时间未设置的开始时间，不是则为上一个的开始时间加上上一个的模板开启天数
+            //5.1获取到活动的开始时间,如果是0则是第一个开始时间未设置的开始时间，不是则为上一个的开始时间加上上一个的模板开启天数
             if (j == 0) {
+                //活动的开始时间，第一个的开始时间就是计划开始的时间
                 tempTime = start;
             } else {
+                //活动的开始时间为上一个活动的结束时间加上计划开始
                 tempTime = DateUtil.addDaysByCalendar(listAnnualSchedule.get(j - 1).getTempTime(), listAnnualSchedule.get(j - 1).getTemplateOpendays());
             }
             logger.info("tempTime:"+tempTime);
             System.out.println("tempTime:"+tempTime);
+            //5.2设置开始时间
             listAnnualSchedule.get(j).setTempTime(tempTime);
+            //5.3获取到模板下的所有活动
             List <TemplateManager> listTemplateManager = templateManagerService.listTemplateManagerByTemplateId(templateId);
             for (TemplateManager templateManager:listTemplateManager){
                 String end=null;
-                if(templateManager.getDelayDays()==0 || templateManager.getDelayStatus()==0){
+                String startTime=null;
+                if (templateManager.getDelayDays() == 0 || templateManager.getDelayStatus() == 0) {
                     //根据开始时间和活动开启天数和结束时间进行获取活动的结束时间
-                 end=DateUtil.addDaysByCalendar(listAnnualSchedule.get(j).getTempTime(),templateManager.getOpenTakesDay()-1);
-                }else {
+                    startTime = listAnnualSchedule.get(j).getTempTime();
+                    end = DateUtil.addDaysByCalendar(listAnnualSchedule.get(j).getTempTime(), templateManager.getOpenTakesDay() - 1);
+                } else {
                     //根据开始时间和活动开启天数和结束时间进行获取活动的结束时间
-                    end=DateUtil.addDaysByCalendar(listAnnualSchedule.get(j).getTempTime(),templateManager.getOpenTakesDay()+templateManager.getDelayDays()-1);
+                    //有延期开始时间得往后推迟
+                    startTime=DateUtil.addDaysByCalendar(listAnnualSchedule.get(j).getTempTime(),templateManager.getDelayDays());
+                    end = DateUtil.addDaysByCalendar(startTime, templateManager.getOpenTakesDay()-1);
                 }
                 logger.info("end:"+end);
                 System.out.println("end:"+end);
                 String hmm=templateManager.getEndtime();
-                String postfix = "stime," + listAnnualSchedule.get(j).getTempTime() + "%2000:00:01,etime," + end + "%20" + hmm + ",value,1,state,1";
+                String postfix = "stime," + startTime + "%2000:00:01,etime," + end + "%20" + hmm + ",value,1,state,1";
 //                http://47.104.227.113:8080/?mod=control&act=addAct&server=node_360_1&aid=1001&value=1&stime=2018-10-13%2023:59:59&etime=2018-10-15%2023:59:59&state=1
-                URI uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "control").setParameter("act", "addAct").
+                URI uri = new URIBuilder("http://192.168.1.91:8080/").setParameter("mod", "control").setParameter("act", "addAct").
                         setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
-                //11.2获取到url
+                //6.1第一个Url
                 String url = URLDecoder.decode(uri.toString(), "UTF-8");
 //                logger.info("url:"+url);
                 System.out.println(url);
@@ -152,11 +160,12 @@ public class AnnualPlanOpenServiceImpl implements AnnualPlanOpenService {
 //                }
 //                http://47.104.227.113:8080/?mod=control&act=modifyAct&server=node_360_1&aid=1001&fields=stime,2018-10-14%2018:00:00,etime,2018-10-14%2018:59:59,state,1,value,1
                 //活动调整
-                URI uri1 = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "control").setParameter("act", "modifyAct").
+                //6.2第二个url
+                URI uri1 = new URIBuilder("http://192.168.1.91:8080/").setParameter("mod", "control").setParameter("act", "modifyAct").
                         setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
-                String urii = URLDecoder.decode(uri1.toString(), "UTF-8");
-                System.out.println(urii);
-                HttpGet httpGet1 = new HttpGet(urii);
+                String url1 = URLDecoder.decode(uri1.toString(), "UTF-8");
+                System.out.println(url1);
+                HttpGet httpGet1 = new HttpGet(url1);
 
                 //响应调整的结果
                 CloseableHttpResponse response2;

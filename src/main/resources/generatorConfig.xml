@@ -8,11 +8,12 @@
 
     <context id="mysqlTables" targetRuntime="MyBatis3">
 
+        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+                        <!--connectionURL="jdbc:mysql://localhost:3306/chenyoumanager?characterEncoding=utf-8"-->
+                        <!--userId="root" password="root"/>-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/chenyoumanager?characterEncoding=utf-8"
-                        userId="root" password="root"/>
-
-
+                        connectionURL="jdbc:mysql://47.104.227.113:3306/account?characterEncoding=utf-8"
+                        userId="root" password="chenyou#123"/>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
@@ -398,12 +399,35 @@
         <!--</table>-->
 
 
-        <table tableName="t_send_prop" domainObjectName="SendProp"
+        <!--<table tableName="t_send_prop" domainObjectName="SendProp"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+
+        <!--<table tableName="t_notify_acti" domainObjectName="NotifyActi"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="d_noity" domainObjectName="Notify"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <table tableName="s_activity" domainObjectName="OpenPlan"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
+
+
 
 
 

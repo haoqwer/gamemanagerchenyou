@@ -83,12 +83,12 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
     public int saveTemplateOpen(TemplateOpen templateOpen) throws BizException, ParseException, URISyntaxException, UnsupportedEncodingException {
         List <TemplateManager> listManager = new ArrayList <>();
         //开始时间
-        String end;
+        String end=null;
         //结束时间
-        String start;
+        String start=null;
         //开启天数
         int openDay = 0;
-        //结束天数
+        //延期天数
         int delyDay = 0;
         //区服名称
         String serverName;
@@ -123,59 +123,63 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
         start = templateOpen.getStart();
         CloseableHttpClient httpClient = HttpClients.createDefault();
         for (TemplateManager templateManager : listManager) {
+            String startTime=null;
             //6.对开启活动天数进行判断
             if (templateManager.getOpenTakesDay() == 0) {
                 throw new BizException(BizException.CODE_PARM_LACK, "开服天数不能为0!");
             }
-            //对状态进行判断如果状态是1的则不进行开启
             //7.获取到开服天数
             openDay = templateManager.getOpenTakesDay();
             //8.获取到延期天数
             delyDay = templateManager.getDelayDays();
-            //9.判断是否延期来确定结束时间
+            //根据是否延期来判断活动的开始时间(延期的话，活动开始时间，为模板开始时间加上延期天数)
             if (templateManager.getDelayStatus() == 0 || delyDay == 0) {
-                //9.1表示没有延期
+                //9.表示没有延期,没有延期开始时间为模板的开始时间
+                startTime=start;
+                //结束时间就为开始时间和开启活动的天数-1
                 end = DateUtil.addDaysByCalendar(start, openDay - 1);
             } else {
-                //9.2表示延期获取到最后的时间
-                end = DateUtil.addDaysByCalendar(start, openDay - 1 + delyDay);
+                //9.1延期的开始时间九尾开始时间，加上延期的时间
+                startTime=DateUtil.addDaysByCalendar(start,delyDay);
+                //9.2结束时间就为延期的开始时间加上结束的时间
+                end = DateUtil.addDaysByCalendar(startTime, openDay-1);
             }
             // http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_3&aid=5003&fields=stime,2018-11-16%2000:00:01,etime,2018-11-23%2023:59:59,value,1,state=1
-            //获取到开启活动的时分秒
-            //10.获取到结束时间
+            //10.获取到结束时间的时分秒
             String hmm = templateManager.getEndtime();
             //1.1后缀部分
-            String postfix = "stime," + start + "%2000:00:01,etime," + end + "%20" + hmm + ",value,1,state,1";
+            String postfix = "stime," + startTime + "%2000:00:01,etime," + end + "%20" + hmm + ",value,1,state,1";
 //                http://47.104.227.113:8080/?mod=control&act=addAct&server=node_360_1&aid=1001&value=1&stime=2018-10-13%2023:59:59&etime=2018-10-15%2023:59:59&state=1
 //            System.out.println(postfix);
             URI uri = null;
             try {
-                uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "control").setParameter("act", "addAct").
+                uri = new URIBuilder("http://192.168.1.91:8080/").setParameter("mod", "control").setParameter("act", "addAct").
                         setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
             //11.2获取到url
             String url = URLDecoder.decode(uri.toString(), "UTF-8");
+//            考虑可能会出现+空格的问题
             url = url.replaceAll(" +", "");
             System.out.println(url);
             HttpGet httpGet = new HttpGet(url);
             CloseableHttpResponse response;
-            try {
-                response = httpClient.execute(httpGet);
-                if (response.getStatusLine().getStatusCode() == 200) {
-                    String content = EntityUtils.toString(response.getEntity(), "UTF-8");
-                    System.out.println("响应的内容为:" + content);
-                    logger.info("content:" + content);
-                }
-            } catch (IOException e) {
-                throw new BizException(BizException.CODE_PARM_LACK, "不好意思活动开启失败!");
-            }
+//            try {
+//                response = httpClient.execute(httpGet);
+//                if (response.getStatusLine().getStatusCode() == 200) {
+//                    String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+//                    System.out.println("响应的内容为:" + content);
+//                    logger.info("content:" + content);
+//                }
+//            } catch (IOException e) {
+//                throw new BizException(BizException.CODE_PARM_LACK, "不好意思活动开启失败!");
+//            }
             //13.1插入活动id
             templateOpen.setActiveId(templateManager.getActiveId());
             //13.2插入结束时间
             templateOpen.setEnd(end);
-            //13.3设置延期天数
+            //13.3插入延期天数
             templateOpen.setDelayDays(delyDay);
             //13.4记录时间
             templateOpen.setRecordTime(DateUtil.format1(new Date()));

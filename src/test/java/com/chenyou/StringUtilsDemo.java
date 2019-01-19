@@ -1,6 +1,7 @@
 package com.chenyou;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.junit.Test;
 
 import java.util.*;
 
@@ -47,4 +48,14 @@ public class StringUtilsDemo {
         res.put("deleteArr", deleteArr);
         return res;
     }
+
+    @Test
+    public  void test3(){
+        String content="http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&title=关服公告&msg=由于各种原因，我们不得不做出一个万分艰难的决定：《千年盛世》将于1月25日正式停止运营。同时关闭所有服务器，无法登陆游戏，对此我们感到万分抱歉。游戏将于2019年1月21日停止充值，1月25日?正式关闭服务器，届时将无法使用虚拟货币，对于服务器关闭后未消耗掉的虚拟货币，不予退换和补偿，还请各位玩家谅解！最后再次感谢所有玩家对《千年盛世》的爱护与帮助，对于由此给您造成的不便，我们表示诚挚的歉意，敬请谅解。\n" + "&fromuid=0&attach=1001,20&type=1&uids=3628314&arrstate=0&server=3";
+        String s = content.substring(165);
+        System.out.println(s);
+    }
+
+
+
 }

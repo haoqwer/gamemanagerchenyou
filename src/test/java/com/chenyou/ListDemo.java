@@ -1,8 +1,11 @@
 package com.chenyou;
 
 import com.alibaba.druid.sql.visitor.functions.Char;
+import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class ListDemo {
@@ -43,6 +46,11 @@ public class ListDemo {
             set.add(character);
         }
         return true;
+    }
+
+    @Test
+    public  void test05(){
+
     }
 
 }

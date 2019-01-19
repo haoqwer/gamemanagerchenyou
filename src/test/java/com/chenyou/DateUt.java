@@ -23,9 +23,10 @@ public class DateUt {
 //        Date d = format.parse(date);
 //        System.out.println(d);
 //        System.out.println(sdf.format(d));
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS Z");
+
 //        Date d = format.parse(date);
+        Date date = DateUtil.getDate("2019-01-05 23:59:59");
+        System.out.println(date.getTime()/1000);
     }
 
     public  static  String formate(Date date){
@@ -61,6 +62,9 @@ public class DateUt {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         return sdf.format(date);
     }
+
+
+
 
 
 

@@ -125,17 +125,7 @@ public class PoiTest {
 
     @Test
     public  void test_equal(){
-        String s="123456";
-        String s1 = MD5Utils.md5(s);
-        String s2 = MD5Utils.md5(s);
-        if(s1.equals(s2)){
-            System.out.println("-------");
-        }
-
-
-    if("e10adc3949ba59abbe56e057f20f883e".equals("e10adc3949ba59abbe56e057f20f883e")){
-        System.out.println("----");
-    }
+        System.out.println(6%6);
     }
 
 

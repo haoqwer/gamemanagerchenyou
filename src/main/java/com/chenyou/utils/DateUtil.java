@@ -233,5 +233,16 @@ public class DateUtil {
         return dateFormat.format(date);
     }
 
+    public static String format3(Date date){
+       SimpleDateFormat sdf=new SimpleDateFormat("yyyy年M月d日");
+       return sdf.format(date);
+    }
+
+    public static  Date getDate(String time) throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return  sdf.parse(time);
+    }
+
+
 
 }

@@ -18,25 +18,13 @@ value:1封号0恢复
 道具发放：http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&title=测试道具发送&msg=测试道具发送&fromuid=0&attach=1004,6480&type=1&uids=6453108,9408736
           http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&title=测试道具发送&msg=测试道具发送&fromuid=0&attach=10048,10&type=1&uids=1001,1002,1003
 &arrstate=0
-
-活动调整：http://47.104.227.113:8080/?mod=control&act=modifyAct&server=node_360_1&aid=1001&fields=stime,2018-10-14%2018:00:00,etime,2018-10-14%2018:59:59,state,1,value,1
-活动添加：http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_1&aid=1001&value=1&stime=2018-10-13%2023:59:59&etime=2018-10-15%2023:59:59&state=1
-
         http://47.104.227.113:8080/?mod=control&act=addAct&server=node_360_1&aid=1001&value=1&stime=2018-10-13%2023:59:59&etime=2018-10-15%2023:59:59&state=1
-
-
-
 活动开启:
 //server 区服名称 aid 活动id stime 活动开始时间 etime活动结束时间
 http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_3&aid=5003&fields=stime,2018-11-16%2000:00:01,etime,2018-11-23%2023:59:59,value,1,state,1
 http://47.104.240.79:8080/?mod=control&act=addAct&server=node_360_1&aid=1001&fields=stime,2018-12-06%2000:00:01,etime,2019-01-05%2023:59:59,value,1,state=1
 modifyAct
 
---------------------------------------------------------------------------------
---1.优化1开始时间和结束时间的时分秒为固定值
---2.优化2开始时间和结束时间点击事件icon才出来时间的年月日
---3.优化3选择区服,区服只需要选一次，或者选的值是一样的
---4.优化4出现40个框
 
 
 

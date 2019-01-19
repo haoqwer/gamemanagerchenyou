@@ -51,7 +51,7 @@ public class SendPropServiceImpl implements SendPropService {
     private ServerService serverService;
 
     @Override
-    public int saveSendProp(List <SendProp> listSendProp) throws BizException, URISyntaxException, UnsupportedEncodingException {
+    public int saveSendProp(List <SendProp> listSendProp) throws BizException, UnsupportedEncodingException, URISyntaxException {
         if (StringUtils.isEmpty(listSendProp)) {
             throw new BizException(BizException.CODE_PARM_LACK, "请输入发送道具数据");
         }
@@ -129,34 +129,48 @@ public class SendPropServiceImpl implements SendPropService {
         System.out.println(attach);
         //如果==1说明是全服开启
 
-        if (firstSendPro.getWhether() == 1) {
-//            http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&title=服务器异常补偿&msg=测试道具发送&fromuid=0&attach=1004,1000000&type=1&uids=6408736&arrstate=0&server=1
-            URI uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "mail").
-                    setParameter("act", "sendMail").setParameter("title", title).setParameter("msg", content).
-                    setParameter("fromuid", "0").setParameter("attach", attach).setParameter("type", "1").setParameter("uids", uids).setParameter("all", "1").setParameter("server", serverId.toString()).build();
-            url = URLDecoder.decode(uri.toString(), "UTF-8");
-        } else {
-//            http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&fromuid=-1&attach=1004,500,10022,2,10023,2,10024,2&type=1&uids=node_360_1&all=1&server=1
-            //http://47.104.227.113:8080/
-            URI uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "mail").
-                    setParameter("act", "sendMail").setParameter("title", title).setParameter("msg", content).
-                    setParameter("fromuid", "0").setParameter("attach", attach).setParameter("type", "1").setParameter("uids", uids).setParameter("arrstate", "0").setParameter("server", serverId.toString()).build();
-            url = URLDecoder.decode(uri.toString(), "UTF-8");
+        try {
+            if (firstSendPro.getWhether() == 1) {
+    //            http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&title=服务器异常补偿&msg=测试道具发送&fromuid=0&attach=1004,1000000&type=1&uids=6408736&arrstate=0&server=1
+                URI uri = new URIBuilder("http://gamejy.chyoukj.com:8080/").setParameter("mod", "mail").
+                        setParameter("act", "sendMail").setParameter("title", title).setParameter("msg", content).
+                        setParameter("fromuid", "0").setParameter("attach", attach).setParameter("type", "1").setParameter("uids", uids).setParameter("all", "1").setParameter("server", serverId.toString()).build();
+                url = URLDecoder.decode(uri.toString(), "UTF-8");
+                System.out.println(url);
+                url = url.replaceAll(" +", "");
+                System.out.println(url);
+            } else {
+    //            http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&fromuid=-1&attach=1004,500,10022,2,10023,2,10024,2&type=1&uids=node_360_1&all=1&server=1
+                //http://47.104.227.113:8080/
+                URI uri = new URIBuilder("http://gamejy.chyoukj.com:8080/").setParameter("mod", "mail").
+                        setParameter("act", "sendMail").setParameter("title", title).setParameter("msg", content).
+                        setParameter("fromuid", "0").setParameter("attach", attach).setParameter("type", "1").setParameter("uids", uids).setParameter("arrstate", "0").setParameter("server", serverId.toString()).build();
+                url = URLDecoder.decode(uri.toString(), "UTF-8");
+                System.out.println(url);
+                url = url.replaceAll(" +", "");
+                System.out.println(url);
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.out.println(e.getReason());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
         //获取到url
         HttpGet httpGet = new HttpGet(url);
         System.out.println("路径为:" + url);
         CloseableHttpResponse response;
-        try {
-            response = httpClient.execute(httpGet);
-            if (response.getStatusLine().getStatusCode() == 200) {
-                String con = EntityUtils.toString(response.getEntity(), "UTF-8");
-                System.out.println("响应的内容为:" + con);
-                logger.info("con:" + con);
-            }
-        } catch (IOException e) {
-            throw new BizException(BizException.CODE_PARM_LACK, "不好意思活动开启失败!");
-        }
+//        try {
+//            response = httpClient.execute(httpGet);
+//            if (response.getStatusLine().getStatusCode() == 200) {
+//                String con = EntityUtils.toString(response.getEntity(), "UTF-8");
+//                System.out.println("响应的内容为:" + con);
+//                logger.info("con:" + con);
+//            }
+//        } catch (IOException e) {
+//            throw new BizException(BizException.CODE_PARM_LACK, "不好意思邮件发送失败!");
+//        }
         return sum;
     }
 
