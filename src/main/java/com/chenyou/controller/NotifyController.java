@@ -156,7 +156,6 @@ public class NotifyController {
         Map <String, Object> resultMap = new HashMap <>();
         resultMap.put(ApplicationConstants.TAG_DATA, notifyService.addNotify());
         resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
-        System.out.println("---------------");
         return resultMap;
     }
 }
