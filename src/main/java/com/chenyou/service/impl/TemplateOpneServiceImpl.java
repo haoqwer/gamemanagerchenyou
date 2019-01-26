@@ -133,6 +133,7 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
             //8.获取到延期天数
             delyDay = templateManager.getDelayDays();
             //根据是否延期来判断活动的开始时间(延期的话，活动开始时间，为模板开始时间加上延期天数)
+            //0则表示不延期,不延期则为选择的开始时间
             if (templateManager.getDelayStatus() == 0 || delyDay == 0) {
                 //9.表示没有延期,没有延期开始时间为模板的开始时间
                 startTime=start;

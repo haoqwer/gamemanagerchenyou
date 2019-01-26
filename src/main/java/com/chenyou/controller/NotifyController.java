@@ -24,6 +24,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -64,8 +65,7 @@ public class NotifyController {
     }
 
 
-
-    @RequestMapping(value = "/exportListNotify",method = RequestMethod.GET)
+    @RequestMapping(value = "/exportListNotify", method = RequestMethod.GET)
     public void exportListNotify(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //导出所有的公告
         List <Map <String, Object>> list = new ArrayList <>();
@@ -149,5 +149,13 @@ public class NotifyController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping(value = "/addNotifys", method = RequestMethod.GET)
+    public Map <String, Object> addNotifys() throws ParseException {
+        Map <String, Object> resultMap = new HashMap <>();
+        resultMap.put(ApplicationConstants.TAG_DATA, notifyService.addNotify());
+        resultMap.put(ApplicationConstants.TAG_SC, ApplicationConstants.SC_OK);
+        return resultMap;
     }
 }

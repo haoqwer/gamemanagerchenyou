@@ -42,7 +42,8 @@ public class NotifyServiceImpl implements NotifyService {
     }
 
     @Override
-    public List<Notify> addNotify() throws ParseException {
+    public int  addNotify() throws ParseException {
+        int sum=0;
         //1.获取到所有包含公告模板的活动
         List <OpenPlan> listOpenPlan = openPlanService.getListOpenPlanByAids();
         //
@@ -71,10 +72,13 @@ public class NotifyServiceImpl implements NotifyService {
             Date et=DateUtil.getDate(etime);
             notify.setEtime((int) (et.getTime()/1000));
             notify.setSid(openPlan.getId());
-            notify.setChannid("android_td_gongce");
-            listNotify.add(notify);
+            notify.setChannid("test_01");
+//            listNotify.add(notify);
+            System.out.println(notify);
+            int i = notifyMapper.insertSelective(notify);
+            sum+=i;
         }
-        return listNotify;
+        return sum;
     }
 
     /*

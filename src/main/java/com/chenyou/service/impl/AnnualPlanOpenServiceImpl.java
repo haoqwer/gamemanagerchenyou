@@ -139,7 +139,7 @@ public class AnnualPlanOpenServiceImpl implements AnnualPlanOpenService {
                 String hmm=templateManager.getEndtime();
                 String postfix = "stime," + startTime + "%2000:00:01,etime," + end + "%20" + hmm + ",value,1,state,1";
 //                http://47.104.227.113:8080/?mod=control&act=addAct&server=node_360_1&aid=1001&value=1&stime=2018-10-13%2023:59:59&etime=2018-10-15%2023:59:59&state=1
-                URI uri = new URIBuilder("http://192.168.1.91:8080/").setParameter("mod", "control").setParameter("act", "addAct").
+                URI uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "control").setParameter("act", "addAct").
                         setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
                 //6.1第一个Url
                 String url = URLDecoder.decode(uri.toString(), "UTF-8");
@@ -147,21 +147,21 @@ public class AnnualPlanOpenServiceImpl implements AnnualPlanOpenService {
                 System.out.println(url);
                 HttpGet httpGet = new HttpGet(url);
                 //响应开启的结果
-//                CloseableHttpResponse response1;
-//                try {
-//                    response1 = httpClient.execute(httpGet);
-//                    if (response1.getStatusLine().getStatusCode() == 200) {
-//                        String content = EntityUtils.toString(response1.getEntity(), "UTF-8");
-//                        System.out.println("响应的内容为:" + content);
-//                        logger.info("content:" + content);
-//                    }
-//                } catch (IOException e) {
-//                    logger.debug("开启活动失败!");
-//                }
+                CloseableHttpResponse response1;
+                try {
+                    response1 = httpClient.execute(httpGet);
+                    if (response1.getStatusLine().getStatusCode() == 200) {
+                        String content = EntityUtils.toString(response1.getEntity(), "UTF-8");
+                        System.out.println("响应的内容为:" + content);
+                        logger.info("content:" + content);
+                    }
+                } catch (IOException e) {
+                    logger.debug("开启活动失败!");
+                }
 //                http://47.104.227.113:8080/?mod=control&act=modifyAct&server=node_360_1&aid=1001&fields=stime,2018-10-14%2018:00:00,etime,2018-10-14%2018:59:59,state,1,value,1
                 //活动调整
                 //6.2第二个url
-                URI uri1 = new URIBuilder("http://192.168.1.91:8080/").setParameter("mod", "control").setParameter("act", "modifyAct").
+                URI uri1 = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "control").setParameter("act", "modifyAct").
                         setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
                 String url1 = URLDecoder.decode(uri1.toString(), "UTF-8");
                 System.out.println(url1);
@@ -169,16 +169,17 @@ public class AnnualPlanOpenServiceImpl implements AnnualPlanOpenService {
 
                 //响应调整的结果
                 CloseableHttpResponse response2;
-//                try {
-//                    response2 = httpClient.execute(httpGet1);
-//                    if (response2.getStatusLine().getStatusCode() == 200) {
-//                        String content1 = EntityUtils.toString(response2.getEntity(), "UTF-8");
-//                        System.out.println("响应的内容为:" + content1);
-//                        logger.info("content:" + content1);
-//                    }
-//                } catch (IOException e) {
-//                    logger.debug("开启活动失败!");
-//                }
+                try {
+                    response2 = httpClient.execute(httpGet1);
+                    if (response2.getStatusLine().getStatusCode() == 200) {
+                        String content1 = EntityUtils.toString(response2.getEntity(), "UTF-8");
+                        System.out.println("响应的内容为:" + content1);
+                        logger.info("content:" + content1);
+                    }
+                } catch (IOException e) {
+                    logger.debug("开启活动失败!");
+                }
+                //将开启的每一个活动都插入到AnnualPlanOpen表中
                 AnnualPlanOpen planOpen=new AnnualPlanOpen();
                 planOpen.setServerId(annualPlanOpen.getServerId());
                 planOpen.setAnnualId(annualPlanOpen.getAnnualId());

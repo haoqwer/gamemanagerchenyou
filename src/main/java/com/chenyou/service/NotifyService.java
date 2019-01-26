@@ -13,5 +13,5 @@ import java.util.List;
  **/
 public interface NotifyService {
     List<Notify> getListNotify();
-    List<Notify> addNotify() throws ParseException;
+    int addNotify() throws ParseException;
 }

@@ -52,10 +52,6 @@ public class NotifyTest {
     }
     @Test
     public  void  test05() throws ParseException {
-        List <Notify> list = notifyService.addNotify();
-        for(Notify notify : list){
-            System.out.println(notify);
-//            2019-01-05 00:00:01
-        }
+
     }
 }

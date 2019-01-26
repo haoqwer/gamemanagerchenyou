@@ -128,7 +128,6 @@ public class SendPropServiceImpl implements SendPropService {
         logger.debug(attach);
         System.out.println(attach);
         //如果==1说明是全服开启
-
         try {
             if (firstSendPro.getWhether() == 1) {
     //            http://gamejy.chyoukj.com:8080/?mod=mail&act=sendMail&title=服务器异常补偿&msg=测试道具发送&fromuid=0&attach=1004,1000000&type=1&uids=6408736&arrstate=0&server=1
