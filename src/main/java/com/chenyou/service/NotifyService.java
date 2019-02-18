@@ -14,4 +14,7 @@ import java.util.List;
 public interface NotifyService {
     List<Notify> getListNotify();
     int addNotify() throws ParseException;
+
+
+    void addNotifySchedule() throws ParseException;
 }

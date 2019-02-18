@@ -18,4 +18,7 @@ import java.util.List;
 public interface AnnualPlanOpenService {
     int saveAnnualPlanOpen(AnnualPlanOpen annualPlanOpen) throws BizException, ParseException, URISyntaxException, UnsupportedEncodingException;
     PageResult findPage(int pageNum,int pageSize);
+
+    //每天晚上0时0分01秒开启
+    void openActivity() throws URISyntaxException, UnsupportedEncodingException;
 }

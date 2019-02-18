@@ -9,6 +9,7 @@ import com.chenyou.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,4 +59,11 @@ public class AboutGameServiceImpl implements AboutGameService {
         return list.get(0);
     }
 
+//    @Scheduled(cron="0/5 * *  * * ? ")
+    @Override
+    public void testSchedule() {
+        System.out.println("每过5秒将会执行一次吗?testSchedule");
+        System.out.println("----------");
+
+    }
 }

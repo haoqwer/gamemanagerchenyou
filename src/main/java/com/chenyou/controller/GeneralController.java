@@ -17,6 +17,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,6 +54,18 @@ public class GeneralController extends BaseController {
 
     @Autowired
     private ServerService serverService;
+
+
+
+
+    @RequestMapping("/testdemo")
+    public void testSchedule(){
+     System.out.println("每5秒执行一次这个请求");
+        System.out.println("-----");
+    }
+
+
+
 
 
     /**

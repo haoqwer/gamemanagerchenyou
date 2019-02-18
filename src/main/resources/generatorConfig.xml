@@ -12,8 +12,8 @@
                         <!--connectionURL="jdbc:mysql://localhost:3306/chenyoumanager?characterEncoding=utf-8"-->
                         <!--userId="root" password="root"/>-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://47.104.227.113:3306/account?characterEncoding=utf-8"
-                        userId="root" password="chenyou#123"/>
+                        connectionURL="jdbc:mysql://47.104.240.79:3306/gm_db?characterEncoding=utf-8"
+                        userId="gm@Wui" password="kjime@EI"/>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
@@ -391,12 +391,12 @@
         <!--</table>-->
 
 
-        <!--<table tableName="t_annualplan_open" domainObjectName="AnnualPlanOpen"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true"-->
-               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true">-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="t_annualplan_open" domainObjectName="AnnualPlanOpen"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
 
 
         <!--<table tableName="t_send_prop" domainObjectName="SendProp"-->
@@ -421,11 +421,11 @@
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <table tableName="s_activity" domainObjectName="OpenPlan"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
-        </table>
+        <!--<table tableName="s_activity" domainObjectName="OpenPlan"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true">-->
+        <!--</table>-->
 
 
 

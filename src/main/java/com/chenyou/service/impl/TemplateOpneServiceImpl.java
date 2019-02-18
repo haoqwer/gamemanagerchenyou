@@ -154,7 +154,7 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
 //            System.out.println(postfix);
             URI uri = null;
             try {
-                uri = new URIBuilder("http://192.168.1.91:8080/").setParameter("mod", "control").setParameter("act", "addAct").
+                uri = new URIBuilder("http://47.104.227.113:8080/").setParameter("mod", "control").setParameter("act", "addAct").
                         setParameter("server", serverName).setParameter("aid", templateManager.getActiveId()).setParameter("fields", postfix).build();
             } catch (URISyntaxException e) {
                 e.printStackTrace();
@@ -166,16 +166,16 @@ public class TemplateOpneServiceImpl implements TemplateOpenService {
             System.out.println(url);
             HttpGet httpGet = new HttpGet(url);
             CloseableHttpResponse response;
-//            try {
-//                response = httpClient.execute(httpGet);
-//                if (response.getStatusLine().getStatusCode() == 200) {
-//                    String content = EntityUtils.toString(response.getEntity(), "UTF-8");
-//                    System.out.println("响应的内容为:" + content);
-//                    logger.info("content:" + content);
-//                }
-//            } catch (IOException e) {
-//                throw new BizException(BizException.CODE_PARM_LACK, "不好意思活动开启失败!");
-//            }
+            try {
+                response = httpClient.execute(httpGet);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+                    System.out.println("响应的内容为:" + content);
+                    logger.info("content:" + content);
+                }
+            } catch (IOException e) {
+                throw new BizException(BizException.CODE_PARM_LACK, "不好意思活动开启失败!");
+            }
             //13.1插入活动id
             templateOpen.setActiveId(templateManager.getActiveId());
             //13.2插入结束时间
